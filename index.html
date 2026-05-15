@@ -1,121 +1,209 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Nexora Community</title>
-  <style>
-    body{margin:0;font-family:Arial,sans-serif;background:#f4f7fb;color:#111827}
-    header{background:linear-gradient(135deg,#071a3d,#0f3d75);color:white;padding:45px 20px;text-align:center}
-    header h1{font-size:36px;margin:0}
-    .btn{padding:13px 22px;background:#f5b301;color:#111;border:none;border-radius:9px;font-weight:bold;cursor:pointer;margin:6px}
-    section{padding:25px 18px;max-width:950px;margin:auto}
-    .card{background:white;padding:22px;margin:15px 0;border-radius:14px;box-shadow:0 4px 12px rgba(0,0,0,.08)}
-    .grid{display:grid;gap:15px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
-    input{width:90%;padding:13px;margin:8px;border:1px solid #ccc;border-radius:8px}
-    footer{text-align:center;padding:22px;background:#071a3d;color:white}
-    #memberBox{text-align:center}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nexora Community</title>
+<style>
+body{margin:0;font-family:Arial;background:#f4f7fb;color:#111827}
+header{background:linear-gradient(135deg,#071a3d,#0f3d75);color:white;padding:45px 20px;text-align:center}
+header h1{font-size:36px;margin:0}
+.btn{padding:12px 20px;background:#f5b301;color:#111;border:none;border-radius:9px;font-weight:bold;cursor:pointer;margin:6px}
+.dark{background:#111827;color:white}
+section{padding:25px 18px;max-width:1000px;margin:auto}
+.card{background:white;padding:22px;margin:15px 0;border-radius:14px;box-shadow:0 4px 12px rgba(0,0,0,.08)}
+.grid{display:grid;gap:15px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+input,textarea{width:92%;padding:13px;margin:8px;border:1px solid #ccc;border-radius:8px}
+footer{text-align:center;padding:22px;background:#071a3d;color:white}
+.hide{display:none}
+.badge{background:#e8f1ff;padding:8px 12px;border-radius:20px;display:inline-block;margin:5px}
+</style>
 </head>
 <body>
 
 <header>
-  <h1>Nexora Community</h1>
-  <p>Smart Growth • Learning • Digital Opportunities</p>
+<h1>Nexora Community</h1>
+<p>Smart Growth • Learning • Digital Opportunities</p>
+<button class="btn" onclick="location.href='#memberBox'">Join Now</button>
 </header>
 
 <section>
-  <div class="card">
-    <h2>Welcome to Nexora Community</h2>
-    <p>A digital growth platform for learning, blogs, videos, community and future digital services.</p>
-  </div>
+<div class="card">
+<h2>Welcome to Nexora Community</h2>
+<p>A digital growth platform for learning, blogs, videos, community and future digital services.</p>
+</div>
 
-  <div class="grid">
-    <div class="card"><h3>📌 Daily Check-In</h3><p>Daily learning activities and tasks.</p></div>
-    <div class="card"><h3>🎥 Videos</h3><p>Educational videos and tutorials.</p></div>
-    <div class="card"><h3>📝 Blogs</h3><p>Posts, updates and learning content.</p></div>
-    <div class="card"><h3>👥 Community</h3><p>Join, learn and grow together.</p></div>
-  </div>
+<div class="grid">
+<div class="card"><h3>📌 Daily Check-In</h3><p>Daily learning activities and quizzes.</p></div>
+<div class="card"><h3>🎥 Videos</h3><p>Educational videos and tutorials.</p></div>
+<div class="card"><h3>📝 Blogs</h3><p>Posts, updates and learning content.</p></div>
+<div class="card"><h3>👥 Community</h3><p>Join, learn and grow together.</p></div>
+</div>
 
-  <div class="card" id="memberBox">
-    <h2>Loading...</h2>
-  </div>
+<div class="card" id="memberBox">
+<h2>Loading Member Area...</h2>
+</div>
 </section>
 
 <footer>
-  <p>© 2026 Nexora Community. All rights reserved.</p>
+<p>© 2026 Nexora Community. All rights reserved.</p>
 </footer>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import {
-  getAuth,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  signOut,
-  onAuthStateChanged
+getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword,
+signOut, onAuthStateChanged, updateProfile
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import {
+getFirestore, doc, setDoc, getDoc, collection, addDoc, getDocs, serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAWj7dozNpK8ExbJ4fptOODj66i09lxb0s",
-  authDomain: "nexoracapitalcommunity.firebaseapp.com",
-  projectId: "nexoracapitalcommunity",
-  storageBucket: "nexoracapitalcommunity.appspot.com",
-  messagingSenderId: "714723891713",
-  appId: "1:714723891713:web:65f70b7d3902f2aac7be00"
+apiKey: "AIzaSyAWj7dozNpK8ExbJ4fptOODj66i09lxb0s",
+authDomain: "nexoracapitalcommunity.firebaseapp.com",
+projectId: "nexoracapitalcommunity",
+storageBucket: "nexoracapitalcommunity.appspot.com",
+messagingSenderId: "714723891713",
+appId: "1:714723891713:web:65f70b7d3902f2aac7be00"
 };
+
+const ADMIN_EMAIL = "shanmarwat001@gmail.com";
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+const db = getFirestore(app);
 const box = document.getElementById("memberBox");
 
+function msg(t){ document.getElementById("msg").innerText=t; }
+
+function showSignup(){
+box.innerHTML = `
+<h2>Create Account</h2>
+<input id="name" placeholder="Full Name">
+<input id="email" type="email" placeholder="Email">
+<input id="password" type="password" placeholder="Password">
+<input id="confirm" type="password" placeholder="Confirm Password">
+<button class="btn" id="signupBtn">Create Account</button>
+<p>Already have account? <button class="btn dark" id="goLogin">Login</button></p>
+<p id="msg"></p>`;
+document.getElementById("goLogin").onclick=showLogin;
+document.getElementById("signupBtn").onclick=signup;
+}
+
 function showLogin(){
-  box.innerHTML = `
-    <h2>Member Signup / Login</h2>
-    <input id="email" type="email" placeholder="Enter email">
-    <input id="password" type="password" placeholder="Enter password">
-    <br>
-    <button class="btn" id="signupBtn">Create Account</button>
-    <button class="btn" id="loginBtn">Login</button>
-    <p id="msg"></p>
-  `;
-
-  document.getElementById("signupBtn").onclick = async () => {
-    try {
-      const email = document.getElementById("email").value;
-      const password = document.getElementById("password").value;
-      await createUserWithEmailAndPassword(auth, email, password);
-    } catch(e) {
-      document.getElementById("msg").innerText = e.message;
-    }
-  };
-
-  document.getElementById("loginBtn").onclick = async () => {
-    try {
-      const email = document.getElementById("email").value;
-      const password = document.getElementById("password").value;
-      await signInWithEmailAndPassword(auth, email, password);
-    } catch(e) {
-      document.getElementById("msg").innerText = e.message;
-    }
-  };
+box.innerHTML = `
+<h2>Member Login</h2>
+<input id="email" type="email" placeholder="Email">
+<input id="password" type="password" placeholder="Password">
+<button class="btn" id="loginBtn">Login</button>
+<p>New member? <button class="btn dark" id="goSignup">Create Account</button></p>
+<p id="msg"></p>`;
+document.getElementById("goSignup").onclick=showSignup;
+document.getElementById("loginBtn").onclick=login;
 }
 
-function showDashboard(user){
-  box.innerHTML = `
-    <h2>Welcome Member</h2>
-    <p><b>Email:</b> ${user.email}</p>
-    <p><b>Member ID:</b> ${user.uid.slice(0,8).toUpperCase()}</p>
-    <p><b>Points:</b> 0</p>
-    <button class="btn">Daily Check-In</button>
-    <button class="btn" id="logoutBtn">Logout</button>
-  `;
-  document.getElementById("logoutBtn").onclick = () => signOut(auth);
+async function signup(){
+try{
+let name=document.getElementById("name").value.trim();
+let email=document.getElementById("email").value.trim();
+let password=document.getElementById("password").value;
+let confirm=document.getElementById("confirm").value;
+if(!name) return msg("Please enter your name");
+if(password!==confirm) return msg("Passwords do not match");
+let res=await createUserWithEmailAndPassword(auth,email,password);
+await updateProfile(res.user,{displayName:name});
+await setDoc(doc(db,"users",res.user.uid),{
+name,email,points:0,role:"member",createdAt:serverTimestamp()
+});
+}catch(e){msg(e.message);}
 }
 
-onAuthStateChanged(auth, user => {
-  if(user) showDashboard(user);
-  else showLogin();
+async function login(){
+try{
+let email=document.getElementById("email").value.trim();
+let password=document.getElementById("password").value;
+await signInWithEmailAndPassword(auth,email,password);
+}catch(e){msg(e.message);}
+}
+
+async function showDashboard(user){
+let ref=doc(db,"users",user.uid);
+let snap=await getDoc(ref);
+let data=snap.exists()?snap.data():{name:user.displayName||"Member",points:0};
+box.innerHTML=`
+<h2>Welcome, ${data.name}</h2>
+<p><b>Email:</b> ${user.email}</p>
+<p><b>Member ID:</b> ${user.uid.slice(0,8).toUpperCase()}</p>
+<span class="badge">Points: ${data.points||0}</span>
+<hr>
+<button class="btn" onclick="document.getElementById('daily').classList.toggle('hide')">Daily Check-In</button>
+<button class="btn" onclick="document.getElementById('posts').classList.toggle('hide')">Community Posts</button>
+<button class="btn" onclick="document.getElementById('courses').classList.toggle('hide')">Courses</button>
+<button class="btn" onclick="document.getElementById('support').classList.toggle('hide')">Support</button>
+${user.email===ADMIN_EMAIL?`<button class="btn dark" onclick="document.getElementById('admin').classList.toggle('hide')">Admin Panel</button>`:""}
+<br><button class="btn dark" id="logoutBtn">Logout</button>
+
+<div id="daily" class="card hide">
+<h3>📌 Daily Check-In</h3>
+<p>Today’s task: Read blog / watch learning video and submit answer.</p>
+<input id="dailyAnswer" placeholder="Enter today answer/code">
+<button class="btn" id="checkBtn">Submit Check-In</button>
+<p id="checkMsg"></p>
+</div>
+
+<div id="posts" class="card hide">
+<h3>👥 Community Post</h3>
+<textarea id="postText" placeholder="Write your community post"></textarea>
+<button class="btn" id="postBtn">Publish Post</button>
+<div id="postList"></div>
+</div>
+
+<div id="courses" class="card hide">
+<h3>🎓 Courses / Learning</h3>
+<p>Coming soon: Math, English, YouTube Growth, Blogging, Trading Basics.</p>
+</div>
+
+<div id="support" class="card hide">
+<h3>💬 Support</h3>
+<p>Need help? Contact support on WhatsApp.</p>
+<a class="btn" href="https://wa.me/" target="_blank">WhatsApp Support</a>
+</div>
+
+<div id="admin" class="card hide">
+<h3>🛠 Admin Panel</h3>
+<p>Add announcements, tasks, blogs and updates here later.</p>
+<input placeholder="Today task title">
+<textarea placeholder="Today update"></textarea>
+<button class="btn">Save Update</button>
+</div>
+`;
+document.getElementById("logoutBtn").onclick=()=>signOut(auth);
+document.getElementById("checkBtn").onclick=()=>document.getElementById("checkMsg").innerText="Submitted ✅ Admin will verify.";
+document.getElementById("postBtn").onclick=async()=>{
+let text=document.getElementById("postText").value;
+if(text.trim()){
+await addDoc(collection(db,"posts"),{text,user:user.email,createdAt:serverTimestamp()});
+loadPosts();
+}
+};
+loadPosts();
+}
+
+async function loadPosts(){
+let list=document.getElementById("postList");
+if(!list)return;
+let q=await getDocs(collection(db,"posts"));
+list.innerHTML="";
+q.forEach(d=>{
+let p=d.data();
+list.innerHTML+=`<div class="card"><b>${p.user}</b><p>${p.text}</p></div>`;
+});
+}
+
+onAuthStateChanged(auth,user=>{
+if(user) showDashboard(user);
+else showSignup();
 });
 </script>
 

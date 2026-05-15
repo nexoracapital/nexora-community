@@ -49,7 +49,14 @@
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import {
+  getAuth,
+  GoogleAuthProvider,
+  signInWithRedirect,
+  getRedirectResult,
+  signOut,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAWj7dozNpK8ExbJ4fptOODj",
@@ -71,7 +78,9 @@ function showLogin() {
     <p>Login with Gmail to access your dashboard.</p>
     <button id="loginBtn" class="btn">Login with Gmail</button>
   `;
-  document.getElementById("loginBtn").onclick = () => signInWithPopup(auth, provider);
+  document.getElementById("loginBtn").onclick = () => {
+    signInWithRedirect(auth, provider);
+  };
 }
 
 function showDashboard(user) {
@@ -86,6 +95,10 @@ function showDashboard(user) {
   `;
   document.getElementById("logoutBtn").onclick = () => signOut(auth);
 }
+
+getRedirectResult(auth).catch((error) => {
+  console.log(error.message);
+});
 
 onAuthStateChanged(auth, user => {
   if (user) showDashboard(user);

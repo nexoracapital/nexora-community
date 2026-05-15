@@ -5,16 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Nexora Community</title>
   <style>
-    body { margin:0; font-family:Arial,sans-serif; background:#f4f7fb; color:#111827; }
-    header { background:linear-gradient(135deg,#071a3d,#0f3d75); color:white; padding:55px 20px; text-align:center; }
-    header h1 { font-size:38px; margin:0; }
-    header p { font-size:17px; margin-top:12px; }
-    .btn { display:inline-block; margin-top:18px; padding:13px 24px; background:#f5b301; color:#111; border:none; border-radius:9px; font-weight:bold; cursor:pointer; text-decoration:none; }
-    section { padding:28px 20px; max-width:950px; margin:auto; }
-    .card { background:white; padding:22px; margin:15px 0; border-radius:14px; box-shadow:0 4px 12px rgba(0,0,0,0.08); }
-    .grid { display:grid; gap:15px; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); }
-    footer { text-align:center; padding:25px; background:#071a3d; color:white; margin-top:30px; }
-    #memberBox { max-width:520px; margin:30px auto; padding:25px; background:white; border-radius:15px; box-shadow:0 5px 15px rgba(0,0,0,0.1); text-align:center; }
+    body{margin:0;font-family:Arial,sans-serif;background:#f4f7fb;color:#111827}
+    header{background:linear-gradient(135deg,#071a3d,#0f3d75);color:white;padding:45px 20px;text-align:center}
+    header h1{font-size:36px;margin:0}
+    .btn{padding:13px 22px;background:#f5b301;color:#111;border:none;border-radius:9px;font-weight:bold;cursor:pointer;margin:6px}
+    section{padding:25px 18px;max-width:950px;margin:auto}
+    .card{background:white;padding:22px;margin:15px 0;border-radius:14px;box-shadow:0 4px 12px rgba(0,0,0,.08)}
+    .grid{display:grid;gap:15px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+    input{width:90%;padding:13px;margin:8px;border:1px solid #ccc;border-radius:8px}
+    footer{text-align:center;padding:22px;background:#071a3d;color:white}
+    #memberBox{text-align:center}
   </style>
 </head>
 <body>
@@ -22,24 +22,23 @@
 <header>
   <h1>Nexora Community</h1>
   <p>Smart Growth • Learning • Digital Opportunities</p>
-  <a class="btn" href="#memberBox">Join Now</a>
 </header>
 
 <section>
   <div class="card">
     <h2>Welcome to Nexora Community</h2>
-    <p>Nexora Community is a digital growth platform focused on learning, community engagement, online skills, blogs, videos, and future digital services.</p>
+    <p>A digital growth platform for learning, blogs, videos, community and future digital services.</p>
   </div>
 
   <div class="grid">
-    <div class="card"><h3>📌 Daily Check-In</h3><p>Members will complete daily learning activities, blog reading tasks, and video quizzes.</p></div>
-    <div class="card"><h3>🎥 Videos & Learning</h3><p>Educational videos, tutorials, and useful content will be shared for community growth.</p></div>
-    <div class="card"><h3>📝 Blogs & Updates</h3><p>Latest posts, announcements, business updates, and learning material will appear here.</p></div>
-    <div class="card"><h3>👥 Community System</h3><p>Users can join, learn, participate, and grow with the community.</p></div>
+    <div class="card"><h3>📌 Daily Check-In</h3><p>Daily learning activities and tasks.</p></div>
+    <div class="card"><h3>🎥 Videos</h3><p>Educational videos and tutorials.</p></div>
+    <div class="card"><h3>📝 Blogs</h3><p>Posts, updates and learning content.</p></div>
+    <div class="card"><h3>👥 Community</h3><p>Join, learn and grow together.</p></div>
   </div>
 
-  <div id="memberBox">
-    <h2>Loading Member Area...</h2>
+  <div class="card" id="memberBox">
+    <h2>Loading...</h2>
   </div>
 </section>
 
@@ -51,9 +50,8 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import {
   getAuth,
-  GoogleAuthProvider,
-  signInWithRedirect,
-  getRedirectResult,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
   signOut,
   onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
@@ -69,39 +67,54 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
-const provider = new GoogleAuthProvider();
 const box = document.getElementById("memberBox");
 
-function showLogin() {
+function showLogin(){
   box.innerHTML = `
-    <h2>Member Login</h2>
-    <p>Login with Gmail to access your dashboard.</p>
-    <button id="loginBtn" class="btn">Login with Gmail</button>
+    <h2>Member Signup / Login</h2>
+    <input id="email" type="email" placeholder="Enter email">
+    <input id="password" type="password" placeholder="Enter password">
+    <br>
+    <button class="btn" id="signupBtn">Create Account</button>
+    <button class="btn" id="loginBtn">Login</button>
+    <p id="msg"></p>
   `;
-  document.getElementById("loginBtn").onclick = () => {
-    signInWithRedirect(auth, provider);
+
+  document.getElementById("signupBtn").onclick = async () => {
+    try {
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+      await createUserWithEmailAndPassword(auth, email, password);
+    } catch(e) {
+      document.getElementById("msg").innerText = e.message;
+    }
+  };
+
+  document.getElementById("loginBtn").onclick = async () => {
+    try {
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+      await signInWithEmailAndPassword(auth, email, password);
+    } catch(e) {
+      document.getElementById("msg").innerText = e.message;
+    }
   };
 }
 
-function showDashboard(user) {
+function showDashboard(user){
   box.innerHTML = `
-    <h2>Welcome, ${user.displayName || "Member"}</h2>
+    <h2>Welcome Member</h2>
     <p><b>Email:</b> ${user.email}</p>
-    <p><b>Member ID:</b> ${user.uid.slice(0, 8).toUpperCase()}</p>
+    <p><b>Member ID:</b> ${user.uid.slice(0,8).toUpperCase()}</p>
     <p><b>Points:</b> 0</p>
     <button class="btn">Daily Check-In</button>
-    <br><br>
-    <button id="logoutBtn" class="btn" style="background:#111827;color:white;">Logout</button>
+    <button class="btn" id="logoutBtn">Logout</button>
   `;
   document.getElementById("logoutBtn").onclick = () => signOut(auth);
 }
 
-getRedirectResult(auth).catch((error) => {
-  console.log(error.message);
-});
-
 onAuthStateChanged(auth, user => {
-  if (user) showDashboard(user);
+  if(user) showDashboard(user);
   else showLogin();
 });
 </script>

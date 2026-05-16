@@ -140,6 +140,7 @@ box.innerHTML=`
 <button class="btn" onclick="document.getElementById('daily').classList.toggle('hide')">Daily Check-In</button>
 <button class="btn" onclick="document.getElementById('posts').classList.toggle('hide')">Community Posts</button>
 <button class="btn" onclick="document.getElementById('courses').classList.toggle('hide')">Courses</button>
+<button class="btn" onclick="document.getElementById('client').classList.toggle('hide')">Client Panel</button>
 <button class="btn" onclick="document.getElementById('support').classList.toggle('hide')">Support</button>
 ${user.email===ADMIN_EMAIL?`<button class="btn dark" onclick="document.getElementById('admin').classList.toggle('hide')">Admin Panel</button>`:""}
 <br><button class="btn dark" id="logoutBtn">Logout</button>
@@ -163,7 +164,23 @@ ${user.email===ADMIN_EMAIL?`<button class="btn dark" onclick="document.getElemen
 <h3>🎓 Courses / Learning</h3>
 <p>Coming soon: Math, English, YouTube Growth, Blogging, Trading Basics.</p>
 </div>
+<div id="client" class="card hide">
 
+<h3>💼 Client Service Panel</h3>
+
+<input id="serviceName" placeholder="Service Needed (e.g Video Editing)">
+
+<input id="budget" placeholder="Your Budget">
+
+<input id="deadline" placeholder="Deadline">
+
+<textarea id="details" placeholder="Project Details"></textarea>
+
+<button class="btn" id="submitOrderBtn">Submit Order</button>
+
+<p id="orderMsg"></p>
+
+</div>
 <div id="support" class="card hide">
 <h3>💬 Support</h3>
 <p>Need help? Contact support on WhatsApp.</p>

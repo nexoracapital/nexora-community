@@ -244,33 +244,48 @@ window.adminLogin = async function(){
   }
 
   document.getElementById("adminDashboard").classList.remove("hide");
+
   const container = document.getElementById("requestsContainer");
-  container.innerHTML = "Loading...";
+  container.innerHTML = "<h3>Loading...</h3>";
 
-  const querySnapshot = await getDocs(collection(db,"clientRequests"));
-  container.innerHTML = "";
+  const clientSnap = await getDocs(collection(db,"clientRequests"));
+  let html = "<h2>📋 Client Requests</h2>";
 
-  querySnapshot.forEach((doc)=>{
+  clientSnap.forEach((doc)=>{
     const d = doc.data();
-    container.innerHTML += `
+    html += `
       <div class="card">
         <h3>${d.name || "No Name"}</h3>
         <p><b>Mobile:</b> ${d.mobile || ""}</p>
         <p><b>Email:</b> ${d.email || ""}</p>
         <p><b>Service:</b> ${d.service || ""}</p>
         <p><b>Budget:</b> ${d.budget || ""}</p>
-        <p><b>Deadline:</b> ${d.deadline || ""}</p>
-        <p><b>Payment:</b> ${d.paymentMethod || ""}</p>
-        <p><b>Transaction ID:</b> ${d.transactionId || ""}</p>
         <p><b>Status:</b> ${d.status || "Pending"}</p>
-        <p><b>Details:</b> ${d.details || ""}</p>
       </div>
     `;
   });
 
-  if(container.innerHTML === ""){
-    container.innerHTML = "No client requests found.";
-  }
+  const studentSnap = await getDocs(collection(db,"studentRequests"));
+  html += "<h2>🎓 Student Tuition Requests</h2>";
+
+  studentSnap.forEach((doc)=>{
+    const s = doc.data();
+    html += `
+      <div class="card">
+        <h3>${s.studentName || "No Name"}</h3>
+        <p><b>Parent:</b> ${s.parentName || ""}</p>
+        <p><b>Mobile:</b> ${s.mobile || ""}</p>
+        <p><b>Class:</b> ${s.className || ""}</p>
+        <p><b>Subject:</b> ${s.subject || ""}</p>
+        <p><b>Study Method:</b> ${s.studyMethod || ""}</p>
+        <p><b>Status:</b> ${s.status || "Pending"}</p>
+        <p><b>Details:</b> ${s.details || ""}</p>
+      </div>
+    `;
+  });
+
+  container.innerHTML = html;
+    }
 }
 </script>
 

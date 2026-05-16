@@ -245,27 +245,29 @@ onclick="goHome()">
 
 <!-- ADMIN -->
 
-<div id="adminSection"
-class="card hide">
+<div id="adminSection" class="card hide">
 
-<h2>👑 Admin Login</h2>
+<h2>👑 Admin Panel</h2>
 
-<input placeholder="Admin Email">
+<input id="adminEmail" placeholder="Admin Email">
 
-<input type="password"
-placeholder="Password">
+<input type="password" id="adminPassword" placeholder="Password">
 
-<button class="btn dark">
-
+<button class="btn dark" onclick="adminLogin()">
 Admin Login
-
 </button>
 
-<p>
+<hr>
 
-Only approved admin accounts can login.
+<div id="adminDashboard" class="hide">
 
-</p>
+<h3>📋 Client Requests</h3>
+
+<div id="requestsContainer">
+Loading Requests...
+</div>
+
+</div>
 
 </div>
 
@@ -472,6 +474,7 @@ getFirestore,
 collection,
 addDoc,
 serverTimestamp
+  getDocs
 }
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
@@ -613,7 +616,76 @@ document.getElementById(sec)
 });
 
 }
+window.adminLogin =
+async function(){
 
+let email =
+document.getElementById("adminEmail").value;
+
+if(
+email !== "smartustad0@gmail.com"
+){
+
+alert("Access Denied ❌");
+
+return;
+
+}
+
+document.getElementById(
+"adminDashboard"
+).classList.remove("hide");
+
+let container =
+document.getElementById(
+"requestsContainer"
+);
+
+container.innerHTML = "";
+
+let querySnapshot =
+await getDocs(
+collection(db,"clientRequests")
+);
+
+querySnapshot.forEach((doc)=>{
+
+let data = doc.data();
+
+container.innerHTML += `
+
+<div style="
+background:#fff;
+padding:15px;
+margin-top:15px;
+border-radius:12px;
+border:1px solid #ddd;
+">
+
+<h3>${data.name}</h3>
+
+<p><b>Service:</b>
+${data.service}</p>
+
+<p><b>Budget:</b>
+${data.budget}</p>
+
+<p><b>Deadline:</b>
+${data.deadline}</p>
+
+<p><b>Email:</b>
+${data.email}</p>
+
+<p><b>Status:</b>
+${data.status}</p>
+
+</div>
+
+`;
+
+});
+
+  }
 </script>
 
 </body>

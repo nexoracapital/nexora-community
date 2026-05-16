@@ -37,18 +37,6 @@ footer{background:#071a3d;color:white;text-align:center;padding:18px;margin-top:
 <button id="backBtn" class="dark hide" onclick="goHome()">⬅ Back To Main Menu</button>
 </div>
 
-<div id="admin" class="card hide">
-<h2>👑 Admin Panel</h2>
-<input id="adminEmail" placeholder="Admin Email">
-<input id="adminPassword" type="password" placeholder="Password">
-<button class="dark" onclick="adminLogin()">Admin Login</button>
-<hr>
-<div id="adminDashboard" class="hide">
-<h2>📋 Client Requests</h2>
-<div id="requestsContainer">Loading...</div>
-</div>
-</div>
-
 <div id="team" class="card hide">
 <h2>👥 Team Member Login</h2>
 <input placeholder="Team ID given by Admin">
@@ -69,7 +57,104 @@ footer{background:#071a3d;color:white;text-align:center;padding:18px;margin-top:
 <textarea id="clientDetails" placeholder="Project Details"></textarea>
 
 <h3>💳 Payment Method</h3>
-<select id="paymentMethod">
+<selec<div id="admin" class="card hide">
+
+<h2>👑 Admin Panel</h2>
+
+<input id="adminEmail"
+placeholder="Admin Email">
+
+<input id="adminPassword"
+type="password"
+placeholder="Password">
+
+<button class="dark"
+onclick="adminLogin()">
+
+Admin Login
+
+</button>
+
+<div id="adminDashboard"
+class="hide">
+
+<hr>
+
+<h2>📊 Admin Dashboard</h2>
+
+<div class="grid">
+
+<div class="card">
+
+<h3>
+💼 Client Requests
+<span id="clientCount"
+class="badge">
+0
+</span>
+</h3>
+
+<button onclick="showAdminSection('clientRequestsBox')">
+
+Open Client Requests
+
+</button>
+
+</div>
+
+<div class="card">
+
+<h3>
+🎓 Student Requests
+<span id="studentCount"
+class="badge">
+0
+</span>
+</h3>
+
+<button onclick="showAdminSection('studentRequestsBox')">
+
+Open Student Requests
+
+</button>
+
+</div>
+
+</div>
+
+<!-- CLIENT REQUESTS -->
+
+<div id="clientRequestsBox"
+class="hide">
+
+<h2>💼 Client Requests</h2>
+
+<div id="clientRequestsContainer">
+
+Loading...
+
+</div>
+
+</div>
+
+<!-- STUDENT REQUESTS -->
+
+<div id="studentRequestsBox"
+class="hide">
+
+<h2>🎓 Student Requests</h2>
+
+<div id="studentRequestsContainer">
+
+Loading...
+
+</div>
+
+</div>
+
+</div>
+
+</div>t id="paymentMethod">
 <option>Select Payment Method</option>
 <option>Easypaisa</option>
 <option>JazzCash</option>
@@ -233,80 +318,226 @@ e.message;
 
 }
 
+window.adminLogin =
+async function(){
+
+const email =
+document.getElementById(
+"adminEmail"
+).value;
+
+if(email !== "smartustad0@gmail.com"){
+
+alert("Access Denied ❌");
+
+return;
+
 }
 
-window.adminLogin = async function(){
-  const email = document.getElementById("adminEmail").value.trim();
+document.getElementById(
+"adminDashboard"
+).classList.remove("hide");
 
-  if(email !== "smartustad0@gmail.com"){
-    alert("Access Denied ❌");
-    return;
-  }
+loadClientRequests();
 
-  document.getElementById("adminDashboard").classList.remove("hide");
+loadStudentRequests();
 
-  const container = document.getElementById("requestsContainer");
-  container.innerHTML = "<h3>Loading...</h3>";
-
-  const clientSnap = await getDocs(collection(db,"clientRequests"));
-  let html = "<h2>📋 Client Requests</h2>";
-
-  clientSnap.forEach((doc)=>{
-    const d = doc.data();
-    html += `
-      <div class="card">
-        <h3>${d.name || "No Name"}</h3>
-        <p><b>Mobile:</b> ${d.mobile || ""}</p>
-        <p><b>Email:</b> ${d.email || ""}</p>
-        <p><b>Service:</b> ${d.service || ""}</p>
-        <p><b>Budget:</b> ${d.budget || ""}</p>
-        <p><b>Status:</b> ${d.status || "Pending"}</p>
-      </div>
-    `;
-  });
-
-  const studentSnap = await getDocs(collection(db,"studentRequests"));
-  html += "<h2>🎓 Student Tuition Requests</h2>";
-
-  studentSnap.forEach((doc)=>{
-    const s = doc.data();
-    html += `
-      <div class="card">
-        <h3>${s.studentName || "No Name"}</h3>
-        <p><b>Parent:</b> ${s.parentName || ""}</p>
-        <p><b>Mobile:</b> ${s.mobile || ""}</p>
-        <p><b>Class:</b> ${s.className || ""}</p>
-        <p><b>Subject:</b> ${s.subject || ""}</p>
-        <p><b>Study Method:</b> ${s.studyMethod || ""}</p>
-        <p><b>Status:</b> ${s.status || "Pending"}</p>
-        <p><b>Details:</b> ${s.details || ""}</p>
-      </div>
-    `;
-  });
-
-  container.innerHTML = html;
-}
-</script>
-
-<script>
-function openPortal(id){
-  document.getElementById("mainMenu").style.display = "none";
-  document.getElementById("backBtn").classList.remove("hide");
-
-  ["admin","team","client","community","student","support"].forEach(function(sec){
-    document.getElementById(sec).classList.add("hide");
-  });
-
-  document.getElementById(id).classList.remove("hide");
 }
 
-function goHome(){
-  document.getElementById("mainMenu").style.display = "block";
-  document.getElementById("backBtn").classList.add("hide");
+async function loadClientRequests(){
 
-  ["admin","team","client","community","student","support"].forEach(function(sec){
-    document.getElementById(sec).classList.add("hide");
-  });
+const snap =
+await getDocs(
+collection(db,"clientRequests")
+);
+
+document.getElementById(
+"clientCount"
+).innerText =
+snap.size;
+
+let html = "";
+
+snap.forEach((docItem)=>{
+
+const d = docItem.data();
+
+html += `
+
+<div class="card">
+
+<h3>${d.name}</h3>
+
+<p><b>Service:</b>
+${d.service}</p>
+
+<p><b>Budget:</b>
+${d.budget}</p>
+
+<p><b>Status:</b>
+<span class="status">
+${d.status}
+</span></p>
+
+<button class="green"
+onclick="updateClientStatus('${docItem.id}','Accepted')">
+
+✅ Accept
+
+</button>
+
+<button class="red"
+onclick="updateClientStatus('${docItem.id}','Rejected')">
+
+❌ Reject
+
+</button>
+
+<button class="dark"
+onclick="deleteClientRequest('${docItem.id}')">
+
+🗑 Delete
+
+</button>
+
+</div>
+
+`;
+
+});
+
+document.getElementById(
+"clientRequestsContainer"
+).innerHTML = html;
+
+}
+
+async function loadStudentRequests(){
+
+const snap =
+await getDocs(
+collection(db,"studentRequests")
+);
+
+document.getElementById(
+"studentCount"
+).innerText =
+snap.size;
+
+let html = "";
+
+snap.forEach((docItem)=>{
+
+const s = docItem.data();
+
+html += `
+
+<div class="card">
+
+<h3>${s.studentName}</h3>
+
+<p><b>Class:</b>
+${s.className}</p>
+
+<p><b>Subject:</b>
+${s.subject}</p>
+
+<p><b>Status:</b>
+<span class="status">
+${s.status}
+</span></p>
+
+<button class="green"
+onclick="updateStudentStatus('${docItem.id}','Accepted')">
+
+✅ Accept
+
+</button>
+
+<button class="red"
+onclick="updateStudentStatus('${docItem.id}','Rejected')">
+
+❌ Reject
+
+</button>
+
+<button class="dark"
+onclick="deleteStudentRequest('${docItem.id}')">
+
+🗑 Delete
+
+</button>
+
+</div>
+
+`;
+
+});
+
+document.getElementById(
+"studentRequestsContainer"
+).innerHTML = html;
+
+}
+
+window.updateClientStatus =
+async function(id,status){
+
+await updateDoc(
+doc(db,"clientRequests",id),
+{
+status:status
+}
+);
+
+loadClientRequests();
+
+}
+
+window.updateStudentStatus =
+async function(id,status){
+
+await updateDoc(
+doc(db,"studentRequests",id),
+{
+status:status
+}
+);
+
+loadStudentRequests();
+
+}
+
+window.deleteClientRequest =
+async function(id){
+
+await deleteDoc(
+doc(db,"clientRequests",id)
+);
+
+loadClientRequests();
+
+}
+
+window.deleteStudentRequest =
+async function(id){
+
+await deleteDoc(
+doc(db,"studentRequests",id)
+);
+
+loadStudentRequests();
+
+  } 
+
+function showAdminSection(id){
+
+["clientRequestsBox","studentRequestsBox"].forEach(function(sec){
+document.getElementById(sec).classList.add("hide");
+});
+
+document.getElementById(id).classList.remove("hide");
+
 }
 </script>
 

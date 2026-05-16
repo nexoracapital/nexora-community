@@ -1,321 +1,74 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Nexora Community</title>
-
 <style>
-
-body{
-margin:0;
-font-family:Arial,sans-serif;
-background:#eef2f7;
-color:#111827;
-}
-
-header{
-background:linear-gradient(135deg,#071a3d,#0f4c81);
-padding:40px 20px;
-text-align:center;
-color:white;
-}
-
-header h1{
-margin:0;
-font-size:38px;
-}
-
-header p{
-margin-top:10px;
-font-size:16px;
-}
-
-.container{
-max-width:1100px;
-margin:auto;
-padding:20px;
-}
-
-.grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-gap:18px;
-}
-
-.card{
-background:white;
-padding:22px;
-border-radius:16px;
-box-shadow:0 4px 12px rgba(0,0,0,.08);
-}
-
-.card h2{
-margin-top:0;
-}
-
-.btn{
-padding:12px 18px;
-border:none;
-border-radius:10px;
-background:#f5b301;
-font-weight:bold;
-cursor:pointer;
-margin-top:10px;
-}
-
-.dark{
-background:#111827;
-color:white;
-}
-
-input,select,textarea{
-width:92%;
-padding:12px;
-margin-top:10px;
-border:1px solid #ccc;
-border-radius:10px;
-}
-
-.hide{
-display:none;
-}
-
-footer{
-background:#071a3d;
-color:white;
-text-align:center;
-padding:20px;
-margin-top:30px;
-}
-
+body{margin:0;font-family:Arial;background:#eef2f7;color:#111827}
+header{background:linear-gradient(135deg,#071a3d,#0f4c81);color:white;text-align:center;padding:40px 20px}
+.card{background:white;margin:18px;padding:22px;border-radius:16px;box-shadow:0 4px 12px #0002}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:15px}
+button{background:#f5b301;border:0;border-radius:10px;padding:12px 18px;font-weight:bold;margin:6px}
+.dark{background:#111827;color:white}
+input,select,textarea{width:92%;padding:12px;margin:7px;border:1px solid #ccc;border-radius:8px}
+.hide{display:none}
+footer{background:#071a3d;color:white;text-align:center;padding:18px;margin-top:30px}
 </style>
-
 </head>
-
 <body>
 
 <header>
-
 <h1>Nexora Community</h1>
-
-<p>
-
-Learning • Services • Community • Tuition Platform
-
-</p>
-
+<p>Learning • Services • Community • Tuition Platform</p>
 </header>
 
-<div class="container">
-
-<!-- MAIN MENU -->
-
-<div id="mainMenu">
-
+<div class="card" id="mainMenu">
 <div class="grid">
+<div><h2>👑 Admin Panel</h2><button class="dark" onclick="openPortal('admin')">Open Admin</button></div>
+<div><h2>👥 Team Members</h2><button onclick="openPortal('team')">Open Team</button></div>
+<div><h2>💼 Client Services</h2><button onclick="openPortal('client')">Open Client</button></div>
+<div><h2>🌐 Community Rewards</h2><button onclick="openPortal('community')">Open Community</button></div>
+<div><h2>🎓 Student Panel</h2><button onclick="openPortal('student')">Open Student</button></div>
+<div><h2>📞 Support</h2><button onclick="openPortal('support')">Open Support</button></div>
+</div>
+</div>
 
-<div class="card">
+<div style="margin:18px">
+<button id="backBtn" class="dark hide" onclick="goHome()">⬅ Back To Main Menu</button>
+</div>
 
+<div id="admin" class="card hide">
 <h2>👑 Admin Panel</h2>
-
-<p>
-
-Platform management and controls.
-
-</p>
-
-<button class="btn dark"
-onclick="openPortal('adminSection')">
-
-Open Admin
-
-</button>
-
-</div>
-
-<div class="card">
-
-<h2>👥 Team Members</h2>
-
-<p>
-
-Tasks, work management and points system.
-
-</p>
-
-<button class="btn"
-onclick="openPortal('teamSection')">
-
-Open Team
-
-</button>
-
-</div>
-
-<div class="card">
-
-<h2>💼 Client Services</h2>
-
-<p>
-
-Submit projects and service requests.
-
-</p>
-
-<button class="btn"
-onclick="openPortal('clientSection')">
-
-Open Client
-
-</button>
-
-</div>
-
-<div class="card">
-
-<h2>🌐 Community Rewards</h2>
-
-<p>
-
-Daily tasks, points and reward system.
-
-</p>
-
-<button class="btn"
-onclick="openPortal('communitySection')">
-
-Open Community
-
-</button>
-
-</div>
-
-<div class="card">
-
-<h2>🎓 Student Panel</h2>
-
-<p>
-
-Apply for tuition and online classes.
-
-</p>
-
-<button class="btn"
-onclick="openPortal('studentSection')">
-
-Open Student
-
-</button>
-
-</div>
-
-<div class="card">
-
-<h2>📞 Support Center</h2>
-
-<p>
-
-Need help? Contact support.
-
-</p>
-
-<button class="btn"
-onclick="openPortal('supportSection')">
-
-Open Support
-
-</button>
-
-</div>
-
-</div>
-
-</div>
-
-<!-- BACK BUTTON -->
-
-<button id="backBtn"
-class="btn dark hide"
-onclick="goHome()">
-
-⬅ Back To Main Menu
-
-</button>
-
-<!-- ADMIN -->
-
-<div id="adminSection" class="card hide">
-
-<h2>👑 Admin Panel</h2>
-
 <input id="adminEmail" placeholder="Admin Email">
-
-<input type="password" id="adminPassword" placeholder="Password">
-
-<button class="btn dark" onclick="adminLogin()">
-Admin Login
-</button>
-
+<input id="adminPassword" type="password" placeholder="Password">
+<button class="dark" onclick="adminLogin()">Admin Login</button>
 <hr>
-
 <div id="adminDashboard" class="hide">
-
-<h3>📋 Client Requests</h3>
-
-<div id="requestsContainer">
-Loading Requests...
+<h2>📋 Client Requests</h2>
+<div id="requestsContainer">Loading...</div>
+</div>
 </div>
 
-</div>
-
-</div>
-
-<!-- TEAM -->
-
-<div id="teamSection"
-class="card hide">
-
+<div id="team" class="card hide">
 <h2>👥 Team Member Login</h2>
-
-<input placeholder="Team ID">
-
+<input placeholder="Team ID given by Admin">
 <input placeholder="Email">
-
-<input type="password"
-placeholder="Password">
-
-<button class="btn">
-
-Login Team Panel
-
-</button>
-
-<p>
-
-Team IDs are generated by Admin.
-
-</p>
-
+<input type="password" placeholder="Password">
+<button>Login Team</button>
+<p>Team ID system will be connected later.</p>
 </div>
 
-<!-- CLIENT -->
-
-<div id="clientSection" class="card hide">
-
+<div id="client" class="card hide">
 <h2>💼 Client Service Request</h2>
-
 <input id="clientName" placeholder="Full Name">
 <input id="clientMobile" placeholder="Mobile / WhatsApp">
 <input id="clientEmail" placeholder="Email">
 <input id="clientService" placeholder="Service Required">
 <input id="clientBudget" placeholder="Budget">
 <input id="clientDeadline" placeholder="Deadline">
-
 <textarea id="clientDetails" placeholder="Project Details"></textarea>
 
 <h3>💳 Payment Method</h3>
-
 <select id="paymentMethod">
 <option>Select Payment Method</option>
 <option>Easypaisa</option>
@@ -323,370 +76,164 @@ Team IDs are generated by Admin.
 <option>Bank Transfer</option>
 </select>
 
-<p>Admin account details will appear here after order approval.</p>
+<p>Admin account details will be shared after order approval.</p>
+<input id="transactionId" placeholder="Transaction ID / Reference Number">
+<p>Screenshot upload will be added later.</p>
 
-<input id="transactionId" placeholder="Transaction ID">
-
-<p>Payment screenshot upload system will be added later.</p>
-
-<button class="btn" onclick="submitClientRequest()">
-Submit Client Request
-</button>
-
+<button onclick="submitClientRequest()">Submit Client Request</button>
+<p id="clientMsg"></p>
 </div>
 
-<!-- COMMUNITY -->
-
-<div id="communitySection"
-class="card hide">
-
+<div id="community" class="card hide">
 <h2>🌐 Community Rewards</h2>
-
-<input placeholder="Full Name">
-
-<input placeholder="Email">
-
-<input type="password"
-placeholder="Password">
-
-<button class="btn">
-
-Create Community Account
-
-</button>
-
-<hr>
-
-<input
-placeholder="Community Email">
-
-<input type="password"
-placeholder="Password">
-
-<button class="btn dark">
-
-Login Community
-
-</button>
-
-<p>
-
-Daily codes, watch & earn,
-leaderboard and rewards system.
-
-</p>
-
-<button class="btn dark">
-
-Withdraw Locked
-
-</button>
-
+<p>Daily codes, points, leaderboard and withdraw system will be added here.</p>
+<button class="dark">Withdraw Locked</button>
 </div>
 
-<!-- STUDENT -->
-
-<div id="studentSection"
-class="card hide">
-
+<div id="student" class="card hide">
 <h2>🎓 Student Tuition Request</h2>
-
-<input placeholder="Student Name">
-
-<input placeholder="Parent Name">
-
-<input placeholder="WhatsApp Number">
-
-<input placeholder="Class">
-
-<input placeholder="Subject">
-
-<select>
-
-<option>
-
-Study Method
-
-</option>
-
-<option>
-
-Online Classes
-
-</option>
-
-<option>
-
-WhatsApp Lectures
-
-</option>
-
-</select>
-
-<textarea
-placeholder="Extra Study Details"></textarea>
-
-<button class="btn">
-
-Submit Tuition Request
-
-</button>
-
+<input id="studentName" placeholder="Student Name">
+<input id="parentName" placeholder="Parent Name">
+<input id="studentMobile" placeholder="WhatsApp Number">
+<input id="studentClass" placeholder="Class">
+<input id="studentSubject" placeholder="Subject">
+<textarea id="studentDetails" placeholder="Study Details"></textarea>
+<button onclick="submitStudentRequest()">Submit Tuition Request</button>
+<p id="studentMsg"></p>
 </div>
 
-<!-- SUPPORT -->
-
-<div id="supportSection"
-class="card hide">
-
+<div id="support" class="card hide">
 <h2>📞 Support Center</h2>
-
-<p>
-
-WhatsApp Support:
-Coming Soon
-
-</p>
-
-<p>
-
-Email Support:
-support@nexora.com
-
-</p>
-
+<p>WhatsApp Support: Coming Soon</p>
+<p>Email Support: support@nexora.com</p>
 </div>
 
-</div>
+<footer>© 2026 Nexora Community</footer>
 
-<footer>
-
-© 2026 Nexora Community
-
-</footer>
 <script type="module">
-
-import { initializeApp }
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-
-import {
-getFirestore,
-collection,
-addDoc,
-serverTimestamp
-  getDocs
-}
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getFirestore, collection, addDoc, getDocs, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
-
-apiKey: "AIzaSyAWj7dozNpK8ExbJ4fptOODj66i09lxb0s",
-
-authDomain:
-"nexoracapitalcommunity.firebaseapp.com",
-
-projectId:
-"nexoracapitalcommunity",
-
-storageBucket:
-"nexoracapitalcommunity.appspot.com",
-
-messagingSenderId:
-"714723891713",
-
-appId:
-"1:714723891713:web:65f70b7d3902f2aac7be00"
-
+  apiKey: "AIzaSyAWj7dozNpK8ExbJ4fptOODj66i09lxb0s",
+  authDomain: "nexoracapitalcommunity.firebaseapp.com",
+  projectId: "nexoracapitalcommunity",
+  storageBucket: "nexoracapitalcommunity.appspot.com",
+  messagingSenderId: "714723891713",
+  appId: "1:714723891713:web:65f70b7d3902f2aac7be00"
 };
 
-const app =
-initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
-const db =
-getFirestore(app);
+window.submitClientRequest = async function(){
+  try{
+    const data = {
+      name: document.getElementById("clientName").value,
+      mobile: document.getElementById("clientMobile").value,
+      email: document.getElementById("clientEmail").value,
+      service: document.getElementById("clientService").value,
+      budget: document.getElementById("clientBudget").value,
+      deadline: document.getElementById("clientDeadline").value,
+      details: document.getElementById("clientDetails").value,
+      paymentMethod: document.getElementById("paymentMethod").value,
+      transactionId: document.getElementById("transactionId").value,
+      status: "Pending",
+      createdAt: serverTimestamp()
+    };
 
-window.submitClientRequest =
-async function(){
+    if(!data.name || !data.mobile || !data.service){
+      document.getElementById("clientMsg").innerText = "Please fill Name, Mobile and Service.";
+      return;
+    }
 
-let data = {
-
-name:
-document.getElementById("clientName").value,
-
-mobile:
-document.getElementById("clientMobile").value,
-
-email:
-document.getElementById("clientEmail").value,
-
-service:
-document.getElementById("clientService").value,
-
-budget:
-document.getElementById("clientBudget").value,
-
-deadline:
-document.getElementById("clientDeadline").value,
-
-details:
-document.getElementById("clientDetails").value,
-
-paymentMethod:
-document.getElementById("paymentMethod").value,
-
-transactionId:
-document.getElementById("transactionId").value,
-
-status:"Pending",
-
-createdAt:
-serverTimestamp()
-
-};
-
-await addDoc(
-collection(db,"clientRequests"),
-data
-);
-
-alert(
-"Client Request Submitted Successfully ✅"
-);
-
+    await addDoc(collection(db,"clientRequests"), data);
+    document.getElementById("clientMsg").innerText = "Request Submitted Successfully ✅";
+  }catch(e){
+    document.getElementById("clientMsg").innerText = e.message;
+  }
 }
 
+window.submitStudentRequest = async function(){
+  try{
+    const data = {
+      studentName: document.getElementById("studentName").value,
+      parentName: document.getElementById("parentName").value,
+      mobile: document.getElementById("studentMobile").value,
+      className: document.getElementById("studentClass").value,
+      subject: document.getElementById("studentSubject").value,
+      details: document.getElementById("studentDetails").value,
+      status: "Pending",
+      createdAt: serverTimestamp()
+    };
+
+    await addDoc(collection(db,"studentRequests"), data);
+    document.getElementById("studentMsg").innerText = "Tuition Request Submitted ✅";
+  }catch(e){
+    document.getElementById("studentMsg").innerText = e.message;
+  }
+}
+
+window.adminLogin = async function(){
+  const email = document.getElementById("adminEmail").value.trim();
+
+  if(email !== "smartustad0@gmail.com"){
+    alert("Access Denied ❌");
+    return;
+  }
+
+  document.getElementById("adminDashboard").classList.remove("hide");
+  const container = document.getElementById("requestsContainer");
+  container.innerHTML = "Loading...";
+
+  const querySnapshot = await getDocs(collection(db,"clientRequests"));
+  container.innerHTML = "";
+
+  querySnapshot.forEach((doc)=>{
+    const d = doc.data();
+    container.innerHTML += `
+      <div class="card">
+        <h3>${d.name || "No Name"}</h3>
+        <p><b>Mobile:</b> ${d.mobile || ""}</p>
+        <p><b>Email:</b> ${d.email || ""}</p>
+        <p><b>Service:</b> ${d.service || ""}</p>
+        <p><b>Budget:</b> ${d.budget || ""}</p>
+        <p><b>Deadline:</b> ${d.deadline || ""}</p>
+        <p><b>Payment:</b> ${d.paymentMethod || ""}</p>
+        <p><b>Transaction ID:</b> ${d.transactionId || ""}</p>
+        <p><b>Status:</b> ${d.status || "Pending"}</p>
+        <p><b>Details:</b> ${d.details || ""}</p>
+      </div>
+    `;
+  });
+
+  if(container.innerHTML === ""){
+    container.innerHTML = "No client requests found.";
+  }
+}
 </script>
+
 <script>
-
 function openPortal(id){
+  document.getElementById("mainMenu").style.display = "none";
+  document.getElementById("backBtn").classList.remove("hide");
 
-document.getElementById("mainMenu")
-.style.display = "none";
+  ["admin","team","client","community","student","support"].forEach(function(sec){
+    document.getElementById(sec).classList.add("hide");
+  });
 
-document.getElementById("backBtn")
-.classList.remove("hide");
-
-let sections = [
-
-"adminSection",
-"teamSection",
-"clientSection",
-"communitySection",
-"studentSection",
-"supportSection"
-
-];
-
-sections.forEach(function(sec){
-
-document.getElementById(sec)
-.classList.add("hide");
-
-});
-
-document.getElementById(id)
-.classList.remove("hide");
-
+  document.getElementById(id).classList.remove("hide");
 }
 
 function goHome(){
+  document.getElementById("mainMenu").style.display = "block";
+  document.getElementById("backBtn").classList.add("hide");
 
-document.getElementById("mainMenu")
-.style.display = "block";
-
-document.getElementById("backBtn")
-.classList.add("hide");
-
-let sections = [
-
-"adminSection",
-"teamSection",
-"clientSection",
-"communitySection",
-"studentSection",
-"supportSection"
-
-];
-
-sections.forEach(function(sec){
-
-document.getElementById(sec)
-.classList.add("hide");
-
-});
-
+  ["admin","team","client","community","student","support"].forEach(function(sec){
+    document.getElementById(sec).classList.add("hide");
+  });
 }
-window.adminLogin =
-async function(){
-
-let email =
-document.getElementById("adminEmail").value;
-
-if(
-email !== "smartustad0@gmail.com"
-){
-
-alert("Access Denied ❌");
-
-return;
-
-}
-
-document.getElementById(
-"adminDashboard"
-).classList.remove("hide");
-
-let container =
-document.getElementById(
-"requestsContainer"
-);
-
-container.innerHTML = "";
-
-let querySnapshot =
-await getDocs(
-collection(db,"clientRequests")
-);
-
-querySnapshot.forEach((doc)=>{
-
-let data = doc.data();
-
-container.innerHTML += `
-
-<div style="
-background:#fff;
-padding:15px;
-margin-top:15px;
-border-radius:12px;
-border:1px solid #ddd;
-">
-
-<h3>${data.name}</h3>
-
-<p><b>Service:</b>
-${data.service}</p>
-
-<p><b>Budget:</b>
-${data.budget}</p>
-
-<p><b>Deadline:</b>
-${data.deadline}</p>
-
-<p><b>Email:</b>
-${data.email}</p>
-
-<p><b>Status:</b>
-${data.status}</p>
-
-</div>
-
-`;
-
-});
-
-  }
 </script>
 
 </body>
-  </html>
+</html>

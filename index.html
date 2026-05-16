@@ -4,224 +4,757 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Nexora Community</title>
+
 <style>
-body{margin:0;font-family:Arial;background:#f4f7fb;color:#111827}
-header{background:linear-gradient(135deg,#071a3d,#0f3d75);color:white;padding:45px 20px;text-align:center}
-header h1{font-size:36px;margin:0}
-.btn{padding:12px 20px;background:#f5b301;color:#111;border:none;border-radius:9px;font-weight:bold;cursor:pointer;margin:6px}
-.dark{background:#111827;color:white}
-section{padding:25px 18px;max-width:1000px;margin:auto}
-.card{background:white;padding:22px;margin:15px 0;border-radius:14px;box-shadow:0 4px 12px rgba(0,0,0,.08)}
-.grid{display:grid;gap:15px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
-input,textarea{width:92%;padding:13px;margin:8px;border:1px solid #ccc;border-radius:8px}
-footer{text-align:center;padding:22px;background:#071a3d;color:white}
-.hide{display:none}
-.badge{background:#e8f1ff;padding:8px 12px;border-radius:20px;display:inline-block;margin:5px}
+
+body{
+margin:0;
+font-family:Arial,sans-serif;
+background:#f4f7fb;
+color:#111827;
+}
+
+header{
+background:linear-gradient(135deg,#071a3d,#0f3d75);
+color:white;
+padding:45px 20px;
+text-align:center;
+}
+
+header h1{
+margin:0;
+font-size:38px;
+}
+
+header p{
+margin-top:10px;
+font-size:17px;
+}
+
+section{
+max-width:1100px;
+margin:auto;
+padding:25px;
+}
+
+.card{
+background:white;
+padding:22px;
+border-radius:14px;
+margin-bottom:18px;
+box-shadow:0 4px 12px rgba(0,0,0,.08);
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+gap:18px;
+}
+
+.btn{
+padding:12px 20px;
+background:#f5b301;
+border:none;
+border-radius:10px;
+font-weight:bold;
+cursor:pointer;
+margin-top:10px;
+}
+
+.dark{
+background:#111827;
+color:white;
+}
+
+input,textarea{
+width:92%;
+padding:12px;
+margin-top:10px;
+border:1px solid #ccc;
+border-radius:8px;
+}
+
+.hide{
+display:none;
+}
+
+footer{
+background:#071a3d;
+color:white;
+padding:22px;
+text-align:center;
+margin-top:30px;
+}
+
+.badge{
+background:#e8f1ff;
+padding:8px 12px;
+border-radius:20px;
+display:inline-block;
+margin:5px;
+}
+
 </style>
+
 </head>
+
 <body>
 
 <header>
+
 <h1>Nexora Community</h1>
-<p>Smart Growth • Learning • Digital Opportunities</p>
-<button class="btn" onclick="location.href='#memberBox'">Join Now</button>
+
+<p>
+Smart Growth • Learning • Services • Community
+</p>
+
 </header>
 
 <section>
-<div class="card">
-<h2>Welcome to Nexora Community</h2>
-<p>A digital growth platform for learning, blogs, videos, community and future digital services.</p>
-</div>
 
-<div class="grid">
-<div class="card"><h3>📌 Daily Check-In</h3><p>Daily learning activities and quizzes.</p></div>
-<div class="card"><h3>🎥 Videos</h3><p>Educational videos and tutorials.</p></div>
-<div class="card"><h3>📝 Blogs</h3><p>Posts, updates and learning content.</p></div>
-<div class="card"><h3>👥 Community</h3><p>Join, learn and grow together.</p></div>
+<div class="card">
+
+<h2>Welcome to Nexora Community</h2>
+
+<p>
+
+A professional learning, services, tuition and digital community platform.
+
+</p>
+
 </div>
 
 <div class="card" id="memberBox">
-<h2>Loading Member Area...</h2>
+
+<h2>Loading...</h2>
+
 </div>
+
 </section>
 
 <footer>
-<p>© 2026 Nexora Community. All rights reserved.</p>
+
+© 2026 Nexora Community
+
 </footer>
 
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
 import {
-getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword,
-signOut, onAuthStateChanged, updateProfile
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+getAuth,
+createUserWithEmailAndPassword,
+signInWithEmailAndPassword,
+signOut,
+onAuthStateChanged,
+updateProfile
+
+}
+
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
 import {
-getFirestore, doc, setDoc, getDoc, collection, addDoc, getDocs, serverTimestamp
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+getFirestore,
+doc,
+setDoc,
+getDoc,
+collection,
+addDoc,
+serverTimestamp
+
+}
+
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
-apiKey: "AIzaSyAWj7dozNpK8ExbJ4fptOODj66i09lxb0s",
+
+apiKey: "YOUR_REAL_API_KEY",
+
 authDomain: "nexoracapitalcommunity.firebaseapp.com",
+
 projectId: "nexoracapitalcommunity",
+
 storageBucket: "nexoracapitalcommunity.appspot.com",
+
 messagingSenderId: "714723891713",
+
 appId: "1:714723891713:web:65f70b7d3902f2aac7be00"
+
 };
 
-const ADMIN_EMAIL = "shanmarwat001@gmail.com";
-
 const app = initializeApp(firebaseConfig);
+
 const auth = getAuth(app);
+
 const db = getFirestore(app);
+
 const box = document.getElementById("memberBox");
 
-function msg(t){ document.getElementById("msg").innerText=t; }
+function message(t){
+
+document.getElementById("msg").innerText=t;
+
+}
 
 function showSignup(){
+
 box.innerHTML = `
+
 <h2>Create Account</h2>
+
 <input id="name" placeholder="Full Name">
+
 <input id="email" type="email" placeholder="Email">
+
 <input id="password" type="password" placeholder="Password">
+
 <input id="confirm" type="password" placeholder="Confirm Password">
-<button class="btn" id="signupBtn">Create Account</button>
-<p>Already have account? <button class="btn dark" id="goLogin">Login</button></p>
-<p id="msg"></p>`;
+
+<button class="btn" id="signupBtn">
+
+Create Account
+
+</button>
+
+<p>
+
+Already have account?
+
+<button class="btn dark" id="goLogin">
+
+Login
+
+</button>
+
+</p>
+
+<p id="msg"></p>
+
+`;
+
 document.getElementById("goLogin").onclick=showLogin;
+
 document.getElementById("signupBtn").onclick=signup;
+
 }
 
 function showLogin(){
+
 box.innerHTML = `
+
 <h2>Member Login</h2>
+
 <input id="email" type="email" placeholder="Email">
+
 <input id="password" type="password" placeholder="Password">
-<button class="btn" id="loginBtn">Login</button>
-<p>New member? <button class="btn dark" id="goSignup">Create Account</button></p>
-<p id="msg"></p>`;
+
+<button class="btn" id="loginBtn">
+
+Login
+
+</button>
+
+<p>
+
+New member?
+
+<button class="btn dark" id="goSignup">
+
+Create Account
+
+</button>
+
+</p>
+
+<p id="msg"></p>
+
+`;
+
 document.getElementById("goSignup").onclick=showSignup;
+
 document.getElementById("loginBtn").onclick=login;
+
 }
 
 async function signup(){
+
 try{
-let name=document.getElementById("name").value.trim();
-let email=document.getElementById("email").value.trim();
-let password=document.getElementById("password").value;
-let confirm=document.getElementById("confirm").value;
-if(!name) return msg("Please enter your name");
-if(password!==confirm) return msg("Passwords do not match");
-let res=await createUserWithEmailAndPassword(auth,email,password);
-await updateProfile(res.user,{displayName:name});
-await setDoc(doc(db,"users",res.user.uid),{
-name,email,points:0,role:"member",createdAt:serverTimestamp()
+
+let name =
+document.getElementById("name").value.trim();
+
+let email =
+document.getElementById("email").value.trim();
+
+let password =
+document.getElementById("password").value;
+
+let confirm =
+document.getElementById("confirm").value;
+
+if(password !== confirm){
+
+return message("Passwords do not match");
+
+}
+
+let res =
+await createUserWithEmailAndPassword(
+auth,email,password
+);
+
+await updateProfile(res.user,{
+displayName:name
 });
-}catch(e){msg(e.message);}
+
+await setDoc(doc(db,"users",res.user.uid),{
+
+name,
+email,
+points:0,
+role:"community",
+
+createdAt:serverTimestamp()
+
+});
+
+}catch(e){
+
+message(e.message);
+
+}
+
 }
 
 async function login(){
+
 try{
-let email=document.getElementById("email").value.trim();
-let password=document.getElementById("password").value;
-await signInWithEmailAndPassword(auth,email,password);
-}catch(e){msg(e.message);}
+
+let email =
+document.getElementById("email").value.trim();
+
+let password =
+document.getElementById("password").value;
+
+await signInWithEmailAndPassword(
+auth,email,password
+);
+
+}catch(e){
+
+message(e.message);
+
+}
+
 }
 
 async function showDashboard(user){
-let ref=doc(db,"users",user.uid);
-let snap=await getDoc(ref);
-let data=snap.exists()?snap.data():{name:user.displayName||"Member",points:0};
-box.innerHTML=`
-<h2>Welcome, ${data.name}</h2>
-<p><b>Email:</b> ${user.email}</p>
-<p><b>Member ID:</b> ${user.uid.slice(0,8).toUpperCase()}</p>
-<span class="badge">Points: ${data.points||0}</span>
+
+let ref = doc(db,"users",user.uid);
+
+let snap = await getDoc(ref);
+
+let data = snap.data();
+
+box.innerHTML = `
+
+<h2>
+
+Welcome, ${data.name}
+
+</h2>
+
+<p>
+
+<b>Email:</b>
+
+${user.email}
+
+</p>
+
+<span class="badge">
+
+Points:
+${data.points || 0}
+
+</span>
+
 <hr>
-<button class="btn" onclick="document.getElementById('daily').classList.toggle('hide')">Daily Check-In</button>
-<button class="btn" onclick="document.getElementById('posts').classList.toggle('hide')">Community Posts</button>
-<button class="btn" onclick="document.getElementById('courses').classList.toggle('hide')">Courses</button>
-<button class="btn" onclick="document.getElementById('client').classList.toggle('hide')">Client Panel</button>
-<button class="btn" onclick="document.getElementById('support').classList.toggle('hide')">Support</button>
-${user.email===ADMIN_EMAIL?`<button class="btn dark" onclick="document.getElementById('admin').classList.toggle('hide')">Admin Panel</button>`:""}
-<br><button class="btn dark" id="logoutBtn">Logout</button>
 
-<div id="daily" class="card hide">
-<h3>📌 Daily Check-In</h3>
-<p>Today’s task: Read blog / watch learning video and submit answer.</p>
-<input id="dailyAnswer" placeholder="Enter today answer/code">
-<button class="btn" id="checkBtn">Submit Check-In</button>
-<p id="checkMsg"></p>
+<div class="grid">
+
+<div class="card">
+
+<h2>👑 Admin Panel</h2>
+
+<p>
+
+Manage users, tasks and platform.
+
+</p>
+
+<button class="btn"
+
+onclick="document.getElementById('admin').classList.toggle('hide')">
+
+Open Admin Panel
+
+</button>
+
 </div>
 
-<div id="posts" class="card hide">
-<h3>👥 Community Post</h3>
-<textarea id="postText" placeholder="Write your community post"></textarea>
-<button class="btn" id="postBtn">Publish Post</button>
-<div id="postList"></div>
+<div class="card">
+
+<h2>👥 Team Members</h2>
+
+<p>
+
+Tasks, points and work system.
+
+</p>
+
+<button class="btn"
+
+onclick="document.getElementById('team').classList.toggle('hide')">
+
+Open Team Panel
+
+</button>
+
 </div>
 
-<div id="courses" class="card hide">
-<h3>🎓 Courses / Learning</h3>
-<p>Coming soon: Math, English, YouTube Growth, Blogging, Trading Basics.</p>
+<div class="card">
+
+<h2>💼 Client Services</h2>
+
+<p>
+
+Submit work requests and projects.
+
+</p>
+
+<button class="btn"
+
+onclick="document.getElementById('client').classList.toggle('hide')">
+
+Open Client Panel
+
+</button>
+
 </div>
+
+<div class="card">
+
+<h2>🌐 Community Rewards</h2>
+
+<p>
+
+Daily tasks and reward system.
+
+</p>
+
+<button class="btn"
+
+onclick="document.getElementById('community').classList.toggle('hide')">
+
+Open Community Panel
+
+</button>
+
+</div>
+
+<div class="card">
+
+<h2>🎓 Student Panel</h2>
+
+<p>
+
+Apply for tuition and classes.
+
+</p>
+
+<button class="btn"
+
+onclick="document.getElementById('student').classList.toggle('hide')">
+
+Open Student Panel
+
+</button>
+
+</div>
+
+<div class="card">
+
+<h2>📞 Support Center</h2>
+
+<p>
+
+Need help? Contact support.
+
+</p>
+
+<button class="btn"
+
+onclick="document.getElementById('support').classList.toggle('hide')">
+
+Open Support
+
+</button>
+
+</div>
+
+</div>
+
+<div id="admin" class="card hide">
+
+<h3>👑 Admin Panel</h3>
+
+<p>
+
+Manage tasks, users, points and withdrawals.
+
+</p>
+
+</div>
+
+<div id="team" class="card hide">
+
+<h3>👥 Team Member Panel</h3>
+
+<p>
+
+Assigned work, tasks and withdrawals.
+
+</p>
+
+<button class="btn dark">
+
+Withdraw Locked
+
+</button>
+
+</div>
+
+<div id="community" class="card hide">
+
+<h3>🌐 Community Rewards</h3>
+
+<p>
+
+Daily codes, blog tasks and watch rewards.
+
+</p>
+
+<span class="badge">
+
+Points:
+${data.points || 0}
+
+</span>
+
+<button class="btn dark">
+
+Withdraw Locked
+
+</button>
+
+</div>
+
 <div id="client" class="card hide">
 
 <h3>💼 Client Service Panel</h3>
 
-<input id="serviceName" placeholder="Service Needed (e.g Video Editing)">
+<input id="serviceName"
 
-<input id="budget" placeholder="Your Budget">
+placeholder="Service Needed">
 
-<input id="deadline" placeholder="Deadline">
+<input id="budget"
 
-<textarea id="details" placeholder="Project Details"></textarea>
+placeholder="Budget">
 
-<button class="btn" id="submitOrderBtn">Submit Order</button>
+<input id="deadline"
+
+placeholder="Deadline">
+
+<textarea id="details"
+
+placeholder="Project Details"></textarea>
+
+<button class="btn"
+
+id="submitOrderBtn">
+
+Submit Request
+
+</button>
 
 <p id="orderMsg"></p>
 
 </div>
+
+<div id="student" class="card hide">
+
+<h3>🎓 Student / Tuition Panel</h3>
+
+<input id="studentName"
+
+placeholder="Student Name">
+
+<input id="parentName"
+
+placeholder="Parent Name">
+
+<input id="studentMobile"
+
+placeholder="WhatsApp Number">
+
+<input id="studentClass"
+
+placeholder="Class">
+
+<input id="studentSubject"
+
+placeholder="Subject">
+
+<textarea id="studentDetails"
+
+placeholder="Extra Details"></textarea>
+
+<button class="btn"
+
+id="studentSubmitBtn">
+
+Submit Request
+
+</button>
+
+<p id="studentMsg"></p>
+
+</div>
+
 <div id="support" class="card hide">
-<h3>💬 Support</h3>
-<p>Need help? Contact support on WhatsApp.</p>
-<a class="btn" href="https://wa.me/" target="_blank">WhatsApp Support</a>
+
+<h3>📞 Support Center</h3>
+
+<p>
+
+WhatsApp support and admin help.
+
+</p>
+
 </div>
 
-<div id="admin" class="card hide">
-<h3>🛠 Admin Panel</h3>
-<p>Add announcements, tasks, blogs and updates here later.</p>
-<input placeholder="Today task title">
-<textarea placeholder="Today update"></textarea>
-<button class="btn">Save Update</button>
-</div>
+<br>
+
+<button class="btn dark"
+
+id="logoutBtn">
+
+Logout
+
+</button>
+
 `;
-document.getElementById("logoutBtn").onclick=()=>signOut(auth);
-document.getElementById("checkBtn").onclick=()=>document.getElementById("checkMsg").innerText="Submitted ✅ Admin will verify.";
-document.getElementById("postBtn").onclick=async()=>{
-let text=document.getElementById("postText").value;
-if(text.trim()){
-await addDoc(collection(db,"posts"),{text,user:user.email,createdAt:serverTimestamp()});
-loadPosts();
-}
+
+document.getElementById("logoutBtn").onclick =
+()=>signOut(auth);
+
+document.getElementById("submitOrderBtn").onclick =
+async()=>{
+
+let service =
+document.getElementById("serviceName").value;
+
+let budget =
+document.getElementById("budget").value;
+
+let deadline =
+document.getElementById("deadline").value;
+
+let details =
+document.getElementById("details").value;
+
+await addDoc(collection(db,"orders"),{
+
+service,
+budget,
+deadline,
+details,
+
+client:user.email,
+
+status:"Pending",
+
+createdAt:serverTimestamp()
+
+});
+
+document.getElementById("orderMsg").innerText =
+"Request Submitted ✅";
+
 };
-loadPosts();
+
+document.getElementById("studentSubmitBtn").onclick =
+async()=>{
+
+let studentName =
+document.getElementById("studentName").value;
+
+let parentName =
+document.getElementById("parentName").value;
+
+let studentMobile =
+document.getElementById("studentMobile").value;
+
+let studentClass =
+document.getElementById("studentClass").value;
+
+let studentSubject =
+document.getElementById("studentSubject").value;
+
+let studentDetails =
+document.getElementById("studentDetails").value;
+
+await addDoc(collection(db,"students"),{
+
+studentName,
+parentName,
+studentMobile,
+studentClass,
+studentSubject,
+studentDetails,
+
+status:"Pending",
+
+createdAt:serverTimestamp()
+
+});
+
+document.getElementById("studentMsg").innerText =
+"Student Request Submitted ✅";
+
+};
+
 }
 
-async function loadPosts(){
-let list=document.getElementById("postList");
-if(!list)return;
-let q=await getDocs(collection(db,"posts"));
-list.innerHTML="";
-q.forEach(d=>{
-let p=d.data();
-list.innerHTML+=`<div class="card"><b>${p.user}</b><p>${p.text}</p></div>`;
-});
+onAuthStateChanged(auth,(user)=>{
+
+if(user){
+
+showDashboard(user);
+
+}else{
+
+showSignup();
+
 }
 
-onAuthStateChanged(auth,user=>{
-if(user) showDashboard(user);
-else showSignup();
 });
+
 </script>
 
 </body>

@@ -1,760 +1,114 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Nexora Community</title>
-
 <style>
-
-body{
-margin:0;
-font-family:Arial,sans-serif;
-background:#f4f7fb;
-color:#111827;
-}
-
-header{
-background:linear-gradient(135deg,#071a3d,#0f3d75);
-color:white;
-padding:45px 20px;
-text-align:center;
-}
-
-header h1{
-margin:0;
-font-size:38px;
-}
-
-header p{
-margin-top:10px;
-font-size:17px;
-}
-
-section{
-max-width:1100px;
-margin:auto;
-padding:25px;
-}
-
-.card{
-background:white;
-padding:22px;
-border-radius:14px;
-margin-bottom:18px;
-box-shadow:0 4px 12px rgba(0,0,0,.08);
-}
-
-.grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-gap:18px;
-}
-
-.btn{
-padding:12px 20px;
-background:#f5b301;
-border:none;
-border-radius:10px;
-font-weight:bold;
-cursor:pointer;
-margin-top:10px;
-}
-
-.dark{
-background:#111827;
-color:white;
-}
-
-input,textarea{
-width:92%;
-padding:12px;
-margin-top:10px;
-border:1px solid #ccc;
-border-radius:8px;
-}
-
-.hide{
-display:none;
-}
-
-footer{
-background:#071a3d;
-color:white;
-padding:22px;
-text-align:center;
-margin-top:30px;
-}
-
-.badge{
-background:#e8f1ff;
-padding:8px 12px;
-border-radius:20px;
-display:inline-block;
-margin:5px;
-}
-
+body{margin:0;font-family:Arial;background:#eef2f7;color:#111827}
+header{background:#071a3d;color:white;text-align:center;padding:35px 15px}
+.card{background:white;margin:18px;padding:22px;border-radius:16px;box-shadow:0 4px 12px #0002}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:15px}
+button{background:#f5b301;border:0;border-radius:10px;padding:12px 18px;font-weight:bold;margin:6px}
+input,select,textarea{width:92%;padding:12px;margin:7px;border:1px solid #ccc;border-radius:8px}
+.hide{display:none}
+footer{background:#071a3d;color:white;text-align:center;padding:18px}
 </style>
-
 </head>
-
 <body>
 
 <header>
-
 <h1>Nexora Community</h1>
-
-<p>
-Smart Growth • Learning • Services • Community
-</p>
-
+<p>Learning • Services • Team • Tuition • Community</p>
 </header>
 
-<section>
-
 <div class="card">
-
-<h2>Welcome to Nexora Community</h2>
-
-<p>
-
-A professional learning, services, tuition and digital community platform.
-
-</p>
-
-</div>
-
-<div class="card" id="memberBox">
-
-<h2>Loading...</h2>
-
-</div>
-
-</section>
-
-<footer>
-
-© 2026 Nexora Community
-
-</footer>
-
-<script type="module">
-
-import { initializeApp }
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-
-import {
-
-getAuth,
-createUserWithEmailAndPassword,
-signInWithEmailAndPassword,
-signOut,
-onAuthStateChanged,
-updateProfile
-
-}
-
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
-import {
-
-getFirestore,
-doc,
-setDoc,
-getDoc,
-collection,
-addDoc,
-serverTimestamp
-
-}
-
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-const firebaseConfig = {
-
-apiKey: "YOUR_REAL_API_KEY",
-
-authDomain: "nexoracapitalcommunity.firebaseapp.com",
-
-projectId: "nexoracapitalcommunity",
-
-storageBucket: "nexoracapitalcommunity.appspot.com",
-
-messagingSenderId: "714723891713",
-
-appId: "1:714723891713:web:65f70b7d3902f2aac7be00"
-
-};
-
-const app = initializeApp(firebaseConfig);
-
-const auth = getAuth(app);
-
-const db = getFirestore(app);
-
-const box = document.getElementById("memberBox");
-
-function message(t){
-
-document.getElementById("msg").innerText=t;
-
-}
-
-function showSignup(){
-
-box.innerHTML = `
-
-<h2>Create Account</h2>
-
-<input id="name" placeholder="Full Name">
-
-<input id="email" type="email" placeholder="Email">
-
-<input id="password" type="password" placeholder="Password">
-
-<input id="confirm" type="password" placeholder="Confirm Password">
-
-<button class="btn" id="signupBtn">
-
-Create Account
-
-</button>
-
-<p>
-
-Already have account?
-
-<button class="btn dark" id="goLogin">
-
-Login
-
-</button>
-
-</p>
-
-<p id="msg"></p>
-
-`;
-
-document.getElementById("goLogin").onclick=showLogin;
-
-document.getElementById("signupBtn").onclick=signup;
-
-}
-
-function showLogin(){
-
-box.innerHTML = `
-
-<h2>Member Login</h2>
-
-<input id="email" type="email" placeholder="Email">
-
-<input id="password" type="password" placeholder="Password">
-
-<button class="btn" id="loginBtn">
-
-Login
-
-</button>
-
-<p>
-
-New member?
-
-<button class="btn dark" id="goSignup">
-
-Create Account
-
-</button>
-
-</p>
-
-<p id="msg"></p>
-
-`;
-
-document.getElementById("goSignup").onclick=showSignup;
-
-document.getElementById("loginBtn").onclick=login;
-
-}
-
-async function signup(){
-
-try{
-
-let name =
-document.getElementById("name").value.trim();
-
-let email =
-document.getElementById("email").value.trim();
-
-let password =
-document.getElementById("password").value;
-
-let confirm =
-document.getElementById("confirm").value;
-
-if(password !== confirm){
-
-return message("Passwords do not match");
-
-}
-
-let res =
-await createUserWithEmailAndPassword(
-auth,email,password
-);
-
-await updateProfile(res.user,{
-displayName:name
-});
-
-await setDoc(doc(db,"users",res.user.uid),{
-
-name,
-email,
-points:0,
-role:"community",
-
-createdAt:serverTimestamp()
-
-});
-
-}catch(e){
-
-message(e.message);
-
-}
-
-}
-
-async function login(){
-
-try{
-
-let email =
-document.getElementById("email").value.trim();
-
-let password =
-document.getElementById("password").value;
-
-await signInWithEmailAndPassword(
-auth,email,password
-);
-
-}catch(e){
-
-message(e.message);
-
-}
-
-}
-
-async function showDashboard(user){
-
-let ref = doc(db,"users",user.uid);
-
-let snap = await getDoc(ref);
-
-let data = snap.data();
-
-box.innerHTML = `
-
-<h2>
-
-Welcome, ${data.name}
-
-</h2>
-
-<p>
-
-<b>Email:</b>
-
-${user.email}
-
-</p>
-
-<span class="badge">
-
-Points:
-${data.points || 0}
-
-</span>
-
-<hr>
-
 <div class="grid">
-
-<div class="card">
-
-<h2>👑 Admin Panel</h2>
-
-<p>
-
-Manage users, tasks and platform.
-
-</p>
-
-<button class="btn"
-
-onclick="document.getElementById('admin').classList.toggle('hide')">
-
-Open Admin Panel
-
-</button>
-
+<div><h2>👑 Admin Panel</h2><button onclick="show('admin')">Open Admin</button></div>
+<div><h2>👥 Team Members</h2><button onclick="show('team')">Open Team</button></div>
+<div><h2>💼 Client Services</h2><button onclick="show('client')">Open Client</button></div>
+<div><h2>🌐 Community Rewards</h2><button onclick="show('community')">Open Community</button></div>
+<div><h2>🎓 Student Panel</h2><button onclick="show('student')">Open Student</button></div>
+<div><h2>📞 Support</h2><button onclick="show('support')">Open Support</button></div>
 </div>
-
-<div class="card">
-
-<h2>👥 Team Members</h2>
-
-<p>
-
-Tasks, points and work system.
-
-</p>
-
-<button class="btn"
-
-onclick="document.getElementById('team').classList.toggle('hide')">
-
-Open Team Panel
-
-</button>
-
-</div>
-
-<div class="card">
-
-<h2>💼 Client Services</h2>
-
-<p>
-
-Submit work requests and projects.
-
-</p>
-
-<button class="btn"
-
-onclick="document.getElementById('client').classList.toggle('hide')">
-
-Open Client Panel
-
-</button>
-
-</div>
-
-<div class="card">
-
-<h2>🌐 Community Rewards</h2>
-
-<p>
-
-Daily tasks and reward system.
-
-</p>
-
-<button class="btn"
-
-onclick="document.getElementById('community').classList.toggle('hide')">
-
-Open Community Panel
-
-</button>
-
-</div>
-
-<div class="card">
-
-<h2>🎓 Student Panel</h2>
-
-<p>
-
-Apply for tuition and classes.
-
-</p>
-
-<button class="btn"
-
-onclick="document.getElementById('student').classList.toggle('hide')">
-
-Open Student Panel
-
-</button>
-
-</div>
-
-<div class="card">
-
-<h2>📞 Support Center</h2>
-
-<p>
-
-Need help? Contact support.
-
-</p>
-
-<button class="btn"
-
-onclick="document.getElementById('support').classList.toggle('hide')">
-
-Open Support
-
-</button>
-
-</div>
-
 </div>
 
 <div id="admin" class="card hide">
-
-<h3>👑 Admin Panel</h3>
-
-<p>
-
-Manage tasks, users, points and withdrawals.
-
-</p>
-
+<h2>👑 Admin Login</h2>
+<input placeholder="Admin Email">
+<input type="password" placeholder="Password">
+<button>Login Admin</button>
 </div>
 
 <div id="team" class="card hide">
-
-<h3>👥 Team Member Panel</h3>
-
-<p>
-
-Assigned work, tasks and withdrawals.
-
-</p>
-
-<button class="btn dark">
-
-Withdraw Locked
-
-</button>
-
-</div>
-
-<div id="community" class="card hide">
-
-<h3>🌐 Community Rewards</h3>
-
-<p>
-
-Daily codes, blog tasks and watch rewards.
-
-</p>
-
-<span class="badge">
-
-Points:
-${data.points || 0}
-
-</span>
-
-<button class="btn dark">
-
-Withdraw Locked
-
-</button>
-
+<h2>👥 Team Member Login</h2>
+<input placeholder="Team ID given by Admin">
+<input placeholder="Email">
+<input type="password" placeholder="Password">
+<button>Login Team</button>
 </div>
 
 <div id="client" class="card hide">
+<h2>💼 Client Service Request</h2>
+<input placeholder="Full Name">
+<input placeholder="Mobile / WhatsApp Number">
+<input placeholder="Email">
+<input placeholder="Service Required">
+<input placeholder="Budget">
+<input placeholder="Deadline">
+<textarea placeholder="Project Details"></textarea>
 
-<h3>💼 Client Service Panel</h3>
+<h3>💳 Payment Section</h3>
+<select>
+<option>Select Payment Method</option>
+<option>Easypaisa</option>
+<option>JazzCash</option>
+<option>Bank Transfer</option>
+</select>
 
-<input id="serviceName"
+<p><b>Payment Account:</b> Admin will share account after accepting your order.</p>
 
-placeholder="Service Needed">
+<input placeholder="Transaction ID / Reference Number">
+<input type="file">
+<p>Upload payment screenshot as proof.</p>
 
-<input id="budget"
+<button onclick="alert('Request submitted. Admin will verify payment ✅')">Submit Request</button>
+</div>
 
-placeholder="Budget">
-
-<input id="deadline"
-
-placeholder="Deadline">
-
-<textarea id="details"
-
-placeholder="Project Details"></textarea>
-
-<button class="btn"
-
-id="submitOrderBtn">
-
-Submit Request
-
-</button>
-
-<p id="orderMsg"></p>
-
+<div id="community" class="card hide">
+<h2>🌐 Community Rewards</h2>
+<input placeholder="Email">
+<input type="password" placeholder="Password">
+<button>Create / Login</button>
+<p>Daily code, points, leaderboard and withdraw request will be added here.</p>
 </div>
 
 <div id="student" class="card hide">
-
-<h3>🎓 Student / Tuition Panel</h3>
-
-<input id="studentName"
-
-placeholder="Student Name">
-
-<input id="parentName"
-
-placeholder="Parent Name">
-
-<input id="studentMobile"
-
-placeholder="WhatsApp Number">
-
-<input id="studentClass"
-
-placeholder="Class">
-
-<input id="studentSubject"
-
-placeholder="Subject">
-
-<textarea id="studentDetails"
-
-placeholder="Extra Details"></textarea>
-
-<button class="btn"
-
-id="studentSubmitBtn">
-
-Submit Request
-
-</button>
-
-<p id="studentMsg"></p>
-
+<h2>🎓 Student Tuition Request</h2>
+<input placeholder="Student Name">
+<input placeholder="Parent Name">
+<input placeholder="WhatsApp Number">
+<input placeholder="Class">
+<input placeholder="Subject Required">
+<textarea placeholder="Study Details"></textarea>
+<button>Submit Tuition Request</button>
 </div>
 
 <div id="support" class="card hide">
-
-<h3>📞 Support Center</h3>
-
-<p>
-
-WhatsApp support and admin help.
-
-</p>
-
+<h2>📞 Support Center</h2>
+<p>WhatsApp Support: Coming Soon</p>
+<p>Email Support: support@nexora.com</p>
 </div>
 
-<br>
+<footer>© 2026 Nexora Community</footer>
 
-<button class="btn dark"
-
-id="logoutBtn">
-
-Logout
-
-</button>
-
-`;
-
-document.getElementById("logoutBtn").onclick =
-()=>signOut(auth);
-
-document.getElementById("submitOrderBtn").onclick =
-async()=>{
-
-let service =
-document.getElementById("serviceName").value;
-
-let budget =
-document.getElementById("budget").value;
-
-let deadline =
-document.getElementById("deadline").value;
-
-let details =
-document.getElementById("details").value;
-
-await addDoc(collection(db,"orders"),{
-
-service,
-budget,
-deadline,
-details,
-
-client:user.email,
-
-status:"Pending",
-
-createdAt:serverTimestamp()
-
+<script>
+function show(id){
+let sections=["admin","team","client","community","student","support"];
+sections.forEach(function(s){
+document.getElementById(s).classList.add("hide");
 });
-
-document.getElementById("orderMsg").innerText =
-"Request Submitted ✅";
-
-};
-
-document.getElementById("studentSubmitBtn").onclick =
-async()=>{
-
-let studentName =
-document.getElementById("studentName").value;
-
-let parentName =
-document.getElementById("parentName").value;
-
-let studentMobile =
-document.getElementById("studentMobile").value;
-
-let studentClass =
-document.getElementById("studentClass").value;
-
-let studentSubject =
-document.getElementById("studentSubject").value;
-
-let studentDetails =
-document.getElementById("studentDetails").value;
-
-await addDoc(collection(db,"students"),{
-
-studentName,
-parentName,
-studentMobile,
-studentClass,
-studentSubject,
-studentDetails,
-
-status:"Pending",
-
-createdAt:serverTimestamp()
-
-});
-
-document.getElementById("studentMsg").innerText =
-"Student Request Submitted ✅";
-
-};
-
+document.getElementById(id).classList.remove("hide");
 }
-
-onAuthStateChanged(auth,(user)=>{
-
-if(user){
-
-showDashboard(user);
-
-}else{
-
-showSignup();
-
-}
-
-});
-
 </script>
 
 </body>

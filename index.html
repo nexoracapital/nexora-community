@@ -3,324 +3,893 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Nexora Community</title>
+
 <style>
-body{margin:0;font-family:Arial;background:#eef2f7;color:#111827}
-header{background:linear-gradient(135deg,#071a3d,#0f4c81);color:white;text-align:center;padding:40px 20px}
-.card{background:white;margin:18px;padding:22px;border-radius:16px;box-shadow:0 4px 12px #0002}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:15px}
-button{background:#f5b301;border:0;border-radius:10px;padding:12px 18px;font-weight:bold;margin:6px;cursor:pointer}
-.dark{background:#111827;color:white}
-.green{background:#16a34a;color:white}
-.red{background:#dc2626;color:white}
-input,select,textarea{width:92%;padding:12px;margin:7px;border:1px solid #ccc;border-radius:8px}
-.hide{display:none}
-.badge{background:red;color:white;padding:4px 8px;border-radius:30px;font-size:12px}
-.status{background:#e5e7eb;padding:6px 10px;border-radius:20px;font-weight:bold}
-footer{background:#071a3d;color:white;text-align:center;padding:18px;margin-top:30px}
+body{
+margin:0;
+font-family:Arial;
+background:#eef2f7;
+color:#111827;
+}
+
+header{
+background:linear-gradient(135deg,#071a3d,#0f4c81);
+color:white;
+padding:40px 20px;
+text-align:center;
+}
+
+.card{
+background:white;
+margin:18px;
+padding:22px;
+border-radius:16px;
+box-shadow:0 4px 12px #0002;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+gap:15px;
+}
+
+button{
+background:#f5b301;
+border:none;
+padding:12px 18px;
+border-radius:10px;
+font-weight:bold;
+margin:6px;
+cursor:pointer;
+}
+
+.dark{
+background:#111827;
+color:white;
+}
+
+.green{
+background:#16a34a;
+color:white;
+}
+
+.red{
+background:#dc2626;
+color:white;
+}
+
+.blue{
+background:#2563eb;
+color:white;
+}
+
+input,select,textarea{
+width:92%;
+padding:12px;
+margin:7px;
+border:1px solid #ccc;
+border-radius:8px;
+}
+
+.hide{
+display:none;
+}
+
+.badge{
+background:red;
+color:white;
+padding:4px 8px;
+border-radius:30px;
+font-size:12px;
+}
+
+.status{
+padding:6px 10px;
+border-radius:20px;
+background:#e5e7eb;
+font-weight:bold;
+display:inline-block;
+}
+
+footer{
+background:#071a3d;
+color:white;
+text-align:center;
+padding:18px;
+margin-top:30px;
+}
 </style>
 </head>
+
 <body>
 
 <header>
 <h1>Nexora Community</h1>
-<p>Learning • Services • Tuition • Community Platform</p>
+<p>
+Learning • Services • Tuition • Community Platform
+</p>
 </header>
 
+<!-- MAIN MENU -->
+
 <div id="mainMenu" class="card">
+
 <div class="grid">
-<div><h2>👑 Admin Panel</h2><button class="dark" onclick="openPortal('admin')">Open Admin</button></div>
-<div><h2>👥 Team Members</h2><button onclick="openPortal('team')">Open Team</button></div>
-<div><h2>💼 Client Services</h2><button onclick="openPortal('client')">Open Client</button></div>
-<div><h2>🌐 Community</h2><button onclick="openPortal('community')">Open Community</button></div>
-<div><h2>🎓 Student Panel</h2><button onclick="openPortal('student')">Open Student</button></div>
-<div><h2>📞 Support</h2><button onclick="openPortal('support')">Open Support</button></div>
+
+<div>
+<h2>👑 Admin Panel</h2>
+<button class="dark"
+onclick="openPortal('admin')">
+Open Admin
+</button>
 </div>
+
+<div>
+<h2>👥 Team Members</h2>
+<button onclick="openPortal('team')">
+Open Team
+</button>
+</div>
+
+<div>
+<h2>💼 Client Services</h2>
+<button onclick="openPortal('client')">
+Open Client
+</button>
+</div>
+
+<div>
+<h2>🌐 Community</h2>
+<button onclick="openPortal('community')">
+Open Community
+</button>
+</div>
+
+<div>
+<h2>🎓 Student Panel</h2>
+<button onclick="openPortal('student')">
+Open Student
+</button>
+</div>
+
+<div>
+<h2>📞 Support</h2>
+<button onclick="openPortal('support')">
+Open Support
+</button>
+</div>
+
+</div>
+
 </div>
 
 <div style="margin:18px">
-<button id="backBtn" class="dark hide" onclick="goHome()">⬅ Back To Main Menu</button>
+
+<button id="backBtn"
+class="dark hide"
+onclick="goHome()">
+
+⬅ Back To Main Menu
+
+</button>
+
 </div>
 
-<div id="admin" class="card hide">
-<h2>👑 Admin Panel</h2>
-<input id="adminEmail" placeholder="Admin Email">
-<input id="adminPassword" type="password" placeholder="Password">
-<button class="dark" onclick="adminLogin()">Admin Login</button>
+<!-- ADMIN -->
 
-<div id="adminDashboard" class="hide">
+<div id="admin"
+class="card hide">
+
+<h2>👑 Admin Panel</h2>
+
+<input id="adminEmail"
+placeholder="Admin Email">
+
+<input id="adminPassword"
+type="password"
+placeholder="Password">
+
+<button class="dark"
+onclick="adminLogin()">
+
+Admin Login
+
+</button>
+
+<div id="adminDashboard"
+class="hide">
+
 <hr>
+
 <h2>📊 Admin Dashboard</h2>
 
 <div class="grid">
+
 <div class="card">
-<h3>💼 Client Requests <span id="clientCount" class="badge">0</span></h3>
-<button onclick="showAdminSection('clientRequestsBox')">Open Client Requests</button>
+<h3>
+💼 Client Requests
+<span id="clientCount"
+class="badge">
+0
+</span>
+</h3>
+
+<button onclick="showAdminSection('clientRequestsBox')">
+Open Client Requests
+</button>
 </div>
 
 <div class="card">
-<h3>🎓 Student Requests <span id="studentCount" class="badge">0</span></h3>
-<button onclick="showAdminSection('studentRequestsBox')">Open Student Requests</button>
-</div>
+<h3>
+🎓 Student Requests
+<span id="studentCount"
+class="badge">
+0
+</span>
+</h3>
+
+<button onclick="showAdminSection('studentRequestsBox')">
+Open Student Requests
+</button>
 </div>
 
-<div id="clientRequestsBox" class="hide">
+</div>
+
+<!-- FILTER BUTTONS -->
+
+<div style="margin-top:20px">
+
+<button class="blue"
+onclick="setFilter('Pending')">
+Pending
+</button>
+
+<button class="green"
+onclick="setFilter('Accepted')">
+Accepted
+</button>
+
+<button class="red"
+onclick="setFilter('Rejected')">
+Rejected
+</button>
+
+<button class="dark"
+onclick="setFilter('All')">
+All
+</button>
+
+</div>
+
+<!-- CLIENT REQUESTS -->
+
+<div id="clientRequestsBox"
+class="hide">
+
 <h2>💼 Client Requests</h2>
-<div id="clientRequestsContainer">Loading...</div>
+
+<div id="clientRequestsContainer">
+Loading...
 </div>
 
-<div id="studentRequestsBox" class="hide">
+</div>
+
+<!-- STUDENT REQUESTS -->
+
+<div id="studentRequestsBox"
+class="hide">
+
 <h2>🎓 Student Requests</h2>
-<div id="studentRequestsContainer">Loading...</div>
+
+<div id="studentRequestsContainer">
+Loading...
 </div>
 
 </div>
+
 </div>
 
-<div id="team" class="card hide">
-<h2>👥 Team Member Login</h2>
-<input placeholder="Team ID given by Admin">
-<input placeholder="Email">
-<input type="password" placeholder="Password">
-<button>Login Team</button>
-<p>Team ID system will be connected later.</p>
 </div>
 
-<div id="client" class="card hide">
+<!-- TEAM -->
+
+<div id="team"
+class="card hide">
+
+<h2>👥 Team Members</h2>
+
+<p>
+Team system coming soon.
+</p>
+
+</div>
+
+<!-- CLIENT -->
+
+<div id="client"
+class="card hide">
+
 <h2>💼 Client Service Request</h2>
-<input id="clientName" placeholder="Full Name">
-<input id="clientMobile" placeholder="Mobile / WhatsApp">
-<input id="clientEmail" placeholder="Email">
-<input id="clientService" placeholder="Service Required">
-<input id="clientBudget" placeholder="Budget">
-<input id="clientDeadline" placeholder="Deadline">
-<textarea id="clientDetails" placeholder="Project Details"></textarea>
+
+<input id="clientName"
+placeholder="Full Name">
+
+<input id="clientMobile"
+placeholder="Mobile / WhatsApp">
+
+<input id="clientEmail"
+placeholder="Email">
+
+<input id="clientService"
+placeholder="Service Required">
+
+<input id="clientBudget"
+placeholder="Budget">
+
+<input id="clientDeadline"
+placeholder="Deadline">
+
+<textarea id="clientDetails"
+placeholder="Project Details"></textarea>
 
 <select id="paymentMethod">
+
 <option>Select Payment Method</option>
+
 <option>Easypaisa</option>
+
 <option>JazzCash</option>
+
 <option>Bank Transfer</option>
+
 </select>
 
-<input id="transactionId" placeholder="Transaction ID / Reference Number">
-<button onclick="submitClientRequest()">Submit Client Request</button>
+<input id="transactionId"
+placeholder="Transaction ID / Reference Number">
+
+<button onclick="submitClientRequest()">
+Submit Client Request
+</button>
+
 <p id="clientMsg"></p>
+
 </div>
 
-<div id="community" class="card hide">
+<!-- COMMUNITY -->
+
+<div id="community"
+class="card hide">
+
 <h2>🌐 Community Rewards</h2>
-<p>Daily codes, points, leaderboard and withdraw system will be added here.</p>
-<button class="dark">Withdraw Locked</button>
+
+<p>
+Rewards system coming soon.
+</p>
+
 </div>
 
-<div id="student" class="card hide">
-<h2>🎓 Student Tuition Request</h2>
-<input id="studentName" placeholder="Student Name">
-<input id="parentName" placeholder="Parent Name">
-<input id="studentMobile" placeholder="WhatsApp Number">
-<input id="studentClass" placeholder="Class">
-<input id="studentSubject" placeholder="Subject">
+<!-- STUDENT -->
+
+<div id="student"
+class="card hide">
+
+<h2>🎓 Tuition Request</h2>
+
+<input id="studentName"
+placeholder="Student Name">
+
+<input id="parentName"
+placeholder="Parent Name">
+
+<input id="studentMobile"
+placeholder="WhatsApp Number">
+
+<input id="studentClass"
+placeholder="Class">
+
+<input id="studentSubject"
+placeholder="Subject">
+
 <select id="studyMethod">
+
 <option>Select Study Method</option>
+
 <option>Online Classes</option>
+
 <option>WhatsApp Lectures</option>
+
 </select>
-<textarea id="studentDetails" placeholder="Study Details"></textarea>
-<button onclick="submitStudentRequest()">Submit Tuition Request</button>
+
+<textarea id="studentDetails"
+placeholder="Study Details"></textarea>
+
+<button onclick="submitStudentRequest()">
+Submit Tuition Request
+</button>
+
 <p id="studentMsg"></p>
+
 </div>
 
-<div id="support" class="card hide">
+<!-- SUPPORT -->
+
+<div id="support"
+class="card hide">
+
 <h2>📞 Support Center</h2>
-<p>WhatsApp Support: Coming Soon</p>
-<p>Email Support: support@nexora.com</p>
+
+<p>
+WhatsApp Support Coming Soon
+</p>
+
 </div>
 
-<footer>© 2026 Nexora Community</footer>
+<footer>
+© 2026 Nexora Community
+</footer>
 
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getFirestore, collection, addDoc, getDocs, serverTimestamp, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+getFirestore,
+collection,
+addDoc,
+getDocs,
+serverTimestamp,
+doc,
+updateDoc,
+deleteDoc
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAWj7dozNpK8ExbJ4fptOODj66i09lxb0s",
-  authDomain: "nexoracapitalcommunity.firebaseapp.com",
-  projectId: "nexoracapitalcommunity",
-  storageBucket: "nexoracapitalcommunity.appspot.com",
-  messagingSenderId: "714723891713",
-  appId: "1:714723891713:web:65f70b7d3902f2aac7be00"
+
+apiKey: "AIzaSyAWj7dozNpK8ExbJ4fptOODj66i09lxb0s",
+
+authDomain:
+"nexoracapitalcommunity.firebaseapp.com",
+
+projectId:
+"nexoracapitalcommunity",
+
+storageBucket:
+"nexoracapitalcommunity.appspot.com",
+
+messagingSenderId:
+"714723891713",
+
+appId:
+"1:714723891713:web:65f70b7d3902f2aac7be00"
+
 };
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+const app =
+initializeApp(firebaseConfig);
 
-window.submitClientRequest = async function(){
-  try{
-    const data = {
-      name: document.getElementById("clientName").value,
-      mobile: document.getElementById("clientMobile").value,
-      email: document.getElementById("clientEmail").value,
-      service: document.getElementById("clientService").value,
-      budget: document.getElementById("clientBudget").value,
-      deadline: document.getElementById("clientDeadline").value,
-      details: document.getElementById("clientDetails").value,
-      paymentMethod: document.getElementById("paymentMethod").value,
-      transactionId: document.getElementById("transactionId").value,
-      status: "Pending",
-      createdAt: serverTimestamp()
-    };
+const db =
+getFirestore(app);
 
-    if(!data.name || !data.mobile || !data.service){
-      document.getElementById("clientMsg").innerText = "Please fill Name, Mobile and Service.";
-      return;
-    }
+let currentFilter = "All";
 
-    await addDoc(collection(db,"clientRequests"), data);
-    document.getElementById("clientMsg").innerText = "Request Submitted Successfully ✅";
-  }catch(e){
-    document.getElementById("clientMsg").innerText = e.message;
-  }
+window.setFilter = function(status){
+
+currentFilter = status;
+
+loadClientRequests();
+
+loadStudentRequests();
+
 }
 
-window.submitStudentRequest = async function(){
-  try{
-    const data = {
-      studentName: document.getElementById("studentName").value,
-      parentName: document.getElementById("parentName").value,
-      mobile: document.getElementById("studentMobile").value,
-      className: document.getElementById("studentClass").value,
-      subject: document.getElementById("studentSubject").value,
-      studyMethod: document.getElementById("studyMethod").value,
-      details: document.getElementById("studentDetails").value,
-      status: "Pending",
-      createdAt: serverTimestamp()
-    };
+window.submitClientRequest =
+async function(){
 
-    await addDoc(collection(db,"studentRequests"), data);
-    document.getElementById("studentMsg").innerText = "Tuition Request Submitted ✅";
-  }catch(e){
-    document.getElementById("studentMsg").innerText = e.message;
-  }
+const data = {
+
+name:
+document.getElementById("clientName").value,
+
+mobile:
+document.getElementById("clientMobile").value,
+
+email:
+document.getElementById("clientEmail").value,
+
+service:
+document.getElementById("clientService").value,
+
+budget:
+document.getElementById("clientBudget").value,
+
+deadline:
+document.getElementById("clientDeadline").value,
+
+details:
+document.getElementById("clientDetails").value,
+
+paymentMethod:
+document.getElementById("paymentMethod").value,
+
+transactionId:
+document.getElementById("transactionId").value,
+
+status:"Pending",
+
+createdAt:
+serverTimestamp()
+
+};
+
+await addDoc(
+collection(db,"clientRequests"),
+data
+);
+
+document.getElementById(
+"clientMsg"
+).innerText =
+"Request Submitted ✅";
+
 }
 
-window.adminLogin = async function(){
-  const email = document.getElementById("adminEmail").value.trim();
+window.submitStudentRequest =
+async function(){
 
-  if(email !== "smartustad0@gmail.com"){
-    alert("Access Denied ❌");
-    return;
-  }
+const data = {
 
-  document.getElementById("adminDashboard").classList.remove("hide");
-  loadClientRequests();
-  loadStudentRequests();
+studentName:
+document.getElementById("studentName").value,
+
+parentName:
+document.getElementById("parentName").value,
+
+mobile:
+document.getElementById("studentMobile").value,
+
+className:
+document.getElementById("studentClass").value,
+
+subject:
+document.getElementById("studentSubject").value,
+
+studyMethod:
+document.getElementById("studyMethod").value,
+
+details:
+document.getElementById("studentDetails").value,
+
+status:"Pending",
+
+createdAt:
+serverTimestamp()
+
+};
+
+await addDoc(
+collection(db,"studentRequests"),
+data
+);
+
+document.getElementById(
+"studentMsg"
+).innerText =
+"Tuition Request Submitted ✅";
+
+}
+
+window.adminLogin =
+async function(){
+
+const email =
+document.getElementById(
+"adminEmail"
+).value;
+
+if(email !== "smartustad0@gmail.com"){
+
+alert("Access Denied ❌");
+
+return;
+
+}
+
+document.getElementById(
+"adminDashboard"
+).classList.remove("hide");
+
+loadClientRequests();
+
+loadStudentRequests();
+
 }
 
 async function loadClientRequests(){
-  const snap = await getDocs(collection(db,"clientRequests"));
-  document.getElementById("clientCount").innerText = snap.size;
 
-  let html = "";
-  snap.forEach((docItem)=>{
-    const d = docItem.data();
-    html += `
-      <div class="card">
-        <h3>${d.name || "No Name"}</h3>
-        <p><b>Mobile:</b> ${d.mobile || ""}</p>
-        <p><b>Email:</b> ${d.email || ""}</p>
-        <p><b>Service:</b> ${d.service || ""}</p>
-        <p><b>Budget:</b> ${d.budget || ""}</p>
-        <p><b>Deadline:</b> ${d.deadline || ""}</p>
-        <p><b>Payment:</b> ${d.paymentMethod || ""}</p>
-        <p><b>Transaction ID:</b> ${d.transactionId || ""}</p>
-        <p><b>Status:</b> <span class="status">${d.status || "Pending"}</span></p>
-        <p><b>Details:</b> ${d.details || ""}</p>
-        <button class="green" onclick="updateClientStatus('${docItem.id}','Accepted')">✅ Accept</button>
-        <button class="red" onclick="updateClientStatus('${docItem.id}','Rejected')">❌ Reject</button>
-        <button class="dark" onclick="deleteClientRequest('${docItem.id}')">🗑 Delete</button>
-      </div>
-    `;
-  });
+const snap =
+await getDocs(
+collection(db,"clientRequests")
+);
 
-  document.getElementById("clientRequestsContainer").innerHTML = html || "No client requests found.";
+document.getElementById(
+"clientCount"
+).innerText =
+snap.size;
+
+let html = "";
+
+snap.forEach((docItem)=>{
+
+const d = docItem.data();
+
+if(
+currentFilter !== "All"
+&&
+d.status !== currentFilter
+){
+return;
+}
+
+html += `
+
+<div class="card">
+
+<h3>${d.name}</h3>
+
+<p><b>Service:</b>
+${d.service}</p>
+
+<p><b>Budget:</b>
+${d.budget}</p>
+
+<p><b>Status:</b>
+<span class="status">
+${d.status}
+</span></p>
+
+<button class="green"
+onclick="updateClientStatus('${docItem.id}','Accepted')">
+
+✅ Accept
+
+</button>
+
+<button class="red"
+onclick="updateClientStatus('${docItem.id}','Rejected')">
+
+❌ Reject
+
+</button>
+
+<button class="dark"
+onclick="deleteClientRequest('${docItem.id}')">
+
+🗑 Delete
+
+</button>
+
+</div>
+
+`;
+
+});
+
+document.getElementById(
+"clientRequestsContainer"
+).innerHTML = html;
+
 }
 
 async function loadStudentRequests(){
-  const snap = await getDocs(collection(db,"studentRequests"));
-  document.getElementById("studentCount").innerText = snap.size;
 
-  let html = "";
-  snap.forEach((docItem)=>{
-    const s = docItem.data();
-    html += `
-      <div class="card">
-        <h3>${s.studentName || "No Name"}</h3>
-        <p><b>Parent:</b> ${s.parentName || ""}</p>
-        <p><b>Mobile:</b> ${s.mobile || ""}</p>
-        <p><b>Class:</b> ${s.className || ""}</p>
-        <p><b>Subject:</b> ${s.subject || ""}</p>
-        <p><b>Study Method:</b> ${s.studyMethod || ""}</p>
-        <p><b>Status:</b> <span class="status">${s.status || "Pending"}</span></p>
-        <p><b>Details:</b> ${s.details || ""}</p>
-        <button class="green" onclick="updateStudentStatus('${docItem.id}','Accepted')">✅ Accept</button>
-        <button class="red" onclick="updateStudentStatus('${docItem.id}','Rejected')">❌ Reject</button>
-        <button class="dark" onclick="deleteStudentRequest('${docItem.id}')">🗑 Delete</button>
-      </div>
-    `;
-  });
+const snap =
+await getDocs(
+collection(db,"studentRequests")
+);
 
-  document.getElementById("studentRequestsContainer").innerHTML = html || "No student requests found.";
+document.getElementById(
+"studentCount"
+).innerText =
+snap.size;
+
+let html = "";
+
+snap.forEach((docItem)=>{
+
+const s = docItem.data();
+
+if(
+currentFilter !== "All"
+&&
+s.status !== currentFilter
+){
+return;
 }
 
-window.updateClientStatus = async function(id,status){
-  await updateDoc(doc(db,"clientRequests",id),{status:status});
-  loadClientRequests();
+html += `
+
+<div class="card">
+
+<h3>${s.studentName}</h3>
+
+<p><b>Class:</b>
+${s.className}</p>
+
+<p><b>Subject:</b>
+${s.subject}</p>
+
+<p><b>Status:</b>
+<span class="status">
+${s.status}
+</span></p>
+
+<button class="green"
+onclick="updateStudentStatus('${docItem.id}','Accepted')">
+
+✅ Accept
+
+</button>
+
+<button class="red"
+onclick="updateStudentStatus('${docItem.id}','Rejected')">
+
+❌ Reject
+
+</button>
+
+<button class="dark"
+onclick="deleteStudentRequest('${docItem.id}')">
+
+🗑 Delete
+
+</button>
+
+</div>
+
+`;
+
+});
+
+document.getElementById(
+"studentRequestsContainer"
+).innerHTML = html;
+
 }
 
-window.updateStudentStatus = async function(id,status){
-  await updateDoc(doc(db,"studentRequests",id),{status:status});
-  loadStudentRequests();
+window.updateClientStatus =
+async function(id,status){
+
+await updateDoc(
+doc(db,"clientRequests",id),
+{
+status:status
+}
+);
+
+loadClientRequests();
+
 }
 
-window.deleteClientRequest = async function(id){
-  await deleteDoc(doc(db,"clientRequests",id));
-  loadClientRequests();
+window.updateStudentStatus =
+async function(id,status){
+
+await updateDoc(
+doc(db,"studentRequests",id),
+{
+status:status
+}
+);
+
+loadStudentRequests();
+
 }
 
-window.deleteStudentRequest = async function(id){
-  await deleteDoc(doc(db,"studentRequests",id));
-  loadStudentRequests();
+window.deleteClientRequest =
+async function(id){
+
+await deleteDoc(
+doc(db,"clientRequests",id)
+);
+
+loadClientRequests();
+
 }
+
+window.deleteStudentRequest =
+async function(id){
+
+await deleteDoc(
+doc(db,"studentRequests",id)
+);
+
+loadStudentRequests();
+
+}
+
 </script>
 
 <script>
+
 function openPortal(id){
-  document.getElementById("mainMenu").style.display = "none";
-  document.getElementById("backBtn").classList.remove("hide");
 
-  ["admin","team","client","community","student","support"].forEach(function(sec){
-    document.getElementById(sec).classList.add("hide");
-  });
+document.getElementById(
+"mainMenu"
+).style.display = "none";
 
-  document.getElementById(id).classList.remove("hide");
+document.getElementById(
+"backBtn"
+).classList.remove("hide");
+
+[
+"admin",
+"team",
+"client",
+"community",
+"student",
+"support"
+]
+
+.forEach(function(sec){
+
+document.getElementById(sec)
+.classList.add("hide");
+
+});
+
+document.getElementById(id)
+.classList.remove("hide");
+
 }
 
 function goHome(){
-  document.getElementById("mainMenu").style.display = "block";
-  document.getElementById("backBtn").classList.add("hide");
 
-  ["admin","team","client","community","student","support"].forEach(function(sec){
-    document.getElementById(sec).classList.add("hide");
-  });
+document.getElementById(
+"mainMenu"
+).style.display = "block";
+
+document.getElementById(
+"backBtn"
+).classList.add("hide");
+
+[
+"admin",
+"team",
+"client",
+"community",
+"student",
+"support"
+]
+
+.forEach(function(sec){
+
+document.getElementById(sec)
+.classList.add("hide");
+
+});
+
 }
 
 function showAdminSection(id){
-  ["clientRequestsBox","studentRequestsBox"].forEach(function(sec){
-    document.getElementById(sec).classList.add("hide");
-  });
 
-  document.getElementById(id).classList.remove("hide");
+[
+"clientRequestsBox",
+"studentRequestsBox"
+]
+
+.forEach(function(sec){
+
+document.getElementById(sec)
+.classList.add("hide");
+
+});
+
+document.getElementById(id)
+.classList.remove("hide");
+
 }
+
 </script>
 
 </body>

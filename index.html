@@ -1,115 +1,571 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Nexora Community</title>
+
 <style>
-body{margin:0;font-family:Arial;background:#eef2f7;color:#111827}
-header{background:#071a3d;color:white;text-align:center;padding:35px 15px}
-.card{background:white;margin:18px;padding:22px;border-radius:16px;box-shadow:0 4px 12px #0002}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:15px}
-button{background:#f5b301;border:0;border-radius:10px;padding:12px 18px;font-weight:bold;margin:6px}
-input,select,textarea{width:92%;padding:12px;margin:7px;border:1px solid #ccc;border-radius:8px}
-.hide{display:none}
-footer{background:#071a3d;color:white;text-align:center;padding:18px}
+
+body{
+margin:0;
+font-family:Arial,sans-serif;
+background:#eef2f7;
+color:#111827;
+}
+
+header{
+background:linear-gradient(135deg,#071a3d,#0f4c81);
+padding:40px 20px;
+text-align:center;
+color:white;
+}
+
+header h1{
+margin:0;
+font-size:38px;
+}
+
+header p{
+margin-top:10px;
+font-size:16px;
+}
+
+.container{
+max-width:1100px;
+margin:auto;
+padding:20px;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:18px;
+}
+
+.card{
+background:white;
+padding:22px;
+border-radius:16px;
+box-shadow:0 4px 12px rgba(0,0,0,.08);
+}
+
+.card h2{
+margin-top:0;
+}
+
+.btn{
+padding:12px 18px;
+border:none;
+border-radius:10px;
+background:#f5b301;
+font-weight:bold;
+cursor:pointer;
+margin-top:10px;
+}
+
+.dark{
+background:#111827;
+color:white;
+}
+
+input,select,textarea{
+width:92%;
+padding:12px;
+margin-top:10px;
+border:1px solid #ccc;
+border-radius:10px;
+}
+
+.hide{
+display:none;
+}
+
+footer{
+background:#071a3d;
+color:white;
+text-align:center;
+padding:20px;
+margin-top:30px;
+}
+
 </style>
+
 </head>
+
 <body>
 
 <header>
+
 <h1>Nexora Community</h1>
-<p>Learning • Services • Team • Tuition • Community</p>
+
+<p>
+
+Learning • Services • Community • Tuition Platform
+
+</p>
+
 </header>
 
-<div class="card">
+<div class="container">
+
+<!-- MAIN MENU -->
+
+<div id="mainMenu">
+
 <div class="grid">
-<div><h2>👑 Admin Panel</h2><button onclick="show('admin')">Open Admin</button></div>
-<div><h2>👥 Team Members</h2><button onclick="show('team')">Open Team</button></div>
-<div><h2>💼 Client Services</h2><button onclick="show('client')">Open Client</button></div>
-<div><h2>🌐 Community Rewards</h2><button onclick="show('community')">Open Community</button></div>
-<div><h2>🎓 Student Panel</h2><button onclick="show('student')">Open Student</button></div>
-<div><h2>📞 Support</h2><button onclick="show('support')">Open Support</button></div>
-</div>
+
+<div class="card">
+
+<h2>👑 Admin Panel</h2>
+
+<p>
+
+Platform management and controls.
+
+</p>
+
+<button class="btn dark"
+onclick="openPortal('adminSection')">
+
+Open Admin
+
+</button>
+
 </div>
 
-<div id="admin" class="card hide">
+<div class="card">
+
+<h2>👥 Team Members</h2>
+
+<p>
+
+Tasks, work management and points system.
+
+</p>
+
+<button class="btn"
+onclick="openPortal('teamSection')">
+
+Open Team
+
+</button>
+
+</div>
+
+<div class="card">
+
+<h2>💼 Client Services</h2>
+
+<p>
+
+Submit projects and service requests.
+
+</p>
+
+<button class="btn"
+onclick="openPortal('clientSection')">
+
+Open Client
+
+</button>
+
+</div>
+
+<div class="card">
+
+<h2>🌐 Community Rewards</h2>
+
+<p>
+
+Daily tasks, points and reward system.
+
+</p>
+
+<button class="btn"
+onclick="openPortal('communitySection')">
+
+Open Community
+
+</button>
+
+</div>
+
+<div class="card">
+
+<h2>🎓 Student Panel</h2>
+
+<p>
+
+Apply for tuition and online classes.
+
+</p>
+
+<button class="btn"
+onclick="openPortal('studentSection')">
+
+Open Student
+
+</button>
+
+</div>
+
+<div class="card">
+
+<h2>📞 Support Center</h2>
+
+<p>
+
+Need help? Contact support.
+
+</p>
+
+<button class="btn"
+onclick="openPortal('supportSection')">
+
+Open Support
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- BACK BUTTON -->
+
+<button id="backBtn"
+class="btn dark hide"
+onclick="goHome()">
+
+⬅ Back To Main Menu
+
+</button>
+
+<!-- ADMIN -->
+
+<div id="adminSection"
+class="card hide">
+
 <h2>👑 Admin Login</h2>
+
 <input placeholder="Admin Email">
-<input type="password" placeholder="Password">
-<button>Login Admin</button>
+
+<input type="password"
+placeholder="Password">
+
+<button class="btn dark">
+
+Admin Login
+
+</button>
+
+<p>
+
+Only approved admin accounts can login.
+
+</p>
+
 </div>
 
-<div id="team" class="card hide">
+<!-- TEAM -->
+
+<div id="teamSection"
+class="card hide">
+
 <h2>👥 Team Member Login</h2>
-<input placeholder="Team ID given by Admin">
+
+<input placeholder="Team ID">
+
 <input placeholder="Email">
-<input type="password" placeholder="Password">
-<button>Login Team</button>
+
+<input type="password"
+placeholder="Password">
+
+<button class="btn">
+
+Login Team Panel
+
+</button>
+
+<p>
+
+Team IDs are generated by Admin.
+
+</p>
+
 </div>
 
-<div id="client" class="card hide">
-<h2>💼 Client Service Request</h2>
-<input placeholder="Full Name">
-<input placeholder="Mobile / WhatsApp Number">
-<input placeholder="Email">
-<input placeholder="Service Required">
-<input placeholder="Budget">
-<input placeholder="Deadline">
-<textarea placeholder="Project Details"></textarea>
+<!-- CLIENT -->
 
-<h3>💳 Payment Section</h3>
+<div id="clientSection"
+class="card hide">
+
+<h2>💼 Client Service Request</h2>
+
+<input placeholder="Full Name">
+
+<input placeholder="Mobile / WhatsApp">
+
+<input placeholder="Email">
+
+<input placeholder="Service Required">
+
+<input placeholder="Budget">
+
+<input placeholder="Deadline">
+
+<textarea
+placeholder="Project Details"></textarea>
+
+<h3>💳 Payment Method</h3>
+
 <select>
-<option>Select Payment Method</option>
-<option>Easypaisa</option>
-<option>JazzCash</option>
-<option>Bank Transfer</option>
+
+<option>
+
+Select Payment Method
+
+</option>
+
+<option>
+
+Easypaisa
+
+</option>
+
+<option>
+
+JazzCash
+
+</option>
+
+<option>
+
+Bank Transfer
+
+</option>
+
 </select>
 
-<p><b>Payment Account:</b> Admin will share account after accepting your order.</p>
+<p>
 
-<input placeholder="Transaction ID / Reference Number">
+Admin account details will appear here after order approval.
+
+</p>
+
+<input
+placeholder="Transaction ID">
+
 <input type="file">
-<p>Upload payment screenshot as proof.</p>
 
-<button onclick="alert('Request submitted. Admin will verify payment ✅')">Submit Request</button>
+<p>
+
+Upload payment screenshot proof.
+
+</p>
+
+<button class="btn">
+
+Submit Client Request
+
+</button>
+
 </div>
 
-<div id="community" class="card hide">
+<!-- COMMUNITY -->
+
+<div id="communitySection"
+class="card hide">
+
 <h2>🌐 Community Rewards</h2>
+
+<input placeholder="Full Name">
+
 <input placeholder="Email">
-<input type="password" placeholder="Password">
-<button>Create / Login</button>
-<p>Daily code, points, leaderboard and withdraw request will be added here.</p>
+
+<input type="password"
+placeholder="Password">
+
+<button class="btn">
+
+Create Community Account
+
+</button>
+
+<hr>
+
+<input
+placeholder="Community Email">
+
+<input type="password"
+placeholder="Password">
+
+<button class="btn dark">
+
+Login Community
+
+</button>
+
+<p>
+
+Daily codes, watch & earn,
+leaderboard and rewards system.
+
+</p>
+
+<button class="btn dark">
+
+Withdraw Locked
+
+</button>
+
 </div>
 
-<div id="student" class="card hide">
+<!-- STUDENT -->
+
+<div id="studentSection"
+class="card hide">
+
 <h2>🎓 Student Tuition Request</h2>
+
 <input placeholder="Student Name">
+
 <input placeholder="Parent Name">
+
 <input placeholder="WhatsApp Number">
+
 <input placeholder="Class">
-<input placeholder="Subject Required">
-<textarea placeholder="Study Details"></textarea>
-<button>Submit Tuition Request</button>
+
+<input placeholder="Subject">
+
+<select>
+
+<option>
+
+Study Method
+
+</option>
+
+<option>
+
+Online Classes
+
+</option>
+
+<option>
+
+WhatsApp Lectures
+
+</option>
+
+</select>
+
+<textarea
+placeholder="Extra Study Details"></textarea>
+
+<button class="btn">
+
+Submit Tuition Request
+
+</button>
+
 </div>
 
-<div id="support" class="card hide">
+<!-- SUPPORT -->
+
+<div id="supportSection"
+class="card hide">
+
 <h2>📞 Support Center</h2>
-<p>WhatsApp Support: Coming Soon</p>
-<p>Email Support: support@nexora.com</p>
+
+<p>
+
+WhatsApp Support:
+Coming Soon
+
+</p>
+
+<p>
+
+Email Support:
+support@nexora.com
+
+</p>
+
 </div>
 
-<footer>© 2026 Nexora Community</footer>
+</div>
+
+<footer>
+
+© 2026 Nexora Community
+
+</footer>
 
 <script>
-function show(id){
-let sections=["admin","team","client","community","student","support"];
-sections.forEach(function(s){
-document.getElementById(s).classList.add("hide");
+
+function openPortal(id){
+
+document.getElementById("mainMenu")
+.style.display = "none";
+
+document.getElementById("backBtn")
+.classList.remove("hide");
+
+let sections = [
+
+"adminSection",
+"teamSection",
+"clientSection",
+"communitySection",
+"studentSection",
+"supportSection"
+
+];
+
+sections.forEach(function(sec){
+
+document.getElementById(sec)
+.classList.add("hide");
+
 });
-document.getElementById(id).classList.remove("hide");
+
+document.getElementById(id)
+.classList.remove("hide");
+
 }
+
+function goHome(){
+
+document.getElementById("mainMenu")
+.style.display = "block";
+
+document.getElementById("backBtn")
+.classList.add("hide");
+
+let sections = [
+
+"adminSection",
+"teamSection",
+"clientSection",
+"communitySection",
+"studentSection",
+"supportSection"
+
+];
+
+sections.forEach(function(sec){
+
+document.getElementById(sec)
+.classList.add("hide");
+
+});
+
+}
+
 </script>
 
 </body>
-</html>
+  </html>

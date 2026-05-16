@@ -91,15 +91,40 @@ footer{background:#071a3d;color:white;text-align:center;padding:18px;margin-top:
 </div>
 
 <div id="student" class="card hide">
+
 <h2>🎓 Student Tuition Request</h2>
+
 <input id="studentName" placeholder="Student Name">
+
 <input id="parentName" placeholder="Parent Name">
+
 <input id="studentMobile" placeholder="WhatsApp Number">
+
 <input id="studentClass" placeholder="Class">
+
 <input id="studentSubject" placeholder="Subject">
-<textarea id="studentDetails" placeholder="Study Details"></textarea>
-<button onclick="submitStudentRequest()">Submit Tuition Request</button>
+
+<select id="studyMethod">
+
+<option>Select Study Method</option>
+
+<option>Online Classes</option>
+
+<option>WhatsApp Lectures</option>
+
+</select>
+
+<textarea id="studentDetails"
+placeholder="Study Details"></textarea>
+
+<button onclick="submitStudentRequest()">
+
+Submit Tuition Request
+
+</button>
+
 <p id="studentMsg"></p>
+
 </div>
 
 <div id="support" class="card hide">
@@ -154,24 +179,60 @@ window.submitClientRequest = async function(){
   }
 }
 
-window.submitStudentRequest = async function(){
-  try{
-    const data = {
-      studentName: document.getElementById("studentName").value,
-      parentName: document.getElementById("parentName").value,
-      mobile: document.getElementById("studentMobile").value,
-      className: document.getElementById("studentClass").value,
-      subject: document.getElementById("studentSubject").value,
-      details: document.getElementById("studentDetails").value,
-      status: "Pending",
-      createdAt: serverTimestamp()
-    };
+window.submitStudentRequest =
+async function(){
 
-    await addDoc(collection(db,"studentRequests"), data);
-    document.getElementById("studentMsg").innerText = "Tuition Request Submitted ✅";
-  }catch(e){
-    document.getElementById("studentMsg").innerText = e.message;
-  }
+try{
+
+const data = {
+
+studentName:
+document.getElementById("studentName").value,
+
+parentName:
+document.getElementById("parentName").value,
+
+mobile:
+document.getElementById("studentMobile").value,
+
+className:
+document.getElementById("studentClass").value,
+
+subject:
+document.getElementById("studentSubject").value,
+
+studyMethod:
+document.getElementById("studyMethod").value,
+
+details:
+document.getElementById("studentDetails").value,
+
+status:"Pending",
+
+createdAt:
+serverTimestamp()
+
+};
+
+await addDoc(
+collection(db,"studentRequests"),
+data
+);
+
+document.getElementById(
+"studentMsg"
+).innerText =
+"Tuition Request Submitted ✅";
+
+}catch(e){
+
+document.getElementById(
+"studentMsg"
+).innerText =
+e.message;
+
+}
+
 }
 
 window.adminLogin = async function(){

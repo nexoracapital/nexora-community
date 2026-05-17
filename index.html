@@ -387,4 +387,164 @@ plansAdminList.innerHTML=h||"No plans";
 }
 window.showInvestmentType=async function(type){
 let disclaimer=type==="Short Term"?"Minimum 1 month, maximum 1 year.":type==="Mid Term"?"Minimum 1 year, maximum 5 years.":"Minimum 5 years, no fixed maximum.";
-let snap=await getDocs(collection(db,"investmentPlans"));let h=`<div class="card"><b>${type} 
+let snap=await getDocs(collection(db,"investmentPlans"));
+let h=`<div class="card"><b>${type} Disclaimer:</b><p>${disclaimer}</p><p>Business has profit/loss risk. This feature is Coming Soon and requires admin approval.</p></div>`;
+snap.forEach(d=>{
+let x=d.data();
+if(x.type===type){
+h+=`<div class="card"><h3>${x.title}</h3><p>${x.amount}</p><p>${x.note}</p><button onclick="alert('Coming Soon - Admin approval required')">Activate</button></div>`;
+}
+});
+investmentList.innerHTML=h;
+}
+
+window.addMCQ=async function(){
+await addDoc(collection(db,"mcqs"),{
+subject:mcqSubject.value,
+question:mcqQuestion.value,
+A:mcqA.value,
+B:mcqB.value,
+C:mcqC.value,
+D:mcqD.value,
+correct:mcqCorrect.value,
+createdAt:serverTimestamp()
+});
+loadMCQsAdmin();
+}
+
+async function loadMCQsAdmin(){
+let snap=await getDocs(collection(db,"mcqs"));
+let h="";
+snap.forEach(d=>{
+let x=d.data();
+h+=`<div class="card"><b>${x.subject}</b><p>${x.question}</p><p>Correct: ${x.correct}</p></div>`;
+});
+mcqAdminList.innerHTML=h||"No MCQs";
+}
+
+window.startTest=async function(){
+let snap=await getDocs(collection(db,"mcqs"));
+testQuestions=[];
+currentQ=0;
+score=0;
+snap.forEach(d=>{
+let x=d.data();
+if(x.subject===testSubject.value){
+testQuestions.push(x);
+}
+});
+showQuestion();
+}
+
+function showQuestion(){
+if(currentQ>=testQuestions.length){
+testBox.innerHTML="<h3>Test Completed</h3>";
+scoreBox.innerText="Score: "+score+"/"+testQuestions.length;
+return;
+}
+
+let q=testQuestions[currentQ];
+scoreBox.innerText="Score: "+score+"/"+testQuestions.length;
+
+testBox.innerHTML=`
+<div class="card">
+<h3>${q.question}</h3>
+<button class="option" onclick="answer('A')">A. ${q.A}</button>
+<button class="option" onclick="answer('B')">B. ${q.B}</button>
+<button class="option" onclick="answer('C')">C. ${q.C}</button>
+<button class="option" onclick="answer('D')">D. ${q.D}</button>
+</div>
+`;
+}
+
+window.answer=function(opt){
+let q=testQuestions[currentQ];
+if(opt===q.correct){
+score++;
+}
+alert(opt===q.correct?"Correct ✅":"Wrong ❌ Correct: "+q.correct);
+currentQ++;
+showQuestion();
+}
+</script>
+
+<script>
+window.openPortal=function(id){
+document.getElementById("mainMenu").style.display="none";
+document.getElementById("backBtn").classList.remove("hide");
+
+[
+"adminLogin",
+"adminDashboard",
+"teamLogin",
+"client",
+"community",
+"student",
+"classes",
+"marketplace",
+"smartTest",
+"support"
+].forEach(function(x){
+let e=document.getElementById(x);
+if(e){
+e.classList.add("hide");
+}
+});
+
+let t=document.getElementById(id);
+if(t){
+t.classList.remove("hide");
+}
+}
+
+window.goHome=function(){
+document.getElementById("mainMenu").style.display="block";
+document.getElementById("backBtn").classList.add("hide");
+
+[
+"adminLogin",
+"adminDashboard",
+"teamLogin",
+"client",
+"community",
+"student",
+"classes",
+"marketplace",
+"smartTest",
+"support"
+].forEach(function(x){
+let e=document.getElementById(x);
+if(e){
+e.classList.add("hide");
+}
+});
+}
+
+window.showAdmin=function(id){
+[
+"clientBox",
+"studentBox",
+"teamBox",
+"communityBox",
+"codeBox",
+"messageBox",
+"withdrawBox",
+"controlBox",
+"investmentAdminBox",
+"mcqAdminBox"
+].forEach(function(x){
+let e=document.getElementById(x);
+if(e){
+e.classList.add("hide");
+}
+});
+
+let t=document.getElementById(id);
+if(t){
+t.classList.remove("hide");
+}
+}
+</script>
+
+</body>
+</html>

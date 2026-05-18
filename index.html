@@ -1506,5 +1506,26 @@ window.showAdmin=function(id){
   if(target){target.classList.remove("hide");}
 };
   </script>
+  <script>
+window.adminLogin=function(){
+
+  var email=document.getElementById("adminEmail").value.trim();
+  var secret=document.getElementById("adminSecretId").value.trim();
+
+  if(email==="smartustad0@gmail.com" && secret==="NX-OWNER-786"){
+
+    document.getElementById("adminLogin").classList.add("hide");
+    document.getElementById("adminDashboard").classList.remove("hide");
+
+    alert("Admin Login Successful ✅");
+
+  }else{
+
+    alert("Access Denied ❌ Check Email or Secret ID");
+
+  }
+
+};
+  </script>
 </body>
 </html>

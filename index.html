@@ -180,6 +180,7 @@ footer{
   <h2>👑 Admin Login</h2>
   <input id="adminEmail" placeholder="Admin Email">
   <input id="adminPassword" type="password" placeholder="Password">
+  <input id="adminSecretId" placeholder="Admin Secret ID">
   <button class="dark" onclick="adminLogin()">Admin Login</button>
 </div>
 
@@ -621,8 +622,23 @@ footer{
 
 <script type="module">
 
-import { initializeApp }
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+getAuth,
+createUserWithEmailAndPassword,
+signInWithEmailAndPassword,
+sendPasswordResetEmail,
+signOut
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+import {
+getAuth,
+createUserWithEmailAndPassword,
+signInWithEmailAndPassword,
+sendPasswordResetEmail,
+signOut
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 import {
 getFirestore,
@@ -630,34 +646,131 @@ collection,
 addDoc,
 getDocs,
 updateDoc,
-doc
-}
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
+doc,
+setDoc,
+getDoc
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 const firebaseConfig = {
 
 apiKey:"AIzaSyAWj7dozNpK8ExbJ4fptOODj66i09lxb0s",
 
-authDomain:"YOUR_AUTH_DOMAIN",
-
-projectId:"YOUR_PROJECT_ID",
-
-storageBucket:"YOUR_STORAGE_BUCKET",
-
-messagingSenderId:"YOUR_MESSAGING_ID",
-
-appId:"YOUR_APP_ID"
-
+authDomain: "nexoracapitalcommunity.firebaseapp.com",
+projectId: "nexoracapitalcommunity",
+storageBucket: "nexoracapitalcommunity.firebasestorage.app",
+messagingSenderId: "714723891713",
+appId: "1:714723891713:web:db1b927e57308d6ec7be00",
+measurementId: "G-4MNCR327KJ"
 };
 
 const app = initializeApp(firebaseConfig);
 
 const db = getFirestore(app);
-
+const auth = getAuth(app);
 let currentFilter="All";
 
 let currentCommunity=null;
+window.createCommunityAccount = async function(){
 
+let name=document.getElementById("communityName").value;
+
+let email=document.getElementById("communityEmail").value;
+
+let password=document.getElementById("communityPassword").value;
+
+if(!name || !email || !password){
+
+alert("Fill all fields");
+
+return;
+
+}
+
+try{
+
+let userCredential =
+await createUserWithEmailAndPassword(auth,email,password);
+
+await setDoc(doc(db,"communityUsers",userCredential.user.uid),{
+
+name:name,
+
+email:email,
+
+points:0
+
+});
+
+alert("Account Created Successfully ✅");
+
+}catch(err){
+
+alert(err.message);
+
+}
+
+}
+
+window.communityLogin = async function(){
+
+let email=document.getElementById("communityEmail").value;
+
+let password=document.getElementById("communityPassword").value;
+
+if(!email || !password){
+
+alert("Enter email & password");
+
+return;
+
+}
+
+try{
+
+await signInWithEmailAndPassword(auth,email,password);
+
+alert("Login Successful ✅");
+
+}catch(err){
+
+alert(err.message);
+
+}
+
+}
+
+window.resetPassword = async function(){
+
+let email=document.getElementById("communityEmail").value;
+
+if(!email){
+
+alert("Enter email");
+
+return;
+
+}
+
+try{
+
+await sendPasswordResetEmail(auth,email);
+
+alert("Password Reset Email Sent ✅");
+
+}catch(err){
+
+alert(err.message);
+
+}
+
+}
+
+window.logoutUser = async function(){
+
+await signOut(auth);
+
+alert("Logged Out");
+
+  }
 window.openPortal=function(id){
 
 mainMenu.classList.add("hide");
@@ -770,11 +883,63 @@ function now(){
 }
 
 window.adminLogin=async function(){
-  const email=document.getElementById("adminEmail").value.trim();
 
-  if(email!=="smartustad0@gmail.com"){
-    alert("Access Denied ❌");
-    return;
+const email=document.getElementById("adminEmail").value.trim();
+
+const secret=document.getElementById("adminSecretId").value.trim();
+
+const allowedAdmins=[
+
+{
+email:"smartustad0@gmail.com",
+secret:"NX-OWNER-786",
+role:"owner"
+},
+
+{
+email:"admin1@nexora.com",
+secret:"NX-ADM-1001",
+role:"admin"
+}
+
+];
+
+const admin=allowedAdmins.find(
+a=>a.email===email && a.secret===secret
+);
+
+if(!admin){
+
+alert("Access Denied ❌");
+
+return;
+
+}
+
+document.getElementById("adminLogin").classList.add("hide");
+
+document.getElementById("adminDashboard").classList.remove("hide");
+
+loadClientRequests();
+
+loadStudentRequests();
+
+loadTeamMembers();
+
+loadCommunityMembers();
+
+loadServices();
+
+loadTasksAdmin();
+
+loadInvestmentPlansAdmin();
+
+loadMCQsAdmin();
+
+loadWithdrawRequests();
+
+alert("Admin Login Successful ✅");
+
   }
 
   document.getElementById("adminLogin").classList.add("hide");

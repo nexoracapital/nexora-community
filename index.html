@@ -1527,5 +1527,84 @@ window.adminLogin=function(){
 
 };
   </script>
+  <script>
+window.openPortal=function(id){
+  var main=document.getElementById("mainMenu");
+  var back=document.getElementById("backBtn");
+
+  if(main){main.classList.add("hide");}
+  if(back){back.classList.remove("hide");}
+
+  [
+    "adminLogin","adminDashboard","teamLogin","community",
+    "client","student","classes","marketplace","smartTest","support"
+  ].forEach(function(sec){
+    var el=document.getElementById(sec);
+    if(el){el.classList.add("hide");}
+  });
+
+  var target=document.getElementById(id);
+  if(target){target.classList.remove("hide");}
+};
+
+window.goHome=function(){
+  var main=document.getElementById("mainMenu");
+  var back=document.getElementById("backBtn");
+
+  if(main){main.classList.remove("hide");}
+  if(back){back.classList.add("hide");}
+
+  [
+    "adminLogin","adminDashboard","teamLogin","community",
+    "client","student","classes","marketplace","smartTest","support"
+  ].forEach(function(sec){
+    var el=document.getElementById(sec);
+    if(el){el.classList.add("hide");}
+  });
+};
+
+window.showAdmin=function(id){
+  [
+    "clientBox","studentBox","teamBox","communityBox",
+    "codeBox","taskBox","messageBox","withdrawBox",
+    "controlBox","serviceAdminBox","investmentAdminBox","mcqAdminBox"
+  ].forEach(function(sec){
+    var el=document.getElementById(sec);
+    if(el){el.classList.add("hide");}
+  });
+
+  var target=document.getElementById(id);
+  if(target){target.classList.remove("hide");}
+};
+
+window.toggleAdminPassword=function(){
+  var pass=document.getElementById("adminPassword");
+  if(!pass){return;}
+
+  if(pass.type==="password"){
+    pass.type="text";
+  }else{
+    pass.type="password";
+  }
+};
+
+window.adminLogin=function(){
+  var email=document.getElementById("adminEmail").value.trim();
+  var secret=document.getElementById("adminSecretId").value.trim();
+
+  if(email==="smartustad0@gmail.com" && secret==="NX-OWNER-786"){
+    document.getElementById("adminLogin").classList.add("hide");
+    document.getElementById("adminDashboard").classList.remove("hide");
+
+    document.getElementById("adminEmail").value="";
+    document.getElementById("adminPassword").value="";
+    document.getElementById("adminSecretId").value="";
+
+    alert("Admin Login Successful ✅");
+  }else{
+    alert("Access Denied ❌ Check Email or Secret ID");
+  }
+};
+  </script>
 </body>
 </html>

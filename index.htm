@@ -14,6 +14,19 @@
 body{margin:0;font-family:Arial,sans-serif;background:#eef2f7;color:#111827}
 header{background:linear-gradient(135deg,#071a3d,#0f4c81);color:white;text-align:center;padding:32px 18px}
 .logo{width:80px;height:80px;border-radius:50%;object-fit:cover;background:white;display:none;margin:auto}
+  .logo{...}
+
+.badge{
+  background:red;
+  color:white;
+  padding:4px 10px;
+  border-radius:50px;
+  font-size:12px;
+  margin-left:8px;
+  font-weight:bold;
+}
+
+.card{
 .card{background:white;margin:16px;padding:20px;border-radius:18px;box-shadow:0 4px 14px rgba(0,0,0,.10)}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:15px}
 button{background:#f5b301;border:0;border-radius:10px;padding:12px 16px;font-weight:bold;margin:6px 4px;cursor:pointer}
@@ -143,7 +156,10 @@ a{color:#0f4c81;font-weight:bold}
     </div>
 
     <div class="card">
-      <h3>🛒 Seller Requests <span id="productRequestCount" class="badge">0</span></h3>
+      <h3>
+🛒 Seller Requests
+<span id="marketReqBadge" class="badge"></span>
+</h3>
       <button onclick="showAdmin('productRequestsBox')">Open</button>
     </div>
 
@@ -153,12 +169,18 @@ a{color:#0f4c81;font-weight:bold}
     </div>
 
     <div class="card">
-      <h3>🎓 Student Requests <span id="studentCount" class="badge">0</span></h3>
+      <h3>
+🎓 Student Requests
+<span id="studentReqBadge" class="badge"></span>
+</h3>
       <button onclick="showAdmin('studentRequestsBox')">Open</button>
     </div>
 
     <div class="card">
-      <h3>👨‍🏫 Teacher Interests <span id="teacherInterestCount" class="badge">0</span></h3>
+      <h3>
+🧑‍🏫 Teacher Interests
+<span id="teacherReqBadge" class="badge"></span>
+</h3>
       <button onclick="showAdmin('teacherInterestsBox')">Open</button>
     </div>
 
@@ -193,7 +215,10 @@ a{color:#0f4c81;font-weight:bold}
     </div>
 
     <div class="card">
-      <h3>📩 Messages</h3>
+      <h3>
+📩 Messages
+<span id="communityMsgBadge" class="badge"></span>
+      </h3>
       <button onclick="showAdmin('messageBox')">Open</button>
     </div>
 
@@ -447,7 +472,15 @@ a{color:#0f4c81;font-weight:bold}
 
     <h3>📋 Daily Tasks</h3>
     <div id="communityTasks"></div>
+<div class="card">
+  <h3>📈 Investment Plans</h3>
 
+  <div id="investmentPlansBox"></div>
+
+  <button onclick="showSection('investmentSection')">
+    Open Investments
+  </button>
+</div>
     <h3>🔐 Submit Task Code</h3>
     <input id="communityCode" placeholder="Enter task code">
     <button class="green" onclick="submitCommunityCode()">Submit Code</button>
@@ -2896,6 +2929,210 @@ document.getElementById("botReply").innerHTML=`<p>${reply}</p>`;
 
 };
 
+  /* V3.4 PATCH — UI FIX + BETTER BOT */
+
+function clearInputs(ids){
+  ids.forEach(id=>{
+    const el=document.getElementById(id);
+    if(el){el.value="";}
+  });
+}
+
+function hideAuthShowDashboard(authIds,dashboardId){
+  authIds.forEach(id=>{
+    const el=document.getElementById(id);
+    if(el){el.style.display="none";}
+  });
+  const dash=document.getElementById(dashboardId);
+  if(dash){dash.classList.remove("hide");}
+}
+
+function showAuthHideDashboard(authIds,dashboardId){
+  authIds.forEach(id=>{
+    const el=document.getElementById(id);
+    if(el){el.style.display="block";}
+  });
+  const dash=document.getElementById(dashboardId);
+  if(dash){dash.classList.add("hide");}
+}
+
+window.askBot=function(){
+  const q=document.getElementById("botQuestion").value.toLowerCase();
+  let reply="میں آپ کی مدد کے لیے موجود ہوں۔ اپنا مسئلہ واضح لکھیں۔";
+
+  if(q.includes("login") || q.includes("لاگ")){
+    reply="Login کے لیے اپنا registered email اور password استعمال کریں۔ اگر password بھول گئے ہیں تو Forgot Password دبائیں۔";
+  }
+  else if(q.includes("password") || q.includes("پاسورڈ")){
+    reply="Password reset کے لیے Forgot Password استعمال کریں۔ Email پر reset link آ جائے گا۔";
+  }
+  else if(q.includes("points") || q.includes("پوائنٹ")){
+    reply="Points حاصل کرنے کے لیے Daily Task مکمل کریں، پھر task code dashboard میں submit کریں۔";
+  }
+  else if(q.includes("task") || q.includes("ٹاسک")){
+    reply="Daily Tasks میں link open کریں، task مکمل کریں، پھر secret code submit کریں۔";
+  }
+  else if(q.includes("market") || q.includes("product")){
+    reply="Marketplace میں product دیکھیں، Buy/Request دبائیں۔ Seller product submit کرنا ہو تو Client Portal استعمال کریں۔";
+  }
+  else if(q.includes("teacher") || q.includes("ٹیچر")){
+    reply="Teacher Portal سے account بنائیں، login کریں، student requests دیکھیں اور interest accept کریں۔";
+  }
+  else if(q.includes("student") || q.includes("student")){
+    reply="Student Portal میں account بنا کر tuition request submit کریں۔";
+  }
+  else if(q.includes("wallet") || q.includes("withdraw")){
+    reply="Wallet اور Withdraw system V3.4 میں add کیا جا رہا ہے۔ Points/earning approved ہونے کے بعد withdraw request دی جا سکے گی۔";
+  }
+  else if(q.includes("support") || q.includes("help")){
+    reply="Support کے لیے WhatsApp Channel join کریں یا support email پر رابطہ کریں۔";
+  }
+
+  document.getElementById("botReply").innerHTML=`<p>${reply}</p>`;
+};
+  /* V3.4 PATCH — NOTIFICATIONS + BADGES */
+
+function updateBadge(id,count){
+  const el=document.getElementById(id);
+
+  if(!el) return;
+
+  if(count<=0){
+    el.style.display="none";
+    el.innerText="";
+  }else{
+    el.style.display="inline-block";
+    el.innerText=count;
+  }
+}
+
+/* COMMUNITY MESSAGE COUNTER */
+
+window.loadCommunityMessages = async function(userId){
+
+  const wrap=document.getElementById("communityMessages");
+
+  if(!wrap) return;
+
+  const snap=await getDocs(collection(db,"communityMessages"));
+
+  wrap.innerHTML="";
+
+  let unread=0;
+
+  snap.forEach(docSnap=>{
+
+    const d=docSnap.data();
+
+    if(d.userId===userId){
+
+      if(!d.read){
+        unread++;
+      }
+
+      wrap.innerHTML += `
+      <div class="card">
+        <p>${d.message}</p>
+
+        <button class="green"
+        onclick="markMessageRead('${docSnap.id}')">
+        Mark Read
+        </button>
+      </div>
+      `;
+    }
+
+  });
+
+  updateBadge("communityMsgBadge",unread);
+
+};
+
+window.markMessageRead = async function(id){
+
+  await updateDoc(doc(db,"communityMessages",id),{
+    read:true
+  });
+
+  alert("Message marked as read");
+
+};
+
+/* ADMIN REQUEST COUNTERS */
+
+window.loadPendingCounts = async function(){
+
+  let pendingStudents=0;
+  let pendingTeachers=0;
+  let pendingMarketplace=0;
+
+  const studentSnap=await getDocs(collection(db,"studentRequests"));
+
+  studentSnap.forEach(d=>{
+    const data=d.data();
+
+    if(data.status==="Pending"){
+      pendingStudents++;
+    }
+  });
+
+  const teacherSnap=await getDocs(collection(db,"teacherInterests"));
+
+  teacherSnap.forEach(d=>{
+    const data=d.data();
+
+    if(data.status==="Pending"){
+      pendingTeachers++;
+    }
+  });
+
+  const marketSnap=await getDocs(collection(db,"marketplaceRequests"));
+
+  marketSnap.forEach(d=>{
+    const data=d.data();
+
+    if(data.status==="Pending"){
+      pendingMarketplace++;
+    }
+  });
+
+  updateBadge("studentReqBadge",pendingStudents);
+
+  updateBadge("teacherReqBadge",pendingTeachers);
+
+  updateBadge("marketReqBadge",pendingMarketplace);
+
+};
+  async function editItem(id, collectionName){
+
+  const newText = prompt("Update Text");
+
+  if(!newText) return;
+
+  await updateDoc(
+    doc(db, collectionName, id),
+    {
+      text:newText,
+      updatedAt:now()
+    }
+  );
+
+  alert("Updated Successfully ✅");
+}
+
+async function deleteItem(id, collectionName){
+
+  const ok = confirm("Delete this item?");
+
+  if(!ok) return;
+
+  await deleteDoc(
+    doc(db, collectionName, id)
+  );
+
+  alert("Deleted Successfully ✅");
+  }
+  
 </script>
 
 </body>

@@ -2906,7 +2906,60 @@ async function loadLogs(){
 loadWebsiteControls();
 
 </script>
+<script>
+function hideAllBasic(){
+  [
+    "adminLoginPage","adminDashboard","memberPage","clientPage",
+    "walletPage","studentPage","teacherPage","teamPage",
+    "marketplacePage","classesPage","smartTestPage","supportPage"
+  ].forEach(function(id){
+    var el=document.getElementById(id);
+    if(el){el.classList.add("hide");}
+  });
+}
 
+window.showPage=function(id){
+  hideAllBasic();
+  var main=document.getElementById("mainMenu");
+  var back=document.getElementById("backBtn");
+  var page=document.getElementById(id);
+
+  if(main){main.classList.add("hide");}
+  if(back){back.classList.remove("hide");}
+  if(page){page.classList.remove("hide");}
+};
+
+window.goHome=function(){
+  hideAllBasic();
+  var main=document.getElementById("mainMenu");
+  var back=document.getElementById("backBtn");
+
+  if(main){main.classList.remove("hide");}
+  if(back){back.classList.add("hide");}
+};
+
+window.togglePassword=function(id){
+  var el=document.getElementById(id);
+  if(!el){return;}
+  el.type = el.type==="password" ? "text" : "password";
+};
+
+window.showAdminSection=function(id){
+  [
+    "adminClientRequests","adminSellerRequests","adminStudentRequests",
+    "adminTeacherInterests","adminTeacherProfiles","adminTeamMembers",
+    "adminAssignWork","adminMembers","adminDailyTasks","adminAnnouncements",
+    "adminMessages","adminWallet","adminInvestment","adminMarketplace",
+    "adminMCQ","adminCourses","adminRoles","adminControls","adminLogs"
+  ].forEach(function(sec){
+    var el=document.getElementById(sec);
+    if(el){el.classList.add("hide");}
+  });
+
+  var target=document.getElementById(id);
+  if(target){target.classList.remove("hide");}
+};
+</script>
 </body>
 </html>
 

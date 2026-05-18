@@ -1,548 +1,1308 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Nexora Community</title>
+
 <style>
-body{margin:0;font-family:Arial;background:#eef2f7;color:#111827}
-header{background:linear-gradient(135deg,#071a3d,#0f4c81);color:white;text-align:center;padding:35px 20px}
-.logo{width:75px;height:75px;border-radius:50%;object-fit:cover;display:none;background:white}
-.card{background:white;margin:18px;padding:22px;border-radius:16px;box-shadow:0 4px 12px #0002}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:15px}
-button{background:#f5b301;border:0;border-radius:10px;padding:12px 18px;font-weight:bold;margin:6px;cursor:pointer}
-.dark{background:#111827;color:white}.green{background:#16a34a;color:white}.red{background:#dc2626;color:white}.blue{background:#2563eb;color:white}
-input,select,textarea{width:92%;padding:12px;margin:7px;border:1px solid #ccc;border-radius:8px}
-.hide{display:none}.badge{background:red;color:white;padding:4px 8px;border-radius:30px;font-size:12px}
-.status{background:#e5e7eb;padding:6px 10px;border-radius:20px;font-weight:bold;display:inline-block}
-.ticker{background:#f5b301;color:#111827;font-weight:bold;overflow:hidden;white-space:nowrap;padding:10px}
-.ticker span{display:inline-block;padding-left:100%;animation:move 18s linear infinite}
-@keyframes move{0%{transform:translateX(0)}100%{transform:translateX(-100%)}}
-.option{display:block;width:95%;text-align:left;margin:8px;padding:12px;border-radius:10px;background:#e5e7eb}
-.correct{background:#16a34a!important;color:white}.wrong{background:#dc2626!important;color:white}
-footer{background:#071a3d;color:white;text-align:center;padding:18px;margin-top:30px}
+body{
+  margin:0;
+  font-family:Arial, sans-serif;
+  background:#eef2f7;
+  color:#111827;
+}
+header{
+  background:linear-gradient(135deg,#071a3d,#0f4c81);
+  color:white;
+  text-align:center;
+  padding:35px 20px;
+}
+.logo{
+  width:75px;
+  height:75px;
+  border-radius:50%;
+  object-fit:cover;
+  display:none;
+  background:white;
+}
+.card{
+  background:white;
+  margin:18px;
+  padding:22px;
+  border-radius:16px;
+  box-shadow:0 4px 12px #0002;
+}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+  gap:15px;
+}
+button{
+  background:#f5b301;
+  border:0;
+  border-radius:10px;
+  padding:12px 18px;
+  font-weight:bold;
+  margin:6px;
+  cursor:pointer;
+}
+.dark{background:#111827;color:white}
+.green{background:#16a34a;color:white}
+.red{background:#dc2626;color:white}
+.blue{background:#2563eb;color:white}
+input,select,textarea{
+  width:92%;
+  padding:12px;
+  margin:7px;
+  border:1px solid #ccc;
+  border-radius:8px;
+}
+.hide{display:none}
+.badge{
+  background:red;
+  color:white;
+  padding:4px 8px;
+  border-radius:30px;
+  font-size:12px;
+}
+.status{
+  background:#e5e7eb;
+  padding:6px 10px;
+  border-radius:20px;
+  font-weight:bold;
+  display:inline-block;
+}
+.ticker{
+  background:#f5b301;
+  color:#111827;
+  font-weight:bold;
+  overflow:hidden;
+  white-space:nowrap;
+  padding:10px;
+}
+.ticker span{
+  display:inline-block;
+  padding-left:100%;
+  animation:move 18s linear infinite;
+}
+@keyframes move{
+  0%{transform:translateX(0)}
+  100%{transform:translateX(-100%)}
+}
+.option{
+  display:block;
+  width:95%;
+  text-align:left;
+  margin:8px;
+  padding:12px;
+  border-radius:10px;
+  background:#e5e7eb;
+}
+footer{
+  background:#071a3d;
+  color:white;
+  text-align:center;
+  padding:18px;
+  margin-top:30px;
+}
 </style>
 </head>
+
 <body>
 
 <header>
-<img id="siteLogo" class="logo">
-<h1>Nexora Community</h1>
-<p>Learning • Services • Tuition • Community Platform</p>
+  <img id="siteLogo" class="logo">
+  <h1>Nexora Community</h1>
+  <p>Learning • Services • Tuition • Community Platform</p>
 </header>
 
-<div class="ticker"><span id="newsText">Welcome to Nexora Community</span></div>
+<div class="ticker">
+  <span id="newsText">Welcome to Nexora Community</span>
+</div>
 
 <div id="mainMenu" class="card">
-<div class="grid">
-<div><h2>👑 Admin Panel</h2><button class="dark" onclick="openPortal('adminLogin')">Open Admin</button></div>
-<div><h2>👥 Team Members</h2><button onclick="openPortal('teamLogin')">Open Team</button></div>
-<div><h2>💼 Client Services</h2><button onclick="openPortal('client')">Open Client</button></div>
-<div><h2>🌐 Community</h2><button onclick="openPortal('community')">Open Community</button></div>
-<div><h2>🎓 Student Panel</h2><button onclick="openPortal('student')">Open Student</button></div>
-<div><h2>📚 Live Classes</h2><button onclick="openPortal('classes')">Open Classes</button></div>
-<div><h2>🛒 Marketplace</h2><button onclick="openPortal('marketplace')">Open Store</button></div>
-<div><h2>🧠 Smart Test</h2><button onclick="openPortal('smartTest')">Open Test</button></div>
-<div><h2>📞 Support</h2><button onclick="openPortal('support')">Open Support</button></div>
-</div>
+  <div class="grid">
+
+    <div>
+      <h2>👑 Admin Panel</h2>
+      <button class="dark" onclick="openPortal('adminLogin')">Open Admin</button>
+    </div>
+
+    <div>
+      <h2>👥 Team Members</h2>
+      <button onclick="openPortal('teamLogin')">Open Team</button>
+    </div>
+
+    <div>
+      <h2>💼 Client Services</h2>
+      <button onclick="openPortal('client')">Open Client</button>
+    </div>
+
+    <div>
+      <h2>🌐 Community</h2>
+      <button onclick="openPortal('community')">Open Community</button>
+    </div>
+
+    <div>
+      <h2>🎓 Student Panel</h2>
+      <button onclick="openPortal('student')">Open Student</button>
+    </div>
+
+    <div>
+      <h2>📚 Live Classes</h2>
+      <button onclick="openPortal('classes')">Open Classes</button>
+    </div>
+
+    <div>
+      <h2>🛒 Marketplace</h2>
+      <button onclick="openPortal('marketplace')">Open Store</button>
+    </div>
+
+    <div>
+      <h2>🧠 Smart Test</h2>
+      <button onclick="openPortal('smartTest')">Open Test</button>
+    </div>
+
+    <div>
+      <h2>📞 Support</h2>
+      <button onclick="openPortal('support')">Open Support</button>
+    </div>
+
+  </div>
 </div>
 
-<div style="margin:18px"><button id="backBtn" class="dark hide" onclick="goHome()">⬅ Back To Main Menu</button></div>
+<div style="margin:18px">
+  <button id="backBtn" class="dark hide" onclick="goHome()">⬅ Back To Main Menu</button>
+</div>
 
 <div id="adminLogin" class="card hide">
-<h2>👑 Admin Login</h2>
-<input id="adminEmail" placeholder="Admin Email">
-<input id="adminPassword" type="password" placeholder="Password">
-<button class="dark" onclick="adminLogin()">Admin Login</button>
+  <h2>👑 Admin Login</h2>
+  <input id="adminEmail" placeholder="Admin Email">
+  <input id="adminPassword" type="password" placeholder="Password">
+  <button class="dark" onclick="adminLogin()">Admin Login</button>
 </div>
 
 <div id="adminDashboard" class="card hide">
-<h2>📊 Admin Dashboard</h2>
+  <h2>📊 Admin Dashboard</h2>
 
-<div class="grid">
-<div class="card"><h3>💼 Client Requests <span id="clientCount" class="badge">0</span></h3><button onclick="showAdmin('clientBox')">Open</button></div>
-<div class="card"><h3>🎓 Student Requests <span id="studentCount" class="badge">0</span></h3><button onclick="showAdmin('studentBox')">Open</button></div>
-<div class="card"><h3>👥 Team Members</h3><button onclick="showAdmin('teamBox')">Open</button></div>
-<div class="card"><h3>🌐 Community Members</h3><button onclick="showAdmin('communityBox')">Open</button></div>
-<div class="card"><h3>🔐 Daily Code</h3><button onclick="showAdmin('codeBox')">Open</button></div>
-<div class="card"><h3>📢 Messages</h3><button onclick="showAdmin('messageBox')">Open</button></div>
-<div class="card"><h3>💸 Withdraw Requests</h3><button onclick="showAdmin('withdrawBox')">Open</button></div>
-<div class="card"><h3>⚙️ Website Controls</h3><button onclick="showAdmin('controlBox')">Open</button></div>
-<div class="card"><h3>📈 Investment Plans</h3><button onclick="showAdmin('investmentAdminBox')">Open</button></div>
-<div class="card"><h3>🧠 Smart Test MCQs</h3><button onclick="showAdmin('mcqAdminBox')">Open</button></div>
-</div>
+  <div class="grid">
 
-<div style="margin-top:15px">
-<button class="blue" onclick="setFilter('Pending')">Pending</button>
-<button class="green" onclick="setFilter('Accepted')">Accepted</button>
-<button class="red" onclick="setFilter('Rejected')">Rejected</button>
-<button class="dark" onclick="setFilter('All')">All</button>
-</div>
+    <div class="card">
+      <h3>💼 Client Requests <span id="clientCount" class="badge">0</span></h3>
+      <button onclick="showAdmin('clientBox')">Open</button>
+    </div>
 
-<div id="clientBox" class="hide"><h2>💼 Client Requests</h2><div id="clientList"></div></div>
-<div id="studentBox" class="hide"><h2>🎓 Student Requests</h2><div id="studentList"></div></div>
+    <div class="card">
+      <h3>🎓 Student Requests <span id="studentCount" class="badge">0</span></h3>
+      <button onclick="showAdmin('studentBox')">Open</button>
+    </div>
 
-<div id="teamBox" class="hide">
-<h2>👥 Team Members</h2>
-<input id="teamName" placeholder="Team Member Name">
-<input id="teamEmail" placeholder="Team Member Email">
-<button class="green" onclick="addTeamMember()">Add Team Member</button>
-<div id="teamList"></div>
-</div>
+    <div class="card">
+      <h3>👥 Team Members</h3>
+      <button onclick="showAdmin('teamBox')">Open</button>
+    </div>
 
-<div id="communityBox" class="hide"><h2>🌐 Community Members</h2><div id="communityList"></div></div>
+    <div class="card">
+      <h3>🌐 Community Members</h3>
+      <button onclick="showAdmin('communityBox')">Open</button>
+    </div>
 
-<div id="codeBox" class="hide">
-<h2>🔐 Daily Code</h2>
-<input id="dailyCode" placeholder="Today Code">
-<input id="dailyPoints" placeholder="Points">
-<button class="green" onclick="saveDailyCode()">Save Code</button>
-<p id="codeMsg"></p>
-</div>
+    <div class="card">
+      <h3>🔐 Daily Code</h3>
+      <button onclick="showAdmin('codeBox')">Open</button>
+    </div>
 
-<div id="messageBox" class="hide">
-<h2>📢 Send Message</h2>
-<select id="msgTarget"><option>community</option><option>team</option><option>all</option></select>
-<textarea id="adminMsg" placeholder="Write message"></textarea>
-<button class="green" onclick="sendMessage()">Send Message</button>
-<p id="msgStatus"></p>
-</div>
+    <div class="card">
+      <h3>📋 Daily Tasks</h3>
+      <button onclick="showAdmin('taskBox')">Open</button>
+    </div>
 
-<div id="withdrawBox" class="hide"><h2>💸 Withdraw Requests</h2><div id="withdrawList"></div></div>
+    <div class="card">
+      <h3>📢 Messages</h3>
+      <button onclick="showAdmin('messageBox')">Open</button>
+    </div>
 
-<div id="controlBox" class="hide">
-<h2>⚙️ Website Controls</h2>
-<input id="logoInput" placeholder="Logo Image URL">
-<input id="newsInput" placeholder="News Ticker Text">
-<button class="green" onclick="saveBranding()">Save Logo / News</button>
-<p id="controlMsg"></p>
-</div>
+    <div class="card">
+      <h3>💸 Withdraw Requests</h3>
+      <button onclick="showAdmin('withdrawBox')">Open</button>
+    </div>
 
-<div id="investmentAdminBox" class="hide">
-<h2>📈 Add Investment Plan</h2>
-<select id="planType"><option>Short Term</option><option>Mid Term</option><option>Long Term</option></select>
-<input id="planTitle" placeholder="Plan Title e.g $10 Plan">
-<input id="planAmount" placeholder="Amount e.g 10 USD / 3000 PKR">
-<input id="planNote" placeholder="Profit/Loss note">
-<textarea id="planDesc" placeholder="Plan description / disclaimer"></textarea>
-<button class="green" onclick="addInvestmentPlan()">Add Plan</button>
-<div id="plansAdminList"></div>
-</div>
+    <div class="card">
+      <h3>⚙️ Website Controls</h3>
+      <button onclick="showAdmin('controlBox')">Open</button>
+    </div>
 
-<div id="mcqAdminBox" class="hide">
-<h2>🧠 Add Smart Test MCQ</h2>
-<input id="mcqSubject" placeholder="Subject e.g Math, English, GK">
-<textarea id="mcqQuestion" placeholder="Question"></textarea>
-<input id="mcqA" placeholder="Option A">
-<input id="mcqB" placeholder="Option B">
-<input id="mcqC" placeholder="Option C">
-<input id="mcqD" placeholder="Option D">
-<select id="mcqCorrect"><option>A</option><option>B</option><option>C</option><option>D</option></select>
-<button class="green" onclick="addMCQ()">Add MCQ</button>
-<div id="mcqAdminList"></div>
-</div>
-</div>
+    <div class="card">
+      <h3>🛍 Service / Product Menu</h3>
+      <button onclick="showAdmin('serviceAdminBox')">Open</button>
+    </div>
 
-<div id="teamLogin" class="card hide">
-<h2>👥 Team Login</h2>
-<input id="teamIdInput" placeholder="Team ID">
-<button class="dark" onclick="teamLogin()">Team Login</button>
-<p id="teamMsg"></p>
-<div id="teamDash" class="hide">
-<h2>Team Dashboard</h2>
-<p id="teamInfo"></p>
-<div id="teamMessages"></div>
-<button id="teamWithdrawBtn" class="dark" onclick="teamWithdraw()">Withdraw Locked</button>
-</div>
-</div>
+    <div class="card">
+      <h3>📈 Investment Plans</h3>
+      <button onclick="showAdmin('investmentAdminBox')">Open</button>
+    </div>
 
-<div id="client" class="card hide">
-<h2>💼 Client Request</h2>
-<input id="clientName" placeholder="Full Name">
-<input id="clientMobile" placeholder="Mobile">
-<input id="clientEmail" placeholder="Email">
-<input id="clientService" placeholder="Service / Product Required">
-<textarea id="clientDetails" placeholder="Details"></textarea>
-<button onclick="submitClientRequest()">Submit Request</button>
-<p id="clientMsg"></p>
+    <div class="card">
+      <h3>🧠 Smart Test MCQs</h3>
+      <button onclick="showAdmin('mcqAdminBox')">Open</button>
+    </div>
+
+  </div>
+
+  <div style="margin-top:15px">
+    <button class="blue" onclick="setFilter('Pending')">Pending</button>
+    <button class="green" onclick="setFilter('Accepted')">Accepted</button>
+    <button class="red" onclick="setFilter('Rejected')">Rejected</button>
+    <button class="dark" onclick="setFilter('All')">All</button>
+  </div>
+
+  <div id="clientBox" class="hide">
+    <h2>💼 Client Requests</h2>
+    <div id="clientList"></div>
+  </div>
+
+  <div id="studentBox" class="hide">
+    <h2>🎓 Student Requests</h2>
+    <div id="studentList"></div>
+  </div>
+
+  <div id="teamBox" class="hide">
+    <h2>👥 Team Members</h2>
+    <input id="teamName" placeholder="Team Member Name">
+    <input id="teamEmail" placeholder="Team Member Email">
+    <button class="green" onclick="addTeamMember()">Add Team Member</button>
+    <div id="teamList"></div>
+  </div>
+
+  <div id="communityBox" class="hide">
+    <h2>🌐 Community Members</h2>
+    <div id="communityList"></div>
+  </div>
+
+  <div id="codeBox" class="hide">
+    <h2>🔐 Daily Code</h2>
+    <input id="dailyCode" placeholder="Today Code">
+    <input id="dailyPoints" placeholder="Points">
+    <button class="green" onclick="saveDailyCode()">Save Code</button>
+    <p id="codeMsg"></p>
+  </div>
+
+  <div id="taskBox" class="hide">
+    <h2>📋 Add Daily Task</h2>
+    <select id="taskType">
+      <option>YouTube Video</option>
+      <option>Blog Post</option>
+      <option>Website Visit</option>
+    </select>
+    <input id="taskTitle" placeholder="Task Title">
+    <input id="taskLink" placeholder="Task Link">
+    <input id="taskCode" placeholder="Task Code">
+    <input id="taskPoints" placeholder="Task Points">
+    <button class="green" onclick="addDailyTask()">Add Task</button>
+    <div id="taskAdminList"></div>
+  </div>
+
+  <div id="messageBox" class="hide">
+    <h2>📢 Send Message</h2>
+    <select id="msgTarget">
+      <option>community</option>
+      <option>team</option>
+      <option>all</option>
+    </select>
+    <textarea id="adminMsg" placeholder="Write message"></textarea>
+    <button class="green" onclick="sendMessage()">Send Message</button>
+    <p id="msgStatus"></p>
+  </div>
+
+  <div id="withdrawBox" class="hide">
+    <h2>💸 Withdraw Requests</h2>
+    <div id="withdrawList"></div>
+  </div>
+
+  <div id="controlBox" class="hide">
+    <h2>⚙️ Website Controls</h2>
+    <input id="logoInput" placeholder="Logo Image URL">
+    <input id="newsInput" placeholder="News Ticker Text">
+    <button class="green" onclick="saveBranding()">Save Logo / News</button>
+    <p id="controlMsg"></p>
+  </div>
+
+  <div id="serviceAdminBox" class="hide">
+    <h2>🛍 Add Service / Product</h2>
+    <input id="serviceName" placeholder="Service / Product Name">
+    <input id="serviceCategory" placeholder="Category e.g YouTube, Books, Stationery">
+    <textarea id="serviceDesc" placeholder="Description"></textarea>
+    <button class="green" onclick="addServiceItem()">Add Item</button>
+    <div id="serviceAdminList"></div>
+  </div>
+
+  <div id="investmentAdminBox" class="hide">
+    <h2>📈 Add Investment Plan</h2>
+    <select id="planType">
+      <option>Short Term</option>
+      <option>Mid Term</option>
+      <option>Long Term</option>
+    </select>
+    <input id="planTitle" placeholder="Plan Title e.g $10 Plan">
+    <input id="planAmount" placeholder="Amount e.g 10 USD / 3000 PKR">
+    <input id="planNote" placeholder="Profit/Loss note">
+    <textarea id="planDesc" placeholder="Plan description / disclaimer"></textarea>
+    <button class="green" onclick="addInvestmentPlan()">Add Plan</button>
+    <div id="plansAdminList"></div>
+  </div>
+
+  <div id="mcqAdminBox" class="hide">
+    <h2>🧠 Add Smart Test MCQ</h2>
+    <input id="mcqSubject" placeholder="Subject e.g Math, English, GK">
+    <textarea id="mcqQuestion" placeholder="Question"></textarea>
+    <input id="mcqA" placeholder="Option A">
+    <input id="mcqB" placeholder="Option B">
+    <input id="mcqC" placeholder="Option C">
+    <input id="mcqD" placeholder="Option D">
+    <select id="mcqCorrect">
+      <option>A</option>
+      <option>B</option>
+      <option>C</option>
+      <option>D</option>
+    </select>
+    <button class="green" onclick="addMCQ()">Add MCQ</button>
+    <div id="mcqAdminList"></div>
+  </div>
+
+  </div>
+
+  <div id="teamLogin" class="card hide">
+  <h2>👥 Team Login</h2>
+  <input id="teamId" placeholder="Team ID">
+  <button class="dark" onclick="teamLogin()">Team Login</button>
+
+  <div id="teamDashboard" class="hide">
+    <h2>📋 Team Dashboard</h2>
+    <p id="teamWelcome"></p>
+
+    <h3>📢 Messages</h3>
+    <div id="teamMessages"></div>
+
+    <h3>💰 Points</h3>
+    <p id="teamPoints">0</p>
+
+    <button class="green" onclick="requestWithdraw('team')">
+      Request Withdraw
+    </button>
+  </div>
 </div>
 
 <div id="community" class="card hide">
-<h2>🌐 Community Dashboard</h2>
-<input id="comName" placeholder="Full Name">
-<input id="comEmail" placeholder="Email">
-<button class="dark" onclick="communityLogin()">Create / Login</button>
-<div id="comDash" class="hide">
-<p id="comInfo"></p>
-<div id="communityMessages"></div>
-<h3>🎯 Daily Code</h3>
-<input id="codeInput" placeholder="Enter Code">
-<button class="green" onclick="submitDailyCode()">Submit Code</button>
-<p id="codeResult"></p>
-<h3>📈 Investment</h3>
-<button onclick="showInvestmentType('Short Term')">Short Term</button>
-<button onclick="showInvestmentType('Mid Term')">Mid Term</button>
-<button onclick="showInvestmentType('Long Term')">Long Term</button>
-<div id="investmentList"></div>
-<button id="comWithdrawBtn" class="dark" onclick="communityWithdraw()">Withdraw Locked</button>
-<p id="comMsg"></p>
+  <h2>🌐 Community Dashboard</h2>
+
+  <input id="communityName" placeholder="Full Name">
+  <input id="communityEmail" placeholder="Email">
+
+  <button class="dark" onclick="communityLogin()">
+    Create / Login
+  </button>
+
+  <div id="communityDashboard" class="hide">
+
+    <h3 id="communityUser"></h3>
+    <p>Points: <span id="communityPoints">0</span></p>
+
+    <h2>📢 Messages</h2>
+    <div id="communityMessages"></div>
+
+    <h2>🎯 Daily Tasks</h2>
+    <div id="dailyTaskList"></div>
+
+    <h2>🔐 Daily Code</h2>
+    <input id="userCode" placeholder="Enter Code">
+    <button class="green" onclick="submitCode()">
+      Submit Code
+    </button>
+
+    <h2>📈 Investment</h2>
+
+    <button onclick="showInvestmentType('Short Term')">
+      Short Term
+    </button>
+
+    <button onclick="showInvestmentType('Mid Term')">
+      Mid Term
+    </button>
+
+    <button onclick="showInvestmentType('Long Term')">
+      Long Term
+    </button>
+
+    <div id="investmentArea"></div>
+
+    <h2>💸 Withdraw</h2>
+
+    <button class="green" onclick="requestWithdraw('community')">
+      Request Withdraw
+    </button>
+
+  </div>
 </div>
+
+<div id="client" class="card hide">
+
+  <h2>💼 Client Request</h2>
+
+  <input id="clientName" placeholder="Full Name">
+
+  <input id="clientMobile" placeholder="Mobile">
+
+  <input id="clientEmail" placeholder="Email">
+
+  <select id="clientService"></select>
+
+  <textarea id="clientDetails" placeholder="Details"></textarea>
+
+  <button onclick="submitClientRequest()">
+    Submit Request
+  </button>
+
+  <p id="clientMsg"></p>
+
 </div>
 
 <div id="student" class="card hide">
-<h2>🎓 Tuition Request</h2>
-<input id="studentName" placeholder="Student Name">
-<input id="studentClass" placeholder="Class">
-<input id="studentSubject" placeholder="Subject">
-<button onclick="submitStudentRequest()">Submit Request</button>
-<p id="studentMsg"></p>
+
+  <h2>🎓 Tuition Request</h2>
+
+  <input id="studentName" placeholder="Student Name">
+
+  <input id="parentName" placeholder="Parent Name">
+
+  <input id="studentMobile" placeholder="Mobile">
+
+  <select id="studentClass">
+
+    <option>Nursery</option>
+    <option>KG</option>
+    <option>Class 1</option>
+    <option>Class 2</option>
+    <option>Class 3</option>
+    <option>Class 4</option>
+    <option>Class 5</option>
+    <option>Class 6</option>
+    <option>Class 7</option>
+    <option>Class 8</option>
+    <option>Class 9</option>
+    <option>Class 10</option>
+
+  </select>
+
+  <select id="studentSubject">
+
+    <option>Math</option>
+    <option>English</option>
+    <option>Urdu</option>
+    <option>General Science</option>
+    <option>General Knowledge</option>
+    <option>Computer Science</option>
+    <option>Biology</option>
+    <option>Chemistry</option>
+    <option>Physics</option>
+    <option>Islamiat</option>
+
+  </select>
+
+  <select id="studyMethod">
+    <option>Online</option>
+    <option>Physical</option>
+  </select>
+
+  <textarea id="studentDetails" placeholder="Details"></textarea>
+
+  <button onclick="submitStudentRequest()">
+    Submit Request
+  </button>
+
+  <p id="studentMsg"></p>
+
 </div>
 
 <div id="classes" class="card hide">
-<h2>📚 Live Classes</h2>
-<p>Coming Soon - Nursery to Class 10 lectures will be uploaded here.</p>
-<div class="grid">
-<button>Nursery</button><button>KG</button><button>Class 1</button><button>Class 2</button>
-<button>Class 3</button><button>Class 4</button><button>Class 5</button><button>Class 6</button>
-<button>Class 7</button><button>Class 8</button><button>Class 9</button><button>Class 10</button>
-</div>
+
+  <h2>📚 Live Classes</h2>
+
+  <select id="classSelect">
+
+    <option>Nursery</option>
+    <option>KG</option>
+    <option>Class 1</option>
+    <option>Class 2</option>
+    <option>Class 3</option>
+    <option>Class 4</option>
+    <option>Class 5</option>
+    <option>Class 6</option>
+    <option>Class 7</option>
+    <option>Class 8</option>
+    <option>Class 9</option>
+    <option>Class 10</option>
+
+  </select>
+
+  <select id="subjectSelect">
+
+    <option>Math</option>
+    <option>English</option>
+    <option>Urdu</option>
+    <option>General Science</option>
+    <option>General Knowledge</option>
+    <option>Computer Science</option>
+    <option>Biology</option>
+    <option>Chemistry</option>
+    <option>Physics</option>
+    <option>Islamiat</option>
+
+  </select>
+
+  <button onclick="openClasses()">
+    Open Subject
+  </button>
+
+  <div id="classArea"></div>
+
 </div>
 
-<div id="marketplace" class="card hide"><h2>🛒 Marketplace</h2><p>Coming Soon - Products, books and services will be available here.</p></div>
+<div id="marketplace" class="card hide">
+
+  <h2>🛒 Marketplace</h2>
+
+  <div id="marketplaceItems"></div>
+
+</div>
 
 <div id="smartTest" class="card hide">
-<h2>🧠 Smart Test</h2>
-<select id="testSubject"><option>Math</option><option>English</option><option>Science</option><option>General Knowledge</option><option>Islamiat</option></select>
-<button class="green" onclick="startTest()">Start Test</button>
-<p id="scoreBox"></p>
-<div id="testBox"></div>
+
+  <h2>🧠 Smart Test</h2>
+
+  <select id="testSubject" onchange="loadMCQTest()">
+
+    <option>Math</option>
+    <option>English</option>
+    <option>Urdu</option>
+    <option>General Science</option>
+    <option>General Knowledge</option>
+    <option>Biology</option>
+    <option>Chemistry</option>
+    <option>Computer Science</option>
+    <option>Islamiat</option>
+    <option>ETEA Test</option>
+    <option>Hajj Muavineen</option>
+
+  </select>
+
+  <div id="mcqBox"></div>
+
+  <h3>
+    Score:
+    <span id="mcqScore">0</span>
+  </h3>
+
 </div>
 
-<div id="support" class="card hide"><h2>📞 Support</h2><p>WhatsApp Support Coming Soon</p></div>
+<div id="support" class="card hide">
 
-<footer>© 2026 Nexora Community</footer>
+  <h2>📞 Support</h2>
+
+  <p>
+    WhatsApp Support Coming Soon
+  </p>
+
+</div>
+
+<footer>
+  © 2026 Nexora Community
+</footer>
 
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getFirestore,collection,addDoc,getDocs,getDoc,setDoc,serverTimestamp,doc,updateDoc,deleteDoc,increment } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-const firebaseConfig={
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+getFirestore,
+collection,
+addDoc,
+getDocs,
+updateDoc,
+doc
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+
 apiKey:"AIzaSyAWj7dozNpK8ExbJ4fptOODj66i09lxb0s",
-authDomain:"nexoracapitalcommunity.firebaseapp.com",
-projectId:"nexoracapitalcommunity",
-storageBucket:"nexoracapitalcommunity.appspot.com",
-messagingSenderId:"714723891713",
-appId:"1:714723891713:web:65f70b7d3902f2aac7be00"
+
+authDomain:"YOUR_AUTH_DOMAIN",
+
+projectId:"YOUR_PROJECT_ID",
+
+storageBucket:"YOUR_STORAGE_BUCKET",
+
+messagingSenderId:"YOUR_MESSAGING_ID",
+
+appId:"YOUR_APP_ID"
+
 };
 
-const app=initializeApp(firebaseConfig);
-const db=getFirestore(app);
-let currentFilter="All", currentCommunityId="", currentTeamDoc="", testQuestions=[], currentQ=0, score=0;
+const app = initializeApp(firebaseConfig);
 
-function safeId(x){return x.replaceAll(".","_").replaceAll("@","_");}
-window.setFilter=x=>{currentFilter=x;loadClientRequests();loadStudentRequests();}
+const db = getFirestore(app);
 
-async function loadSettings(){
-let n=await getDoc(doc(db,"settings","news"));
-if(n.exists())newsText.innerText=n.data().text||"Welcome to Nexora Community";
-let b=await getDoc(doc(db,"settings","branding"));
-if(b.exists()&&b.data().logo){siteLogo.src=b.data().logo;siteLogo.style.display="inline-block";}
-}
-loadSettings();
+let currentFilter="All";
 
-window.saveBranding=async function(){
-await setDoc(doc(db,"settings","news"),{text:newsInput.value});
-await setDoc(doc(db,"settings","branding"),{logo:logoInput.value});
-controlMsg.innerText="Saved ✅";loadSettings();
-}
+let currentCommunity=null;
 
-window.submitClientRequest=async function(){
-await addDoc(collection(db,"clientRequests"),{name:clientName.value,mobile:clientMobile.value,email:clientEmail.value,service:clientService.value,details:clientDetails.value,status:"Pending",createdAt:serverTimestamp()});
-clientMsg.innerText="Request Submitted ✅";
-}
-
-window.submitStudentRequest=async function(){
-await addDoc(collection(db,"studentRequests"),{studentName:studentName.value,className:studentClass.value,subject:studentSubject.value,status:"Pending",createdAt:serverTimestamp()});
-studentMsg.innerText="Request Submitted ✅";
-}
-
-window.adminLogin=async function(){
-if(adminEmail.value.trim()!=="smartustad0@gmail.com"){alert("Access Denied ❌");return;}
-adminLogin.classList.add("hide");adminDashboard.classList.remove("hide");
-loadClientRequests();loadStudentRequests();loadTeamMembers();loadCommunityMembers();loadWithdraws();loadPlansAdmin();loadMCQsAdmin();
-}
-
-async function loadClientRequests(){
-let snap=await getDocs(collection(db,"clientRequests"));clientCount.innerText=snap.size;let h="";
-snap.forEach(d=>{let x=d.data();if(currentFilter!="All"&&x.status!==currentFilter)return;
-h+=`<div class="card"><h3>${x.name||""}</h3><p>${x.service||""}</p><p><span class="status">${x.status||"Pending"}</span></p><button class="green" onclick="updateClientStatus('${d.id}','Accepted')">Accept</button><button class="red" onclick="updateClientStatus('${d.id}','Rejected')">Reject</button><button class="dark" onclick="deleteClientRequest('${d.id}')">Delete</button></div>`;
-});clientList.innerHTML=h||"No requests";
-}
-
-async function loadStudentRequests(){
-let snap=await getDocs(collection(db,"studentRequests"));studentCount.innerText=snap.size;let h="";
-snap.forEach(d=>{let x=d.data();if(currentFilter!="All"&&x.status!==currentFilter)return;
-h+=`<div class="card"><h3>${x.studentName||""}</h3><p>${x.className||""} - ${x.subject||""}</p><p><span class="status">${x.status||"Pending"}</span></p><button class="green" onclick="updateStudentStatus('${d.id}','Accepted')">Accept</button><button class="red" onclick="updateStudentStatus('${d.id}','Rejected')">Reject</button><button class="dark" onclick="deleteStudentRequest('${d.id}')">Delete</button></div>`;
-});studentList.innerHTML=h||"No requests";
-}
-
-window.updateClientStatus=async(id,s)=>{await updateDoc(doc(db,"clientRequests",id),{status:s});loadClientRequests();}
-window.updateStudentStatus=async(id,s)=>{await updateDoc(doc(db,"studentRequests",id),{status:s});loadStudentRequests();}
-window.deleteClientRequest=async id=>{await deleteDoc(doc(db,"clientRequests",id));loadClientRequests();}
-window.deleteStudentRequest=async id=>{await deleteDoc(doc(db,"studentRequests",id));loadStudentRequests();}
-
-window.addTeamMember=async function(){
-let teamId="NX-TM-"+Math.floor(1000+Math.random()*9000);
-await addDoc(collection(db,"teamMembers"),{name:teamName.value,email:teamEmail.value,teamId,points:0,createdAt:serverTimestamp()});
-loadTeamMembers();
-}
-async function loadTeamMembers(){
-let snap=await getDocs(collection(db,"teamMembers"));let h="";
-snap.forEach(d=>{let x=d.data();h+=`<div class="card"><h3>${x.name}</h3><p>${x.email}</p><p><b>Team ID:</b> ${x.teamId}</p><p>Points: ${x.points||0}</p></div>`});
-teamList.innerHTML=h||"No team members";
-}
-
-window.teamLogin=async function(){
-let snap=await getDocs(collection(db,"teamMembers"));let found=null,id="";
-snap.forEach(d=>{let x=d.data();if(x.teamId===teamIdInput.value.trim()){found=x;id=d.id;}});
-if(!found){teamMsg.innerText="Invalid Team ID";return;}
-currentTeamDoc=id;teamDash.classList.remove("hide");
-teamInfo.innerHTML=`<b>${found.name}</b><br>Points: ${found.points||0}`;
-teamWithdrawBtn.className=(found.points||0)>=500?"green":"dark";
-teamWithdrawBtn.innerText=(found.points||0)>=500?"Withdraw Request":"Withdraw Locked";
-loadMessages("team","teamMessages");
-}
-
-window.teamWithdraw=async function(){
-let s=await getDoc(doc(db,"teamMembers",currentTeamDoc));let p=s.data().points||0;
-if(p<500){teamMsg.innerText="Minimum 500 points required";return;}
-await addDoc(collection(db,"withdrawRequests"),{type:"team",points:p,status:"Pending",createdAt:serverTimestamp()});
-teamMsg.innerText="Withdraw request sent ✅";
-}
-
-window.communityLogin=async function(){
-let email=comEmail.value.trim();if(!email){comMsg.innerText="Enter email";return;}
-currentCommunityId=safeId(email);
-let ref=doc(db,"communityMembers",currentCommunityId),s=await getDoc(ref);
-if(!s.exists())await setDoc(ref,{name:comName.value,email,points:0,createdAt:serverTimestamp()});
-let n=await getDoc(ref),p=n.data().points||0;
-comDash.classList.remove("hide");comInfo.innerHTML=`<b>${n.data().name}</b><br>Points: ${p}`;
-comWithdrawBtn.className=p>=1000?"green":"dark";comWithdrawBtn.innerText=p>=1000?"Withdraw Request":"Withdraw Locked";
-loadMessages("community","communityMessages");
-}
-
-window.submitDailyCode=async function(){
-let s=await getDoc(doc(db,"settings","dailyCode"));if(!s.exists()){codeResult.innerText="No code set";return;}
-let c=s.data().code, pts=Number(s.data().points||0);
-if(codeInput.value.trim()!==c){codeResult.innerText="Wrong code ❌";return;}
-let claim=doc(db,"codeClaims",currentCommunityId+"_"+c),old=await getDoc(claim);
-if(old.exists()){codeResult.innerText="Already claimed";return;}
-await setDoc(claim,{member:currentCommunityId,code:c,createdAt:serverTimestamp()});
-await updateDoc(doc(db,"communityMembers",currentCommunityId),{points:increment(pts)});
-codeResult.innerText="Points added ✅";communityLogin();
-}
-
-window.communityWithdraw=async function(){
-let s=await getDoc(doc(db,"communityMembers",currentCommunityId));let p=s.data().points||0;
-if(p<1000){comMsg.innerText="Minimum 1000 points required";return;}
-await addDoc(collection(db,"withdrawRequests"),{type:"community",id:currentCommunityId,points:p,status:"Pending",createdAt:serverTimestamp()});
-comMsg.innerText="Withdraw request sent ✅";
-}
-
-window.saveDailyCode=async function(){
-await setDoc(doc(db,"settings","dailyCode"),{code:dailyCode.value,points:Number(dailyPoints.value||0)});
-codeMsg.innerText="Code saved ✅";
-}
-
-window.sendMessage=async function(){
-await addDoc(collection(db,"messages"),{target:msgTarget.value,text:adminMsg.value,createdAt:serverTimestamp()});
-msgStatus.innerText="Message sent ✅";
-}
-
-async function loadMessages(target,box){
-let snap=await getDocs(collection(db,"messages")),h="<h3>Messages</h3>";
-snap.forEach(d=>{let x=d.data();if(x.target===target||x.target==="all")h+=`<div class="card">${x.text}</div>`});
-document.getElementById(box).innerHTML=h;
-}
-
-async function loadCommunityMembers(){
-let snap=await getDocs(collection(db,"communityMembers"));let h="";
-snap.forEach(d=>{let x=d.data();h+=`<div class="card"><b>${x.name}</b><br>${x.email}<br>Points: ${x.points||0}</div>`});
-communityList.innerHTML=h||"No members";
-}
-
-async function loadWithdraws(){
-let snap=await getDocs(collection(db,"withdrawRequests"));let h="";
-snap.forEach(d=>{let x=d.data();h+=`<div class="card"><b>${x.type}</b><br>Points: ${x.points}<br>Status: ${x.status}</div>`});
-withdrawList.innerHTML=h||"No withdraw requests";
-}
-
-window.addInvestmentPlan=async function(){
-await addDoc(collection(db,"investmentPlans"),{type:planType.value,title:planTitle.value,amount:planAmount.value,note:planNote.value,desc:planDesc.value,status:"Active",createdAt:serverTimestamp()});
-loadPlansAdmin();
-}
-async function loadPlansAdmin(){
-let snap=await getDocs(collection(db,"investmentPlans"));let h="";
-snap.forEach(d=>{let x=d.data();h+=`<div class="card"><b>${x.type}</b><h3>${x.title}</h3><p>${x.amount}</p><p>${x.note}</p></div>`});
-plansAdminList.innerHTML=h||"No plans";
-}
-window.showInvestmentType=async function(type){
-let disclaimer=type==="Short Term"?"Minimum 1 month, maximum 1 year.":type==="Mid Term"?"Minimum 1 year, maximum 5 years.":"Minimum 5 years, no fixed maximum.";
-let snap=await getDocs(collection(db,"investmentPlans"));
-let h=`<div class="card"><b>${type} Disclaimer:</b><p>${disclaimer}</p><p>Business has profit/loss risk. This feature is Coming Soon and requires admin approval.</p></div>`;
-snap.forEach(d=>{
-let x=d.data();
-if(x.type===type){
-h+=`<div class="card"><h3>${x.title}</h3><p>${x.amount}</p><p>${x.note}</p><button onclick="alert('Coming Soon - Admin approval required')">Activate</button></div>`;
-}
-});
-investmentList.innerHTML=h;
-}
-
-window.addMCQ=async function(){
-await addDoc(collection(db,"mcqs"),{
-subject:mcqSubject.value,
-question:mcqQuestion.value,
-A:mcqA.value,
-B:mcqB.value,
-C:mcqC.value,
-D:mcqD.value,
-correct:mcqCorrect.value,
-createdAt:serverTimestamp()
-});
-loadMCQsAdmin();
-}
-
-async function loadMCQsAdmin(){
-let snap=await getDocs(collection(db,"mcqs"));
-let h="";
-snap.forEach(d=>{
-let x=d.data();
-h+=`<div class="card"><b>${x.subject}</b><p>${x.question}</p><p>Correct: ${x.correct}</p></div>`;
-});
-mcqAdminList.innerHTML=h||"No MCQs";
-}
-
-window.startTest=async function(){
-let snap=await getDocs(collection(db,"mcqs"));
-testQuestions=[];
-currentQ=0;
-score=0;
-snap.forEach(d=>{
-let x=d.data();
-if(x.subject===testSubject.value){
-testQuestions.push(x);
-}
-});
-showQuestion();
-}
-
-function showQuestion(){
-if(currentQ>=testQuestions.length){
-testBox.innerHTML="<h3>Test Completed</h3>";
-scoreBox.innerText="Score: "+score+"/"+testQuestions.length;
-return;
-}
-
-let q=testQuestions[currentQ];
-scoreBox.innerText="Score: "+score+"/"+testQuestions.length;
-
-testBox.innerHTML=`
-<div class="card">
-<h3>${q.question}</h3>
-<button class="option" onclick="answer('A')">A. ${q.A}</button>
-<button class="option" onclick="answer('B')">B. ${q.B}</button>
-<button class="option" onclick="answer('C')">C. ${q.C}</button>
-<button class="option" onclick="answer('D')">D. ${q.D}</button>
-</div>
-`;
-}
-
-window.answer=function(opt){
-let q=testQuestions[currentQ];
-if(opt===q.correct){
-score++;
-}
-alert(opt===q.correct?"Correct ✅":"Wrong ❌ Correct: "+q.correct);
-currentQ++;
-showQuestion();
-}
-</script>
-
-<script>
 window.openPortal=function(id){
-document.getElementById("mainMenu").style.display="none";
-document.getElementById("backBtn").classList.remove("hide");
+
+mainMenu.classList.add("hide");
+
+backBtn.classList.remove("hide");
 
 [
 "adminLogin",
 "adminDashboard",
 "teamLogin",
-"client",
 "community",
+"client",
 "student",
 "classes",
 "marketplace",
 "smartTest",
 "support"
-].forEach(function(x){
-let e=document.getElementById(x);
-if(e){
-e.classList.add("hide");
-}
+]
+
+.forEach(sec=>{
+
+document
+.getElementById(sec)
+.classList.add("hide");
+
 });
 
-let t=document.getElementById(id);
-if(t){
-t.classList.remove("hide");
+document
+.getElementById(id)
+.classList.remove("hide");
+
+if(id==="marketplace"){
+loadMarketplace();
 }
+
+if(id==="smartTest"){
+loadMCQTest();
+}
+
 }
 
 window.goHome=function(){
-document.getElementById("mainMenu").style.display="block";
-document.getElementById("backBtn").classList.add("hide");
+
+mainMenu.classList.remove("hide");
+
+backBtn.classList.add("hide");
 
 [
 "adminLogin",
 "adminDashboard",
 "teamLogin",
-"client",
 "community",
+"client",
 "student",
 "classes",
 "marketplace",
 "smartTest",
 "support"
-].forEach(function(x){
-let e=document.getElementById(x);
-if(e){
-e.classList.add("hide");
-}
+]
+
+.forEach(sec=>{
+
+document
+.getElementById(sec)
+.classList.add("hide");
+
 });
+
 }
 
 window.showAdmin=function(id){
+
 [
 "clientBox",
 "studentBox",
 "teamBox",
 "communityBox",
 "codeBox",
+"taskBox",
 "messageBox",
 "withdrawBox",
 "controlBox",
+"serviceAdminBox",
 "investmentAdminBox",
 "mcqAdminBox"
-].forEach(function(x){
-let e=document.getElementById(x);
-if(e){
-e.classList.add("hide");
-}
+]
+
+.forEach(sec=>{
+
+document
+.getElementById(sec)
+.classList.add("hide");
+
 });
 
-let t=document.getElementById(id);
-if(t){
-t.classList.remove("hide");
+document
+.getElementById(id)
+.classList.remove("hide");
+
 }
+
+  window.setFilter=function(status){
+  currentFilter=status;
+  loadClientRequests();
+  loadStudentRequests();
+}
+
+function now(){
+  return new Date().toLocaleString();
+}
+
+window.adminLogin=async function(){
+  const email=document.getElementById("adminEmail").value.trim();
+
+  if(email!=="smartustad0@gmail.com"){
+    alert("Access Denied ❌");
+    return;
+  }
+
+  document.getElementById("adminLogin").classList.add("hide");
+  document.getElementById("adminDashboard").classList.remove("hide");
+
+  loadClientRequests();
+  loadStudentRequests();
+  loadTeamMembers();
+  loadCommunityMembers();
+  loadServices();
+  loadTasksAdmin();
+  loadInvestmentPlansAdmin();
+  loadMCQsAdmin();
+  loadWithdrawRequests();
+}
+
+window.submitClientRequest=async function(){
+  await addDoc(collection(db,"clientRequests"),{
+    name:document.getElementById("clientName").value,
+    mobile:document.getElementById("clientMobile").value,
+    email:document.getElementById("clientEmail").value,
+    service:document.getElementById("clientService").value,
+    details:document.getElementById("clientDetails").value,
+    status:"Pending",
+    createdAt:now()
+  });
+
+  document.getElementById("clientMsg").innerText="Client request submitted ✅";
+}
+
+window.submitStudentRequest=async function(){
+  await addDoc(collection(db,"studentRequests"),{
+    studentName:document.getElementById("studentName").value,
+    parentName:document.getElementById("parentName").value,
+    mobile:document.getElementById("studentMobile").value,
+    className:document.getElementById("studentClass").value,
+    subject:document.getElementById("studentSubject").value,
+    studyMethod:document.getElementById("studyMethod").value,
+    details:document.getElementById("studentDetails").value,
+    status:"Pending",
+    createdAt:now()
+  });
+
+  document.getElementById("studentMsg").innerText="Student request submitted ✅";
+}
+
+async function loadClientRequests(){
+  const snap=await getDocs(collection(db,"clientRequests"));
+  document.getElementById("clientCount").innerText=snap.size;
+
+  let html="";
+  snap.forEach(item=>{
+    const d=item.data();
+    if(currentFilter!=="All" && d.status!==currentFilter)return;
+
+    html+=`
+    <div class="card">
+      <h3>${d.name||"No Name"}</h3>
+      <p><b>Mobile:</b> ${d.mobile||""}</p>
+      <p><b>Email:</b> ${d.email||""}</p>
+      <p><b>Service:</b> ${d.service||""}</p>
+      <p><b>Status:</b> <span class="status">${d.status||"Pending"}</span></p>
+      <p>${d.details||""}</p>
+      <button class="green" onclick="updateClientStatus('${item.id}','Accepted')">Accept</button>
+      <button class="red" onclick="updateClientStatus('${item.id}','Rejected')">Reject</button>
+    </div>`;
+  });
+
+  document.getElementById("clientList").innerHTML=html||"No client requests";
+}
+
+async function loadStudentRequests(){
+  const snap=await getDocs(collection(db,"studentRequests"));
+  document.getElementById("studentCount").innerText=snap.size;
+
+  let html="";
+  snap.forEach(item=>{
+    const d=item.data();
+    if(currentFilter!=="All" && d.status!==currentFilter)return;
+
+    html+=`
+    <div class="card">
+      <h3>${d.studentName||"No Name"}</h3>
+      <p><b>Parent:</b> ${d.parentName||""}</p>
+      <p><b>Mobile:</b> ${d.mobile||""}</p>
+      <p><b>Class:</b> ${d.className||""}</p>
+      <p><b>Subject:</b> ${d.subject||""}</p>
+      <p><b>Status:</b> <span class="status">${d.status||"Pending"}</span></p>
+      <button class="green" onclick="updateStudentStatus('${item.id}','Accepted')">Accept</button>
+      <button class="red" onclick="updateStudentStatus('${item.id}','Rejected')">Reject</button>
+    </div>`;
+  });
+
+  document.getElementById("studentList").innerHTML=html||"No student requests";
+}
+
+window.updateClientStatus=async function(id,status){
+  await updateDoc(doc(db,"clientRequests",id),{status:status});
+  loadClientRequests();
+}
+
+window.updateStudentStatus=async function(id,status){
+  await updateDoc(doc(db,"studentRequests",id),{status:status});
+  loadStudentRequests();
+}
+
+window.addTeamMember=async function(){
+  const teamId="NX-TM-"+Math.floor(1000+Math.random()*9000);
+
+  await addDoc(collection(db,"teamMembers"),{
+    name:document.getElementById("teamName").value,
+    email:document.getElementById("teamEmail").value,
+    teamId:teamId,
+    points:0,
+    createdAt:now()
+  });
+
+  loadTeamMembers();
+}
+
+async function loadTeamMembers(){
+  const snap=await getDocs(collection(db,"teamMembers"));
+  let html="";
+
+  snap.forEach(item=>{
+    const d=item.data();
+    html+=`
+    <div class="card">
+      <h3>${d.name||""}</h3>
+      <p>${d.email||""}</p>
+      <p><b>Team ID:</b> ${d.teamId||""}</p>
+      <p><b>Points:</b> ${d.points||0}</p>
+    </div>`;
+  });
+
+  document.getElementById("teamList").innerHTML=html||"No team members";
+}
+
+window.teamLogin=async function(){
+  const teamId=document.getElementById("teamId").value.trim();
+  const snap=await getDocs(collection(db,"teamMembers"));
+
+  let found=null;
+  snap.forEach(item=>{
+    const d=item.data();
+    if(d.teamId===teamId)found=d;
+  });
+
+  if(!found){
+    alert("Invalid Team ID ❌");
+    return;
+  }
+
+  document.getElementById("teamDashboard").classList.remove("hide");
+  document.getElementById("teamWelcome").innerText="Welcome "+found.name;
+  document.getElementById("teamPoints").innerText=found.points||0;
+  loadMessages("team","teamMessages");
+}
+
+window.communityLogin=async function(){
+  const name=document.getElementById("communityName").value;
+  const email=document.getElementById("communityEmail").value;
+
+  if(!email){
+    alert("Please enter email");
+    return;
+  }
+
+  currentCommunity=email;
+
+  await addDoc(collection(db,"communityMembers"),{
+    name:name,
+    email:email,
+    points:0,
+    loginAt:now()
+  });
+
+  document.getElementById("communityDashboard").classList.remove("hide");
+  document.getElementById("communityUser").innerText="Welcome "+name;
+  document.getElementById("communityPoints").innerText="0";
+
+  loadMessages("community","communityMessages");
+  loadDailyTasks();
+}
+
+async function loadCommunityMembers(){
+  const snap=await getDocs(collection(db,"communityMembers"));
+  let html="";
+
+  snap.forEach(item=>{
+    const d=item.data();
+    html+=`
+    <div class="card">
+      <b>${d.name||""}</b><br>
+      ${d.email||""}<br>
+      Points: ${d.points||0}
+    </div>`;
+  });
+
+  document.getElementById("communityList").innerHTML=html||"No community members";
+}
+
+window.saveDailyCode=async function(){
+  await addDoc(collection(db,"dailyCodes"),{
+    code:document.getElementById("dailyCode").value,
+    points:Number(document.getElementById("dailyPoints").value||0),
+    createdAt:now()
+  });
+
+  document.getElementById("codeMsg").innerText="Daily code saved ✅";
+}
+
+window.addDailyTask=async function(){
+  await addDoc(collection(db,"dailyTasks"),{
+    type:document.getElementById("taskType").value,
+    title:document.getElementById("taskTitle").value,
+    link:document.getElementById("taskLink").value,
+    code:document.getElementById("taskCode").value,
+    points:Number(document.getElementById("taskPoints").value||0),
+    createdAt:now()
+  });
+
+  loadTasksAdmin();
+}
+
+async function loadTasksAdmin(){
+  const snap=await getDocs(collection(db,"dailyTasks"));
+  let html="";
+
+  snap.forEach(item=>{
+    const d=item.data();
+    html+=`
+    <div class="card">
+      <b>${d.type}</b>
+      <h3>${d.title}</h3>
+      <p>Code: ${d.code}</p>
+      <p>Points: ${d.points}</p>
+    </div>`;
+  });
+
+  document.getElementById("taskAdminList").innerHTML=html||"No tasks";
+}
+
+async function loadDailyTasks(){
+  const snap=await getDocs(collection(db,"dailyTasks"));
+  let html="";
+
+  snap.forEach(item=>{
+    const d=item.data();
+    html+=`
+    <div class="card">
+      <b>${d.type}</b>
+      <h3>${d.title}</h3>
+      <a href="${d.link}" target="_blank">Open Task</a>
+      <p>Watch/read and enter code below.</p>
+    </div>`;
+  });
+
+  document.getElementById("dailyTaskList").innerHTML=html||"No daily tasks";
+}
+
+window.submitCode=async function(){
+  const entered=document.getElementById("userCode").value.trim();
+  const snap=await getDocs(collection(db,"dailyTasks"));
+
+  let matched=null;
+  snap.forEach(item=>{
+    const d=item.data();
+    if(d.code===entered)matched=d;
+  });
+
+  if(!matched){
+    alert("Wrong code ❌");
+    return;
+  }
+
+  document.getElementById("communityPoints").innerText=
+  Number(document.getElementById("communityPoints").innerText||0)+Number(matched.points||0);
+
+  alert("Points added ✅");
+}
+
+window.addServiceItem=async function(){
+  await addDoc(collection(db,"services"),{
+    name:document.getElementById("serviceName").value,
+    category:document.getElementById("serviceCategory").value,
+    desc:document.getElementById("serviceDesc").value,
+    createdAt:now()
+  });
+
+  loadServices();
+}
+
+async function loadServices(){
+  const snap=await getDocs(collection(db,"services"));
+  let adminHtml="";
+  let selectHtml="<option>Select Service / Product</option>";
+  let marketHtml="";
+
+  snap.forEach(item=>{
+    const d=item.data();
+
+    adminHtml+=`
+    <div class="card">
+      <h3>${d.name}</h3>
+      <p>${d.category}</p>
+      <p>${d.desc}</p>
+    </div>`;
+
+    selectHtml+=`<option>${d.name}</option>`;
+
+    marketHtml+=`
+    <div class="card">
+      <h3>${d.name}</h3>
+      <p>${d.category}</p>
+      <p>${d.desc}</p>
+    </div>`;
+  });
+
+  document.getElementById("serviceAdminList").innerHTML=adminHtml||"No items";
+  document.getElementById("clientService").innerHTML=selectHtml;
+  document.getElementById("marketplaceItems").innerHTML=marketHtml||"Coming Soon";
+}
+
+window.sendMessage=async function(){
+  await addDoc(collection(db,"messages"),{
+    target:document.getElementById("msgTarget").value,
+    text:document.getElementById("adminMsg").value,
+    createdAt:now()
+  });
+
+  document.getElementById("msgStatus").innerText="Message sent ✅";
+}
+
+async function loadMessages(target,boxId){
+  const snap=await getDocs(collection(db,"messages"));
+  let html="";
+
+  snap.forEach(item=>{
+    const d=item.data();
+    if(d.target===target || d.target==="all"){
+      html+=`<div class="card">${d.text}</div>`;
+    }
+  });
+
+  document.getElementById(boxId).innerHTML=html||"No messages";
+}
+
+window.requestWithdraw=async function(type){
+  await addDoc(collection(db,"withdrawRequests"),{
+    type:type,
+    user:currentCommunity||"team-member",
+    status:"Pending",
+    createdAt:now()
+  });
+
+  alert("Withdraw request sent ✅");
+}
+
+async function loadWithdrawRequests(){
+  const snap=await getDocs(collection(db,"withdrawRequests"));
+  let html="";
+
+  snap.forEach(item=>{
+    const d=item.data();
+    html+=`
+    <div class="card">
+      <b>${d.type}</b>
+      <p>${d.user||""}</p>
+      <p>${d.status}</p>
+    </div>`;
+  });
+
+  document.getElementById("withdrawList").innerHTML=html||"No withdraw requests";
+}
+
+window.saveBranding=async function(){
+  const logo=document.getElementById("logoInput").value;
+  const news=document.getElementById("newsInput").value;
+
+  if(logo){
+    document.getElementById("siteLogo").src=logo;
+    document.getElementById("siteLogo").style.display="inline-block";
+  }
+
+  if(news){
+    document.getElementById("newsText").innerText=news;
+  }
+}
+
+window.addInvestmentPlan=async function(){
+  await addDoc(collection(db,"investmentPlans"),{
+    type:document.getElementById("planType").value,
+    title:document.getElementById("planTitle").value,
+    amount:document.getElementById("planAmount").value,
+    note:document.getElementById("planNote").value,
+    desc:document.getElementById("planDesc").value,
+    createdAt:now()
+  });
+
+  loadInvestmentPlansAdmin();
+}
+
+async function loadInvestmentPlansAdmin(){
+  const snap=await getDocs(collection(db,"investmentPlans"));
+  let html="";
+
+  snap.forEach(item=>{
+    const d=item.data();
+    html+=`
+    <div class="card">
+      <b>${d.type}</b>
+      <h3>${d.title}</h3>
+      <p>${d.amount}</p>
+      <p>${d.note}</p>
+    </div>`;
+  });
+
+  document.getElementById("plansAdminList").innerHTML=html||"No plans";
+}
+
+window.showInvestmentType=async function(type){
+  const snap=await getDocs(collection(db,"investmentPlans"));
+  let disclaimer="";
+
+  if(type==="Short Term") disclaimer="Minimum 1 month, maximum 1 year.";
+  if(type==="Mid Term") disclaimer="Minimum 1 year, maximum 5 years.";
+  if(type==="Long Term") disclaimer="Minimum 5 years, no fixed maximum.";
+
+  let html=`
+  <div class="card">
+    <b>${type} Disclaimer</b>
+    <p>${disclaimer}</p>
+    <p>Business has profit/loss risk. Feature coming soon.</p>
+  </div>`;
+
+  snap.forEach(item=>{
+    const d=item.data();
+    if(d.type===type){
+      html+=`
+      <div class="card">
+        <h3>${d.title}</h3>
+        <p>${d.amount}</p>
+        <p>${d.note}</p>
+        <button onclick="alert('Coming Soon - Admin approval required')">Activate</button>
+      </div>`;
+    }
+  });
+
+  document.getElementById("investmentArea").innerHTML=html;
+}
+
+window.addMCQ=async function(){
+  await addDoc(collection(db,"mcqs"),{
+    subject:document.getElementById("mcqSubject").value,
+    question:document.getElementById("mcqQuestion").value,
+    A:document.getElementById("mcqA").value,
+    B:document.getElementById("mcqB").value,
+    C:document.getElementById("mcqC").value,
+    D:document.getElementById("mcqD").value,
+    correct:document.getElementById("mcqCorrect").value,
+    createdAt:now()
+  });
+
+  loadMCQsAdmin();
+}
+
+async function loadMCQsAdmin(){
+  const snap=await getDocs(collection(db,"mcqs"));
+  let html="";
+
+  snap.forEach(item=>{
+    const d=item.data();
+    html+=`
+    <div class="card">
+      <b>${d.subject}</b>
+      <p>${d.question}</p>
+      <p>Correct: ${d.correct}</p>
+    </div>`;
+  });
+
+  document.getElementById("mcqAdminList").innerHTML=html||"No MCQs";
+}
+
+window.loadMCQTest=async function(){
+  const subject=document.getElementById("testSubject").value;
+  const snap=await getDocs(collection(db,"mcqs"));
+  let html="";
+  let count=0;
+
+  snap.forEach(item=>{
+    const d=item.data();
+    if(d.subject===subject){
+      count++;
+      html+=`
+      <div class="card">
+        <h3>${count}. ${d.question}</h3>
+        <button class="option" onclick="checkAnswer(this,'A','${d.correct}')">A. ${d.A}</button>
+        <button class="option" onclick="checkAnswer(this,'B','${d.correct}')">B. ${d.B}</button>
+        <button class="option" onclick="checkAnswer(this,'C','${d.correct}')">C. ${d.C}</button>
+        <button class="option" onclick="checkAnswer(this,'D','${d.correct}')">D. ${d.D}</button>
+      </div>`;
+    }
+  });
+
+  document.getElementById("mcqBox").innerHTML=html||"No MCQs available";
+}
+
+window.checkAnswer=function(btn,selected,correct){
+  if(selected===correct){
+    btn.style.background="#16a34a";
+    btn.style.color="white";
+    document.getElementById("mcqScore").innerText=
+    Number(document.getElementById("mcqScore").innerText||0)+1;
+  }else{
+    btn.style.background="#dc2626";
+    btn.style.color="white";
+    alert("Correct answer: "+correct);
+  }
+}
+
+window.openClasses=function(){
+  document.getElementById("classArea").innerHTML=
+  "<div class='card'>Coming Soon - Lectures will be uploaded class-wise and subject-wise.</div>";
+}
+
+window.loadMarketplace=function(){
+  loadServices();
 }
 </script>
 

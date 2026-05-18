@@ -1348,10 +1348,21 @@ window.showPage=function(id){
   show("backBtn");
   show(id);
 
-  if(id==="marketplacePage"){ loadMarketplace(); }
-  if(id==="classesPage"){ loadCourses(); }
-  if(id==="smartTestPage"){ loadMCQs(); }
-  if(id==="supportPage"){ loadWebsiteControls(); }
+  if(id==="marketplacePage" && typeof loadMarketplace==="function"){
+    loadMarketplace();
+  }
+
+  if(id==="classesPage" && typeof loadCourses==="function"){
+    loadCourses();
+  }
+
+  if(id==="smartTestPage" && typeof window.loadMCQs==="function"){
+    window.loadMCQs();
+  }
+
+  if(id==="supportPage" && typeof loadWebsiteControls==="function"){
+    loadWebsiteControls();
+  }
 };
 
 window.goHome=function(){

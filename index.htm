@@ -2960,6 +2960,24 @@ window.showAdminSection=function(id){
   if(target){target.classList.remove("hide");}
 };
 </script>
+  <script>
+window.adminLogin=function(){
+  var email=document.getElementById("adminEmail").value.trim();
+  var secret=document.getElementById("adminSecret").value.trim();
+
+  if(email==="smartustad0@gmail.com" && secret==="NX-CEO-786"){
+    document.getElementById("adminLoginPage").classList.add("hide");
+    document.getElementById("adminDashboard").classList.remove("hide");
+
+    document.getElementById("adminEmail").value="";
+    document.getElementById("adminSecret").value="";
+
+    alert("CEO Login Successful ✅");
+  }else{
+    alert("Access Denied ❌");
+  }
+};
+  </script>
 </body>
 </html>
 

@@ -4,117 +4,32 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Nexora Community | Learning, Services & Marketplace</title>
+<title>Nexora Community | Learning, Marketplace, Tuition & Services</title>
 <meta name="description" content="Nexora Community is a learning, services, marketplace, tuition, smart test and community rewards platform.">
-<meta name="keywords" content="Nexora Community, online tuition, marketplace, smart test, community rewards, digital services">
+<meta name="keywords" content="Nexora Community, marketplace, online tuition, smart test, community rewards, digital services, Pakistan">
 <meta name="author" content="Nexora Community">
 
 <style>
 *{box-sizing:border-box}
-body{
-  margin:0;
-  font-family:Arial, sans-serif;
-  background:#eef2f7;
-  color:#111827;
-}
-header{
-  background:linear-gradient(135deg,#071a3d,#0f4c81);
-  color:white;
-  text-align:center;
-  padding:32px 18px;
-}
-.logo{
-  width:78px;
-  height:78px;
-  border-radius:50%;
-  background:white;
-  object-fit:cover;
-  display:none;
-  margin:auto;
-}
-.card{
-  background:white;
-  margin:16px;
-  padding:20px;
-  border-radius:16px;
-  box-shadow:0 4px 12px rgba(0,0,0,.10);
-}
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
-  gap:15px;
-}
-button{
-  background:#f5b301;
-  border:0;
-  border-radius:10px;
-  padding:12px 16px;
-  font-weight:bold;
-  margin:6px 4px;
-  cursor:pointer;
-}
-.dark{background:#111827;color:white}
-.green{background:#16a34a;color:white}
-.red{background:#dc2626;color:white}
-.blue{background:#2563eb;color:white}
-.gray{background:#6b7280;color:white}
-input,select,textarea{
-  width:94%;
-  padding:12px;
-  margin:7px 0;
-  border:1px solid #ccc;
-  border-radius:8px;
-}
+body{margin:0;font-family:Arial,sans-serif;background:#eef2f7;color:#111827}
+header{background:linear-gradient(135deg,#071a3d,#0f4c81);color:white;text-align:center;padding:32px 18px}
+.logo{width:80px;height:80px;border-radius:50%;object-fit:cover;background:white;display:none;margin:auto}
+.card{background:white;margin:16px;padding:20px;border-radius:18px;box-shadow:0 4px 14px rgba(0,0,0,.10)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:15px}
+button{background:#f5b301;border:0;border-radius:10px;padding:12px 16px;font-weight:bold;margin:6px 4px;cursor:pointer}
+.dark{background:#111827;color:white}.green{background:#16a34a;color:white}.red{background:#dc2626;color:white}.blue{background:#2563eb;color:white}.gray{background:#6b7280;color:white}
+input,select,textarea{width:94%;padding:12px;margin:7px 0;border:1px solid #ccc;border-radius:8px}
 textarea{min-height:90px}
 .hide{display:none!important}
-.badge{
-  background:red;
-  color:white;
-  padding:4px 8px;
-  border-radius:30px;
-  font-size:12px;
-}
-.status{
-  background:#e5e7eb;
-  padding:6px 10px;
-  border-radius:20px;
-  font-weight:bold;
-  display:inline-block;
-}
-.ticker{
-  background:#f5b301;
-  color:#111827;
-  font-weight:bold;
-  overflow:hidden;
-  white-space:nowrap;
-  padding:10px;
-}
-.ticker span{
-  display:inline-block;
-  padding-left:100%;
-  animation:move 18s linear infinite;
-}
-@keyframes move{
-  0%{transform:translateX(0)}
-  100%{transform:translateX(-100%)}
-}
-.option{
-  display:block;
-  width:95%;
-  text-align:left;
-  background:#e5e7eb;
-}
-.small{
-  font-size:13px;
-  color:#555;
-}
-footer{
-  background:#071a3d;
-  color:white;
-  text-align:center;
-  padding:18px;
-  margin-top:25px;
-}
+.badge{background:red;color:white;padding:4px 8px;border-radius:30px;font-size:12px}
+.status{background:#e5e7eb;padding:6px 10px;border-radius:20px;font-weight:bold;display:inline-block}
+.ticker{background:#f5b301;color:#111827;font-weight:bold;overflow:hidden;white-space:nowrap;padding:10px}
+.ticker span{display:inline-block;padding-left:100%;animation:move 18s linear infinite}
+@keyframes move{0%{transform:translateX(0)}100%{transform:translateX(-100%)}}
+.option{display:block;width:95%;text-align:left;background:#e5e7eb}
+.small{font-size:13px;color:#555}
+img.product-img{width:100%;max-height:230px;object-fit:cover;border-radius:12px;background:#eee}
+footer{background:#071a3d;color:white;text-align:center;padding:18px;margin-top:25px}
 a{color:#0f4c81;font-weight:bold}
 </style>
 </head>
@@ -128,69 +43,69 @@ a{color:#0f4c81;font-weight:bold}
 </header>
 
 <div class="ticker">
-  <span id="newsText">Welcome to Nexora Community — Join our learning, services and rewards platform.</span>
+  <span id="newsText">Welcome to Nexora Community — Learning, marketplace, services and rewards platform.</span>
 </div>
 
 <div id="mainMenu" class="card">
   <div class="grid">
 
     <div class="card">
-      <h2>👑 Admin Panel</h2>
-      <p>Owner and admin management dashboard.</p>
-      <button class="dark" onclick="openPortal('adminLogin')">Open Admin</button>
+      <h2>👑 CEO / Owner Panel</h2>
+      <p>Full control, roles, approvals, settings and system management.</p>
+      <button class="dark" onclick="openPortal('adminLogin')">Open CEO/Admin</button>
     </div>
 
     <div class="card">
       <h2>🌐 Community</h2>
-      <p>Daily tasks, points, rewards and announcements.</p>
+      <p>Daily tasks, points, rewards, announcements and withdraw.</p>
       <button onclick="openPortal('communityPortal')">Open Community</button>
     </div>
 
     <div class="card">
       <h2>💼 Client Portal</h2>
-      <p>Request services, track orders, submit products.</p>
+      <p>Request services, track status, submit products and receive messages.</p>
       <button onclick="openPortal('clientPortal')">Open Client</button>
     </div>
 
     <div class="card">
       <h2>🛒 Marketplace</h2>
-      <p>Products, services, books and listings.</p>
-      <button onclick="openPortal('marketplace')">Open Store</button>
+      <p>Buy, sell, list products and request items.</p>
+      <button onclick="openPortal('marketplace')">Open Marketplace</button>
     </div>
 
     <div class="card">
       <h2>🎓 Student Portal</h2>
-      <p>Find tuition and submit learning requests.</p>
+      <p>Student account, tuition requests and teacher matching.</p>
       <button onclick="openPortal('studentPortal')">Open Student</button>
     </div>
 
     <div class="card">
       <h2>👨‍🏫 Teacher Portal</h2>
-      <p>Teacher login and student request matching.</p>
+      <p>Teacher account, profile, student requests and admin review.</p>
       <button onclick="openPortal('teacherPortal')">Open Teacher</button>
     </div>
 
     <div class="card">
       <h2>👥 Team Portal</h2>
-      <p>Assigned work, tasks, points and withdraw.</p>
+      <p>Assigned work, messages, points and withdraw.</p>
       <button onclick="openPortal('teamPortal')">Open Team</button>
     </div>
 
     <div class="card">
       <h2>📚 Live Classes</h2>
-      <p>Nursery to higher-level courses and lectures.</p>
+      <p>Class-wise courses, subjects and YouTube lectures.</p>
       <button onclick="openPortal('classesPortal')">Open Classes</button>
     </div>
 
     <div class="card">
       <h2>🧠 Smart Test</h2>
-      <p>MCQs, quizzes and online preparation.</p>
-      <button onclick="openPortal('smartTest')">Open Test</button>
+      <p>MCQs, score, quiz and speaker reading option.</p>
+      <button onclick="openPortal('smartTest')">Open Smart Test</button>
     </div>
 
     <div class="card">
       <h2>📞 Support</h2>
-      <p>WhatsApp channel, support email and help bot.</p>
+      <p>WhatsApp channel, support email and AI help bot.</p>
       <button onclick="openPortal('supportPortal')">Open Support</button>
     </div>
 
@@ -201,29 +116,24 @@ a{color:#0f4c81;font-weight:bold}
   <button id="backBtn" class="dark hide" onclick="goHome()">⬅ Back To Main Menu</button>
 </div>
 
-<!-- ADMIN LOGIN -->
+<!-- CEO / ADMIN LOGIN -->
 <div id="adminLogin" class="card hide">
-  <h2>👑 Admin Login</h2>
+  <h2>👑 CEO / Admin Login</h2>
 
   <input id="adminEmail" placeholder="Admin Email">
   <input id="adminPassword" type="password" placeholder="Password">
+  <button type="button" onclick="togglePassword('adminPassword')">Show / Hide Password</button>
 
-  <button type="button" onclick="togglePassword('adminPassword')">
-    Show / Hide Password
-  </button>
+  <input id="adminSecretId" placeholder="CEO/Admin Secret ID">
 
-  <input id="adminSecretId" placeholder="Admin Secret ID">
-
-  <button class="dark" onclick="adminLogin()">
-    Admin Login
-  </button>
-
-  <p class="small">Owner access requires secret ID.</p>
+  <button class="dark" onclick="adminLogin()">Login</button>
+  <p class="small">CEO has full access. Admin access can be limited.</p>
 </div>
 
-<!-- ADMIN DASHBOARD -->
+<!-- CEO / ADMIN DASHBOARD -->
 <div id="adminDashboard" class="card hide">
-  <h2>📊 Admin Dashboard</h2>
+  <h2>📊 CEO / Admin Dashboard</h2>
+  <p id="adminRoleText" class="small"></p>
 
   <div class="grid">
 
@@ -233,8 +143,13 @@ a{color:#0f4c81;font-weight:bold}
     </div>
 
     <div class="card">
-      <h3>🛒 Marketplace Requests <span id="productRequestCount" class="badge">0</span></h3>
+      <h3>🛒 Seller Requests <span id="productRequestCount" class="badge">0</span></h3>
       <button onclick="showAdmin('productRequestsBox')">Open</button>
+    </div>
+
+    <div class="card">
+      <h3>🛍 Admin Marketplace Items</h3>
+      <button onclick="showAdmin('marketAdminBox')">Open</button>
     </div>
 
     <div class="card">
@@ -243,13 +158,23 @@ a{color:#0f4c81;font-weight:bold}
     </div>
 
     <div class="card">
-      <h3>👨‍🏫 Teacher Requests <span id="teacherCount" class="badge">0</span></h3>
-      <button onclick="showAdmin('teacherRequestsBox')">Open</button>
+      <h3>👨‍🏫 Teacher Interests <span id="teacherInterestCount" class="badge">0</span></h3>
+      <button onclick="showAdmin('teacherInterestsBox')">Open</button>
+    </div>
+
+    <div class="card">
+      <h3>👨‍🏫 Teacher Profiles</h3>
+      <button onclick="showAdmin('teacherProfilesBox')">Open</button>
     </div>
 
     <div class="card">
       <h3>👥 Team Members</h3>
       <button onclick="showAdmin('teamBox')">Open</button>
+    </div>
+
+    <div class="card">
+      <h3>📝 Assign Team Work</h3>
+      <button onclick="showAdmin('assignWorkBox')">Open</button>
     </div>
 
     <div class="card">
@@ -278,18 +203,18 @@ a{color:#0f4c81;font-weight:bold}
     </div>
 
     <div class="card">
-      <h3>🛍 Add Product / Service</h3>
-      <button onclick="showAdmin('marketAdminBox')">Open</button>
-    </div>
-
-    <div class="card">
       <h3>🧠 Smart Test MCQs</h3>
       <button onclick="showAdmin('mcqAdminBox')">Open</button>
     </div>
 
     <div class="card">
-      <h3>📚 Course / Lecture Manager</h3>
+      <h3>📚 Course Manager</h3>
       <button onclick="showAdmin('courseAdminBox')">Open</button>
+    </div>
+
+    <div class="card">
+      <h3>🔐 CEO Role Manager</h3>
+      <button onclick="showAdmin('roleBox')">Open</button>
     </div>
 
     <div class="card">
@@ -304,16 +229,28 @@ a{color:#0f4c81;font-weight:bold}
     <button class="green" onclick="setFilter('Accepted')">Accepted</button>
     <button class="red" onclick="setFilter('Rejected')">Rejected</button>
     <button class="dark" onclick="setFilter('All')">All</button>
-  </div>
+                                </div>
 
   <div id="clientRequestsBox" class="hide">
-    <h2>💼 Client Requests</h2>
+    <h2>💼 Client Service Requests</h2>
     <div id="clientRequestsList"></div>
   </div>
 
   <div id="productRequestsBox" class="hide">
-    <h2>🛒 Marketplace / Seller Requests</h2>
+    <h2>🛒 Seller Product Requests</h2>
     <div id="productRequestsList"></div>
+  </div>
+
+  <div id="marketAdminBox" class="hide">
+    <h2>🛍 Admin Marketplace Product / Service</h2>
+    <input id="marketTitle" placeholder="Product / Service Title">
+    <input id="marketCategory" placeholder="Category">
+    <input id="marketPrice" placeholder="Price">
+    <input id="marketImage" placeholder="Image URL">
+    <textarea id="marketDesc" placeholder="Description"></textarea>
+    <button class="green" onclick="addMarketplaceItem()">Add Listing</button>
+    <p id="marketAdminMsg"></p>
+    <div id="marketAdminList"></div>
   </div>
 
   <div id="studentRequestsBox" class="hide">
@@ -321,9 +258,14 @@ a{color:#0f4c81;font-weight:bold}
     <div id="studentRequestsList"></div>
   </div>
 
-  <div id="teacherRequestsBox" class="hide">
-    <h2>👨‍🏫 Teacher Applications</h2>
-    <div id="teacherRequestsList"></div>
+  <div id="teacherInterestsBox" class="hide">
+    <h2>👨‍🏫 Teacher Interests / Accept Requests</h2>
+    <div id="teacherInterestsList"></div>
+  </div>
+
+  <div id="teacherProfilesBox" class="hide">
+    <h2>👨‍🏫 Teacher Profiles</h2>
+    <div id="teacherProfilesList"></div>
   </div>
 
   <div id="teamBox" class="hide">
@@ -331,7 +273,20 @@ a{color:#0f4c81;font-weight:bold}
     <input id="teamName" placeholder="Team Member Name">
     <input id="teamEmail" placeholder="Team Member Email">
     <button class="green" onclick="addTeamMember()">Add Team Member</button>
+    <p id="teamMsg"></p>
     <div id="teamList"></div>
+  </div>
+
+  <div id="assignWorkBox" class="hide">
+    <h2>📝 Assign Work to Team</h2>
+    <input id="assignTeamId" placeholder="Team ID e.g NX-TM-1234">
+    <input id="assignTitle" placeholder="Work Title">
+    <textarea id="assignDetails" placeholder="Work Details"></textarea>
+    <input id="assignDeadline" placeholder="Deadline">
+    <input id="assignPoints" placeholder="Points">
+    <button class="green" onclick="assignTeamWork()">Assign Work</button>
+    <p id="assignMsg"></p>
+    <div id="assignedWorkAdminList"></div>
   </div>
 
   <div id="communityBox" class="hide">
@@ -353,6 +308,7 @@ a{color:#0f4c81;font-weight:bold}
     <input id="taskCode" placeholder="Secret Task Code">
     <input id="taskPoints" placeholder="Points">
     <button class="green" onclick="addDailyTask()">Add Task</button>
+    <p id="taskMsg"></p>
     <div id="taskListAdmin"></div>
   </div>
 
@@ -360,6 +316,7 @@ a{color:#0f4c81;font-weight:bold}
     <h2>📢 Announcement Manager</h2>
     <input id="announcementText" placeholder="Announcement text">
     <button class="green" onclick="addAnnouncement()">Add Announcement</button>
+    <p id="announcementMsg"></p>
     <div id="announcementListAdmin"></div>
   </div>
 
@@ -384,20 +341,9 @@ a{color:#0f4c81;font-weight:bold}
     <div id="withdrawList"></div>
   </div>
 
-  <div id="marketAdminBox" class="hide">
-    <h2>🛍 Add Product / Service</h2>
-    <input id="marketTitle" placeholder="Product / Service Title">
-    <input id="marketCategory" placeholder="Category">
-    <input id="marketPrice" placeholder="Price">
-    <input id="marketImage" placeholder="Image URL">
-    <textarea id="marketDesc" placeholder="Description"></textarea>
-    <button class="green" onclick="addMarketplaceItem()">Add Listing</button>
-    <div id="marketAdminList"></div>
-  </div>
-
   <div id="mcqAdminBox" class="hide">
     <h2>🧠 Smart Test MCQ Manager</h2>
-    <input id="mcqSubject" placeholder="Subject e.g Math, English, Urdu">
+    <input id="mcqSubject" placeholder="Subject">
     <textarea id="mcqQuestion" placeholder="Question"></textarea>
     <input id="mcqA" placeholder="Option A">
     <input id="mcqB" placeholder="Option B">
@@ -410,6 +356,7 @@ a{color:#0f4c81;font-weight:bold}
       <option>D</option>
     </select>
     <button class="green" onclick="addMCQ()">Add MCQ</button>
+    <p id="mcqMsg"></p>
     <div id="mcqAdminList"></div>
   </div>
 
@@ -440,13 +387,28 @@ a{color:#0f4c81;font-weight:bold}
     <input id="lectureTitle" placeholder="Lecture Title">
     <input id="lectureLink" placeholder="YouTube Lecture Link">
     <button class="green" onclick="addLecture()">Add Lecture</button>
+    <p id="lectureMsg"></p>
     <div id="lectureAdminList"></div>
+  </div>
+
+  <div id="roleBox" class="hide">
+    <h2>🔐 CEO Role Manager</h2>
+    <p class="small">CEO can create limited admin IDs and team IDs.</p>
+    <input id="newAdminEmail" placeholder="New Admin Email">
+    <input id="newAdminSecret" placeholder="New Admin Secret ID">
+    <select id="newAdminRole">
+      <option>admin</option>
+      <option>manager</option>
+    </select>
+    <button class="green" onclick="addAdminRole()">Add Admin Role</button>
+    <p id="roleMsg"></p>
+    <div id="roleList"></div>
   </div>
 
   <div id="controlBox" class="hide">
     <h2>⚙️ Website Controls</h2>
     <input id="logoInput" placeholder="Logo Image URL">
-    <input id="newsInput" placeholder="News ticker / announcement text">
+    <input id="newsInput" placeholder="News ticker text">
     <input id="supportEmailInput" placeholder="Support Email">
     <input id="whatsappInput" placeholder="WhatsApp Channel Link">
     <button class="green" onclick="saveWebsiteControls()">Save Controls</button>
@@ -459,12 +421,19 @@ a{color:#0f4c81;font-weight:bold}
 <div id="communityPortal" class="card hide">
   <h2>🌐 Community Member</h2>
 
+  <h3>Create Account</h3>
   <input id="communityName" placeholder="Full Name">
   <input id="communityEmail" type="email" placeholder="Email">
   <input id="communityPassword" type="password" placeholder="Password">
-
   <button type="button" onclick="togglePassword('communityPassword')">Show / Hide Password</button>
   <button class="green" onclick="createCommunityAccount()">Create Account</button>
+
+  <hr>
+
+  <h3>Login</h3>
+  <input id="communityLoginEmail" type="email" placeholder="Email">
+  <input id="communityLoginPassword" type="password" placeholder="Password">
+  <button type="button" onclick="togglePassword('communityLoginPassword')">Show / Hide Password</button>
   <button class="dark" onclick="communityLogin()">Login</button>
   <button onclick="resetCommunityPassword()">Forgot Password</button>
 
@@ -485,9 +454,7 @@ a{color:#0f4c81;font-weight:bold}
     <p id="communityCodeMsg"></p>
 
     <h3>💸 Withdraw</h3>
-    <button id="communityWithdrawBtn" class="dark" onclick="requestWithdraw('community')">
-      Withdraw Locked
-    </button>
+    <button id="communityWithdrawBtn" class="dark" onclick="requestWithdraw('community')">Withdraw Locked</button>
 
     <br>
     <button class="red" onclick="logoutUser()">Logout</button>
@@ -498,19 +465,26 @@ a{color:#0f4c81;font-weight:bold}
 <div id="clientPortal" class="card hide">
   <h2>💼 Client Portal</h2>
 
+  <h3>Create Account</h3>
   <input id="clientName" placeholder="Full Name">
   <input id="clientEmail" type="email" placeholder="Email">
   <input id="clientPassword" type="password" placeholder="Password">
-
   <button type="button" onclick="togglePassword('clientPassword')">Show / Hide Password</button>
   <button class="green" onclick="createClientAccount()">Create Client Account</button>
+
+  <hr>
+
+  <h3>Login</h3>
+  <input id="clientLoginEmail" type="email" placeholder="Email">
+  <input id="clientLoginPassword" type="password" placeholder="Password">
+  <button type="button" onclick="togglePassword('clientLoginPassword')">Show / Hide Password</button>
   <button class="dark" onclick="clientLogin()">Client Login</button>
 
   <div id="clientDashboard" class="hide">
     <h2>Client Dashboard</h2>
     <p id="clientWelcome"></p>
 
-    <h3>Request a Service</h3>
+    <h3>Request Service</h3>
     <input id="clientMobile" placeholder="Mobile / WhatsApp">
     <select id="clientServiceSelect"></select>
     <textarea id="clientDetails" placeholder="Service details"></textarea>
@@ -523,6 +497,7 @@ a{color:#0f4c81;font-weight:bold}
     <input id="sellerProductImage" placeholder="Image URL">
     <textarea id="sellerProductDesc" placeholder="Product Description"></textarea>
     <button class="green" onclick="submitProductRequest()">Submit Product Request</button>
+    <p id="sellerMsg"></p>
 
     <h3>My Requests</h3>
     <div id="clientOwnRequests"></div>
@@ -530,35 +505,43 @@ a{color:#0f4c81;font-weight:bold}
     <h3>Messages</h3>
     <div id="clientMessages"></div>
   </div>
-</div>
+      </div>
 
-<!-- MARKETPLACE -->
+  <!-- MARKETPLACE -->
 <div id="marketplace" class="card hide">
-  <h2>🛒 Marketplace</h2>
-  <p>Buy, sell, request and explore services/products.</p>
-  <div id="marketplaceList"></div>
+  <h2>🛒 Nexora Marketplace</h2>
+
+  <input id="marketSearch" placeholder="Search products..." onkeyup="searchMarketplace()">
+
+  <div id="marketplaceList" class="grid"></div>
 </div>
 
 <!-- STUDENT PORTAL -->
 <div id="studentPortal" class="card hide">
   <h2>🎓 Student Portal</h2>
 
+  <h3>Create Student Account</h3>
   <input id="studentName" placeholder="Student Name">
   <input id="studentEmail" type="email" placeholder="Email">
   <input id="studentPassword" type="password" placeholder="Password">
-
   <button type="button" onclick="togglePassword('studentPassword')">Show / Hide Password</button>
   <button class="green" onclick="createStudentAccount()">Create Student Account</button>
-  <button class="dark" onclick="studentLogin()">Student Login</button>
+
+  <hr>
+
+  <h3>Student Login</h3>
+  <input id="studentLoginEmail" type="email" placeholder="Email">
+  <input id="studentLoginPassword" type="password" placeholder="Password">
+  <button type="button" onclick="togglePassword('studentLoginPassword')">Show / Hide Password</button>
+  <button class="dark" onclick="studentLogin()">Login</button>
 
   <div id="studentDashboard" class="hide">
     <h2>Student Dashboard</h2>
     <p id="studentWelcome"></p>
 
-    <h3>Request Tutor</h3>
+    <h3>📚 Tuition Request</h3>
+
     <select id="studentClass">
-      <option>Nursery</option>
-      <option>KG</option>
       <option>Class 1</option>
       <option>Class 2</option>
       <option>Class 3</option>
@@ -576,79 +559,64 @@ a{color:#0f4c81;font-weight:bold}
       <option>MPhil</option>
     </select>
 
-    <select id="studentSubject">
-      <option>Math</option>
-      <option>English</option>
-      <option>Urdu</option>
-      <option>General Science</option>
-      <option>General Knowledge</option>
-      <option>Computer Science</option>
-      <option>Biology</option>
-      <option>Chemistry</option>
-      <option>Physics</option>
-      <option>Islamiat</option>
+    <input id="studentSubject" placeholder="Subject">
+    <select id="studentMode">
+      <option>WhatsApp</option>
+      <option>Zoom</option>
+      <option>Google Meet</option>
     </select>
 
-    <select id="studyMethod">
-      <option>WhatsApp Lectures</option>
-      <option>Zoom Class</option>
-      <option>Online Class</option>
-    </select>
+    <textarea id="studentNeed" placeholder="Describe your tuition need"></textarea>
 
-    <textarea id="studentDetails" placeholder="Details"></textarea>
-    <button class="green" onclick="submitStudentRequest()">Submit Tutor Request</button>
-    <p id="studentMsg"></p>
+    <button class="green" onclick="submitStudentRequest()">Submit Tuition Request</button>
 
-    <h3>Messages</h3>
+    <p id="studentRequestMsg"></p>
+
+    <h3>📢 Messages</h3>
     <div id="studentMessages"></div>
-  </div>
-      </div>
 
-  <!-- TEACHER PORTAL -->
+    <h3>📋 My Tuition Requests</h3>
+    <div id="studentOwnRequests"></div>
+
+    <button class="red" onclick="logoutUser()">Logout</button>
+  </div>
+</div>
+
+<!-- TEACHER PORTAL -->
 <div id="teacherPortal" class="card hide">
   <h2>👨‍🏫 Teacher Portal</h2>
 
+  <h3>Create Teacher Account</h3>
   <input id="teacherName" placeholder="Teacher Name">
   <input id="teacherEmail" type="email" placeholder="Email">
   <input id="teacherPassword" type="password" placeholder="Password">
+  <button type="button" onclick="togglePassword('teacherPassword')">Show / Hide Password</button>
 
-  <button type="button" onclick="togglePassword('teacherPassword')">
-    Show / Hide Password
-  </button>
+  <input id="teacherSubject" placeholder="Subjects">
+  <input id="teacherExperience" placeholder="Experience">
 
-  <button class="green" onclick="createTeacherAccount()">
-    Create Teacher Account
-  </button>
+  <button class="green" onclick="createTeacherAccount()">Create Teacher Account</button>
 
-  <button class="dark" onclick="teacherLogin()">
-    Teacher Login
-  </button>
+  <hr>
+
+  <h3>Teacher Login</h3>
+  <input id="teacherLoginEmail" type="email" placeholder="Email">
+  <input id="teacherLoginPassword" type="password" placeholder="Password">
+  <button type="button" onclick="togglePassword('teacherLoginPassword')">Show / Hide Password</button>
+  <button class="dark" onclick="teacherLogin()">Teacher Login</button>
 
   <div id="teacherDashboard" class="hide">
     <h2>Teacher Dashboard</h2>
 
     <p id="teacherWelcome"></p>
 
-    <h3>Teacher Profile</h3>
-
-    <input id="teacherSubject" placeholder="Subjects">
-    <input id="teacherQualification" placeholder="Qualification">
-    <input id="teacherFee" placeholder="Monthly Fee">
-    <input id="teacherMode" placeholder="WhatsApp / Zoom / Online">
-
-    <button class="green" onclick="saveTeacherProfile()">
-      Save Profile
-    </button>
-
-    <h3>Available Student Requests</h3>
+    <h3>📚 Student Requests</h3>
     <div id="teacherStudentRequests"></div>
 
-    <h3>Messages</h3>
+    <h3>📢 Messages</h3>
     <div id="teacherMessages"></div>
 
-    <button class="red" onclick="logoutUser()">
-      Logout
-    </button>
+    <button class="red" onclick="logoutUser()">Logout</button>
   </div>
 </div>
 
@@ -657,35 +625,35 @@ a{color:#0f4c81;font-weight:bold}
   <h2>👥 Team Portal</h2>
 
   <input id="teamLoginId" placeholder="Team ID">
-  <button class="dark" onclick="teamLogin()">Login</button>
+  <button class="dark" onclick="teamLogin()">Team Login</button>
 
   <div id="teamDashboard" class="hide">
     <h2>Team Dashboard</h2>
 
     <p id="teamWelcome"></p>
 
-    <h3>Assigned Work</h3>
-    <div id="teamAssignedWork"></div>
-
-    <h3>Messages</h3>
+    <h3>📢 Messages</h3>
     <div id="teamMessages"></div>
 
-    <h3>Points</h3>
-    <p>Total Points: <span id="teamPoints">0</span></p>
+    <h3>📝 Assigned Work</h3>
+    <div id="teamTasks"></div>
 
-    <button id="teamWithdrawBtn" class="dark" onclick="requestWithdraw('team')">
-      Withdraw Locked
-    </button>
+    <h3>💰 Points</h3>
+    <p id="teamPoints">0</p>
+
+    <button class="green" onclick="requestWithdraw('team')">Request Withdraw</button>
+
+    <br><br>
+    <button class="red" onclick="logoutUser()">Logout</button>
   </div>
 </div>
 
 <!-- LIVE CLASSES -->
 <div id="classesPortal" class="card hide">
-  <h2>📚 Live Classes</h2>
+  <h2>📚 Live Classes & Lectures</h2>
 
-  <select id="classSelector" onchange="loadLectures()">
-    <option>Nursery</option>
-    <option>KG</option>
+  <select id="classFilter" onchange="loadCourses()">
+    <option value="">All Classes</option>
     <option>Class 1</option>
     <option>Class 2</option>
     <option>Class 3</option>
@@ -703,37 +671,23 @@ a{color:#0f4c81;font-weight:bold}
     <option>MPhil</option>
   </select>
 
-  <div id="lectureList">
-    <div class="card">
-      Coming Soon — Live lectures and YouTube linked courses.
-    </div>
-  </div>
+  <div id="courseList"></div>
 </div>
 
 <!-- SMART TEST -->
 <div id="smartTest" class="card hide">
   <h2>🧠 Smart Test</h2>
 
-  <select id="testSubject">
-    <option>Math</option>
-    <option>English</option>
-    <option>Urdu</option>
-    <option>General Science</option>
-    <option>General Knowledge</option>
-    <option>Computer Science</option>
-    <option>Biology</option>
-    <option>Chemistry</option>
-    <option>Physics</option>
-    <option>Islamiat</option>
+  <select id="mcqSubjectFilter" onchange="loadMCQs()">
+    <option value="">All Subjects</option>
   </select>
 
-  <button class="green" onclick="loadMCQs()">
-    Start Test
-  </button>
+  <button class="blue" onclick="speakCurrentMCQ()">🔊 Read MCQ</button>
 
-  <h3>Score: <span id="testScore">0</span></h3>
+  <div id="mcqList"></div>
 
-  <div id="mcqContainer"></div>
+  <h3>🏆 Score</h3>
+  <p id="mcqScore">0</p>
 </div>
 
 <!-- SUPPORT -->
@@ -741,43 +695,23 @@ a{color:#0f4c81;font-weight:bold}
   <h2>📞 Support Center</h2>
 
   <div class="card">
-    <h3>WhatsApp Channel</h3>
-
-    <p>
-      Join Nexora Community WhatsApp announcements channel.
-    </p>
-
-    <a href="https://whatsapp.com/channel/0029VbCqlqjA2pL5hxFGvp0a" target="_blank">
-      <button class="green">
-        Join WhatsApp Channel
-      </button>
-    </a>
+    <h3>📢 WhatsApp Channel</h3>
+    <button class="green" onclick="openWhatsAppChannel()">Join WhatsApp Channel</button>
   </div>
 
   <div class="card">
-    <h3>Support Email</h3>
-
-    <p id="supportEmailText">
-      support@nexora.com
-    </p>
-
-    <a id="supportEmailBtn" href="mailto:support@nexora.com">
-      <button class="blue">
-        Send Email
-      </button>
-    </a>
+    <h3>📧 Support Email</h3>
+    <p id="supportEmailText"></p>
   </div>
 
   <div class="card">
-    <h3>AI Help Bot</h3>
+    <h3>🤖 AI Help Bot</h3>
 
-    <input id="botQuestion" placeholder="Ask your question">
+    <textarea id="botQuestion" placeholder="Ask something..."></textarea>
 
-    <button class="dark" onclick="askBot()">
-      Ask Bot
-    </button>
+    <button class="dark" onclick="askBot()">Ask AI Bot</button>
 
-    <div id="botReply"></div>
+    <div id="botReply" class="card"></div>
   </div>
 </div>
 
@@ -805,9 +739,12 @@ collection,
 addDoc,
 getDocs,
 updateDoc,
+deleteDoc,
 doc,
 setDoc,
-getDoc
+getDoc,
+query,
+where
 }
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
@@ -821,445 +758,729 @@ const firebaseConfig = {
   measurementId: "G-QC11PMN306"
 };
 
-const app = initializeApp(firebaseConfig);
-
-const auth = getAuth(app);
-
-const db = getFirestore(app);
+const app=initializeApp(firebaseConfig);
+const auth=getAuth(app);
+const db=getFirestore(app);
 
 let currentFilter="All";
 
 let currentCommunityUser=null;
-
-let currentClientUser=null;
-
+let currentStudentUser=null;
 let currentTeacherUser=null;
+let currentClientUser=null;
+let currentTeamUser=null;
+
+let currentMCQText="";
 
 window.togglePassword=function(id){
+const el=document.getElementById(id);
 
-const input=document.getElementById(id);
-
-if(!input)return;
-
-if(input.type==="password"){
-  input.type="text";
+if(el.type==="password"){
+el.type="text";
 }else{
-  input.type="password";
+el.type="password";
 }
-
 }
 
 window.openPortal=function(id){
 
-document.getElementById("mainMenu").classList.add("hide");
+mainMenu.classList.add("hide");
 
-document.getElementById("backBtn").classList.remove("hide");
-
-[
-"adminLogin",
-"adminDashboard",
-"communityPortal",
-"clientPortal",
-"marketplace",
-"studentPortal",
-"teacherPortal",
-"teamPortal",
-"classesPortal",
-"smartTest",
-"supportPortal"
-].forEach(function(sec){
-
-const el=document.getElementById(sec);
-
-if(el)el.classList.add("hide");
-
-});
+backBtn.classList.remove("hide");
 
 document.getElementById(id).classList.remove("hide");
 
+if(id==="marketplace"){
+loadMarketplace();
+}
+
+if(id==="smartTest"){
+loadMCQs();
+}
+
+if(id==="classesPortal"){
+loadCourses();
+}
+
+if(id==="supportPortal"){
+loadWebsiteControls();
+}
 }
 
 window.goHome=function(){
 
-document.getElementById("mainMenu").classList.remove("hide");
+mainMenu.classList.remove("hide");
 
-document.getElementById("backBtn").classList.add("hide");
+backBtn.classList.add("hide");
 
-[
-"adminLogin",
-"adminDashboard",
-"communityPortal",
-"clientPortal",
-"marketplace",
-"studentPortal",
-"teacherPortal",
-"teamPortal",
-"classesPortal",
-"smartTest",
-"supportPortal"
-].forEach(function(sec){
+document.querySelectorAll(".card").forEach(x=>{
 
-const el=document.getElementById(sec);
-
-if(el)el.classList.add("hide");
-
+if(
+x.id &&
+x.id!=="mainMenu"
+){
+x.classList.add("hide");
+}
 });
 
 }
 
 window.showAdmin=function(id){
 
-[
-"clientRequestsBox",
-"productRequestsBox",
-"studentRequestsBox",
-"teacherRequestsBox",
-"teamBox",
-"communityBox",
-"taskBox",
-"announcementBox",
-"messageBox",
-"withdrawBox",
-"marketAdminBox",
-"mcqAdminBox",
-"courseAdminBox",
-"controlBox"
-].forEach(function(sec){
+document.querySelectorAll("#adminDashboard > div").forEach(x=>{
 
-const el=document.getElementById(sec);
-
-if(el)el.classList.add("hide");
-
+if(x.id){
+x.classList.add("hide");
+}
 });
 
 document.getElementById(id).classList.remove("hide");
+}
+
+function now(){
+return new Date().toLocaleString();
+}
+
+  window.adminLogin=async function(){
+
+const email=document.getElementById("adminEmail").value.trim();
+
+const secret=document.getElementById("adminSecretId").value.trim();
+
+const roles=[
+{
+email:"smartustad0@gmail.com",
+secret:"NX-CEO-786",
+role:"CEO"
+}
+];
+
+const snap=await getDocs(collection(db,"adminRoles"));
+
+snap.forEach(item=>{
+roles.push(item.data());
+});
+
+const found=roles.find(r=>
+r.email===email &&
+r.secret===secret
+);
+
+if(!found){
+
+alert("Access Denied ❌");
+
+return;
 
 }
 
-  function now(){
-  return new Date().toLocaleString();
-}
+document.getElementById("adminDashboard")
+.classList.remove("hide");
 
-window.setFilter=function(status){
-  currentFilter=status;
-  loadClientRequests();
-  loadStudentRequests();
-  loadTeacherRequests();
-  loadProductRequests();
-}
+document.getElementById("adminRoleText")
+.innerText="Logged in as: "+found.role;
 
-window.adminLogin=function(){
-  const email=document.getElementById("adminEmail").value.trim();
-  const secret=document.getElementById("adminSecretId").value.trim();
+document.getElementById("adminEmail").value="";
+document.getElementById("adminPassword").value="";
+document.getElementById("adminSecretId").value="";
 
-  const allowed=[
-    {email:"smartustad0@gmail.com",secret:"NX-OWNER-786",role:"owner"}
-  ];
+alert("Login successful ✅");
 
-  const found=allowed.find(a=>a.email===email && a.secret===secret);
+loadAllAdminData();
 
-  if(!found){
-    alert("Access Denied ❌");
-    return;
-  }
-
-  document.getElementById("adminLogin").classList.add("hide");
-  document.getElementById("adminDashboard").classList.remove("hide");
-
-  document.getElementById("adminEmail").value="";
-  document.getElementById("adminPassword").value="";
-  document.getElementById("adminSecretId").value="";
-
-  loadAllAdminData();
-}
+};
 
 async function loadAllAdminData(){
-  loadClientRequests();
-  loadProductRequests();
-  loadStudentRequests();
-  loadTeacherRequests();
-  loadTeamMembers();
-  loadCommunityMembers();
-  loadDailyTasksAdmin();
-  loadAnnouncements();
-  loadWithdrawRequests();
-  loadMarketplace();
-  loadMCQsAdmin();
-  loadLectures();
+
+loadClientRequests();
+loadProductRequests();
+loadStudentRequests();
+loadTeacherInterests();
+loadTeacherProfiles();
+loadTeamMembers();
+loadCommunityMembers();
+loadDailyTasksAdmin();
+loadAnnouncements();
+loadWithdrawRequests();
+loadMarketplace();
+loadMCQsAdmin();
+loadCoursesAdmin();
+loadRoles();
+loadAssignedWorkAdmin();
+
 }
 
-/* AUTH HELPERS */
+/* CEO ROLES */
+
+window.addAdminRole=async function(){
+
+await addDoc(collection(db,"adminRoles"),{
+
+email:document.getElementById("newAdminEmail").value,
+
+secret:document.getElementById("newAdminSecret").value,
+
+role:document.getElementById("newAdminRole").value,
+
+createdAt:now()
+
+});
+
+document.getElementById("roleMsg")
+.innerText="Admin role added ✅";
+
+document.getElementById("newAdminEmail").value="";
+document.getElementById("newAdminSecret").value="";
+
+loadRoles();
+
+};
+
+async function loadRoles(){
+
+const snap=await getDocs(collection(db,"adminRoles"));
+
+let html="";
+
+snap.forEach(item=>{
+
+const d=item.data();
+
+html+=`
+
+<div class="card">
+
+<h3>${d.email||""}</h3>
+
+<p>${d.role||""}</p>
+
+</div>
+
+`;
+
+});
+
+document.getElementById("roleList")
+.innerHTML=html||"No admin roles";
+
+}
+
+/* AUTH */
 
 async function createAccount(role,name,email,password){
-  const user=await createUserWithEmailAndPassword(auth,email,password);
-  await setDoc(doc(db,"users",user.user.uid),{
-    uid:user.user.uid,
-    role:role,
-    name:name,
-    email:email,
-    points:0,
-    createdAt:now()
-  });
-  return user.user;
+
+const user=await createUserWithEmailAndPassword(
+auth,
+email,
+password
+);
+
+await setDoc(doc(db,"users",user.user.uid),{
+
+uid:user.user.uid,
+
+role:role,
+
+name:name,
+
+email:email,
+
+points:0,
+
+createdAt:now()
+
+});
+
+return user.user;
+
 }
 
 async function loginAccount(email,password){
-  const user=await signInWithEmailAndPassword(auth,email,password);
-  return user.user;
+
+const user=await signInWithEmailAndPassword(
+auth,
+email,
+password
+);
+
+return user.user;
+
 }
 
 window.logoutUser=async function(){
-  await signOut(auth);
-  alert("Logged out ✅");
+
+await signOut(auth);
+
+alert("Logged out ✅");
+
+location.reload();
+
 };
 
 /* COMMUNITY */
 
 window.createCommunityAccount=async function(){
-  try{
-    const name=document.getElementById("communityName").value;
-    const email=document.getElementById("communityEmail").value;
-    const pass=document.getElementById("communityPassword").value;
 
-    if(!name||!email||!pass){
-      alert("Fill all fields");
-      return;
-    }
+try{
 
-    await createAccount("community",name,email,pass);
-    alert("Community account created ✅");
-  }catch(e){
-    alert(e.message);
-  }
+const name=document.getElementById("communityName").value;
+
+const email=document.getElementById("communityEmail").value;
+
+const pass=document.getElementById("communityPassword").value;
+
+if(!name||!email||!pass){
+
+alert("Fill all fields");
+
+return;
+
+}
+
+const user=await createAccount(
+"community",
+name,
+email,
+pass
+);
+
+currentCommunityUser=user;
+
+document.getElementById("communityDashboard")
+.classList.remove("hide");
+
+document.getElementById("communityWelcome")
+.innerText="Welcome "+name;
+
+document.getElementById("communityPoints")
+.innerText="0";
+
+document.getElementById("communityName").value="";
+document.getElementById("communityEmail").value="";
+document.getElementById("communityPassword").value="";
+
+loadMessagesFor("community","communityMessages");
+
+loadDailyTasksCommunity();
+
+alert("Community account created ✅");
+
+}catch(e){
+
+alert(e.message);
+
+}
+
 };
 
 window.communityLogin=async function(){
-  try{
-    const email=document.getElementById("communityEmail").value;
-    const pass=document.getElementById("communityPassword").value;
 
-    const user=await loginAccount(email,pass);
-    currentCommunityUser=user;
+try{
 
-    const snap=await getDoc(doc(db,"users",user.uid));
-    const data=snap.data();
+const email=document.getElementById("communityLoginEmail").value;
 
-    document.getElementById("communityDashboard").classList.remove("hide");
-    document.getElementById("communityWelcome").innerText="Welcome "+data.name;
-    document.getElementById("communityPoints").innerText=data.points||0;
+const pass=document.getElementById("communityLoginPassword").value;
 
-    loadMessagesFor("community","communityMessages");
-    loadDailyTasksCommunity();
-  }catch(e){
-    alert(e.message);
-  }
+const user=await loginAccount(email,pass);
+
+currentCommunityUser=user;
+
+const snap=await getDoc(doc(db,"users",user.uid));
+
+document.getElementById("communityDashboard")
+.classList.remove("hide");
+
+document.getElementById("communityWelcome")
+.innerText="Welcome "+snap.data().name;
+
+document.getElementById("communityPoints")
+.innerText=snap.data().points||0;
+
+document.getElementById("communityLoginEmail").value="";
+document.getElementById("communityLoginPassword").value="";
+
+loadMessagesFor("community","communityMessages");
+
+loadDailyTasksCommunity();
+
+alert("Login successful ✅");
+
+}catch(e){
+
+alert(e.message);
+
+}
+
 };
 
 window.resetCommunityPassword=async function(){
-  const email=document.getElementById("communityEmail").value;
-  if(!email){alert("Enter email");return;}
-  await sendPasswordResetEmail(auth,email);
-  alert("Password reset email sent ✅");
+
+const email=
+document.getElementById("communityLoginEmail").value;
+
+if(!email){
+
+alert("Enter email");
+
+return;
+
+}
+
+await sendPasswordResetEmail(auth,email);
+
+alert("Reset email sent ✅");
+
 };
 
 async function loadDailyTasksCommunity(){
-  const snap=await getDocs(collection(db,"dailyTasks"));
-  let html="";
 
-  snap.forEach(item=>{
-    const d=item.data();
-    html+=`
-    <div class="card">
-      <b>${d.type||""}</b>
-      <h3>${d.title||""}</h3>
-      <p>${d.points||0} Points</p>
-      <a href="${d.link||"#"}" target="_blank">Open Task</a>
-      <p class="small">Complete task and enter secret code below.</p>
-    </div>`;
-  });
+const snap=await getDocs(collection(db,"dailyTasks"));
 
-  document.getElementById("communityTasks").innerHTML=html||"No daily tasks";
+let html="";
+
+snap.forEach(item=>{
+
+const d=item.data();
+
+html+=`
+
+<div class="card">
+
+<h3>${d.title||""}</h3>
+
+<p>${d.type||""}</p>
+
+<p>${d.points||0} Points</p>
+
+<a href="${d.link||"#"}" target="_blank">
+
+Open Task
+
+</a>
+
+</div>
+
+`;
+
+});
+
+document.getElementById("communityTasks")
+.innerHTML=html||"No tasks";
+
 }
 
 window.submitCommunityCode=async function(){
-  if(!currentCommunityUser){
-    alert("Login first");
-    return;
-  }
 
-  const entered=document.getElementById("communityCode").value.trim();
-  const snap=await getDocs(collection(db,"dailyTasks"));
-  let matched=null;
+if(!currentCommunityUser){
 
-  snap.forEach(item=>{
-    const d=item.data();
-    if(d.code===entered){matched=d;}
-  });
+alert("Login first");
 
-  if(!matched){
-    document.getElementById("communityCodeMsg").innerText="Wrong code ❌";
-    return;
-  }
+return;
 
-  const userRef=doc(db,"users",currentCommunityUser.uid);
-  const userSnap=await getDoc(userRef);
-  const oldPoints=Number(userSnap.data().points||0);
-  const newPoints=oldPoints+Number(matched.points||0);
+}
 
-  await updateDoc(userRef,{points:newPoints});
-  document.getElementById("communityPoints").innerText=newPoints;
-  document.getElementById("communityCodeMsg").innerText="Points added ✅";
+const entered=
+document.getElementById("communityCode").value.trim();
+
+const snap=await getDocs(collection(db,"dailyTasks"));
+
+let matched=null;
+
+snap.forEach(item=>{
+
+const d=item.data();
+
+if(d.code===entered){
+
+matched=d;
+
+}
+
+});
+
+if(!matched){
+
+document.getElementById("communityCodeMsg")
+.innerText="Wrong code ❌";
+
+return;
+
+}
+
+const userRef=doc(db,"users",currentCommunityUser.uid);
+
+const userSnap=await getDoc(userRef);
+
+const oldPoints=Number(userSnap.data().points||0);
+
+const newPoints=
+oldPoints+Number(matched.points||0);
+
+await updateDoc(userRef,{
+points:newPoints
+});
+
+document.getElementById("communityPoints")
+.innerText=newPoints;
+
+document.getElementById("communityCodeMsg")
+.innerText="Points added successfully ✅";
+
+document.getElementById("communityCode").value="";
+
 };
 
 /* CLIENT */
 
 window.createClientAccount=async function(){
-  try{
-    const name=document.getElementById("clientName").value;
-    const email=document.getElementById("clientEmail").value;
-    const pass=document.getElementById("clientPassword").value;
 
-    if(!name||!email||!pass){
-      alert("Fill all fields");
-      return;
-    }
+try{
 
-    await createAccount("client",name,email,pass);
-    alert("Client account created ✅");
-  }catch(e){
-    alert(e.message);
-  }
+const name=document.getElementById("clientName").value;
+
+const email=document.getElementById("clientEmail").value;
+
+const pass=document.getElementById("clientPassword").value;
+
+await createAccount("client",name,email,pass);
+
+document.getElementById("clientName").value="";
+document.getElementById("clientEmail").value="";
+document.getElementById("clientPassword").value="";
+
+alert("Client account created ✅");
+
+}catch(e){
+
+alert(e.message);
+
+}
+
 };
 
 window.clientLogin=async function(){
-  try{
-    const email=document.getElementById("clientEmail").value;
-    const pass=document.getElementById("clientPassword").value;
 
-    const user=await loginAccount(email,pass);
-    currentClientUser=user;
+try{
 
-    const snap=await getDoc(doc(db,"users",user.uid));
-    document.getElementById("clientDashboard").classList.remove("hide");
-    document.getElementById("clientWelcome").innerText="Welcome "+snap.data().name;
+const email=document.getElementById("clientLoginEmail").value;
 
-    loadServicesToClient();
-    loadClientOwnRequests();
-    loadMessagesFor("client","clientMessages");
-  }catch(e){
-    alert(e.message);
-  }
+const pass=document.getElementById("clientLoginPassword").value;
+
+const user=await loginAccount(email,pass);
+
+currentClientUser=user;
+
+const snap=await getDoc(doc(db,"users",user.uid));
+
+document.getElementById("clientDashboard")
+.classList.remove("hide");
+
+document.getElementById("clientWelcome")
+.innerText="Welcome "+snap.data().name;
+
+document.getElementById("clientLoginEmail").value="";
+document.getElementById("clientLoginPassword").value="";
+
+loadMarketplaceServices();
+
+loadClientOwnRequests();
+
+loadMessagesFor("client","clientMessages");
+
+alert("Login successful ✅");
+
+}catch(e){
+
+alert(e.message);
+
+}
+
 };
 
-async function loadServicesToClient(){
-  const snap=await getDocs(collection(db,"marketItems"));
-  let html="<option>Select Service / Product</option>";
+async function loadMarketplaceServices(){
 
-  snap.forEach(item=>{
-    const d=item.data();
-    html+=`<option>${d.title||""}</option>`;
-  });
+const snap=await getDocs(collection(db,"marketItems"));
 
-  document.getElementById("clientServiceSelect").innerHTML=html;
+let html="<option>Select Service</option>";
+
+snap.forEach(item=>{
+
+const d=item.data();
+
+html+=`
+<option>${d.title||""}</option>
+`;
+
+});
+
+document.getElementById("clientServiceSelect")
+.innerHTML=html;
+
 }
 
 window.submitClientRequest=async function(){
-  if(!currentClientUser){
-    alert("Client login first");
-    return;
-  }
 
-  await addDoc(collection(db,"clientRequests"),{
-    uid:currentClientUser.uid,
-    name:document.getElementById("clientName").value,
-    email:document.getElementById("clientEmail").value,
-    mobile:document.getElementById("clientMobile").value,
-    service:document.getElementById("clientServiceSelect").value,
-    details:document.getElementById("clientDetails").value,
-    status:"Pending",
-    createdAt:now()
-  });
+await addDoc(collection(db,"clientRequests"),{
 
-  document.getElementById("clientMsg").innerText="Request submitted ✅";
-  loadClientOwnRequests();
+uid:currentClientUser.uid,
+
+name:document.getElementById("clientName").value,
+
+email:currentClientUser.email,
+
+mobile:document.getElementById("clientMobile").value,
+
+service:document.getElementById("clientServiceSelect").value,
+
+details:document.getElementById("clientDetails").value,
+
+status:"Pending",
+
+createdAt:now()
+
+});
+
+document.getElementById("clientMobile").value="";
+document.getElementById("clientDetails").value="";
+
+document.getElementById("clientMsg")
+.innerText="Request submitted successfully ✅";
+
+loadClientOwnRequests();
+
 };
 
 window.submitProductRequest=async function(){
-  if(!currentClientUser){
-    alert("Client login first");
-    return;
-  }
 
-  await addDoc(collection(db,"productRequests"),{
-    sellerUid:currentClientUser.uid,
-    sellerEmail:document.getElementById("clientEmail").value,
-    title:document.getElementById("sellerProductTitle").value,
-    price:document.getElementById("sellerProductPrice").value,
-    image:document.getElementById("sellerProductImage").value,
-    desc:document.getElementById("sellerProductDesc").value,
-    commission:"5%",
-    status:"Pending",
-    createdAt:now()
-  });
+await addDoc(collection(db,"productRequests"),{
 
-  alert("Product request sent to admin ✅");
+sellerUid:currentClientUser.uid,
+
+sellerEmail:currentClientUser.email,
+
+title:document.getElementById("sellerProductTitle").value,
+
+price:document.getElementById("sellerProductPrice").value,
+
+image:document.getElementById("sellerProductImage").value,
+
+desc:document.getElementById("sellerProductDesc").value,
+
+status:"Pending",
+
+createdAt:now()
+
+});
+
+document.getElementById("sellerProductTitle").value="";
+document.getElementById("sellerProductPrice").value="";
+document.getElementById("sellerProductImage").value="";
+document.getElementById("sellerProductDesc").value="";
+
+document.getElementById("sellerMsg")
+.innerText="Product request submitted ✅";
+
 };
 
 async function loadClientOwnRequests(){
-  if(!currentClientUser)return;
 
-  const snap=await getDocs(collection(db,"clientRequests"));
-  let html="";
+if(!currentClientUser)return;
 
-  snap.forEach(item=>{
-    const d=item.data();
-    if(d.uid===currentClientUser.uid){
-      html+=`
-      <div class="card">
-        <h3>${d.service||""}</h3>
-        <p>${d.details||""}</p>
-        <p><b>Status:</b> <span class="status">${d.status||"Pending"}</span></p>
-      </div>`;
-    }
-  });
+const snap=await getDocs(collection(db,"clientRequests"));
 
-  document.getElementById("clientOwnRequests").innerHTML=html||"No requests";
+let html="";
+
+snap.forEach(item=>{
+
+const d=item.data();
+
+if(d.uid===currentClientUser.uid){
+
+html+=`
+
+<div class="card">
+
+<h3>${d.service||""}</h3>
+
+<p>${d.details||""}</p>
+
+<p>
+
+<span class="status">
+
+${d.status||"Pending"}
+
+</span>
+
+</p>
+
+</div>
+
+`;
+
 }
 
-/* STUDENT */
+});
+
+document.getElementById("clientOwnRequests")
+.innerHTML=html||"No requests";
+
+  }
+
+  /* STUDENT */
 
 window.createStudentAccount=async function(){
-  try{
-    const name=document.getElementById("studentName").value;
-    const email=document.getElementById("studentEmail").value;
-    const pass=document.getElementById("studentPassword").value;
 
-    if(!name||!email||!pass){
-      alert("Fill all fields");
-      return;
-    }
+try{
 
-    await createAccount("student",name,email,pass);
-    alert("Student account created ✅");
-  }catch(e){
-    alert(e.message);
-  }
+const name=document.getElementById("studentName").value;
+
+const email=document.getElementById("studentEmail").value;
+
+const pass=document.getElementById("studentPassword").value;
+
+await createAccount("student",name,email,pass);
+
+document.getElementById("studentName").value="";
+document.getElementById("studentEmail").value="";
+document.getElementById("studentPassword").value="";
+
+alert("Student account created ✅");
+
+}catch(e){
+
+alert(e.message);
+
+}
+
 };
 
 window.studentLogin=async function(){
-  try{
-    const email=document.getElementById("studentEmail").value;
-    const pass=document.getElementById("studentPassword").value;
 
-    const user=await loginAccount(email,pass);
-    const snap=await getDoc(doc(db,"users",user.uid));
+try{
 
-    document.getElementById("studentDashboard").classList.remove("hide");
-    document.getElement
-    document.getElementById("studentWelcome").innerText=
-"Welcome "+snap.data().name;
+const email=document.getElementById("studentLoginEmail").value;
+
+const pass=document.getElementById("studentLoginPassword").value;
+
+const user=await loginAccount(email,pass);
+
+currentStudentUser=user;
+
+const snap=await getDoc(doc(db,"users",user.uid));
+
+document.getElementById("studentDashboard").classList.remove("hide");
+
+document.getElementById("studentWelcome").innerText="Welcome "+snap.data().name;
+
+document.getElementById("studentLoginEmail").value="";
+document.getElementById("studentLoginPassword").value="";
 
 loadMessagesFor("student","studentMessages");
+
+loadStudentOwnRequests();
+
+alert("Login successful ✅");
 
 }catch(e){
 
@@ -1273,17 +1494,17 @@ window.submitStudentRequest=async function(){
 
 await addDoc(collection(db,"studentRequests"),{
 
-studentName:document.getElementById("studentName").value,
+uid:currentStudentUser?currentStudentUser.uid:"",
 
-email:document.getElementById("studentEmail").value,
+studentEmail:currentStudentUser?currentStudentUser.email:document.getElementById("studentEmail").value,
 
 className:document.getElementById("studentClass").value,
 
 subject:document.getElementById("studentSubject").value,
 
-method:document.getElementById("studyMethod").value,
+mode:document.getElementById("studentMode").value,
 
-details:document.getElementById("studentDetails").value,
+details:document.getElementById("studentNeed").value,
 
 status:"Pending",
 
@@ -1291,10 +1512,51 @@ createdAt:now()
 
 });
 
-document.getElementById("studentMsg").innerText=
-"Tutor request submitted ✅";
+document.getElementById("studentNeed").value="";
+
+document.getElementById("studentRequestMsg").innerText="Tuition request submitted ✅";
+
+loadStudentOwnRequests();
 
 };
+
+async function loadStudentOwnRequests(){
+
+if(!currentStudentUser)return;
+
+const snap=await getDocs(collection(db,"studentRequests"));
+
+let html="";
+
+snap.forEach(item=>{
+
+const d=item.data();
+
+if(d.uid===currentStudentUser.uid){
+
+html+=`
+
+<div class="card">
+
+<h3>${d.className||""} - ${d.subject||""}</h3>
+
+<p>${d.mode||""}</p>
+
+<p>${d.details||""}</p>
+
+<p><span class="status">${d.status||"Pending"}</span></p>
+
+</div>
+
+`;
+
+}
+
+});
+
+document.getElementById("studentOwnRequests").innerHTML=html||"No requests";
+
+}
 
 /* TEACHER */
 
@@ -1308,15 +1570,31 @@ const email=document.getElementById("teacherEmail").value;
 
 const pass=document.getElementById("teacherPassword").value;
 
-if(!name || !email || !pass){
+const user=await createAccount("teacher",name,email,pass);
 
-alert("Fill all fields");
+await setDoc(doc(db,"teacherProfiles",user.uid),{
 
-return;
+uid:user.uid,
 
-}
+name:name,
 
-await createAccount("teacher",name,email,pass);
+email:email,
+
+subject:document.getElementById("teacherSubject").value,
+
+experience:document.getElementById("teacherExperience").value,
+
+status:"Pending",
+
+createdAt:now()
+
+});
+
+document.getElementById("teacherName").value="";
+document.getElementById("teacherEmail").value="";
+document.getElementById("teacherPassword").value="";
+document.getElementById("teacherSubject").value="";
+document.getElementById("teacherExperience").value="";
 
 alert("Teacher account created ✅");
 
@@ -1332,9 +1610,9 @@ window.teacherLogin=async function(){
 
 try{
 
-const email=document.getElementById("teacherEmail").value;
+const email=document.getElementById("teacherLoginEmail").value;
 
-const pass=document.getElementById("teacherPassword").value;
+const pass=document.getElementById("teacherLoginPassword").value;
 
 const user=await loginAccount(email,pass);
 
@@ -1342,49 +1620,24 @@ currentTeacherUser=user;
 
 const snap=await getDoc(doc(db,"users",user.uid));
 
-document.getElementById("teacherDashboard")
-.classList.remove("hide");
+document.getElementById("teacherDashboard").classList.remove("hide");
 
-document.getElementById("teacherWelcome")
-.innerText="Welcome "+snap.data().name;
+document.getElementById("teacherWelcome").innerText="Welcome "+snap.data().name;
+
+document.getElementById("teacherLoginEmail").value="";
+document.getElementById("teacherLoginPassword").value="";
 
 loadTeacherStudentRequests();
 
 loadMessagesFor("teacher","teacherMessages");
+
+alert("Login successful ✅");
 
 }catch(e){
 
 alert(e.message);
 
 }
-
-};
-
-window.saveTeacherProfile=async function(){
-
-if(!currentTeacherUser){
-
-alert("Teacher login first");
-
-return;
-
-}
-
-await setDoc(doc(db,"teacherProfiles",currentTeacherUser.uid),{
-
-subject:document.getElementById("teacherSubject").value,
-
-qualification:document.getElementById("teacherQualification").value,
-
-fee:document.getElementById("teacherFee").value,
-
-mode:document.getElementById("teacherMode").value,
-
-updatedAt:now()
-
-});
-
-alert("Profile saved ✅");
 
 };
 
@@ -1402,18 +1655,15 @@ html+=`
 
 <div class="card">
 
-<h3>${d.studentName||""}</h3>
+<h3>${d.className||""} - ${d.subject||""}</h3>
 
-<p>${d.className||""} - ${d.subject||""}</p>
+<p>${d.mode||""}</p>
 
-<p>${d.method||""}</p>
+<p>${d.details||""}</p>
 
-<button class="green"
-onclick="teacherAcceptStudent('${item.id}')">
+<p><span class="status">${d.status||"Pending"}</span></p>
 
-Accept Interest
-
-</button>
+<button class="green" onclick="teacherAcceptStudent('${item.id}')">Accept Interest</button>
 
 </div>
 
@@ -1421,8 +1671,7 @@ Accept Interest
 
 });
 
-document.getElementById("teacherStudentRequests")
-.innerHTML=html||"No student requests";
+document.getElementById("teacherStudentRequests").innerHTML=html||"No student requests";
 
 }
 
@@ -1430,8 +1679,9 @@ window.teacherAcceptStudent=async function(id){
 
 await addDoc(collection(db,"teacherInterests"),{
 
-teacherUid:currentTeacherUser
-?currentTeacherUser.uid:"",
+teacherUid:currentTeacherUser?currentTeacherUser.uid:"",
+
+teacherEmail:currentTeacherUser?currentTeacherUser.email:"",
 
 studentRequestId:id,
 
@@ -1441,7 +1691,7 @@ createdAt:now()
 
 });
 
-alert("Sent to admin for review ✅");
+alert("Interest sent to admin ✅");
 
 };
 
@@ -1449,8 +1699,7 @@ alert("Sent to admin for review ✅");
 
 window.addTeamMember=async function(){
 
-const teamId=
-"NX-TM-"+Math.floor(1000+Math.random()*9000);
+const teamId="NX-TM-"+Math.floor(1000+Math.random()*9000);
 
 await addDoc(collection(db,"teamMembers"),{
 
@@ -1465,6 +1714,10 @@ points:0,
 createdAt:now()
 
 });
+
+document.getElementById("teamName").value="";
+document.getElementById("teamEmail").value="";
+document.getElementById("teamMsg").innerText="Team member added ✅";
 
 loadTeamMembers();
 
@@ -1498,15 +1751,77 @@ html+=`
 
 });
 
-document.getElementById("teamList")
-.innerHTML=html||"No team members";
+document.getElementById("teamList").innerHTML=html||"No team members";
+
+}
+
+window.assignTeamWork=async function(){
+
+await addDoc(collection(db,"teamWork"),{
+
+teamId:document.getElementById("assignTeamId").value,
+
+title:document.getElementById("assignTitle").value,
+
+details:document.getElementById("assignDetails").value,
+
+deadline:document.getElementById("assignDeadline").value,
+
+points:Number(document.getElementById("assignPoints").value||0),
+
+status:"Assigned",
+
+createdAt:now()
+
+});
+
+document.getElementById("assignTeamId").value="";
+document.getElementById("assignTitle").value="";
+document.getElementById("assignDetails").value="";
+document.getElementById("assignDeadline").value="";
+document.getElementById("assignPoints").value="";
+
+document.getElementById("assignMsg").innerText="Work assigned ✅";
+
+loadAssignedWorkAdmin();
+
+};
+
+async function loadAssignedWorkAdmin(){
+
+const snap=await getDocs(collection(db,"teamWork"));
+
+let html="";
+
+snap.forEach(item=>{
+
+const d=item.data();
+
+html+=`
+
+<div class="card">
+
+<h3>${d.title||""}</h3>
+
+<p><b>Team ID:</b> ${d.teamId||""}</p>
+
+<p>${d.details||""}</p>
+
+<p><span class="status">${d.status||""}</span></p>
+
+</div>
+
+`;
+
+});
+
+document.getElementById("assignedWorkAdminList").innerHTML=html||"No assigned work";
 
 }
 
 window.teamLogin=async function(){
 
-const entered=
-document.getElementById("teamLoginId").value.trim();
+const entered=document.getElementById("teamLoginId").value.trim();
 
 const snap=await getDocs(collection(db,"teamMembers"));
 
@@ -1532,20 +1847,1054 @@ return;
 
 }
 
-document.getElementById("teamDashboard")
-.classList.remove("hide");
+currentTeamUser=found;
 
-document.getElementById("teamWelcome")
-.innerText="Welcome "+found.name;
+document.getElementById("teamDashboard").classList.remove("hide");
 
-document.getElementById("teamPoints")
-.innerText=found.points||0;
+document.getElementById("teamWelcome").innerText="Welcome "+found.name;
+
+document.getElementById("teamPoints").innerText=found.points||0;
+
+document.getElementById("teamLoginId").value="";
+
+loadTeamWork(found.teamId);
 
 loadMessagesFor("team","teamMessages");
 
 };
 
-/* END */
+async function loadTeamWork(teamId){
+
+const snap=await getDocs(collection(db,"teamWork"));
+
+let html="";
+
+snap.forEach(item=>{
+
+const d=item.data();
+
+if(d.teamId===teamId){
+
+html+=`
+
+<div class="card">
+
+<h3>${d.title||""}</h3>
+
+<p>${d.details||""}</p>
+
+<p>Deadline: ${d.deadline||""}</p>
+
+<p>Points: ${d.points||0}</p>
+
+<p><span class="status">${d.status||""}</span></p>
+
+<button class="green" onclick="updateTeamWork('${item.id}','Accepted')">Accept</button>
+
+<button class="red" onclick="updateTeamWork('${item.id}','Rejected')">Reject</button>
+
+<button class="blue" onclick="updateTeamWork('${item.id}','Completed')">Complete</button>
+
+</div>
+
+`;
+
+}
+
+});
+
+document.getElementById("teamTasks").innerHTML=html||"No assigned work";
+
+}
+
+window.updateTeamWork=async function(id,status){
+
+await updateDoc(doc(db,"teamWork",id),{
+
+status:status
+
+});
+
+alert("Work status updated ✅");
+
+if(currentTeamUser){
+
+loadTeamWork(currentTeamUser.teamId);
+
+}
+
+};
+
+/* ADMIN LISTS */
+
+async function loadClientRequests(){
+
+const snap=await getDocs(collection(db,"clientRequests"));
+
+document.getElementById("clientCount").innerText=snap.size;
+
+let html="";
+
+snap.forEach(item=>{
+
+const d=item.data();
+
+if(currentFilter!=="All" && d.status!==currentFilter)return;
+
+html+=`
+
+<div class="card">
+
+<h3>${d.name||""}</h3>
+
+<p>${d.email||""}</p>
+
+<p>${d.mobile||""}</p>
+
+<p>${d.service||""}</p>
+
+<p>${d.details||""}</p>
+
+<p><span class="status">${d.status||"Pending"}</span></p>
+
+<button class="green" onclick="updateStatus('clientRequests','${item.id}','Accepted')">Accept</button>
+
+<button class="red" onclick="updateStatus('clientRequests','${item.id}','Rejected')">Reject</button>
+
+</div>
+
+`;
+
+});
+
+document.getElementById("clientRequestsList").innerHTML=html||"No client requests";
+
+}
+
+async function loadProductRequests(){
+
+const snap=await getDocs(collection(db,"productRequests"));
+
+document.getElementById("productRequestCount").innerText=snap.size;
+
+let html="";
+
+snap.forEach(item=>{
+
+const d=item.data();
+
+if(currentFilter!=="All" && d.status!==currentFilter)return;
+
+html+=`
+
+<div class="card">
+
+<h3>${d.title||""}</h3>
+
+<p>${d.price||""}</p>
+
+<p>${d.desc||""}</p>
+
+<p><span class="status">${d.status||"Pending"}</span></p>
+
+<button class="green" onclick="approveProductRequest('${item.id}')">Approve & List</button>
+
+<button class="red" onclick="updateStatus('productRequests','${item.id}','Rejected')">Reject</button>
+
+</div>
+
+`;
+
+});
+
+document.getElementById("productRequestsList").innerHTML=html||"No product requests";
+
+}
+
+window.approveProductRequest=async function(id){
+
+const ref=doc(db,"productRequests",id);
+
+const snap=await getDoc(ref);
+
+const d=snap.data();
+
+await addDoc(collection(db,"marketItems"),{
+
+title:d.title,
+
+price:d.price,
+
+image:d.image,
+
+desc:d.desc,
+
+sellerEmail:d.sellerEmail||"",
+
+commission:"5%",
+
+status:"Live",
+
+createdAt:now()
+
+});
+
+await updateDoc(ref,{status:"Accepted"});
+
+alert("Product approved and listed ✅");
+
+loadProductRequests();
+
+loadMarketplace();
+
+};
+
+async function loadStudentRequests(){
+
+const snap=await getDocs(collection(db,"studentRequests"));
+
+document.getElementById("studentCount").innerText=snap.size;
+
+let html="";
+
+snap.forEach(item=>{
+
+const d=item.data();
+
+if(currentFilter!=="All" && d.status!==currentFilter)return;
+
+html+=`
+
+<div class="card">
+
+<h3>${d.className||""} - ${d.subject||""}</h3>
+
+<p>${d.details||""}</p>
+
+<p>${d.studentEmail||""}</p>
+
+<p><span class="status">${d.status||"Pending"}</span></p>
+
+<button class="green" onclick="updateStatus('studentRequests','${item.id}','Accepted')">Accept</button>
+
+<button class="red" onclick="updateStatus('studentRequests','${item.id}','Rejected')">Reject</button>
+
+</div>
+
+`;
+
+});
+
+document.getElementById("studentRequestsList").innerHTML=html||"No student requests";
+
+}
+
+async function loadTeacherInterests(){
+
+const snap=await getDocs(collection(db,"teacherInterests"));
+
+document.getElementById("teacherInterestCount").innerText=snap.size;
+
+let html="";
+
+snap.forEach(item=>{
+
+const d=item.data();
+
+html+=`
+
+<div class="card">
+
+<p>Teacher: ${d.teacherEmail||d.teacherUid||""}</p>
+
+<p>Student Request ID: ${d.studentRequestId||""}</p>
+
+<p><span class="status">${d.status||""}</span></p>
+
+<button class="green" onclick="updateStatus('teacherInterests','${item.id}','Accepted')">Accept</button>
+
+<button class="red" onclick="updateStatus('teacherInterests','${item.id}','Rejected')">Reject</button>
+
+</div>
+
+`;
+
+});
+
+document.getElementById("teacherInterestsList").innerHTML=html||"No teacher interests";
+
+}
+
+async function loadTeacherProfiles(){
+
+const snap=await getDocs(collection(db,"teacherProfiles"));
+
+let html="";
+
+snap.forEach(item=>{
+
+const d=item.data();
+
+html+=`
+
+<div class="card">
+
+<h3>${d.name||""}</h3>
+
+<p>${d.email||""}</p>
+
+<p>Subject: ${d.subject||""}</p>
+
+<p>Experience: ${d.experience||""}</p>
+
+<p><span class="status">${d.status||"Pending"}</span></p>
+
+<button class="green" onclick="updateStatus('teacherProfiles','${item.id}','Accepted')">Accept</button>
+
+<button class="red" onclick="updateStatus('teacherProfiles','${item.id}','Rejected')">Reject</button>
+
+</div>
+
+`;
+
+});
+
+document.getElementById("teacherProfilesList").innerHTML=html||"No teacher profiles";
+
+}
+
+window.updateStatus=async function(collectionName,id,status){
+
+await updateDoc(doc(db,collectionName,id),{
+
+status:status
+
+});
+
+alert("Status updated ✅");
+
+loadAllAdminData();
+
+};
+
+/* MARKETPLACE */
+
+window.addMarketplaceItem=async function(){
+
+await addDoc(collection(db,"marketItems"),{
+
+title:document.getElementById("marketTitle").value,
+
+category:document.getElementById("marketCategory").value,
+
+price:document.getElementById("marketPrice").value,
+
+image:document.getElementById("marketImage").value,
+
+desc:document.getElementById("marketDesc").value,
+
+sellerEmail:"Admin",
+
+commission:"Admin Product",
+
+status:"Live",
+
+createdAt:now()
+
+});
+
+document.getElementById("marketTitle").value="";
+document.getElementById("marketCategory").value="";
+document.getElementById("marketPrice").value="";
+document.getElementById("marketImage").value="";
+document.getElementById("marketDesc").value="";
+
+document.getElementById("marketAdminMsg").innerText="Marketplace item added ✅";
+
+loadMarketplace();
+
+};
+
+async function loadMarketplace(){
+
+const snap=await getDocs(collection(db,"marketItems"));
+
+let html="";
+
+let adminHtml="";
+
+snap.forEach(item=>{
+
+const d=item.data();
+
+html+=`
+
+<div class="card">
+
+${d.image?`<img class="product-img" src="${d.image}">`:""}
+
+<h3>${d.title||""}</h3>
+
+<p>${d.price||""}</p>
+
+<p>${d.desc||""}</p>
+
+<button class="green" onclick="buyerRequest('${d.title||""}')">Buy / Request</button>
+
+</div>
+
+`;
+
+adminHtml+=`
+
+<div class="card">
+
+<h3>${d.title||""}</h3>
+
+<p>${d.price||""}</p>
+
+<p>${d.status||""}</p>
+
+</div>
+
+`;
+
+});
+
+document.getElementById("marketplaceList").innerHTML=html||"No products yet";
+
+document.getElementById("marketAdminList").innerHTML=adminHtml||"No items";
+
+}
+
+window.searchMarketplace=function(){
+
+const q=document.getElementById("marketSearch").value.toLowerCase();
+
+document.querySelectorAll("#marketplaceList .card").forEach(card=>{
+
+card.style.display=card.innerText.toLowerCase().includes(q)?"block":"none";
+
+});
+
+};
+
+window.buyerRequest=async function(product){
+
+await addDoc(collection(db,"buyerRequests"),{
+
+product:product,
+
+status:"Pending",
+
+createdAt:now()
+
+});
+
+alert("Buyer request sent to admin ✅");
+
+};
+
+/* TASKS + ANNOUNCEMENTS */
+
+window.addDailyTask=async function(){
+
+await addDoc(collection(db,"dailyTasks"),{
+
+type:document.getElementById("taskType").value,
+
+title:document.getElementById("taskTitle").value,
+
+link:document.getElementById("taskLink").value,
+
+code:document.getElementById("taskCode").value,
+
+points:Number(document.getElementById("taskPoints").value||0),
+
+createdAt:now()
+
+});
+
+document.getElementById("taskTitle").value="";
+document.getElementById("taskLink").value="";
+document.getElementById("taskCode").value="";
+document.getElementById("taskPoints").value="";
+
+document.getElementById("taskMsg").innerText="Daily task added ✅";
+
+loadDailyTasksAdmin();
+
+};
+
+async function loadDailyTasksAdmin(){
+
+const snap=await getDocs(collection(db,"dailyTasks"));
+
+let html="";
+
+snap.forEach(item=>{
+
+const d=item.data();
+
+html+=`
+
+<div class="card">
+
+<h3>${d.title||""}</h3>
+
+<p>${d.type||""}</p>
+
+<p>Code: ${d.code||""}</p>
+
+<p>Points: ${d.points||0}</p>
+
+</div>
+
+`;
+
+});
+
+document.getElementById("taskListAdmin").innerHTML=html||"No tasks";
+
+}
+
+window.addAnnouncement=async function(){
+
+await addDoc(collection(db,"announcements"),{
+
+text:document.getElementById("announcementText").value,
+
+createdAt:now()
+
+});
+
+document.getElementById("announcementText").value="";
+
+document.getElementById("announcementMsg").innerText="Announcement added ✅";
+
+loadAnnouncements();
+
+};
+
+async function loadAnnouncements(){
+
+const snap=await getDocs(collection(db,"announcements"));
+
+let html="";
+
+let ticker="Welcome to Nexora Community";
+
+snap.forEach(item=>{
+
+const d=item.data();
+
+ticker+=" | "+(d.text||"");
+
+html+=`
+
+<div class="card">
+
+${d.text||""}
+
+<button class="red" onclick="deleteAnnouncement('${item.id}')">Delete</button>
+
+</div>
+
+`;
+
+});
+
+document.getElementById("newsText").innerText=ticker;
+
+document.getElementById("announcementListAdmin").innerHTML=html||"No announcements";
+
+}
+
+window.deleteAnnouncement=async function(id){
+
+await deleteDoc(doc(db,"announcements",id));
+
+loadAnnouncements();
+
+};
+
+/* MESSAGES + WITHDRAW */
+
+window.sendAdminMessage=async function(){
+
+await addDoc(collection(db,"messages"),{
+
+target:document.getElementById("messageTarget").value,
+
+to:document.getElementById("messageTo").value,
+
+text:document.getElementById("messageText").value,
+
+createdAt:now()
+
+});
+
+document.getElementById("messageTo").value="";
+document.getElementById("messageText").value="";
+document.getElementById("messageStatus").innerText="Message sent ✅";
+
+};
+
+async function loadMessagesFor(target,boxId){
+
+const snap=await getDocs(collection(db,"messages"));
+
+let html="";
+
+snap.forEach(item=>{
+
+const d=item.data();
+
+if(d.target===target||d.target==="all"){
+
+html+=`
+
+<div class="card">
+
+${d.text||""}
+
+</div>
+
+`;
+
+}
+
+});
+
+document.getElementById(boxId).innerHTML=html||"No messages";
+
+}
+
+window.requestWithdraw=async function(type){
+
+await addDoc(collection(db,"withdrawRequests"),{
+
+type:type,
+
+status:"Pending",
+
+createdAt:now()
+
+});
+
+alert("Withdraw request sent ✅");
+
+};
+
+async function loadWithdrawRequests(){
+
+const snap=await getDocs(collection(db,"withdrawRequests"));
+
+let html="";
+
+snap.forEach(item=>{
+
+const d=item.data();
+
+html+=`
+
+<div class="card">
+
+<b>${d.type||""}</b>
+
+<p>${d.status||""}</p>
+
+</div>
+
+`;
+
+});
+
+document.getElementById("withdrawList").innerHTML=html||"No withdraw requests";
+
+}
+
+/* COMMUNITY + COURSES + MCQS */
+
+async function loadCommunityMembers(){
+
+const snap=await getDocs(collection(db,"users"));
+
+let html="";
+
+snap.forEach(item=>{
+
+const d=item.data();
+
+if(d.role==="community"){
+
+html+=`
+
+<div class="card">
+
+<h3>${d.name||""}</h3>
+
+<p>${d.email||""}</p>
+
+<p>Points: ${d.points||0}</p>
+
+</div>
+
+`;
+
+}
+
+});
+
+document.getElementById("communityList").innerHTML=html||"No community members";
+
+}
+
+window.addLecture=async function(){
+
+await addDoc(collection(db,"lectures"),{
+
+className:document.getElementById("courseClass").value,
+
+subject:document.getElementById("courseSubject").value,
+
+chapter:document.getElementById("courseChapter").value,
+
+title:document.getElementById("lectureTitle").value,
+
+link:document.getElementById("lectureLink").value,
+
+createdAt:now()
+
+});
+
+document.getElementById("courseSubject").value="";
+document.getElementById("courseChapter").value="";
+document.getElementById("lectureTitle").value="";
+document.getElementById("lectureLink").value="";
+
+document.getElementById("lectureMsg").innerText="Lecture added ✅";
+
+loadCoursesAdmin();
+
+};
+
+async function loadCoursesAdmin(){
+
+const snap=await getDocs(collection(db,"lectures"));
+
+let html="";
+
+snap.forEach(item=>{
+
+const d=item.data();
+
+html+=`
+
+<div class="card">
+
+<b>${d.className||""}</b>
+
+<h3>${d.subject||""} - ${d.chapter||""}</h3>
+
+<a href="${d.link||"#"}" target="_blank">${d.title||"Lecture"}</a>
+
+</div>
+
+`;
+
+});
+
+document.getElementById("lectureAdminList").innerHTML=html||"No lectures";
+
+}
+
+async function loadCourses(){
+
+const snap=await getDocs(collection(db,"lectures"));
+
+let filter=document.getElementById("classFilter").value;
+
+let html="";
+
+snap.forEach(item=>{
+
+const d=item.data();
+
+if(filter && d.className!==filter)return;
+
+html+=`
+
+<div class="card">
+
+<b>${d.className||""}</b>
+
+<h3>${d.subject||""} - ${d.chapter||""}</h3>
+
+<a href="${d.link||"#"}" target="_blank">${d.title||"Lecture"}</a>
+
+</div>
+
+`;
+
+});
+
+document.getElementById("courseList").innerHTML=html||"No lectures yet";
+
+}
+
+window.addMCQ=async function(){
+
+await addDoc(collection(db,"mcqs"),{
+
+subject:document.getElementById("mcqSubject").value,
+
+question:document.getElementById("mcqQuestion").value,
+
+A:document.getElementById("mcqA").value,
+
+B:document.getElementById("mcqB").value,
+
+C:document.getElementById("mcqC").value,
+
+D:document.getElementById("mcqD").value,
+
+correct:document.getElementById("mcqCorrect").value,
+
+createdAt:now()
+
+});
+
+document.getElementById("mcqSubject").value="";
+document.getElementById("mcqQuestion").value="";
+document.getElementById("mcqA").value="";
+document.getElementById("mcqB").value="";
+document.getElementById("mcqC").value="";
+document.getElementById("mcqD").value="";
+
+document.getElementById("mcqMsg").innerText="MCQ added ✅";
+
+loadMCQsAdmin();
+
+};
+
+async function loadMCQsAdmin(){
+
+const snap=await getDocs(collection(db,"mcqs"));
+
+let html="";
+
+let subjects=[];
+
+snap.forEach(item=>{
+
+const d=item.data();
+
+subjects.push(d.subject);
+
+html+=`
+
+<div class="card">
+
+<b>${d.subject||""}</b>
+
+<p>${d.question||""}</p>
+
+<p>Correct: ${d.correct||""}</p>
+
+</div>
+
+`;
+
+});
+
+document.getElementById("mcqAdminList").innerHTML=html||"No MCQs";
+
+let unique=[...new Set(subjects)];
+
+document.getElementById("mcqSubjectFilter").innerHTML="<option value=''>All Subjects</option>"+unique.map(s=>`<option>${s}</option>`).join("");
+
+}
+
+window.loadMCQs=async function(){
+
+const snap=await getDocs(collection(db,"mcqs"));
+
+const filter=document.getElementById("mcqSubjectFilter").value;
+
+let html="";
+
+let count=0;
+
+snap.forEach(item=>{
+
+const d=item.data();
+
+if(filter && d.subject!==filter)return;
+
+count++;
+
+currentMCQText=d.question+" Option A "+d.A+" Option B "+d.B+" Option C "+d.C+" Option D "+d.D;
+
+html+=`
+
+<div class="card">
+
+<h3>${count}. ${d.question||""}</h3>
+
+<button class="option" onclick="checkAnswer(this,'A','${d.correct}')">A. ${d.A||""}</button>
+
+<button class="option" onclick="checkAnswer(this,'B','${d.correct}')">B. ${d.B||""}</button>
+
+<button class="option" onclick="checkAnswer(this,'C','${d.correct}')">C. ${d.C||""}</button>
+
+<button class="option" onclick="checkAnswer(this,'D','${d.correct}')">D. ${d.D||""}</button>
+
+</div>
+
+`;
+
+});
+
+document.getElementById("mcqList").innerHTML=html||"No MCQs";
+
+};
+
+window.checkAnswer=function(btn,selected,correct){
+
+if(selected===correct){
+
+btn.style.background="#16a34a";
+
+btn.style.color="white";
+
+document.getElementById("mcqScore").innerText=Number(document.getElementById("mcqScore").innerText||0)+1;
+
+}else{
+
+btn.style.background="#dc2626";
+
+btn.style.color="white";
+
+alert("Correct answer: "+correct);
+
+}
+
+};
+
+window.speakCurrentMCQ=function(){
+
+if(!currentMCQText){
+
+alert("Load MCQs first");
+
+return;
+
+}
+
+const utter=new SpeechSynthesisUtterance(currentMCQText);
+
+utter.lang="en-US";
+
+utter.rate=0.9;
+
+speechSynthesis.speak(utter);
+
+};
+
+  /* CONTROLS + BOT */
+
+window.saveWebsiteControls=async function(){
+
+const logo=document.getElementById("logoInput").value;
+
+const news=document.getElementById("newsInput").value;
+
+const supportEmail=document.getElementById("supportEmailInput").value;
+
+const whatsapp=document.getElementById("whatsappInput").value;
+
+if(logo){
+
+document.getElementById("siteLogo").src=logo;
+
+document.getElementById("siteLogo").style.display="block";
+
+}
+
+if(news){
+
+document.getElementById("newsText").innerText=news;
+
+}
+
+if(supportEmail){
+
+document.getElementById("supportEmailText").innerText=supportEmail;
+
+}
+
+await setDoc(doc(db,"settings","website"),{
+
+logo:logo,
+
+news:news,
+
+supportEmail:supportEmail,
+
+whatsapp:whatsapp,
+
+updatedAt:now()
+
+});
+
+document.getElementById("controlStatus").innerText="Controls saved ✅";
+
+};
+
+async function loadWebsiteControls(){
+
+const snap=await getDoc(doc(db,"settings","website"));
+
+if(snap.exists()){
+
+const d=snap.data();
+
+if(d.supportEmail){
+
+document.getElementById("supportEmailText").innerText=d.supportEmail;
+
+}
+
+}
+
+}
+
+window.openWhatsAppChannel=function(){
+
+window.open("https://whatsapp.com/channel/0029VbCqlqjA2pL5hxFGvp0a","_blank");
+
+};
+
+window.askBot=function(){
+
+const q=document.getElementById("botQuestion").value.toLowerCase();
+
+let reply="Please contact support for detailed help.";
+
+if(q.includes("password"))reply="Use Forgot Password option or contact support.";
+
+else if(q.includes("points"))reply="Complete daily tasks and submit task code to earn points.";
+
+else if(q.includes("market"))reply="Use Marketplace to buy or request products.";
+
+else if(q.includes("teacher"))reply="Use Teacher Portal to create account and view student requests.";
+
+else if(q.includes("client"))reply="Use Client Portal to request services or submit products.";
+
+document.getElementById("botReply").innerHTML=`<p>${reply}</p>`;
+
+};
 
 </script>
 

@@ -200,7 +200,23 @@ footer{
     Open
   </button>
 </div>
+<div id="ceoTasksBox" class="hide">
+  <h3>Create Today Task</h3>
 
+  <input id="ceoTaskTitle" placeholder="Task Title e.g. YouTube / Blog / Affiliate / Website">
+  <input id="ceoTaskLink" placeholder="Task Link">
+  <input id="ceoTaskCode" placeholder="Secret Code">
+  <input id="ceoTaskPoints" placeholder="Reward Points">
+
+  <button class="green" onclick="createDailyTask()">
+    Save Task
+  </button>
+
+  <p id="ceoTaskMsg"></p>
+
+  <h3>All Tasks</h3>
+  <div id="ceoTasksList"></div>
+</div>
 <div class="card">
   <h3>💰 Wallet Control</h3>
   <button onclick="showCeoBox('ceoWalletBox')">
@@ -355,20 +371,21 @@ onclick="resetMemberPassword()">
 
     </div>
 <div class="card">
-  <h3>📋 Daily Tasks</h3>
-
-  <div id="memberTasks">
-
-    <div class="card">
-      <h3>🌐 Visit Website</h3>
-      <p>Reward: 10 Points</p>
-
-      <button class="blue" onclick="completeTask(10)">
-        Complete Task
-      </button>
-    </div>
-
+  <h3>📋 Today Tasks</h3>
+  <div id="memberTasksList">
+    No tasks yet.
   </div>
+</div>
+
+<div class="card">
+  <h3>🔐 Today Code</h3>
+  <input id="memberTaskCode" placeholder="Enter today task code">
+
+  <button class="green" onclick="submitMemberTaskCode()">
+    Submit Code
+  </button>
+
+  <p id="memberTaskMsg"></p>
 </div>
     <div class="card">
       <h3>📩 Messages</h3>
@@ -563,7 +580,8 @@ window.ceoLogin=async function(){
 
     await loadMembers();
     await loadTeamMembers();
-
+    await loadDailyTasks();
+    
     document.getElementById("ceoLoginMsg").innerText="";
   }else{
     document.getElementById("ceoLoginMsg").innerText="Access denied ❌";
@@ -706,7 +724,8 @@ window.createMemberAccount=async function(){
 
     clearFields(["memberName","memberEmail","memberPassword"]);
     document.getElementById("memberCreateMsg").innerText="";
-
+    await loadDailyTasks();
+    
     alert("Member account created ✅");
   }catch(e){
     document.getElementById("memberCreateMsg").innerText=e.message;
@@ -739,7 +758,8 @@ window.memberLogin=async function(){
 
     clearFields(["memberLoginEmail","memberLoginPassword"]);
     document.getElementById("memberLoginMsg").innerText="";
-
+    await loadDailyTasks();
+    
     alert("Login successful ✅");
   }catch(e){
     document.getElementById("memberLoginMsg").innerText=e.message;
@@ -808,6 +828,112 @@ window.teamLogin=async function(){
   document.getElementById("teamLoginMsg").innerText="";
 };
 
+    /* BLOCK 7B — DAILY TASKS */
+
+window.createDailyTask=async function(){
+  const title=document.getElementById("ceoTaskTitle").value.trim();
+  const link=document.getElementById("ceoTaskLink").value.trim();
+  const code=document.getElementById("ceoTaskCode").value.trim();
+  const points=Number(document.getElementById("ceoTaskPoints").value||0);
+
+  if(!title || !code || !points){
+    document.getElementById("ceoTaskMsg").innerText="Title, code and points required ❌";
+    return;
+  }
+
+  await addDoc(collection(db,"dailyTasks"),{
+    title:title,
+    link:link,
+    code:code,
+    points:points,
+    status:"Active",
+    createdAt:now()
+  });
+
+  clearFields(["ceoTaskTitle","ceoTaskLink","ceoTaskCode","ceoTaskPoints"]);
+  document.getElementById("ceoTaskMsg").innerText="Task saved ✅";
+
+  await loadDailyTasks();
+};
+
+async function loadDailyTasks(){
+  const snap=await getDocs(collection(db,"dailyTasks"));
+  let ceoHtml="";
+  let memberHtml="";
+
+  snap.forEach(item=>{
+    const d=item.data();
+
+    ceoHtml+=`
+      <div class="card">
+        <h3>${d.title||""}</h3>
+        <p>Code: ${d.code||""}</p>
+        <p>Points: ${d.points||0}</p>
+        ${d.link?`<a href="${d.link}" target="_blank">Open Link</a>`:""}
+        <br><br>
+        <button class="red" onclick="deleteDailyTask('${item.id}')">Delete</button>
+      </div>
+    `;
+
+    memberHtml+=`
+      <div class="card">
+        <h3>${d.title||""}</h3>
+        <p>Reward: ${d.points||0} Points</p>
+        ${d.link?`<a href="${d.link}" target="_blank">Open Task</a>`:""}
+      </div>
+    `;
+  });
+
+  const ceoBox=document.getElementById("ceoTasksList");
+  if(ceoBox){ceoBox.innerHTML=ceoHtml||"No tasks yet.";}
+
+  const memberBox=document.getElementById("memberTasksList");
+  if(memberBox){memberBox.innerHTML=memberHtml||"No tasks yet.";}
+}
+
+window.deleteDailyTask=async function(id){
+  if(!confirm("Delete this task?")) return;
+  await deleteDoc(doc(db,"dailyTasks",id));
+  await loadDailyTasks();
+};
+
+window.submitMemberTaskCode=async function(){
+  if(!currentMember){
+    document.getElementById("memberTaskMsg").innerText="Login required ❌";
+    return;
+  }
+
+  const entered=document.getElementById("memberTaskCode").value.trim();
+  const snap=await getDocs(collection(db,"dailyTasks"));
+  let found=null;
+
+  snap.forEach(item=>{
+    const d=item.data();
+    if(d.code===entered){
+      found=d;
+    }
+  });
+
+  if(!found){
+    document.getElementById("memberTaskMsg").innerText="Wrong code ❌";
+    return;
+  }
+
+  const ref=doc(db,"users",currentMember.uid);
+  const userSnap=await getDoc(ref);
+  const oldPoints=Number(userSnap.data().points||0);
+  const newPoints=oldPoints+Number(found.points||0);
+
+  await setDoc(ref,{
+    ...userSnap.data(),
+    points:newPoints
+  });
+
+  document.getElementById("memberPoints").innerText=newPoints;
+  document.getElementById("memberTaskCode").value="";
+  document.getElementById("memberTaskMsg").innerText="Points added ✅";
+};
+    
 /* BLOCK 8 — LOGOUT */
 window.logoutLocal=async function(){
   try{

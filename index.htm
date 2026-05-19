@@ -995,5 +995,48 @@ window.goHome=function(){
 
 </script>
 
+  <script type="module">
+
+import { initializeApp } 
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import { 
+  getAuth,
+  GoogleAuthProvider,
+  signInWithPopup,
+  signOut
+} 
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAWj7dozNpK8ExbJ4fptOODj66i09lxb0s",
+  authDomain: "nexoracapitalcommunity.firebaseapp.com",
+  projectId: "nexoracapitalcommunity",
+  storageBucket: "nexoracapitalcommunity.firebasestorage.app",
+  messagingSenderId: "714723891713",
+  appId: "1:714723891713:web:65f70b7d3902f2aac7be00",
+  measurementId: "G-QC11PMN306"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const googleProvider = new GoogleAuthProvider();
+
+window.loginWithGoogle = async function(){
+  try{
+    const result = await signInWithPopup(auth, googleProvider);
+    alert("Google Login Success ✅ " + result.user.email);
+  }catch(error){
+    alert(error.message);
+  }
+};
+
+window.logoutGoogle = async function(){
+  await signOut(auth);
+  alert("Logged out ✅");
+};
+
+  </script>
+  
 </body>
 </html>

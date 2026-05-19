@@ -567,6 +567,7 @@ window.togglePassword=function(id){
 
 /* BLOCK 4 — NAVIGATION */
 function hideAllPages(){
+function hideAllPages(){
   [
     "ceoLoginPage",
     "ceoDashboard",
@@ -574,11 +575,11 @@ function hideAllPages(){
     "clientPage",
     "studentPage",
     "teacherPage",
-    "teamPage"
+    "teamPage",
     "marketplacePage",
-"smartTestPage"
+    "smartTestPage"
   ].forEach(hide);
-}
+    }
 
 window.showPage=function(id){
   hideAllPages();

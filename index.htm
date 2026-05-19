@@ -4,11 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Nexora Community | Core Stable</title>
-<meta name="description" content="Nexora Community core stable platform.">
+<title>Nexora Community | V3.6 Phase 1</title>
 
 <style>
-*{box-sizing:border-box}
+
+*{
+  box-sizing:border-box;
+}
 
 body{
   margin:0;
@@ -21,65 +23,87 @@ header{
   background:linear-gradient(135deg,#071a3d,#0f4c81);
   color:white;
   text-align:center;
-  padding:34px 18px;
+  padding:35px 16px;
 }
 
 .card{
   background:white;
   margin:16px;
   padding:20px;
-  border-radius:16px;
-  box-shadow:0 4px 12px rgba(0,0,0,.10);
+  border-radius:18px;
+  box-shadow:0 4px 14px rgba(0,0,0,.10);
 }
 
 .grid{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
   gap:14px;
 }
 
 button{
-  background:#f5b301;
   border:0;
-  border-radius:10px;
+  border-radius:12px;
   padding:12px 16px;
   font-weight:bold;
   margin:6px 4px;
+  background:#f5b301;
   cursor:pointer;
 }
 
-.dark{background:#111827;color:white}
-.green{background:#16a34a;color:white}
-.red{background:#dc2626;color:white}
-.blue{background:#2563eb;color:white}
-
-input{
-  width:94%;
-  padding:12px;
-  margin:7px 0;
-  border:1px solid #ccc;
-  border-radius:8px;
+.dark{
+  background:#111827;
+  color:white;
 }
 
-.hide{display:none!important}
+.green{
+  background:#16a34a;
+  color:white;
+}
+
+.red{
+  background:#dc2626;
+  color:white;
+}
+
+.blue{
+  background:#2563eb;
+  color:white;
+}
+
+.hide{
+  display:none!important;
+}
+
+.badge{
+  background:#dc2626;
+  color:white;
+  border-radius:50%;
+  padding:3px 8px;
+  font-size:12px;
+}
 
 .ticker{
   background:#f5b301;
   padding:10px;
-  overflow:hidden;
-  white-space:nowrap;
   font-weight:bold;
+  white-space:nowrap;
+  overflow:hidden;
 }
 
 .ticker span{
   display:inline-block;
   padding-left:100%;
-  animation:move 18s linear infinite;
+  animation:move 20s linear infinite;
 }
 
 @keyframes move{
-  from{transform:translateX(0)}
-  to{transform:translateX(-100%)}
+  from{
+    transform:translateX(0);
+  }
+
+  to{
+    transform:translateX(-100%);
+  }
 }
 
 footer{
@@ -89,899 +113,884 @@ footer{
   padding:18px;
   margin-top:25px;
 }
+
+.section-title{
+  margin-top:0;
+}
+
 </style>
 </head>
 
 <body>
 
 <header>
+
   <h1>Nexora Community</h1>
-  <p>Core Stable Platform</p>
+
+  <p>
+    Learning • Marketplace • Community • Smart Test • Services
+  </p>
+
 </header>
 
 <div class="ticker">
-  <span>Welcome to Nexora Community — Core stable version is running.</span>
+
+  <span>
+
+    Welcome to Nexora Community —
+    Smart Learning, Marketplace,
+    Community Rewards and Services Platform.
+
+  </span>
+
 </div>
 
-<!-- MAIN MENU -->
+<!-- MAIN DASHBOARD -->
+
 <div id="mainMenu" class="card">
-  <h2>Main Menu</h2>
+
+  <h2 class="section-title">
+    🏠 Main Dashboard
+  </h2>
+
+  <div class="grid">
+
+    <!-- CEO -->
+
+    <div class="card">
+
+      <h3>
+        👑 CEO / Admin / Manager
+      </h3>
+
+      <p>
+        System control, approvals,
+        finance and settings.
+      </p>
+
+      <button class="dark"
+      onclick="showPage('ceoPage')">
+
+        Open
+
+      </button>
+
+    </div>
+
+    <!-- TEAM -->
+
+    <div class="card">
+
+      <h3>
+        👥 Team Member
+      </h3>
+
+      <p>
+        Assigned work, wallet,
+        points and messages.
+      </p>
+
+      <button
+      onclick="showPage('teamPage')">
+
+        Open
+
+      </button>
+
+    </div>
+
+    <!-- COMMUNITY -->
+
+    <div class="card">
+
+      <h3>
+        🌐 Community Member
+      </h3>
+
+      <p>
+        Daily tasks, rewards,
+        wallet and investment.
+      </p>
+
+      <button
+      onclick="showPage('communityPage')">
+
+        Open
+
+      </button>
+
+    </div>
+
+    <!-- CLIENT -->
+
+    <div class="card">
+
+      <h3>
+        💼 Client
+      </h3>
+
+      <p>
+        Service requests,
+        listing requests and support.
+      </p>
+
+      <button
+      onclick="showPage('clientPage')">
+
+        Open
+
+      </button>
+
+    </div>
+
+    <!-- STUDENT -->
+
+    <div class="card">
+
+      <h3>
+        🎓 Student
+      </h3>
+
+      <p>
+        Tuition, homework,
+        live classes and support.
+      </p>
+
+      <button
+      onclick="showPage('studentPage')">
+
+        Open
+
+      </button>
+
+    </div>
+
+    <!-- TEACHER -->
+
+    <div class="card">
+
+      <h3>
+        👨‍🏫 Teacher
+      </h3>
+
+      <p>
+        Assignments, test maker,
+        students and fees.
+      </p>
+
+      <button
+      onclick="showPage('teacherPage')">
+
+        Open
+
+      </button>
+
+    </div>
+
+    <!-- SMART TEST -->
+
+    <div class="card">
+
+      <h3>
+        🧠 Smart Test
+      </h3>
+
+      <p>
+        MCQs, online tests,
+        notes and subjects.
+      </p>
+
+      <button
+      onclick="showPage('smartTestPage')">
+
+        Open
+
+      </button>
+
+    </div>
+
+    <!-- MARKETPLACE -->
+
+    <div class="card">
+
+      <h3>
+        🛒 Marketplace
+      </h3>
+
+      <p>
+        Buying, selling and
+        product listing system.
+      </p>
+
+      <button
+      onclick="showPage('marketplacePage')">
+
+        Open
+
+      </button>
+
+    </div>
+
+    <!-- SUPPORT -->
+
+    <div class="card">
+
+      <h3>
+        📞 Support
+      </h3>
+
+      <p>
+        Email support,
+        WhatsApp and AI chatbot.
+      </p>
+
+      <button
+      onclick="showPage('supportPage')">
+
+        Open
+
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- BACK BUTTON -->
+
+<div style="margin:16px">
+
+  <button id="backBtn"
+  class="dark hide"
+  onclick="goHome()">
+
+    ⬅ Back To Main Menu
+
+  </button>
+
+  </div>
+  <!-- CEO PAGE -->
+
+<div id="ceoPage" class="card hide">
+
+  <h2 class="section-title">
+    👑 CEO / Admin / Manager Dashboard
+  </h2>
 
   <div class="grid">
 
     <div class="card">
-      <h3>👑 CEO / Admin</h3>
-      <p>Owner and admin access.</p>
-      <button class="dark" onclick="showPage('ceoLoginPage')">
-        Open CEO/Admin
-      </button>
+      <h3>👤 Create Admin</h3>
+      <button>Open</button>
     </div>
 
     <div class="card">
-      <h3>🌐 Member Portal</h3>
-      <p>Create account or login as member.</p>
-      <button onclick="showPage('memberPage')">
-        Open Member
-      </button>
+      <h3>⚙️ Create Manager</h3>
+      <button>Open</button>
     </div>
 
     <div class="card">
-      <h3>💼 Client Portal</h3>
-      <p>Coming next after core stable.</p>
-      <button onclick="showPage('clientPage')">
-        Open Client
-      </button>
+      <h3>👥 Create Team Member</h3>
+      <button>Open</button>
     </div>
 
     <div class="card">
-      <h3>🎓 Student Portal</h3>
-      <p>Coming next after core stable.</p>
-      <button onclick="showPage('studentPage')">
-        Open Student
-      </button>
+      <h3>🌐 Community Members</h3>
+      <button>Open</button>
     </div>
 
     <div class="card">
-      <h3>👨‍🏫 Teacher Portal</h3>
-      <p>Coming next after core stable.</p>
-      <button onclick="showPage('teacherPage')">
-        Open Teacher
-      </button>
+      <h3>💰 Wallet Control</h3>
+      <button>Open</button>
     </div>
 
     <div class="card">
-      <h3>👥 Team Portal</h3>
-      <p>Team email + secret login.</p>
-      <button onclick="showPage('teamPage')">
-        Open Team
-      </button>
-    </div>
-
-  </div>
-</div>
-
-<!-- CEO LOGIN PAGE -->
-<div id="ceoLoginPage" class="card hide">
-  <h2>👑 CEO / Admin Login</h2>
-
-  <input id="ceoEmail" type="email" placeholder="Email">
-  <input id="ceoSecret" type="password" placeholder="Secret ID">
-
-  <button type="button" onclick="togglePassword('ceoSecret')">
-    Show / Hide Secret
-  </button>
-
-  <button class="dark" onclick="ceoLogin()">
-    Login
-  </button>
-
-  <p id="ceoLoginMsg"></p>
-</div>
-
-<!-- CEO DASHBOARD -->
-<div id="ceoDashboard" class="card hide">
-  <h2>👑 CEO Dashboard</h2>
-  <p id="ceoWelcome"></p>
-
-  <div class="grid">
-    <div class="card">
-      <h3>🌐 Members</h3>
-      <button onclick="showCeoBox('ceoMembersBox')">Open</button>
-    </div>
-<div class="card">
-  <h3>📋 Daily Tasks</h3>
-  <button onclick="showCeoBox('ceoTasksBox')">
-    Open
-  </button>
-</div>
-<div id="ceoTasksBox" class="hide">
-  <h3>Create Today Task</h3>
-
-  <input id="ceoTaskTitle" placeholder="Task Title e.g. YouTube / Blog / Affiliate / Website">
-  <input id="ceoTaskLink" placeholder="Task Link">
-  <input id="ceoTaskCode" placeholder="Secret Code">
-  <input id="ceoTaskPoints" placeholder="Reward Points">
-
-  <button class="green" onclick="createDailyTask()">
-    Save Task
-  </button>
-
-  <p id="ceoTaskMsg"></p>
-
-  <h3>All Tasks</h3>
-  <div id="ceoTasksList"></div>
-</div>
-<div class="card">
-  <h3>💰 Wallet Control</h3>
-  <button onclick="showCeoBox('ceoWalletBox')">
-    Open
-  </button>
-</div>
-
-<div class="card">
-  <h3>📩 Messages</h3>
-  <button onclick="showCeoBox('ceoMessagesBox')">
-    Open
-  </button>
-</div>
-
-<div class="card">
-  <h3>🛒 Marketplace</h3>
-  <button onclick="showCeoBox('ceoMarketplaceBox')">
-    Open
-  </button>
-</div>
-    <div class="card">
-      <h3>👥 Team Members</h3>
-      <button onclick="showCeoBox('ceoTeamBox')">Open</button>
+      <h3>📤 Withdraw Requests</h3>
+      <button>Open</button>
     </div>
 
     <div class="card">
-      <h3>📢 Announcement</h3>
-      <button onclick="showCeoBox('ceoAnnouncementBox')">Open</button>
-    </div>
-  </div>
-
-  <div id="ceoMembersBox" class="hide">
-    <h3>Members List</h3>
-    <div id="membersList"></div>
-  </div>
-
-  <div id="ceoTeamBox" class="hide">
-    <h3>Add Team Member</h3>
-    <input id="teamName" placeholder="Team Name">
-    <input id="teamEmailCreate" type="email" placeholder="Team Email">
-    <input id="teamSecretCreate" placeholder="Team Secret ID">
-
-    <button class="green" onclick="createTeamMember()">
-      Add Team
-    </button>
-
-    <p id="teamCreateMsg"></p>
-    <div id="teamList"></div>
-  </div>
-
-  <div id="ceoAnnouncementBox" class="hide">
-    <h3>Announcement</h3>
-    <input id="announcementText" placeholder="Write announcement">
-    <button class="green" onclick="saveAnnouncement()">Save</button>
-    <p id="announcementMsg"></p>
-  </div>
-
-  <button class="red" onclick="logoutLocal()">
-    Logout
-  </button>
+      <h3>📋 Daily Tasks</h3>
+      <button>Open</button>
     </div>
 
-  <!-- MEMBER PAGE -->
-<div id="memberPage" class="card hide">
-
-  <!-- CREATE / LOGIN MENU -->
-  <div id="memberAuthMenu">
-
-    <h2>🌐 Member Portal</h2>
-
-    <div class="grid">
-
-      <div class="card">
-        <h3>Create Account</h3>
-        <button class="green" onclick="showMemberBox('memberCreateBox')">
-          Open
-        </button>
-      </div>
-
-      <div class="card">
-        <h3>Login Account</h3>
-        <button class="dark" onclick="showMemberBox('memberLoginBox')">
-          Open
-        </button>
-      </div>
-
-    </div>
-
-    <!-- CREATE ACCOUNT -->
-    <div id="memberCreateBox" class="hide">
-      <h3>Create Member Account</h3>
-
-      <input id="memberName" placeholder="Full Name">
-      <input id="memberEmail" type="email" placeholder="Email">
-      <input id="memberPassword" type="password" placeholder="Password">
-
-      <button type="button" onclick="togglePassword('memberPassword')">
-        Show / Hide Password
-      </button>
-
-      <button class="green" onclick="createMemberAccount()">
-        Create Account
-      </button>
-
-      <p id="memberCreateMsg"></p>
-    </div>
-
-    <!-- LOGIN ACCOUNT -->
-    <div id="memberLoginBox" class="hide">
-      <h3>Member Login</h3>
-
-      <input id="memberLoginEmail" type="email" placeholder="Email">
-      <input id="memberLoginPassword" type="password" placeholder="Password">
-
-      <button type="button" onclick="togglePassword('memberLoginPassword')">
-        Show / Hide Password
-      </button>
-
-      <button class="dark" onclick="memberLogin()">
-        Login
-      </button>
-<button type="button"
-class="blue"
-onclick="resetMemberPassword()">
-
-  Forgot Password
-
-</button>
-      <p id="memberLoginMsg"></p>
-    </div>
-
-  </div>
-
-  <!-- MEMBER DASHBOARD -->
-  <div id="memberDashboard" class="hide">
-
-    <h2>🎉 Member Dashboard</h2>
-
-    <p id="memberWelcome"></p>
-
-    <div class="grid">
-
-      <div class="card">
-        <h3>⭐ Reward Points</h3>
-        <h2 id="memberPoints">0</h2>
-      </div>
-
-      <div class="card">
-        <h3>💰 Wallet</h3>
-        <h2 id="memberWallet">0</h2>
-      </div>
-
-    </div>
-<div class="card">
-  <h3>📋 Today Tasks</h3>
-  <div id="memberTasksList">
-    No tasks yet.
-  </div>
-</div>
-
-<div class="card">
-  <h3>🔐 Today Code</h3>
-  <input id="memberTaskCode" placeholder="Enter today task code">
-
-  <button class="green" onclick="submitMemberTaskCode()">
-    Submit Code
-  </button>
-
-  <p id="memberTaskMsg"></p>
-</div>
     <div class="card">
       <h3>📩 Messages</h3>
-      <div id="memberMessages">
-        No messages yet.
-      </div>
+      <button>Open</button>
     </div>
 
-    <button class="red" onclick="logoutLocal()">
-      Logout
-    </button>
+    <div class="card">
+      <h3>📢 Announcements</h3>
+      <button>Open</button>
+    </div>
+
+    <div class="card">
+      <h3>🧠 Smart Test Control</h3>
+      <button>Open</button>
+    </div>
+
+    <div class="card">
+      <h3>🛒 Marketplace Control</h3>
+      <button>Open</button>
+    </div>
+
+    <div class="card">
+      <h3>🎓 Student Requests</h3>
+      <button>Open</button>
+    </div>
+
+    <div class="card">
+      <h3>👨‍🏫 Teacher Requests</h3>
+      <button>Open</button>
+    </div>
+
+    <div class="card">
+      <h3>💼 Client Requests</h3>
+      <button>Open</button>
+    </div>
+
+    <div class="card">
+      <h3>📞 Support Control</h3>
+      <button>Open</button>
+    </div>
+
+    <div class="card">
+      <h3>⚡ System Settings</h3>
+      <button>Open</button>
+    </div>
 
   </div>
 
-</div>
-
-<!-- CLIENT PAGE -->
-<div id="clientPage" class="card hide">
-  <h2>💼 Client Portal</h2>
-  <p>Client system will be added after core stable testing.</p>
-</div>
-
-<!-- STUDENT PAGE -->
-<div id="studentPage" class="card hide">
-  <h2>🎓 Student Portal</h2>
-  <p>Student system will be added after core stable testing.</p>
-</div>
-
-<!-- TEACHER PAGE -->
-<div id="teacherPage" class="card hide">
-  <h2>👨‍🏫 Teacher Portal</h2>
-  <p>Teacher system will be added after core stable testing.</p>
 </div>
 
 <!-- TEAM PAGE -->
+
 <div id="teamPage" class="card hide">
 
-  <div id="teamLoginBox">
+  <h2 class="section-title">
+    👥 Team Member Dashboard
+  </h2>
 
-    <h2>👥 Team Login</h2>
-
-    <input id="teamLoginEmail" type="email" placeholder="Team Email">
-    <input id="teamLoginSecret" type="password" placeholder="Secret ID">
-
-    <button type="button" onclick="togglePassword('teamLoginSecret')">
-      Show / Hide Secret
-    </button>
-
-    <button class="dark" onclick="teamLogin()">
-      Login
-    </button>
-
-    <p id="teamLoginMsg"></p>
-  </div>
-
-  <!-- TEAM DASHBOARD -->
-  <div id="teamDashboard" class="hide">
-
-    <h2>👥 Team Dashboard</h2>
-
-    <p id="teamWelcome"></p>
+  <div class="grid">
 
     <div class="card">
-      <h3>📝 Assigned Tasks</h3>
-      <div id="teamTasks">
-        No tasks assigned yet.
-      </div>
+      <h3>📋 Assigned Work</h3>
+      <button>Open</button>
     </div>
 
-    <button class="red" onclick="logoutLocal()">
-      Logout
-    </button>
+    <div class="card">
+      <h3>⭐ Reward Points</h3>
+      <button>Open</button>
+    </div>
+
+    <div class="card">
+      <h3>💰 Wallet</h3>
+      <button>Open</button>
+    </div>
+
+    <div class="card">
+      <h3>📥 Deposit</h3>
+      <button>Open</button>
+    </div>
+
+    <div class="card">
+      <h3>📤 Withdraw</h3>
+      <button>Open</button>
+    </div>
+
+    <div class="card">
+      <h3>✅ Accept Work</h3>
+      <button>Open</button>
+    </div>
+
+    <div class="card">
+      <h3>❌ Reject Work</h3>
+      <button>Open</button>
+    </div>
+
+    <div class="card">
+      <h3>📩 Messages</h3>
+      <button>Open</button>
+    </div>
+
+    <div class="card">
+      <h3>📞 Support</h3>
+      <button>Open</button>
+    </div>
 
   </div>
 
 </div>
-  
+
+<!-- COMMUNITY PAGE -->
+
+<div id="communityPage" class="card hide">
+
+  <h2 class="section-title">
+    🌐 Community Member Dashboard
+  </h2>
+
+  <div class="grid">
+
+    <div class="card">
+      <h3>📋 Daily Tasks</h3>
+      <button>Open</button>
+    </div>
+
+    <div class="card">
+      <h3>🔐 Submit Code</h3>
+      <button>Open</button>
+    </div>
+
+    <div class="card">
+      <h3>⭐ Reward Points</h3>
+      <button>Open</button>
+    </div>
+
+    <div class="card">
+      <h3>💰 Wallet</h3>
+      <button>Open</button>
+    </div>
+
+    <div class="card">
+      <h3>📥 Deposit</h3>
+      <button>Open</button>
+    </div>
+
+    <div class="card">
+      <h3>📤 Withdraw</h3>
+      <button>Open</button>
+    </div>
+
+    <div class="card">
+      <h3>📈 Investment</h3>
+      <button>Open</button>
+    </div>
+
+    <div class="card">
+      <h3>📩 Messages</h3>
+      <button>Open</button>
+    </div>
+
+    <div class="card">
+      <h3>📞 Support</h3>
+      <button>Open</button>
+    </div>
+
+  </div>
+
+  </div>
+
+  <!-- CLIENT PAGE -->
+
+<div id="clientPage" class="card hide">
+
+  <h2 class="section-title">
+    💼 Client Dashboard
+  </h2>
+
+  <div class="grid">
+
+    <div class="card">
+      <h3>📨 Request Services</h3>
+      <button>Open</button>
+    </div>
+
+    <div class="card">
+      <h3>🛒 Product Listing Request</h3>
+      <button>Open</button>
+    </div>
+
+    <div class="card">
+      <h3>💰 Wallet</h3>
+      <button>Open</button>
+    </div>
+
+    <div class="card">
+      <h3>📥 Deposit</h3>
+      <button>Open</button>
+    </div>
+
+    <div class="card">
+      <h3>📤 Withdraw</h3>
+      <button>Open</button>
+    </div>
+
+    <div class="card">
+      <h3>📦 Product Management</h3>
+      <button>Open</button>
+    </div>
+
+    <div class="card">
+      <h3>📩 Messages</h3>
+      <button>Open</button>
+    </div>
+
+    <div class="card">
+      <h3>📞 Support</h3>
+      <button>Open</button>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- STUDENT PAGE -->
+
+<div id="studentPage" class="card hide">
+
+  <h2 class="section-title">
+    🎓 Student Dashboard
+  </h2>
+
+  <div class="grid">
+
+    <div class="card">
+      <h3>📝 Submit Assignment</h3>
+      <button>Open</button>
+    </div>
+
+    <div class="card">
+      <h3>📚 Homework</h3>
+      <button>Open</button>
+    </div>
+
+    <div class="card">
+      <h3>👨‍🏫 Teacher Profiles</h3>
+      <button>Open</button>
+    </div>
+
+    <div class="card">
+      <h3>🎥 Live Classes</h3>
+      <button>Open</button>
+    </div>
+
+    <div class="card">
+      <h3>📖 Subjects</h3>
+      <button>Open</button>
+    </div>
+
+    <div class="card">
+      <h3>📨 Request Tuition</h3>
+      <button>Open</button>
+    </div>
+
+    <div class="card">
+      <h3>💰 Wallet</h3>
+      <button>Open</button>
+    </div>
+
+    <div class="card">
+      <h3>📩 Messages</h3>
+      <button>Open</button>
+    </div>
+
+    <div class="card">
+      <h3>📞 Support</h3>
+      <button>Open</button>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- TEACHER PAGE -->
+
+<div id="teacherPage" class="card hide">
+
+  <h2 class="section-title">
+    👨‍🏫 Teacher Dashboard
+  </h2>
+
+  <div class="grid">
+
+    <div class="card">
+      <h3>📝 Assign Homework</h3>
+      <button>Open</button>
+    </div>
+
+    <div class="card">
+      <h3>🎥 Live Classes</h3>
+      <button>Open</button>
+    </div>
+
+    <div class="card">
+      <h3>👨‍🎓 Student Profiles</h3>
+      <button>Open</button>
+    </div>
+
+    <div class="card">
+      <h3>📚 Subjects</h3>
+      <button>Open</button>
+    </div>
+
+    <div class="card">
+      <h3>💵 Fees Setup</h3>
+      <button>Open</button>
+    </div>
+
+    <div class="card">
+      <h3>🧠 Test Maker</h3>
+      <button>Open</button>
+    </div>
+
+    <div class="card">
+      <h3>💰 Wallet</h3>
+      <button>Open</button>
+    </div>
+
+    <div class="card">
+      <h3>📩 Messages</h3>
+      <button>Open</button>
+    </div>
+
+    <div class="card">
+      <h3>📞 Support</h3>
+      <button>Open</button>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- SMART TEST PAGE -->
+
+<div id="smartTestPage" class="card hide">
+
+  <h2 class="section-title">
+    🧠 Smart Test Dashboard
+  </h2>
+
+  <div class="grid">
+
+    <div class="card">
+      <h3>📚 Subjects</h3>
+      <button>Open</button>
+    </div>
+
+    <div class="card">
+      <h3>❓ MCQs</h3>
+      <button>Open</button>
+    </div>
+
+    <div class="card">
+      <h3>📝 Online Tests</h3>
+      <button>Open</button>
+    </div>
+
+    <div class="card">
+      <h3>📊 Results</h3>
+      <button>Open</button>
+    </div>
+
+    <div class="card">
+      <h3>📥 Notes Download</h3>
+      <button>Open</button>
+    </div>
+
+    <div class="card">
+      <h3>📰 Blog Posts</h3>
+      <button>Open</button>
+    </div>
+
+  </div>
+
+  </div>
+
+  <!-- MARKETPLACE PAGE -->
+
+<div id="marketplacePage" class="card hide">
+
+  <h2 class="section-title">
+    🛒 Marketplace Dashboard
+  </h2>
+
+  <div class="ticker">
+    <span>
+      Live Marketplace —
+      Buying • Selling • Listings • Sold Products • 5% Commission System
+    </span>
+  </div>
+
+  <div class="grid">
+
+    <div class="card">
+      <h3>🛍️ Buying</h3>
+      <button>Open</button>
+    </div>
+
+    <div class="card">
+      <h3>🏪 Selling</h3>
+      <button>Open</button>
+    </div>
+
+    <div class="card">
+      <h3>📦 Live Products</h3>
+      <button>Open</button>
+    </div>
+
+    <div class="card">
+      <h3>📝 Product Posts</h3>
+      <button>Open</button>
+    </div>
+
+    <div class="card">
+      <h3>✅ Sold Products</h3>
+      <button>Open</button>
+    </div>
+
+    <div class="card">
+      <h3>📨 Listing Request</h3>
+      <button>Open</button>
+    </div>
+
+    <div class="card">
+      <h3>💰 Wallet</h3>
+      <button>Open</button>
+    </div>
+
+    <div class="card">
+      <h3>📥 Deposit</h3>
+      <button>Open</button>
+    </div>
+
+    <div class="card">
+      <h3>📤 Withdraw</h3>
+      <button>Open</button>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- SUPPORT PAGE -->
+
+<div id="supportPage" class="card hide">
+
+  <h2 class="section-title">
+    📞 Support Center
+  </h2>
+
+  <div class="grid">
+
+    <div class="card">
+
+      <h3>📧 Email Support</h3>
+
+      <p>
+        Official support email system.
+      </p>
+
+      <button class="blue">
+        Open
+      </button>
+
+    </div>
+
+    <div class="card">
+
+      <h3>📱 WhatsApp Support</h3>
+
+      <p>
+        Join WhatsApp support channel.
+      </p>
+
+      <button class="green">
+        Open
+      </button>
+
+    </div>
+
+    <div class="card">
+
+      <h3>🤖 AI Chatbot</h3>
+
+      <p>
+        Smart AI assistant support.
+      </p>
+
+      <button class="dark">
+        Open
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+
 <footer>
-  © 2026 Nexora Community — Core Stable Version
+
+  © 2026 Nexora Community —
+  V3.6 Phase 1 Stable UI Architecture
+
 </footer>
 
-  <script type="module">
+<!-- NAVIGATION SCRIPT -->
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-
-import {
-  getAuth,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  signOut,
-sendPasswordResetEmail
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
-import {
-  getFirestore,
-  collection,
-  addDoc,
-  getDocs,
-  doc,
-  setDoc,
-  getDoc,
-  deleteDoc
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-/* BLOCK 1 — FIREBASE CONFIG */
-const firebaseConfig = {
-  apiKey: "AIzaSyAWj7dozNpK8ExbJ4fptOODj66i09lxb0s",
-  authDomain: "nexoracapitalcommunity.firebaseapp.com",
-  projectId: "nexoracapitalcommunity",
-  storageBucket: "nexoracapitalcommunity.firebasestorage.app",
-  messagingSenderId: "714723891713",
-  appId: "1:714723891713:web:65f70b7d3902f2aac7be00",
-  measurementId: "G-QC11PMN306"
-};
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
-
-/* BLOCK 2 — GLOBAL STATE */
-let currentMember = null;
-let currentTeam = null;
-
-/* BLOCK 3 — BASIC HELPERS */
-function now(){
-  return new Date().toLocaleString();
-}
+<script>
 
 function hide(id){
-  const el = document.getElementById(id);
-  if(el){ el.classList.add("hide"); }
+
+  const el=document.getElementById(id);
+
+  if(el){
+    el.classList.add("hide");
+  }
+
 }
 
 function show(id){
-  const el = document.getElementById(id);
-  if(el){ el.classList.remove("hide"); }
-}
 
-function clearFields(ids){
-  ids.forEach(id=>{
-    const el = document.getElementById(id);
-    if(el){ el.value = ""; }
-  });
-}
-
-window.togglePassword=function(id){
   const el=document.getElementById(id);
-  if(el){
-    el.type = el.type==="password" ? "text" : "password";
-  }
-};
 
-/* BLOCK 4 — NAVIGATION */
+  if(el){
+    el.classList.remove("hide");
+  }
+
+}
+
 function hideAllPages(){
-function hideAllPages(){
+
   [
-    "ceoLoginPage",
-    "ceoDashboard",
-    "memberPage",
+
+    "ceoPage",
+    "teamPage",
+    "communityPage",
     "clientPage",
     "studentPage",
     "teacherPage",
-    "teamPage"
+    "smartTestPage",
+    "marketplacePage",
+    "supportPage"
+
   ].forEach(hide);
-    }
+
+}
 
 window.showPage=function(id){
+
   hideAllPages();
+
   hide("mainMenu");
+
   show("backBtn");
+
   show(id);
+
 };
 
 window.goHome=function(){
+
   hideAllPages();
+
   show("mainMenu");
+
   hide("backBtn");
-};
 
-/* BLOCK 5 — CEO / ADMIN */
-window.ceoLogin=async function(){
-  const email=document.getElementById("ceoEmail").value.trim();
-  const secret=document.getElementById("ceoSecret").value.trim();
-
-  if(email==="smartustad0@gmail.com" && secret==="NX-CEO-786"){
-    hide("ceoLoginPage");
-    show("ceoDashboard");
-
-    document.getElementById("ceoWelcome").innerText=
-    "Logged in as CEO: "+email;
-
-    clearFields(["ceoEmail","ceoSecret"]);
-
-    await loadMembers();
-    await loadTeamMembers();
-    await loadDailyTasks();
-    
-    document.getElementById("ceoLoginMsg").innerText="";
-  }else{
-    document.getElementById("ceoLoginMsg").innerText="Access denied ❌";
-  }
-};
-
-window.showCeoBox=function(id){
-  [
-    "ceoMembersBox",
-    "ceoTeamBox",
-    "ceoAnnouncementBox",
-    "ceoTasksBox"
-  ].forEach(hide);
-
-  show(id);
-};
-async function loadMembers(){
-  const snap=await getDocs(collection(db,"users"));
-  let rows="";
-  let count=0;
-
-  snap.forEach(item=>{
-    const d=item.data();
-
-    if(d.role==="member"){
-      count++;
-
-      rows+=`
-        <tr>
-          <td>${count}</td>
-          <td>${d.name||""}</td>
-          <td>${d.email||""}</td>
-          <td>${d.points||0}</td>
-          <td>${d.wallet||0}</td>
-        </tr>
-      `;
-    }
-  });
-
-  document.getElementById("membersList").innerHTML = rows ? `
-    <table border="1" width="100%" cellpadding="8" style="border-collapse:collapse">
-      <tr>
-        <th>#</th>
-        <th>Name</th>
-        <th>Email</th>
-        <th>Points</th>
-        <th>Wallet</th>
-      </tr>
-      ${rows}
-    </table>
-  ` : "No members yet.";
-}
-
-window.createTeamMember=async function(){
-  const name=document.getElementById("teamName").value.trim();
-  const email=document.getElementById("teamEmailCreate").value.trim();
-  const secret=document.getElementById("teamSecretCreate").value.trim();
-
-  if(!name || !email || !secret){
-    document.getElementById("teamCreateMsg").innerText="Fill all fields ❌";
-    return;
-  }
-
-  await addDoc(collection(db,"teamMembers"),{
-    name:name,
-    email:email,
-    secret:secret,
-    status:"Active",
-    createdAt:now()
-  });
-
-  clearFields(["teamName","teamEmailCreate","teamSecretCreate"]);
-  document.getElementById("teamCreateMsg").innerText="Team member added ✅";
-
-  await loadTeamMembers();
-};
-
-async function loadTeamMembers(){
-  const snap=await getDocs(collection(db,"teamMembers"));
-  let html="";
-
-  snap.forEach(item=>{
-    const d=item.data();
-
-    html+=`
-    <div class="card">
-      <h3>${d.name||""}</h3>
-      <p>${d.email||""}</p>
-      <p>Status: ${d.status||"Active"}</p>
-      <button class="red" onclick="deleteTeamMember('${item.id}')">
-        Remove
-      </button>
-    </div>`;
-  });
-
-  document.getElementById("teamList").innerHTML=html||"No team members yet.";
-}
-
-window.deleteTeamMember=async function(id){
-  if(!confirm("Remove this team member?")) return;
-
-  await deleteDoc(doc(db,"teamMembers",id));
-  await loadTeamMembers();
-};
-
-window.saveAnnouncement=function(){
-  const txt=document.getElementById("announcementText").value.trim();
-
-  if(!txt){
-    document.getElementById("announcementMsg").innerText="Write announcement first ❌";
-    return;
-  }
-
-  document.querySelector(".ticker span").innerText=txt;
-  document.getElementById("announcementText").value="";
-  document.getElementById("announcementMsg").innerText="Announcement updated ✅";
-};
-
-/* BLOCK 6 — MEMBER */
-window.showMemberBox=function(id){
-  ["memberCreateBox","memberLoginBox"].forEach(hide);
-  show(id);
-};
-
-window.createMemberAccount=async function(){
-  try{
-    const name=document.getElementById("memberName").value.trim();
-    const email=document.getElementById("memberEmail").value.trim();
-    if(!email.includes("@") || !email.includes(".")){
-  document.getElementById("memberCreateMsg").innerText=
-  "Enter real email ❌";
-  return;
-    }
-    const password=document.getElementById("memberPassword").value;
-
-    if(!name || !email || !password){
-      document.getElementById("memberCreateMsg").innerText="Fill all fields ❌";
-      return;
-    }
-
-    const userCredential=await createUserWithEmailAndPassword(auth,email,password);
-    const user=userCredential.user;
-
-    await setDoc(doc(db,"users",user.uid),{
-      uid:user.uid,
-      role:"member",
-      name:name,
-      email:email,
-      points:0,
-      wallet:0,
-      createdAt:now()
-    });
-
-    currentMember=user;
-
-    hide("memberAuthMenu");
-    show("memberDashboard");
-
-    document.getElementById("memberWelcome").innerText="Welcome "+name;
-    document.getElementById("memberPoints").innerText="0";
-    document.getElementById("memberWallet").innerText="0";
-
-    clearFields(["memberName","memberEmail","memberPassword"]);
-    document.getElementById("memberCreateMsg").innerText="";
-    await loadDailyTasks();
-    
-    alert("Member account created ✅");
-  }catch(e){
-    document.getElementById("memberCreateMsg").innerText=e.message;
-  }
-};
-
-window.memberLogin=async function(){
-  try{
-    const email=document.getElementById("memberLoginEmail").value.trim();
-    const password=document.getElementById("memberLoginPassword").value;
-
-    if(!email || !password){
-      document.getElementById("memberLoginMsg").innerText="Enter email and password ❌";
-      return;
-    }
-
-    const userCredential=await signInWithEmailAndPassword(auth,email,password);
-    const user=userCredential.user;
-    currentMember=user;
-
-    const snap=await getDoc(doc(db,"users",user.uid));
-    const d=snap.exists()?snap.data():{name:email,points:0,wallet:0};
-
-    hide("memberAuthMenu");
-    show("memberDashboard");
-
-    document.getElementById("memberWelcome").innerText="Welcome "+(d.name||email);
-    document.getElementById("memberPoints").innerText=d.points||0;
-    document.getElementById("memberWallet").innerText=d.wallet||0;
-
-    clearFields(["memberLoginEmail","memberLoginPassword"]);
-    document.getElementById("memberLoginMsg").innerText="";
-    await loadDailyTasks();
-    
-    alert("Login successful ✅");
-  }catch(e){
-    document.getElementById("memberLoginMsg").innerText=e.message;
-  }
-};
-/* BLOCK 6B — PASSWORD RESET */
-
-window.resetMemberPassword = async function(){
-
-  try{
-
-    const email =
-    document.getElementById("memberLoginEmail").value.trim();
-
-    if(!email){
-      document.getElementById("memberLoginMsg").innerText =
-      "Enter your email first ❌";
-      return;
-    }
-
-    await sendPasswordResetEmail(auth,email);
-
-    document.getElementById("memberLoginMsg").innerText =
-    "Password reset email sent ✅";
-
-  }catch(e){
-
-    document.getElementById("memberLoginMsg").innerText =
-    e.message;
-
-  }
-
-};
-/* BLOCK 7 — TEAM */
-window.teamLogin=async function(){
-  const email=document.getElementById("teamLoginEmail").value.trim();
-  const secret=document.getElementById("teamLoginSecret").value.trim();
-
-  if(!email || !secret){
-    document.getElementById("teamLoginMsg").innerText="Enter email and secret ❌";
-    return;
-  }
-
-  const snap=await getDocs(collection(db,"teamMembers"));
-  let found=null;
-
-  snap.forEach(item=>{
-    const d=item.data();
-    if(d.email===email && d.secret===secret && d.status==="Active"){
-      found=d;
-    }
-  });
-
-  if(!found){
-    document.getElementById("teamLoginMsg").innerText="Invalid team login ❌";
-    return;
-  }
-
-  currentTeam=found;
-
-  hide("teamLoginBox");
-  show("teamDashboard");
-
-  document.getElementById("teamWelcome").innerText="Welcome "+found.name;
-  clearFields(["teamLoginEmail","teamLoginSecret"]);
-  document.getElementById("teamLoginMsg").innerText="";
-};
-
-    /* BLOCK 7B — DAILY TASKS */
-
-window.createDailyTask=async function(){
-  const title=document.getElementById("ceoTaskTitle").value.trim();
-  const link=document.getElementById("ceoTaskLink").value.trim();
-  const code=document.getElementById("ceoTaskCode").value.trim().toLowerCase();
-  const points=Number(document.getElementById("ceoTaskPoints").value||0);
-
-  if(!title || !code || !points){
-    document.getElementById("ceoTaskMsg").innerText="Title, code and points required ❌";
-    return;
-  }
-
-  await addDoc(collection(db,"dailyTasks"),{
-    title:title,
-    link:link,
-    code:code,
-    points:points,
-    status:"Active",
-    createdAt:now()
-  });
-
-  clearFields(["ceoTaskTitle","ceoTaskLink","ceoTaskCode","ceoTaskPoints"]);
-  document.getElementById("ceoTaskMsg").innerText="Task saved ✅";
-
-  await loadDailyTasks();
-};
-
-async function loadDailyTasks(){
-  const snap=await getDocs(collection(db,"dailyTasks"));
-  let ceoHtml="";
-  let memberHtml="";
-
-  snap.forEach(item=>{
-    const d=item.data();
-
-    ceoHtml+=`
-      <div class="card">
-        <h3>${d.title||""}</h3>
-        <p>Code: ${d.code||""}</p>
-        <p>Points: ${d.points||0}</p>
-        ${d.link ? `<a href="${d.link}" target="_blank">Open Link</a>` : ""}
-        <br><br>
-        <button class="red" onclick="deleteDailyTask('${item.id}')">Delete</button>
-      </div>
-    `;
-
-    memberHtml+=`
-      <div class="card">
-        <h3>${d.title||""}</h3>
-        <p>Reward: ${d.points||0} Points</p>
-        ${d.link ? `<a href="${d.link}" target="_blank">Open Task</a>` : ""}
-      </div>
-    `;
-  });
-
-  const ceoBox=document.getElementById("ceoTasksList");
-  if(ceoBox){ ceoBox.innerHTML=ceoHtml || "No tasks yet."; }
-
-  const memberBox=document.getElementById("memberTasksList");
-  if(memberBox){ memberBox.innerHTML=memberHtml || "No tasks yet."; }
-}
-
-window.deleteDailyTask=async function(id){
-  if(!confirm("Delete this task?")) return;
-
-  await deleteDoc(doc(db,"dailyTasks",id));
-  await loadDailyTasks();
-};
-
-window.submitMemberTaskCode=async function(){
-  if(!currentMember){
-    document.getElementById("memberTaskMsg").innerText="Login required ❌";
-    return;
-  }
-
-  const entered=document.getElementById("memberTaskCode").value.trim().toLowerCase();
-
-  if(!entered){
-    document.getElementById("memberTaskMsg").innerText="Enter code first ❌";
-    return;
-  }
-
-  const snap=await getDocs(collection(db,"dailyTasks"));
-  let found=null;
-
-  snap.forEach(item=>{
-    const d=item.data();
-    const savedCode=(d.code||"").trim().toLowerCase();
-
-    if(savedCode===entered){
-      found=d;
-    }
-  });
-
-  if(!found){
-    document.getElementById("memberTaskMsg").innerText="Wrong code ❌";
-    return;
-  }
-
-  const ref=doc(db,"users",currentMember.uid);
-  const userSnap=await getDoc(ref);
-
-  if(!userSnap.exists()){
-    document.getElementById("memberTaskMsg").innerText="User not found ❌";
-    return;
-  }
-
-  const userData=userSnap.data();
-  const completedTasks=userData.completedTasks || [];
-
-  if(completedTasks.includes(entered)){
-    document.getElementById("memberTaskMsg").innerText="Task already completed ✅";
-    return;
-  }
-
-  const oldPoints=Number(userData.points||0);
-  const newPoints=oldPoints+Number(found.points||0);
-
-  await setDoc(ref,{
-    ...userData,
-    points:newPoints,
-    completedTasks:[...completedTasks, entered]
-  });
-
-  document.getElementById("memberPoints").innerText=newPoints;
-  document.getElementById("memberTaskCode").value="";
-  document.getElementById("memberTaskMsg").innerText="Points added ✅";
-};
-    
-/* BLOCK 8 — LOGOUT */
-window.logoutLocal=async function(){
-  try{
-    await signOut(auth);
-  }catch(e){}
-
-  location.reload();
 };
 
 </script>

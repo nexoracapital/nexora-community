@@ -213,7 +213,7 @@ footer{
       </p>
 
       <button
-      onclick="showPage('communityPage')">
+      onclick="requireGoogleLogin('communityPage')"
 
         Open
 
@@ -235,7 +235,7 @@ footer{
       </p>
 
       <button
-      onclick="showPage('clientPage')">
+      onclick="requireGoogleLogin('clientPage')"
 
         Open
 
@@ -257,7 +257,7 @@ footer{
       </p>
 
       <button
-      onclick="showPage('studentPage')">
+      onclick="requireGoogleLogin('studentPage')"
 
         Open
 
@@ -279,8 +279,7 @@ footer{
       </p>
 
       <button
-      onclick="showPage('teacherPage')">
-
+      onclick="requireGoogleLogin('teacherPage')"
         Open
 
       </button>
@@ -323,8 +322,7 @@ footer{
       </p>
 
       <button
-      onclick="showPage('marketplacePage')">
-
+      onclick="requireGoogleLogin('marketplacePage')"
         Open
 
       </button>
@@ -1036,6 +1034,23 @@ window.logoutGoogle = async function(){
   alert("Logged out ✅");
 };
 
+    window.requireGoogleLogin = async function(pageId){
+
+  try{
+
+    const result = await signInWithPopup(auth, googleProvider);
+
+    alert("Login Success ✅ " + result.user.email);
+
+    showPage(pageId);
+
+  }catch(error){
+
+    alert(error.message);
+
+  }
+
+};
   </script>
   
 </body>

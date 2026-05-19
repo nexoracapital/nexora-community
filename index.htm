@@ -1241,7 +1241,36 @@ a{
 <footer>
   © 2026 Nexora Community — All Rights Reserved
 </footer>
+<script>
+function basicHideAll(){
+  [
+    "adminLoginPage","adminDashboard","memberPage","clientPage",
+    "walletPage","studentPage","teacherPage","teamPage",
+    "marketplacePage","classesPage","smartTestPage","supportPage"
+  ].forEach(function(id){
+    var el=document.getElementById(id);
+    if(el){el.classList.add("hide");}
+  });
+}
 
+window.showPage=function(id){
+  basicHideAll();
+  document.getElementById("mainMenu").classList.add("hide");
+  document.getElementById("backBtn").classList.remove("hide");
+  document.getElementById(id).classList.remove("hide");
+};
+
+window.goHome=function(){
+  basicHideAll();
+  document.getElementById("mainMenu").classList.remove("hide");
+  document.getElementById("backBtn").classList.add("hide");
+};
+
+window.togglePassword=function(id){
+  var el=document.getElementById(id);
+  if(el){el.type = el.type==="password" ? "text" : "password";}
+};
+</script>
   <script type="module">
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";

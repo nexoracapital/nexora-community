@@ -4,19 +4,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Nexora Community | Marketplace, Learning, Tuition & Rewards</title>
-<meta name="description" content="Nexora Community is a marketplace, learning, tuition, community rewards, wallet and smart test platform.">
-<meta name="keywords" content="Nexora Community, marketplace, tuition, online learning, smart test, wallet, community rewards">
-<meta name="author" content="Nexora Community">
+<title>Nexora Community | Core Stable</title>
+<meta name="description" content="Nexora Community core stable platform.">
 
 <style>
-*{
-  box-sizing:border-box;
-}
+*{box-sizing:border-box}
 
 body{
   margin:0;
-  font-family:Arial, sans-serif;
+  font-family:Arial,sans-serif;
   background:#eef2f7;
   color:#111827;
 }
@@ -25,31 +21,21 @@ header{
   background:linear-gradient(135deg,#071a3d,#0f4c81);
   color:white;
   text-align:center;
-  padding:32px 18px;
-}
-
-.logo{
-  width:82px;
-  height:82px;
-  border-radius:50%;
-  object-fit:cover;
-  background:white;
-  display:none;
-  margin:auto;
+  padding:34px 18px;
 }
 
 .card{
   background:white;
   margin:16px;
   padding:20px;
-  border-radius:18px;
-  box-shadow:0 4px 14px rgba(0,0,0,.10);
+  border-radius:16px;
+  box-shadow:0 4px 12px rgba(0,0,0,.10);
 }
 
 .grid{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
-  gap:15px;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:14px;
 }
 
 button{
@@ -62,32 +48,12 @@ button{
   cursor:pointer;
 }
 
-.dark{
-  background:#111827;
-  color:white;
-}
+.dark{background:#111827;color:white}
+.green{background:#16a34a;color:white}
+.red{background:#dc2626;color:white}
+.blue{background:#2563eb;color:white}
 
-.green{
-  background:#16a34a;
-  color:white;
-}
-
-.red{
-  background:#dc2626;
-  color:white;
-}
-
-.blue{
-  background:#2563eb;
-  color:white;
-}
-
-.gray{
-  background:#6b7280;
-  color:white;
-}
-
-input,select,textarea{
+input{
   width:94%;
   padding:12px;
   margin:7px 0;
@@ -95,39 +61,14 @@ input,select,textarea{
   border-radius:8px;
 }
 
-textarea{
-  min-height:90px;
-}
-
-.hide{
-  display:none!important;
-}
-
-.badge{
-  background:red;
-  color:white;
-  padding:4px 10px;
-  border-radius:50px;
-  font-size:12px;
-  margin-left:8px;
-  font-weight:bold;
-}
-
-.status{
-  background:#e5e7eb;
-  padding:6px 10px;
-  border-radius:20px;
-  font-weight:bold;
-  display:inline-block;
-}
+.hide{display:none!important}
 
 .ticker{
   background:#f5b301;
-  color:#111827;
-  font-weight:bold;
+  padding:10px;
   overflow:hidden;
   white-space:nowrap;
-  padding:10px;
+  font-weight:bold;
 }
 
 .ticker span{
@@ -137,36 +78,8 @@ textarea{
 }
 
 @keyframes move{
-  0%{transform:translateX(0)}
-  100%{transform:translateX(-100%)}
-}
-
-.option{
-  display:block;
-  width:95%;
-  text-align:left;
-  background:#e5e7eb;
-}
-
-.small{
-  font-size:13px;
-  color:#555;
-}
-
-.product-img{
-  width:100%;
-  max-height:230px;
-  object-fit:cover;
-  border-radius:12px;
-  background:#eee;
-}
-
-.wallet-box{
-  background:#f8fafc;
-  border:1px solid #e5e7eb;
-  border-radius:14px;
-  padding:15px;
-  margin:10px 0;
+  from{transform:translateX(0)}
+  to{transform:translateX(-100%)}
 }
 
 footer{
@@ -176,108 +89,71 @@ footer{
   padding:18px;
   margin-top:25px;
 }
-
-a{
-  color:#0f4c81;
-  font-weight:bold;
-}
 </style>
 </head>
 
 <body>
 
 <header>
-  <img id="siteLogo" class="logo">
   <h1>Nexora Community</h1>
-  <p>Marketplace • Learning • Tuition • Wallet • Community Rewards</p>
+  <p>Core Stable Platform</p>
 </header>
 
 <div class="ticker">
-  <span id="newsText">
-    Welcome to Nexora Community — Smart marketplace, learning, tuition and rewards platform.
-  </span>
+  <span>Welcome to Nexora Community — Core stable version is running.</span>
 </div>
 
+<!-- MAIN MENU -->
 <div id="mainMenu" class="card">
+  <h2>Main Menu</h2>
+
   <div class="grid">
 
     <div class="card">
-      <h2>👑 CEO / Admin Panel</h2>
-      <p>CEO full control and admin manager access.</p>
-      <button class="dark" onclick="showPage('adminLoginPage')">
+      <h3>👑 CEO / Admin</h3>
+      <p>Owner and admin access.</p>
+      <button class="dark" onclick="showPage('ceoLoginPage')">
         Open CEO/Admin
       </button>
     </div>
 
     <div class="card">
-      <h2>🌐 Member Portal</h2>
-      <p>Community tasks, points, wallet, investment and rewards.</p>
+      <h3>🌐 Member Portal</h3>
+      <p>Create account or login as member.</p>
       <button onclick="showPage('memberPage')">
         Open Member
       </button>
     </div>
 
     <div class="card">
-      <h2>💼 Client Portal</h2>
-      <p>Request services, submit products and track orders.</p>
+      <h3>💼 Client Portal</h3>
+      <p>Coming next after core stable.</p>
       <button onclick="showPage('clientPage')">
         Open Client
       </button>
     </div>
 
     <div class="card">
-      <h2>🛒 Marketplace</h2>
-      <p>Buy, sell, request and explore products/services.</p>
-      <button onclick="showPage('marketplacePage')">
-        Open Marketplace
-      </button>
-    </div>
-
-    <div class="card">
-      <h2>🎓 Student Portal</h2>
-      <p>Submit tuition requests and track teacher matching.</p>
+      <h3>🎓 Student Portal</h3>
+      <p>Coming next after core stable.</p>
       <button onclick="showPage('studentPage')">
         Open Student
       </button>
     </div>
 
     <div class="card">
-      <h2>👨‍🏫 Teacher Portal</h2>
-      <p>Teacher account, profile and student request matching.</p>
+      <h3>👨‍🏫 Teacher Portal</h3>
+      <p>Coming next after core stable.</p>
       <button onclick="showPage('teacherPage')">
         Open Teacher
       </button>
     </div>
 
     <div class="card">
-      <h2>👥 Team Portal</h2>
-      <p>Team login with email + secret ID, assigned work and wallet.</p>
+      <h3>👥 Team Portal</h3>
+      <p>Team email + secret login.</p>
       <button onclick="showPage('teamPage')">
         Open Team
-      </button>
-    </div>
-
-    <div class="card">
-      <h2>📚 Live Classes</h2>
-      <p>Class-wise courses, subjects and YouTube lectures.</p>
-      <button onclick="showPage('classesPage')">
-        Open Classes
-      </button>
-    </div>
-
-    <div class="card">
-      <h2>🧠 Smart Test</h2>
-      <p>MCQs, quizzes, score and voice reading.</p>
-      <button onclick="showPage('smartTestPage')">
-        Open Smart Test
-      </button>
-    </div>
-
-    <div class="card">
-      <h2>📞 Support</h2>
-      <p>WhatsApp channel, support email and help bot.</p>
-      <button onclick="showPage('supportPage')">
-        Open Support
       </button>
     </div>
 
@@ -288,497 +164,173 @@ a{
   <button id="backBtn" class="dark hide" onclick="goHome()">
     ⬅ Back To Main Menu
   </button>
-  </div>
+</div>
 
-  <!-- CEO / ADMIN LOGIN -->
-<div id="adminLoginPage" class="card hide">
+<!-- CEO LOGIN PAGE -->
+<div id="ceoLoginPage" class="card hide">
   <h2>👑 CEO / Admin Login</h2>
 
-  <input id="adminEmail" type="email" placeholder="Email">
-  <input id="adminSecret" type="password" placeholder="Secret ID">
+  <input id="ceoEmail" type="email" placeholder="Email">
+  <input id="ceoSecret" type="password" placeholder="Secret ID">
 
-  <button type="button" onclick="togglePassword('adminSecret')">
+  <button type="button" onclick="togglePassword('ceoSecret')">
     Show / Hide Secret
   </button>
 
-  <button class="dark" onclick="adminLogin()">
+  <button class="dark" onclick="ceoLogin()">
     Login
   </button>
 
-  <p class="small">
-    CEO and Admin Manager login uses Email + Secret ID.
-  </p>
+  <p id="ceoLoginMsg"></p>
 </div>
 
-<!-- CEO / ADMIN DASHBOARD -->
-<div id="adminDashboard" class="card hide">
-  <h2>📊 CEO / Admin Dashboard</h2>
-  <p id="adminRoleInfo" class="small"></p>
+<!-- CEO DASHBOARD -->
+<div id="ceoDashboard" class="card hide">
+  <h2>👑 CEO Dashboard</h2>
+  <p id="ceoWelcome"></p>
 
   <div class="grid">
-
     <div class="card">
-      <h3>💼 Client Requests <span id="clientReqBadge" class="badge"></span></h3>
-      <button onclick="showAdminSection('adminClientRequests')">Open</button>
-    </div>
-
-    <div class="card">
-      <h3>🛒 Seller Requests <span id="sellerReqBadge" class="badge"></span></h3>
-      <button onclick="showAdminSection('adminSellerRequests')">Open</button>
-    </div>
-
-    <div class="card">
-      <h3>🎓 Student Requests <span id="studentReqBadge" class="badge"></span></h3>
-      <button onclick="showAdminSection('adminStudentRequests')">Open</button>
-    </div>
-
-    <div class="card">
-      <h3>👨‍🏫 Teacher Interests <span id="teacherInterestBadge" class="badge"></span></h3>
-      <button onclick="showAdminSection('adminTeacherInterests')">Open</button>
-    </div>
-
-    <div class="card">
-      <h3>👨‍🏫 Teacher Profiles</h3>
-      <button onclick="showAdminSection('adminTeacherProfiles')">Open</button>
+      <h3>🌐 Members</h3>
+      <button onclick="showCeoBox('ceoMembersBox')">Open</button>
     </div>
 
     <div class="card">
       <h3>👥 Team Members</h3>
-      <button onclick="showAdminSection('adminTeamMembers')">Open</button>
+      <button onclick="showCeoBox('ceoTeamBox')">Open</button>
     </div>
 
     <div class="card">
-      <h3>📝 Assign Team Work</h3>
-      <button onclick="showAdminSection('adminAssignWork')">Open</button>
+      <h3>📢 Announcement</h3>
+      <button onclick="showCeoBox('ceoAnnouncementBox')">Open</button>
     </div>
-
-    <div class="card">
-      <h3>🌐 Members</h3>
-      <button onclick="showAdminSection('adminMembers')">Open</button>
-    </div>
-
-    <div class="card">
-      <h3>📋 Daily Tasks</h3>
-      <button onclick="showAdminSection('adminDailyTasks')">Open</button>
-    </div>
-
-    <div class="card">
-      <h3>📢 Announcements</h3>
-      <button onclick="showAdminSection('adminAnnouncements')">Open</button>
-    </div>
-
-    <div class="card">
-      <h3>📩 Messages</h3>
-      <button onclick="showAdminSection('adminMessages')">Open</button>
-    </div>
-
-    <div class="card">
-      <h3>💰 Wallet / Transactions</h3>
-      <button onclick="showAdminSection('adminWallet')">Open</button>
-    </div>
-
-    <div class="card">
-      <h3>📈 Investment Plans</h3>
-      <button onclick="showAdminSection('adminInvestment')">Open</button>
-    </div>
-
-    <div class="card">
-      <h3>🛍 Marketplace Items</h3>
-      <button onclick="showAdminSection('adminMarketplace')">Open</button>
-    </div>
-
-    <div class="card">
-      <h3>🧠 Smart Test MCQs</h3>
-      <button onclick="showAdminSection('adminMCQ')">Open</button>
-    </div>
-
-    <div class="card">
-      <h3>📚 Course / Lecture Manager</h3>
-      <button onclick="showAdminSection('adminCourses')">Open</button>
-    </div>
-
-    <div class="card">
-      <h3>🔐 Role Manager</h3>
-      <button onclick="showAdminSection('adminRoles')">Open</button>
-    </div>
-
-    <div class="card">
-      <h3>⚙️ Website Controls</h3>
-      <button onclick="showAdminSection('adminControls')">Open</button>
-    </div>
-
-    <div class="card">
-      <h3>🧾 Activity Logs</h3>
-      <button onclick="showAdminSection('adminLogs')">Open</button>
-    </div>
-
   </div>
 
-  <div style="margin-top:15px">
-    <button class="blue" onclick="setAdminFilter('Pending')">Pending</button>
-    <button class="green" onclick="setAdminFilter('Accepted')">Accepted</button>
-    <button class="red" onclick="setAdminFilter('Rejected')">Rejected</button>
-    <button class="dark" onclick="setAdminFilter('Completed')">Completed</button>
-    <button class="gray" onclick="setAdminFilter('All')">All</button>
+  <div id="ceoMembersBox" class="hide">
+    <h3>Members List</h3>
+    <div id="membersList"></div>
   </div>
 
-  <div id="adminClientRequests" class="hide">
-    <h2>💼 Client Requests</h2>
-    <div id="adminClientRequestList"></div>
-  </div>
+  <div id="ceoTeamBox" class="hide">
+    <h3>Add Team Member</h3>
+    <input id="teamName" placeholder="Team Name">
+    <input id="teamEmailCreate" type="email" placeholder="Team Email">
+    <input id="teamSecretCreate" placeholder="Team Secret ID">
 
-  <div id="adminSellerRequests" class="hide">
-    <h2>🛒 Seller Product Requests</h2>
-    <div id="adminSellerRequestList"></div>
-  </div>
-
-  <div id="adminStudentRequests" class="hide">
-    <h2>🎓 Student Tuition Requests</h2>
-    <div id="adminStudentRequestList"></div>
-  </div>
-
-  <div id="adminTeacherInterests" class="hide">
-    <h2>👨‍🏫 Teacher Interests</h2>
-    <div id="adminTeacherInterestList"></div>
-  </div>
-
-  <div id="adminTeacherProfiles" class="hide">
-    <h2>👨‍🏫 Teacher Profiles</h2>
-    <div id="adminTeacherProfileList"></div>
-  </div>
-
-  <div id="adminTeamMembers" class="hide">
-    <h2>👥 Team Members</h2>
-
-    <input id="newTeamName" placeholder="Team Member Name">
-    <input id="newTeamEmail" type="email" placeholder="Team Member Email">
-    <input id="newTeamSecret" placeholder="Team Secret ID">
-
-    <button class="green" onclick="addTeamMember()">
-      Add Team Member
+    <button class="green" onclick="createTeamMember()">
+      Add Team
     </button>
 
     <p id="teamCreateMsg"></p>
-    <div id="adminTeamList"></div>
+    <div id="teamList"></div>
   </div>
 
-  <div id="adminAssignWork" class="hide">
-    <h2>📝 Assign Work to Team</h2>
-
-    <input id="workTeamEmail" type="email" placeholder="Team Member Email">
-    <input id="workTitle" placeholder="Work Title">
-    <textarea id="workDetails" placeholder="Work Details"></textarea>
-    <input id="workDeadline" placeholder="Deadline">
-    <input id="workPoints" placeholder="Points">
-
-    <button class="green" onclick="assignTeamWork()">
-      Assign Work
-    </button>
-
-    <p id="assignWorkMsg"></p>
-    <div id="assignedWorkAdminList"></div>
-  </div>
-
-  <div id="adminMembers" class="hide">
-    <h2>🌐 Members</h2>
-    <div id="adminMemberList"></div>
-  </div>
-
-  <div id="adminDailyTasks" class="hide">
-    <h2>📋 Daily Task Manager</h2>
-
-    <select id="taskType">
-      <option>YouTube Video</option>
-      <option>Blog Post</option>
-      <option>Website Visit</option>
-      <option>Affiliate Link</option>
-      <option>Quiz Task</option>
-    </select>
-
-    <input id="taskTitle" placeholder="Task Title">
-    <input id="taskLink" placeholder="Task Link">
-    <input id="taskCode" placeholder="Secret Task Code">
-    <input id="taskPoints" placeholder="Points">
-
-    <button class="green" onclick="addDailyTask()">Add Task</button>
-
-    <p id="taskMsg"></p>
-    <div id="adminTaskList"></div>
-  </div>
-
-  <div id="adminAnnouncements" class="hide">
-    <h2>📢 Announcement Manager</h2>
-
-    <input id="announcementText" placeholder="Announcement Text">
-    <button class="green" onclick="addAnnouncement()">Add Announcement</button>
-
+  <div id="ceoAnnouncementBox" class="hide">
+    <h3>Announcement</h3>
+    <input id="announcementText" placeholder="Write announcement">
+    <button class="green" onclick="saveAnnouncement()">Save</button>
     <p id="announcementMsg"></p>
-    <div id="adminAnnouncementList"></div>
   </div>
 
-  <div id="adminMessages" class="hide">
-    <h2>📩 Send Message</h2>
-
-    <select id="messageTarget">
-      <option>member</option>
-      <option>client</option>
-      <option>student</option>
-      <option>teacher</option>
-      <option>team</option>
-      <option>all</option>
-    </select>
-
-    <input id="messageTo" placeholder="Specific Email Optional">
-    <textarea id="messageText" placeholder="Message"></textarea>
-
-    <button class="green" onclick="sendMessage()">Send Message</button>
-
-    <p id="messageMsg"></p>
-    <div id="adminMessageHistory"></div>
-  </div>
-
-  <div id="adminWallet" class="hide">
-    <h2>💰 Wallet / Transactions</h2>
-
-    <h3>Manual Wallet Update</h3>
-    <input id="walletUserEmail" type="email" placeholder="User Email">
-    <input id="walletAmount" placeholder="Amount">
-    <select id="walletAction">
-      <option>Add</option>
-      <option>Subtract</option>
-    </select>
-
-    <button class="green" onclick="manualWalletUpdate()">Update Wallet</button>
-    <p id="walletAdminMsg"></p>
-
-    <h3>Withdraw Requests</h3>
-    <div id="adminWithdrawList"></div>
-
-    <h3>Transaction History</h3>
-    <div id="adminTransactionList"></div>
-  </div>
-
-  <div id="adminInvestment" class="hide">
-    <h2>📈 Investment Plan Manager</h2>
-
-    <select id="investmentType">
-      <option>Short Term</option>
-      <option>Mid Term</option>
-      <option>Long Term</option>
-    </select>
-
-    <input id="investmentTitle" placeholder="Plan Title">
-    <input id="investmentAmount" placeholder="Amount">
-    <input id="investmentDuration" placeholder="Duration">
-    <input id="investmentNote" placeholder="Profit/Loss Note">
-    <textarea id="investmentDesc" placeholder="Description / Disclaimer"></textarea>
-
-    <button class="green" onclick="addInvestmentPlan()">Add Investment Plan</button>
-
-    <p id="investmentMsg"></p>
-    <div id="adminInvestmentList"></div>
-  </div>
-
-  <div id="adminMarketplace" class="hide">
-    <h2>🛍 Marketplace Item Manager</h2>
-
-    <input id="marketTitle" placeholder="Product / Service Title">
-    <input id="marketCategory" placeholder="Category">
-    <input id="marketPrice" placeholder="Price">
-    <input id="marketImage" placeholder="Image URL">
-    <textarea id="marketDesc" placeholder="Description"></textarea>
-
-    <button class="green" onclick="addMarketplaceItem()">Add Item</button>
-
-    <p id="marketMsg"></p>
-    <div id="adminMarketList"></div>
-  </div>
-
-  <div id="adminMCQ" class="hide">
-    <h2>🧠 Smart Test MCQ Manager</h2>
-
-    <input id="mcqSubject" placeholder="Subject">
-    <textarea id="mcqQuestion" placeholder="Question"></textarea>
-    <input id="mcqA" placeholder="Option A">
-    <input id="mcqB" placeholder="Option B">
-    <input id="mcqC" placeholder="Option C">
-    <input id="mcqD" placeholder="Option D">
-
-    <select id="mcqCorrect">
-      <option>A</option>
-      <option>B</option>
-      <option>C</option>
-      <option>D</option>
-    </select>
-
-    <button class="green" onclick="addMCQ()">Add MCQ</button>
-
-    <p id="mcqMsg"></p>
-    <div id="adminMCQList"></div>
-  </div>
-
-  <div id="adminCourses" class="hide">
-    <h2>📚 Course / Lecture Manager</h2>
-
-    <select id="courseClass">
-      <option>Nursery</option>
-      <option>KG</option>
-      <option>Class 1</option>
-      <option>Class 2</option>
-      <option>Class 3</option>
-      <option>Class 4</option>
-      <option>Class 5</option>
-      <option>Class 6</option>
-      <option>Class 7</option>
-      <option>Class 8</option>
-      <option>Class 9</option>
-      <option>Class 10</option>
-      <option>FA / FSc</option>
-      <option>BA / BSc</option>
-      <option>BS</option>
-      <option>MA / MSc</option>
-      <option>MPhil</option>
-    </select>
-
-    <input id="courseSubject" placeholder="Subject">
-    <input id="courseChapter" placeholder="Chapter">
-    <input id="lectureTitle" placeholder="Lecture Title">
-    <input id="lectureLink" placeholder="YouTube Lecture Link">
-
-    <button class="green" onclick="addLecture()">Add Lecture</button>
-
-    <p id="lectureMsg"></p>
-    <div id="adminLectureList"></div>
-  </div>
-
-  <div id="adminRoles" class="hide">
-    <h2>🔐 Role Manager</h2>
-    <p class="small">CEO can add/remove Admin Managers and Team Members.</p>
-
-    <h3>Add Admin / Manager</h3>
-    <input id="roleEmail" type="email" placeholder="Admin Email">
-    <input id="roleSecret" placeholder="Secret ID">
-    <select id="roleType">
-      <option>Admin Manager</option>
-      <option>Support Manager</option>
-      <option>Marketplace Manager</option>
-    </select>
-
-    <button class="green" onclick="addAdminRole()">Add Admin Role</button>
-    <p id="roleMsg"></p>
-    <div id="adminRoleList"></div>
-  </div>
-
-  <div id="adminControls" class="hide">
-    <h2>⚙️ Website Controls</h2>
-
-    <input id="logoInput" placeholder="Logo Image URL">
-    <input id="newsInput" placeholder="News / Ticker Text">
-    <input id="supportEmailInput" placeholder="Support Email">
-    <input id="whatsappInput" placeholder="WhatsApp Channel Link">
-
-    <button class="green" onclick="saveWebsiteControls()">Save Controls</button>
-
-    <p id="controlMsg"></p>
-  </div>
-
-  <div id="adminLogs" class="hide">
-    <h2>🧾 Activity Logs</h2>
-    <div id="adminLogList"></div>
-  </div>
-
-</div>
+  <button class="red" onclick="logoutLocal()">
+    Logout
+  </button>
+    </div>
 
   <!-- MEMBER PAGE -->
 <div id="memberPage" class="card hide">
 
-  <div id="memberAuthBox">
+  <!-- CREATE / LOGIN MENU -->
+  <div id="memberAuthMenu">
 
     <h2>🌐 Member Portal</h2>
 
-    <h3>Create Account</h3>
+    <div class="grid">
 
-    <input id="memberName" placeholder="Full Name">
-    <input id="memberEmail" type="email" placeholder="Email">
-    <input id="memberPassword" type="password" placeholder="Password">
+      <div class="card">
+        <h3>Create Account</h3>
+        <button class="green" onclick="showMemberBox('memberCreateBox')">
+          Open
+        </button>
+      </div>
 
-    <button type="button" onclick="togglePassword('memberPassword')">
-      Show / Hide Password
-    </button>
+      <div class="card">
+        <h3>Login Account</h3>
+        <button class="dark" onclick="showMemberBox('memberLoginBox')">
+          Open
+        </button>
+      </div>
 
-    <button class="green" onclick="createMemberAccount()">
-      Create Account
-    </button>
+    </div>
 
-    <hr>
+    <!-- CREATE ACCOUNT -->
+    <div id="memberCreateBox" class="hide">
+      <h3>Create Member Account</h3>
 
-    <h3>Member Login</h3>
+      <input id="memberName" placeholder="Full Name">
+      <input id="memberEmail" type="email" placeholder="Email">
+      <input id="memberPassword" type="password" placeholder="Password">
 
-    <input id="memberLoginEmail" type="email" placeholder="Email">
-    <input id="memberLoginPassword" type="password" placeholder="Password">
+      <button type="button" onclick="togglePassword('memberPassword')">
+        Show / Hide Password
+      </button>
 
-    <button type="button" onclick="togglePassword('memberLoginPassword')">
-      Show / Hide Password
-    </button>
+      <button class="green" onclick="createMemberAccount()">
+        Create Account
+      </button>
 
-    <button class="dark" onclick="memberLogin()">
-      Login
-    </button>
+      <p id="memberCreateMsg"></p>
+    </div>
+
+    <!-- LOGIN ACCOUNT -->
+    <div id="memberLoginBox" class="hide">
+      <h3>Member Login</h3>
+
+      <input id="memberLoginEmail" type="email" placeholder="Email">
+      <input id="memberLoginPassword" type="password" placeholder="Password">
+
+      <button type="button" onclick="togglePassword('memberLoginPassword')">
+        Show / Hide Password
+      </button>
+
+      <button class="dark" onclick="memberLogin()">
+        Login
+      </button>
+
+      <p id="memberLoginMsg"></p>
+    </div>
 
   </div>
 
+  <!-- MEMBER DASHBOARD -->
   <div id="memberDashboard" class="hide">
 
     <h2>🎉 Member Dashboard</h2>
 
     <p id="memberWelcome"></p>
 
-    <div class="wallet-box">
-      <h3>💰 Wallet Balance</h3>
-      <h2 id="memberWalletBalance">0</h2>
+    <div class="grid">
 
-      <button class="green" onclick="showPage('walletPage')">
-        Open Wallet
-      </button>
+      <div class="card">
+        <h3>⭐ Reward Points</h3>
+        <h2 id="memberPoints">0</h2>
+      </div>
+
+      <div class="card">
+        <h3>💰 Wallet</h3>
+        <h2 id="memberWallet">0</h2>
+      </div>
+
     </div>
 
-    <div class="wallet-box">
-      <h3>⭐ Reward Points</h3>
-      <h2 id="memberPoints">0</h2>
+    <div class="card">
+      <h3>📩 Messages</h3>
+      <div id="memberMessages">
+        No messages yet.
+      </div>
     </div>
 
-    <h3>
-      📩 Messages
-      <span id="memberMsgBadge" class="badge"></span>
-    </h3>
-
-    <div id="memberMessages"></div>
-
-    <h3>📋 Daily Tasks</h3>
-
-    <div id="memberTaskList"></div>
-
-    <h3>🔐 Submit Task Code</h3>
-
-    <input id="memberTaskCode" placeholder="Enter Task Code">
-
-    <button class="green" onclick="submitTaskCode()">
-      Submit Code
-    </button>
-
-    <p id="taskCodeMsg"></p>
-
-    <h3>📈 Investment Plans</h3>
-
-    <div id="memberInvestmentList"></div>
-
-    <button class="green" onclick="openWhatsAppChannel()">
-      Join WhatsApp Channel
-    </button>
-
-    <br><br>
-
-    <button class="red" onclick="logoutUser()">
+    <button class="red" onclick="logoutLocal()">
       Logout
     </button>
 
@@ -788,357 +340,58 @@ a{
 
 <!-- CLIENT PAGE -->
 <div id="clientPage" class="card hide">
-
-  <div id="clientAuthBox">
-
-    <h2>💼 Client Portal</h2>
-
-    <h3>Create Client Account</h3>
-
-    <input id="clientName" placeholder="Full Name">
-    <input id="clientEmail" type="email" placeholder="Email">
-    <input id="clientPassword" type="password" placeholder="Password">
-
-    <button type="button" onclick="togglePassword('clientPassword')">
-      Show / Hide Password
-    </button>
-
-    <button class="green" onclick="createClientAccount()">
-      Create Account
-    </button>
-
-    <hr>
-
-    <h3>Client Login</h3>
-
-    <input id="clientLoginEmail" type="email" placeholder="Email">
-    <input id="clientLoginPassword" type="password" placeholder="Password">
-
-    <button type="button" onclick="togglePassword('clientLoginPassword')">
-      Show / Hide Password
-    </button>
-
-    <button class="dark" onclick="clientLogin()">
-      Login
-    </button>
-
-  </div>
-
-  <div id="clientDashboard" class="hide">
-
-    <h2>💼 Client Dashboard</h2>
-
-    <p id="clientWelcome"></p>
-
-    <div class="wallet-box">
-      <h3>💰 Wallet Balance</h3>
-      <h2 id="clientWalletBalance">0</h2>
-    </div>
-
-    <h3>🛠 Request Service</h3>
-
-    <select id="clientService">
-      <option>Website Development</option>
-      <option>Graphic Design</option>
-      <option>SEO Service</option>
-      <option>YouTube Promotion</option>
-      <option>Social Media Marketing</option>
-      <option>Custom Service</option>
-    </select>
-
-    <input id="clientMobile" placeholder="WhatsApp / Mobile">
-    <textarea id="clientDetails" placeholder="Describe your service request"></textarea>
-
-    <button class="green" onclick="submitClientRequest()">
-      Submit Service Request
-    </button>
-
-    <p id="clientRequestMsg"></p>
-
-    <hr>
-
-    <h3>🛒 Submit Product To Marketplace</h3>
-
-    <input id="sellerTitle" placeholder="Product Title">
-    <input id="sellerPrice" placeholder="Price">
-    <input id="sellerImage" placeholder="Image URL">
-    <textarea id="sellerDesc" placeholder="Product Description"></textarea>
-
-    <button class="green" onclick="submitSellerRequest()">
-      Submit Product
-    </button>
-
-    <p id="sellerRequestMsg"></p>
-
-    <h3>
-      📩 Messages
-      <span id="clientMsgBadge" class="badge"></span>
-    </h3>
-
-    <div id="clientMessages"></div>
-
-    <h3>📦 My Requests</h3>
-
-    <div id="clientRequestHistory"></div>
-
-    <button class="red" onclick="logoutUser()">
-      Logout
-    </button>
-
-  </div>
-
+  <h2>💼 Client Portal</h2>
+  <p>Client system will be added after core stable testing.</p>
 </div>
 
-<!-- WALLET PAGE -->
-<div id="walletPage" class="card hide">
-
-  <h2>💰 Wallet Center</h2>
-
-  <div class="wallet-box">
-    <h3>Current Balance</h3>
-    <h1 id="walletBalanceView">0</h1>
-  </div>
-
-  <h3>➕ Deposit Request</h3>
-
-  <input id="depositAmount" placeholder="Deposit Amount">
-  <input id="depositMethod" placeholder="JazzCash / Easypaisa">
-
-  <button class="green" onclick="submitDepositRequest()">
-    Submit Deposit Request
-  </button>
-
-  <p id="depositMsg"></p>
-
-  <h3>➖ Withdraw Request</h3>
-
-  <input id="withdrawAmount" placeholder="Withdraw Amount">
-  <input id="withdrawMethod" placeholder="JazzCash / Easypaisa">
-
-  <button class="red" onclick="submitWithdrawRequest()">
-    Submit Withdraw Request
-  </button>
-
-  <p id="withdrawMsg"></p>
-
-  <h3>🧾 Wallet Transactions</h3>
-
-  <div id="walletTransactionList"></div>
-
-</div>
-
-  <!-- STUDENT PAGE -->
+<!-- STUDENT PAGE -->
 <div id="studentPage" class="card hide">
-
-  <div id="studentAuthBox">
-
-    <h2>🎓 Student Portal</h2>
-
-    <h3>Create Student Account</h3>
-
-    <input id="studentName" placeholder="Student Name">
-    <input id="studentEmail" type="email" placeholder="Email">
-    <input id="studentPassword" type="password" placeholder="Password">
-
-    <button type="button" onclick="togglePassword('studentPassword')">
-      Show / Hide Password
-    </button>
-
-    <button class="green" onclick="createStudentAccount()">
-      Create Account
-    </button>
-
-    <hr>
-
-    <h3>Student Login</h3>
-
-    <input id="studentLoginEmail" type="email" placeholder="Email">
-    <input id="studentLoginPassword" type="password" placeholder="Password">
-
-    <button type="button" onclick="togglePassword('studentLoginPassword')">
-      Show / Hide Password
-    </button>
-
-    <button class="dark" onclick="studentLogin()">
-      Login
-    </button>
-
-  </div>
-
-  <div id="studentDashboard" class="hide">
-
-    <h2>🎓 Student Dashboard</h2>
-
-    <p id="studentWelcome"></p>
-
-    <h3>📚 Submit Tuition Request</h3>
-
-    <select id="studentClass">
-      <option>Nursery</option>
-      <option>KG</option>
-      <option>Class 1</option>
-      <option>Class 2</option>
-      <option>Class 3</option>
-      <option>Class 4</option>
-      <option>Class 5</option>
-      <option>Class 6</option>
-      <option>Class 7</option>
-      <option>Class 8</option>
-      <option>Class 9</option>
-      <option>Class 10</option>
-      <option>FA / FSc</option>
-      <option>BA / BSc</option>
-      <option>BS</option>
-      <option>MA / MSc</option>
-      <option>MPhil</option>
-    </select>
-
-    <input id="studentSubject" placeholder="Subject">
-    <input id="studentWhatsApp" placeholder="WhatsApp Number">
-
-    <select id="studentMode">
-      <option>WhatsApp Lectures</option>
-      <option>Zoom Class</option>
-      <option>Google Meet</option>
-      <option>Online Class</option>
-    </select>
-
-    <textarea id="studentNeed" placeholder="Describe your learning need"></textarea>
-
-    <button class="green" onclick="submitStudentRequest()">
-      Submit Tuition Request
-    </button>
-
-    <p id="studentRequestMsg"></p>
-
-    <h3>
-      📩 Messages
-      <span id="studentMsgBadge" class="badge"></span>
-    </h3>
-
-    <div id="studentMessages"></div>
-
-    <h3>📋 My Tuition Requests</h3>
-
-    <div id="studentRequestHistory"></div>
-
-    <button class="red" onclick="logoutUser()">
-      Logout
-    </button>
-
-  </div>
-
+  <h2>🎓 Student Portal</h2>
+  <p>Student system will be added after core stable testing.</p>
 </div>
 
 <!-- TEACHER PAGE -->
 <div id="teacherPage" class="card hide">
-
-  <div id="teacherAuthBox">
-
-    <h2>👨‍🏫 Teacher Portal</h2>
-
-    <h3>Create Teacher Account</h3>
-
-    <input id="teacherName" placeholder="Teacher Name">
-    <input id="teacherEmail" type="email" placeholder="Email">
-    <input id="teacherPassword" type="password" placeholder="Password">
-    <input id="teacherWhatsApp" placeholder="WhatsApp Number">
-    <input id="teacherSubjects" placeholder="Subjects">
-    <input id="teacherExperience" placeholder="Experience / Qualification">
-
-    <button type="button" onclick="togglePassword('teacherPassword')">
-      Show / Hide Password
-    </button>
-
-    <button class="green" onclick="createTeacherAccount()">
-      Create Account
-    </button>
-
-    <hr>
-
-    <h3>Teacher Login</h3>
-
-    <input id="teacherLoginEmail" type="email" placeholder="Email">
-    <input id="teacherLoginPassword" type="password" placeholder="Password">
-
-    <button type="button" onclick="togglePassword('teacherLoginPassword')">
-      Show / Hide Password
-    </button>
-
-    <button class="dark" onclick="teacherLogin()">
-      Login
-    </button>
-
-  </div>
-
-  <div id="teacherDashboard" class="hide">
-
-    <h2>👨‍🏫 Teacher Dashboard</h2>
-
-    <p id="teacherWelcome"></p>
-
-    <h3>📚 Available Student Requests</h3>
-
-    <div id="teacherStudentRequests"></div>
-
-    <h3>
-      📩 Messages
-      <span id="teacherMsgBadge" class="badge"></span>
-    </h3>
-
-    <div id="teacherMessages"></div>
-
-    <button class="red" onclick="logoutUser()">
-      Logout
-    </button>
-
-  </div>
-
+  <h2>👨‍🏫 Teacher Portal</h2>
+  <p>Teacher system will be added after core stable testing.</p>
 </div>
 
 <!-- TEAM PAGE -->
 <div id="teamPage" class="card hide">
 
-  <div id="teamAuthBox">
+  <div id="teamLoginBox">
 
-    <h2>👥 Team Portal</h2>
+    <h2>👥 Team Login</h2>
 
-    <input id="teamEmail" type="email" placeholder="Team Email">
-    <input id="teamSecret" type="password" placeholder="Team Secret ID">
+    <input id="teamLoginEmail" type="email" placeholder="Team Email">
+    <input id="teamLoginSecret" type="password" placeholder="Secret ID">
 
-    <button type="button" onclick="togglePassword('teamSecret')">
+    <button type="button" onclick="togglePassword('teamLoginSecret')">
       Show / Hide Secret
     </button>
 
     <button class="dark" onclick="teamLogin()">
-      Team Login
+      Login
     </button>
 
+    <p id="teamLoginMsg"></p>
   </div>
 
+  <!-- TEAM DASHBOARD -->
   <div id="teamDashboard" class="hide">
 
     <h2>👥 Team Dashboard</h2>
 
     <p id="teamWelcome"></p>
 
-    <div class="wallet-box">
-      <h3>💰 Team Wallet</h3>
-      <h2 id="teamWalletBalance">0</h2>
+    <div class="card">
+      <h3>📝 Assigned Tasks</h3>
+      <div id="teamTasks">
+        No tasks assigned yet.
+      </div>
     </div>
 
-    <h3>
-      📩 Messages
-      <span id="teamMsgBadge" class="badge"></span>
-    </h3>
-
-    <div id="teamMessages"></div>
-
-    <h3>📝 Assigned Work</h3>
-
-    <div id="teamWorkList"></div>
-
-    <button class="red" onclick="logoutUser()">
+    <button class="red" onclick="logoutLocal()">
       Logout
     </button>
 
@@ -1146,131 +399,10 @@ a{
 
 </div>
 
-<!-- MARKETPLACE PAGE -->
-<div id="marketplacePage" class="card hide">
-
-  <h2>🛒 Nexora Marketplace</h2>
-
-  <input id="marketSearch" placeholder="Search product or service" onkeyup="searchMarketplace()">
-
-  <div id="marketplaceList" class="grid"></div>
-
-</div>
-
-<!-- CLASSES PAGE -->
-<div id="classesPage" class="card hide">
-
-  <h2>📚 Live Classes & Lectures</h2>
-
-  <select id="classFilter" onchange="loadCourses()">
-    <option value="">All Classes</option>
-    <option>Nursery</option>
-    <option>KG</option>
-    <option>Class 1</option>
-    <option>Class 2</option>
-    <option>Class 3</option>
-    <option>Class 4</option>
-    <option>Class 5</option>
-    <option>Class 6</option>
-    <option>Class 7</option>
-    <option>Class 8</option>
-    <option>Class 9</option>
-    <option>Class 10</option>
-    <option>FA / FSc</option>
-    <option>BA / BSc</option>
-    <option>BS</option>
-    <option>MA / MSc</option>
-    <option>MPhil</option>
-  </select>
-
-  <div id="courseList"></div>
-
-</div>
-
-<!-- SMART TEST PAGE -->
-<div id="smartTestPage" class="card hide">
-
-  <h2>🧠 Smart Test</h2>
-
-  <select id="mcqSubjectFilter" onchange="loadMCQs()">
-    <option value="">All Subjects</option>
-  </select>
-
-  <button class="blue" onclick="speakCurrentMCQ()">
-    🔊 Read MCQ
-  </button>
-
-  <h3>Score: <span id="mcqScore">0</span></h3>
-
-  <div id="mcqList"></div>
-
-</div>
-
-<!-- SUPPORT PAGE -->
-<div id="supportPage" class="card hide">
-
-  <h2>📞 Support Center</h2>
-
-  <div class="card">
-    <h3>📢 WhatsApp Channel</h3>
-    <p>Join Nexora Community WhatsApp announcements channel.</p>
-    <button class="green" onclick="openWhatsAppChannel()">
-      Join WhatsApp Channel
-    </button>
-  </div>
-
-  <div class="card">
-    <h3>📧 Support Email</h3>
-    <p id="supportEmailText">support@nexora.com</p>
-  </div>
-
-  <div class="card">
-    <h3>🤖 Help Bot</h3>
-
-    <textarea id="botQuestion" placeholder="Ask about login, wallet, marketplace, teacher, student, points..."></textarea>
-
-    <button class="dark" onclick="askBot()">
-      Ask Bot
-    </button>
-
-    <div id="botReply" class="card"></div>
-  </div>
-
-</div>
-
 <footer>
-  © 2026 Nexora Community — All Rights Reserved
+  © 2026 Nexora Community — Core Stable Version
 </footer>
-<script>
-function basicHideAll(){
-  [
-    "adminLoginPage","adminDashboard","memberPage","clientPage",
-    "walletPage","studentPage","teacherPage","teamPage",
-    "marketplacePage","classesPage","smartTestPage","supportPage"
-  ].forEach(function(id){
-    var el=document.getElementById(id);
-    if(el){el.classList.add("hide");}
-  });
-}
 
-window.showPage=function(id){
-  basicHideAll();
-  document.getElementById("mainMenu").classList.add("hide");
-  document.getElementById("backBtn").classList.remove("hide");
-  document.getElementById(id).classList.remove("hide");
-};
-
-window.goHome=function(){
-  basicHideAll();
-  document.getElementById("mainMenu").classList.remove("hide");
-  document.getElementById("backBtn").classList.add("hide");
-};
-
-window.togglePassword=function(id){
-  var el=document.getElementById(id);
-  if(el){el.type = el.type==="password" ? "text" : "password";}
-};
-</script>
   <script type="module">
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
@@ -1279,7 +411,6 @@ import {
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  sendPasswordResetEmail,
   signOut
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
@@ -1288,13 +419,13 @@ import {
   collection,
   addDoc,
   getDocs,
-  getDoc,
+  doc,
   setDoc,
-  updateDoc,
-  deleteDoc,
-  doc
+  getDoc,
+  deleteDoc
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
+/* BLOCK 1 — FIREBASE CONFIG */
 const firebaseConfig = {
   apiKey: "AIzaSyAWj7dozNpK8ExbJ4fptOODj66i09lxb0s",
   authDomain: "nexoracapitalcommunity.firebaseapp.com",
@@ -1309,65 +440,49 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-let currentAdminRole = "";
-let currentAdminEmail = "";
+/* BLOCK 2 — GLOBAL STATE */
 let currentMember = null;
-let currentClient = null;
-let currentStudent = null;
-let currentTeacher = null;
 let currentTeam = null;
-let adminFilter = "All";
-let currentMCQText = "";
 
+/* BLOCK 3 — BASIC HELPERS */
 function now(){
   return new Date().toLocaleString();
 }
 
+function hide(id){
+  const el = document.getElementById(id);
+  if(el){ el.classList.add("hide"); }
+}
+
+function show(id){
+  const el = document.getElementById(id);
+  if(el){ el.classList.remove("hide"); }
+}
+
 function clearFields(ids){
-  ids.forEach(function(id){
+  ids.forEach(id=>{
     const el = document.getElementById(id);
     if(el){ el.value = ""; }
   });
 }
 
-function setText(id,text){
-  const el = document.getElementById(id);
-  if(el){ el.innerText = text; }
-}
-
-function setHTML(id,html){
-  const el = document.getElementById(id);
-  if(el){ el.innerHTML = html; }
-}
-
-function updateBadge(id,count){
-  const el = document.getElementById(id);
-  if(!el) return;
-
-  if(count>0){
-    el.style.display="inline-block";
-    el.innerText=count;
-  }else{
-    el.style.display="none";
-    el.innerText="";
+window.togglePassword=function(id){
+  const el=document.getElementById(id);
+  if(el){
+    el.type = el.type==="password" ? "text" : "password";
   }
-}
+};
 
-function hide(id){
-  const el=document.getElementById(id);
-  if(el){el.classList.add("hide");}
-}
-
-function show(id){
-  const el=document.getElementById(id);
-  if(el){el.classList.remove("hide");}
-}
-
+/* BLOCK 4 — NAVIGATION */
 function hideAllPages(){
   [
-    "adminLoginPage","adminDashboard","memberPage","clientPage",
-    "walletPage","studentPage","teacherPage","teamPage",
-    "marketplacePage","classesPage","smartTestPage","supportPage"
+    "ceoLoginPage",
+    "ceoDashboard",
+    "memberPage",
+    "clientPage",
+    "studentPage",
+    "teacherPage",
+    "teamPage"
   ].forEach(hide);
 }
 
@@ -1376,22 +491,6 @@ window.showPage=function(id){
   hide("mainMenu");
   show("backBtn");
   show(id);
-
-  if(id==="marketplacePage" && typeof loadMarketplace==="function"){
-    loadMarketplace();
-  }
-
-  if(id==="classesPage" && typeof loadCourses==="function"){
-    loadCourses();
-  }
-
-  if(id==="smartTestPage" && typeof window.loadMCQs==="function"){
-    window.loadMCQs();
-  }
-
-  if(id==="supportPage" && typeof loadWebsiteControls==="function"){
-    loadWebsiteControls();
-  }
 };
 
 window.goHome=function(){
@@ -1400,1551 +499,245 @@ window.goHome=function(){
   hide("backBtn");
 };
 
-window.togglePassword=function(id){
-  const el=document.getElementById(id);
-  if(!el) return;
-  el.type = el.type==="password" ? "text" : "password";
+/* BLOCK 5 — CEO / ADMIN */
+window.ceoLogin=async function(){
+  const email=document.getElementById("ceoEmail").value.trim();
+  const secret=document.getElementById("ceoSecret").value.trim();
+
+  if(email==="smartustad0@gmail.com" && secret==="NX-CEO-786"){
+    hide("ceoLoginPage");
+    show("ceoDashboard");
+
+    document.getElementById("ceoWelcome").innerText=
+    "Logged in as CEO: "+email;
+
+    clearFields(["ceoEmail","ceoSecret"]);
+
+    await loadMembers();
+    await loadTeamMembers();
+
+    document.getElementById("ceoLoginMsg").innerText="";
+  }else{
+    document.getElementById("ceoLoginMsg").innerText="Access denied ❌";
+  }
 };
 
-window.showAdminSection=function(id){
-  [
-    "adminClientRequests","adminSellerRequests","adminStudentRequests",
-    "adminTeacherInterests","adminTeacherProfiles","adminTeamMembers",
-    "adminAssignWork","adminMembers","adminDailyTasks","adminAnnouncements",
-    "adminMessages","adminWallet","adminInvestment","adminMarketplace",
-    "adminMCQ","adminCourses","adminRoles","adminControls","adminLogs"
-  ].forEach(hide);
-
+window.showCeoBox=function(id){
+  ["ceoMembersBox","ceoTeamBox","ceoAnnouncementBox"].forEach(hide);
   show(id);
 };
 
-window.setAdminFilter=function(status){
-  adminFilter=status;
-  loadAdminAll();
-};
-
-function matchFilter(status){
-  return adminFilter==="All" || status===adminFilter;
-}
-
-async function logActivity(action,details){
-  await addDoc(collection(db,"activityLogs"),{
-    action:action,
-    details:details,
-    by:currentAdminEmail || "system",
-    createdAt:now()
-  });
-}
-
-async function createUserDoc(uid,role,name,email){
-  await setDoc(doc(db,"users",uid),{
-    uid:uid,
-    role:role,
-    name:name,
-    email:email,
-    points:0,
-    wallet:0,
-    createdAt:now()
-  });
-}
-
-async function createAuthAccount(role,name,email,password){
-  const userCredential = await createUserWithEmailAndPassword(auth,email,password);
-  await createUserDoc(userCredential.user.uid,role,name,email);
-  return userCredential.user;
-}
-
-async function loginAuth(email,password){
-  const userCredential = await signInWithEmailAndPassword(auth,email,password);
-  return userCredential.user;
-}
-
-async function getUserData(uid){
-  const snap = await getDoc(doc(db,"users",uid));
-  return snap.exists() ? snap.data() : null;
-}
-
-window.logoutUser=async function(){
-  await signOut(auth);
-  alert("Logged out ✅");
-  location.reload();
-};
-
-/* ADMIN LOGIN */
-
-window.adminLogin=async function(){
-  const email=document.getElementById("adminEmail").value.trim();
-  const secret=document.getElementById("adminSecret").value.trim();
-
-  const allowed=[
-    {email:"smartustad0@gmail.com",secret:"NX-CEO-786",role:"CEO"}
-  ];
-
-  const roleSnap=await getDocs(collection(db,"adminRoles"));
-  roleSnap.forEach(function(item){
-    allowed.push(item.data());
-  });
-
-  const found=allowed.find(function(x){
-    return x.email===email && x.secret===secret;
-  });
-
-  if(!found){
-    alert("Access Denied ❌");
-    return;
-  }
-
-  currentAdminRole=found.role;
-  currentAdminEmail=found.email;
-
-  hide("adminLoginPage");
-  show("adminDashboard");
-
-  clearFields(["adminEmail","adminSecret"]);
-  setText("adminRoleInfo","Logged in as: "+found.role+" | "+found.email);
-
-  await logActivity("Admin Login","Role: "+found.role+" Email: "+found.email);
-  loadAdminAll();
-
-  alert("Login successful ✅");
-};
-
-async function loadAdminAll(){
-  loadClientRequests();
-  loadSellerRequests();
-  loadStudentRequests();
-  loadTeacherInterests();
-  loadTeacherProfiles();
-  loadTeamMembers();
-  loadMembers();
-  loadDailyTasksAdmin();
-  loadAnnouncements();
-  loadMessagesAdmin();
-  loadWalletAdmin();
-  loadInvestmentAdmin();
-  loadMarketplace();
-  loadMCQAdmin();
-  loadCoursesAdmin();
-  loadRoles();
-  loadAssignedWorkAdmin();
-  loadLogs();
-}
-
-/* MEMBER AUTH */
-
-window.createMemberAccount=async function(){
-  try{
-    const name=document.getElementById("memberName").value;
-    const email=document.getElementById("memberEmail").value;
-    const password=document.getElementById("memberPassword").value;
-
-    if(!name || !email || !password){
-      alert("Fill all fields");
-      return;
-    }
-
-    const user=await createAuthAccount("member",name,email,password);
-    currentMember=user;
-
-    hide("memberAuthBox");
-    show("memberDashboard");
-    setText("memberWelcome","Welcome "+name);
-    setText("memberWalletBalance","0");
-    setText("memberPoints","0");
-
-    clearFields(["memberName","memberEmail","memberPassword"]);
-
-    await logActivity("Member Created",email);
-    loadMemberDashboard();
-
-    alert("Member account created ✅");
-  }catch(e){
-    alert(e.message);
-  }
-};
-
-window.memberLogin=async function(){
-  try{
-    const email=document.getElementById("memberLoginEmail").value;
-    const password=document.getElementById("memberLoginPassword").value;
-
-    const user=await loginAuth(email,password);
-    currentMember=user;
-
-    const data=await getUserData(user.uid);
-
-    hide("memberAuthBox");
-    show("memberDashboard");
-
-    setText("memberWelcome","Welcome "+(data.name||email));
-    setText("memberWalletBalance",data.wallet||0);
-    setText("memberPoints",data.points||0);
-
-    clearFields(["memberLoginEmail","memberLoginPassword"]);
-
-    loadMemberDashboard();
-
-    alert("Login successful ✅");
-  }catch(e){
-    alert(e.message);
-  }
-};
-
-async function loadMemberDashboard(){
-  loadMessagesFor("member","memberMessages","memberMsgBadge");
-  loadDailyTasksMember();
-  loadInvestmentMember();
-}
-
-/* CLIENT AUTH */
-
-window.createClientAccount=async function(){
-  try{
-    const name=document.getElementById("clientName").value;
-    const email=document.getElementById("clientEmail").value;
-    const password=document.getElementById("clientPassword").value;
-
-    if(!name || !email || !password){
-      alert("Fill all fields");
-      return;
-    }
-
-    const user=await createAuthAccount("client",name,email,password);
-    currentClient=user;
-
-    hide("clientAuthBox");
-    show("clientDashboard");
-
-    setText("clientWelcome","Welcome "+name);
-    setText("clientWalletBalance","0");
-
-    clearFields(["clientName","clientEmail","clientPassword"]);
-
-    loadClientDashboard();
-
-    alert("Client account created ✅");
-  }catch(e){
-    alert(e.message);
-  }
-};
-
-window.clientLogin=async function(){
-  try{
-    const email=document.getElementById("clientLoginEmail").value;
-    const password=document.getElementById("clientLoginPassword").value;
-
-    const user=await loginAuth(email,password);
-    currentClient=user;
-    const data=await getUserData(user.uid);
-
-    hide("clientAuthBox");
-    show("clientDashboard");
-
-    setText("clientWelcome","Welcome "+(data.name||email));
-    setText("clientWalletBalance",data.wallet||0);
-
-    clearFields(["clientLoginEmail","clientLoginPassword"]);
-
-    loadClientDashboard();
-
-    alert("Login successful ✅");
-  }catch(e){
-    alert(e.message);
-  }
-};
-
-async function loadClientDashboard(){
-  loadClientRequestHistory();
-  loadMessagesFor("client","clientMessages","clientMsgBadge");
-}
-
-    /* STUDENT AUTH */
-
-window.createStudentAccount=async function(){
-  try{
-    const name=document.getElementById("studentName").value;
-    const email=document.getElementById("studentEmail").value;
-    const password=document.getElementById("studentPassword").value;
-
-    if(!name || !email || !password){
-      alert("Fill all fields");
-      return;
-    }
-
-    const user=await createAuthAccount("student",name,email,password);
-    currentStudent=user;
-
-    hide("studentAuthBox");
-    show("studentDashboard");
-
-    setText("studentWelcome","Welcome "+name);
-
-    clearFields(["studentName","studentEmail","studentPassword"]);
-
-    loadStudentDashboard();
-
-    alert("Student account created ✅");
-  }catch(e){
-    alert(e.message);
-  }
-};
-
-window.studentLogin=async function(){
-  try{
-    const email=document.getElementById("studentLoginEmail").value;
-    const password=document.getElementById("studentLoginPassword").value;
-
-    const user=await loginAuth(email,password);
-    currentStudent=user;
-    const data=await getUserData(user.uid);
-
-    hide("studentAuthBox");
-    show("studentDashboard");
-
-    setText("studentWelcome","Welcome "+(data.name||email));
-
-    clearFields(["studentLoginEmail","studentLoginPassword"]);
-
-    loadStudentDashboard();
-
-    alert("Login successful ✅");
-  }catch(e){
-    alert(e.message);
-  }
-};
-
-async function loadStudentDashboard(){
-  loadStudentHistory();
-  loadMessagesFor("student","studentMessages","studentMsgBadge");
-}
-
-/* TEACHER AUTH */
-
-window.createTeacherAccount=async function(){
-  try{
-    const name=document.getElementById("teacherName").value;
-    const email=document.getElementById("teacherEmail").value;
-    const password=document.getElementById("teacherPassword").value;
-
-    if(!name || !email || !password){
-      alert("Fill all fields");
-      return;
-    }
-
-    const user=await createAuthAccount("teacher",name,email,password);
-    currentTeacher=user;
-
-    await setDoc(doc(db,"teacherProfiles",user.uid),{
-      uid:user.uid,
-      name:name,
-      email:email,
-      whatsapp:document.getElementById("teacherWhatsApp").value,
-      subjects:document.getElementById("teacherSubjects").value,
-      experience:document.getElementById("teacherExperience").value,
-      status:"Pending",
-      createdAt:now()
-    });
-
-    hide("teacherAuthBox");
-    show("teacherDashboard");
-
-    setText("teacherWelcome","Welcome "+name);
-
-    clearFields([
-      "teacherName","teacherEmail","teacherPassword",
-      "teacherWhatsApp","teacherSubjects","teacherExperience"
-    ]);
-
-    loadTeacherDashboard();
-
-    alert("Teacher account created ✅");
-  }catch(e){
-    alert(e.message);
-  }
-};
-
-window.teacherLogin=async function(){
-  try{
-    const email=document.getElementById("teacherLoginEmail").value;
-    const password=document.getElementById("teacherLoginPassword").value;
-
-    const user=await loginAuth(email,password);
-    currentTeacher=user;
-    const data=await getUserData(user.uid);
-
-    hide("teacherAuthBox");
-    show("teacherDashboard");
-
-    setText("teacherWelcome","Welcome "+(data.name||email));
-
-    clearFields(["teacherLoginEmail","teacherLoginPassword"]);
-
-    loadTeacherDashboard();
-
-    alert("Login successful ✅");
-  }catch(e){
-    alert(e.message);
-  }
-};
-
-async function loadTeacherDashboard(){
-  loadStudentRequestsForTeacher();
-  loadMessagesFor("teacher","teacherMessages","teacherMsgBadge");
-}
-
-/* TEAM LOGIN */
-
-window.teamLogin=async function(){
-  const email=document.getElementById("teamEmail").value.trim();
-  const secret=document.getElementById("teamSecret").value.trim();
-
-  const snap=await getDocs(collection(db,"teamMembers"));
-  let found=null;
-
-  snap.forEach(function(item){
-    const d=item.data();
-    if(d.email===email && d.secret===secret){
-      found=d;
-    }
-  });
-
-  if(!found){
-    alert("Invalid team login ❌");
-    return;
-  }
-
-  currentTeam=found;
-
-  hide("teamAuthBox");
-  show("teamDashboard");
-
-  setText("teamWelcome","Welcome "+found.name);
-  setText("teamWalletBalance",found.wallet||0);
-
-  clearFields(["teamEmail","teamSecret"]);
-
-  loadTeamWork(found.email);
-  loadMessagesFor("team","teamMessages","teamMsgBadge");
-
-  alert("Team login successful ✅");
-};
-
-/* ADMIN ROLE + TEAM */
-
-window.addAdminRole=async function(){
-  await addDoc(collection(db,"adminRoles"),{
-    email:document.getElementById("roleEmail").value,
-    secret:document.getElementById("roleSecret").value,
-    role:document.getElementById("roleType").value,
-    status:"Active",
-    createdAt:now()
-  });
-
-  clearFields(["roleEmail","roleSecret"]);
-  setText("roleMsg","Admin role added ✅");
-
-  loadRoles();
-};
-
-async function loadRoles(){
-  const snap=await getDocs(collection(db,"adminRoles"));
+async function loadMembers(){
+  const snap=await getDocs(collection(db,"users"));
   let html="";
 
-  snap.forEach(function(item){
+  snap.forEach(item=>{
     const d=item.data();
-    html+=`
+    if(d.role==="member"){
+      html+=`
       <div class="card">
-        <h3>${d.email||""}</h3>
-        <p>${d.role||""}</p>
-        <p>${d.status||"Active"}</p>
-        <button class="red" onclick="deleteDocById('adminRoles','${item.id}')">Remove</button>
-      </div>
-    `;
+        <h3>${d.name||""}</h3>
+        <p>${d.email||""}</p>
+        <p>Points: ${d.points||0}</p>
+        <p>Wallet: ${d.wallet||0}</p>
+      </div>`;
+    }
   });
 
-  setHTML("adminRoleList",html||"No admin roles");
+  document.getElementById("membersList").innerHTML=html||"No members yet.";
 }
 
-window.addTeamMember=async function(){
+window.createTeamMember=async function(){
+  const name=document.getElementById("teamName").value.trim();
+  const email=document.getElementById("teamEmailCreate").value.trim();
+  const secret=document.getElementById("teamSecretCreate").value.trim();
+
+  if(!name || !email || !secret){
+    document.getElementById("teamCreateMsg").innerText="Fill all fields ❌";
+    return;
+  }
+
   await addDoc(collection(db,"teamMembers"),{
-    name:document.getElementById("newTeamName").value,
-    email:document.getElementById("newTeamEmail").value,
-    secret:document.getElementById("newTeamSecret").value,
-    wallet:0,
-    points:0,
+    name:name,
+    email:email,
+    secret:secret,
     status:"Active",
     createdAt:now()
   });
 
-  clearFields(["newTeamName","newTeamEmail","newTeamSecret"]);
-  setText("teamCreateMsg","Team member added ✅");
+  clearFields(["teamName","teamEmailCreate","teamSecretCreate"]);
+  document.getElementById("teamCreateMsg").innerText="Team member added ✅";
 
-  loadTeamMembers();
+  await loadTeamMembers();
 };
 
 async function loadTeamMembers(){
   const snap=await getDocs(collection(db,"teamMembers"));
   let html="";
 
-  snap.forEach(function(item){
+  snap.forEach(item=>{
     const d=item.data();
+
     html+=`
-      <div class="card">
-        <h3>${d.name||""}</h3>
-        <p>${d.email||""}</p>
-        <p>Status: ${d.status||"Active"}</p>
-        <p>Wallet: ${d.wallet||0}</p>
-        <button class="red" onclick="deleteDocById('teamMembers','${item.id}')">Remove</button>
-      </div>
-    `;
+    <div class="card">
+      <h3>${d.name||""}</h3>
+      <p>${d.email||""}</p>
+      <p>Status: ${d.status||"Active"}</p>
+      <button class="red" onclick="deleteTeamMember('${item.id}')">
+        Remove
+      </button>
+    </div>`;
   });
 
-  setHTML("adminTeamList",html||"No team members");
+  document.getElementById("teamList").innerHTML=html||"No team members yet.";
 }
 
-window.assignTeamWork=async function(){
-  await addDoc(collection(db,"teamWork"),{
-    teamEmail:document.getElementById("workTeamEmail").value,
-    title:document.getElementById("workTitle").value,
-    details:document.getElementById("workDetails").value,
-    deadline:document.getElementById("workDeadline").value,
-    points:Number(document.getElementById("workPoints").value||0),
-    status:"Assigned",
-    createdAt:now()
-  });
+window.deleteTeamMember=async function(id){
+  if(!confirm("Remove this team member?")) return;
 
-  clearFields(["workTeamEmail","workTitle","workDetails","workDeadline","workPoints"]);
-  setText("assignWorkMsg","Work assigned ✅");
-
-  loadAssignedWorkAdmin();
+  await deleteDoc(doc(db,"teamMembers",id));
+  await loadTeamMembers();
 };
 
-async function loadAssignedWorkAdmin(){
-  const snap=await getDocs(collection(db,"teamWork"));
-  let html="";
+window.saveAnnouncement=function(){
+  const txt=document.getElementById("announcementText").value.trim();
 
-  snap.forEach(function(item){
-    const d=item.data();
-    html+=`
-      <div class="card">
-        <h3>${d.title||""}</h3>
-        <p>Team: ${d.teamEmail||""}</p>
-        <p>${d.details||""}</p>
-        <p>Deadline: ${d.deadline||""}</p>
-        <p>Status: ${d.status||""}</p>
-      </div>
-    `;
-  });
+  if(!txt){
+    document.getElementById("announcementMsg").innerText="Write announcement first ❌";
+    return;
+  }
 
-  setHTML("assignedWorkAdminList",html||"No assigned work");
-}
+  document.querySelector(".ticker span").innerText=txt;
+  document.getElementById("announcementText").value="";
+  document.getElementById("announcementMsg").innerText="Announcement updated ✅";
+};
 
-async function loadTeamWork(email){
-  const snap=await getDocs(collection(db,"teamWork"));
-  let html="";
+/* BLOCK 6 — MEMBER */
+window.showMemberBox=function(id){
+  ["memberCreateBox","memberLoginBox"].forEach(hide);
+  show(id);
+};
 
-  snap.forEach(function(item){
-    const d=item.data();
-    if(d.teamEmail===email){
-      html+=`
-        <div class="card">
-          <h3>${d.title||""}</h3>
-          <p>${d.details||""}</p>
-          <p>Deadline: ${d.deadline||""}</p>
-          <p>Points: ${d.points||0}</p>
-          <p><span class="status">${d.status||""}</span></p>
-          <button class="green" onclick="updateTeamWork('${item.id}','Accepted')">Accept</button>
-          <button class="red" onclick="updateTeamWork('${item.id}','Rejected')">Reject</button>
-          <button class="blue" onclick="updateTeamWork('${item.id}','Completed')">Complete</button>
-        </div>
-      `;
+window.createMemberAccount=async function(){
+  try{
+    const name=document.getElementById("memberName").value.trim();
+    const email=document.getElementById("memberEmail").value.trim();
+    const password=document.getElementById("memberPassword").value;
+
+    if(!name || !email || !password){
+      document.getElementById("memberCreateMsg").innerText="Fill all fields ❌";
+      return;
     }
-  });
 
-  setHTML("teamWorkList",html||"No assigned work");
-}
+    const userCredential=await createUserWithEmailAndPassword(auth,email,password);
+    const user=userCredential.user;
 
-window.updateTeamWork=async function(id,status){
-  await updateDoc(doc(db,"teamWork",id),{status:status});
-  alert("Work updated ✅");
-  if(currentTeam){ loadTeamWork(currentTeam.email); }
+    await setDoc(doc(db,"users",user.uid),{
+      uid:user.uid,
+      role:"member",
+      name:name,
+      email:email,
+      points:0,
+      wallet:0,
+      createdAt:now()
+    });
+
+    currentMember=user;
+
+    hide("memberAuthMenu");
+    show("memberDashboard");
+
+    document.getElementById("memberWelcome").innerText="Welcome "+name;
+    document.getElementById("memberPoints").innerText="0";
+    document.getElementById("memberWallet").innerText="0";
+
+    clearFields(["memberName","memberEmail","memberPassword"]);
+    document.getElementById("memberCreateMsg").innerText="";
+
+    alert("Member account created ✅");
+  }catch(e){
+    document.getElementById("memberCreateMsg").innerText=e.message;
+  }
 };
 
-/* REQUESTS */
+window.memberLogin=async function(){
+  try{
+    const email=document.getElementById("memberLoginEmail").value.trim();
+    const password=document.getElementById("memberLoginPassword").value;
 
-window.submitClientRequest=async function(){
-  if(!currentClient){ alert("Login first"); return; }
-
-  await addDoc(collection(db,"clientRequests"),{
-    uid:currentClient.uid,
-    email:currentClient.email,
-    service:document.getElementById("clientService").value,
-    mobile:document.getElementById("clientMobile").value,
-    details:document.getElementById("clientDetails").value,
-    status:"Pending",
-    createdAt:now()
-  });
-
-  clearFields(["clientMobile","clientDetails"]);
-  setText("clientRequestMsg","Service request submitted ✅");
-  loadClientRequestHistory();
-};
-
-window.submitSellerRequest=async function(){
-  if(!currentClient){ alert("Login first"); return; }
-
-  await addDoc(collection(db,"sellerRequests"),{
-    uid:currentClient.uid,
-    sellerEmail:currentClient.email,
-    title:document.getElementById("sellerTitle").value,
-    price:document.getElementById("sellerPrice").value,
-    image:document.getElementById("sellerImage").value,
-    desc:document.getElementById("sellerDesc").value,
-    status:"Pending",
-    commission:"5%",
-    createdAt:now()
-  });
-
-  clearFields(["sellerTitle","sellerPrice","sellerImage","sellerDesc"]);
-  setText("sellerRequestMsg","Product submitted for review ✅");
-};
-
-window.submitStudentRequest=async function(){
-  if(!currentStudent){ alert("Login first"); return; }
-
-  await addDoc(collection(db,"studentRequests"),{
-    uid:currentStudent.uid,
-    studentEmail:currentStudent.email,
-    className:document.getElementById("studentClass").value,
-    subject:document.getElementById("studentSubject").value,
-    whatsapp:document.getElementById("studentWhatsApp").value,
-    mode:document.getElementById("studentMode").value,
-    details:document.getElementById("studentNeed").value,
-    status:"Pending",
-    createdAt:now()
-  });
-
-  clearFields(["studentSubject","studentWhatsApp","studentNeed"]);
-  setText("studentRequestMsg","Tuition request submitted ✅");
-  loadStudentHistory();
-};
-
-async function loadClientRequestHistory(){
-  if(!currentClient) return;
-  const snap=await getDocs(collection(db,"clientRequests"));
-  let html="";
-
-  snap.forEach(function(item){
-    const d=item.data();
-    if(d.uid===currentClient.uid){
-      html+=`
-        <div class="card">
-          <h3>${d.service||""}</h3>
-          <p>${d.details||""}</p>
-          <p><span class="status">${d.status||"Pending"}</span></p>
-        </div>
-      `;
+    if(!email || !password){
+      document.getElementById("memberLoginMsg").innerText="Enter email and password ❌";
+      return;
     }
-  });
 
-  setHTML("clientRequestHistory",html||"No requests");
-}
+    const userCredential=await signInWithEmailAndPassword(auth,email,password);
+    const user=userCredential.user;
+    currentMember=user;
 
-async function loadStudentHistory(){
-  if(!currentStudent) return;
-  const snap=await getDocs(collection(db,"studentRequests"));
-  let html="";
+    const snap=await getDoc(doc(db,"users",user.uid));
+    const d=snap.exists()?snap.data():{name:email,points:0,wallet:0};
 
-  snap.forEach(function(item){
-    const d=item.data();
-    if(d.uid===currentStudent.uid){
-      html+=`
-        <div class="card">
-          <h3>${d.className||""} - ${d.subject||""}</h3>
-          <p>${d.details||""}</p>
-          <p><span class="status">${d.status||"Pending"}</span></p>
-        </div>
-      `;
-    }
-  });
+    hide("memberAuthMenu");
+    show("memberDashboard");
 
-  setHTML("studentRequestHistory",html||"No requests");
-}
+    document.getElementById("memberWelcome").innerText="Welcome "+(d.name||email);
+    document.getElementById("memberPoints").innerText=d.points||0;
+    document.getElementById("memberWallet").innerText=d.wallet||0;
 
-async function loadStudentRequestsForTeacher(){
-  const snap=await getDocs(collection(db,"studentRequests"));
-  let html="";
+    clearFields(["memberLoginEmail","memberLoginPassword"]);
+    document.getElementById("memberLoginMsg").innerText="";
 
-  snap.forEach(function(item){
-    const d=item.data();
-    html+=`
-      <div class="card">
-        <h3>${d.className||""} - ${d.subject||""}</h3>
-        <p>Student: ${d.studentEmail||""}</p>
-        <p>WhatsApp: ${d.whatsapp||""}</p>
-        <p>${d.details||""}</p>
-        <button class="green" onclick="teacherAcceptStudent('${item.id}','${d.studentEmail||""}','${d.subject||""}')">Accept Interest</button>
-      </div>
-    `;
-  });
-
-  setHTML("teacherStudentRequests",html||"No student requests");
-}
-
-window.teacherAcceptStudent=async function(requestId,studentEmail,subject){
-  if(!currentTeacher){ alert("Login first"); return; }
-
-  const profile=await getDoc(doc(db,"teacherProfiles",currentTeacher.uid));
-  const p=profile.exists()?profile.data():{};
-
-  await addDoc(collection(db,"teacherInterests"),{
-    teacherUid:currentTeacher.uid,
-    teacherEmail:currentTeacher.email,
-    teacherName:p.name||"",
-    teacherWhatsApp:p.whatsapp||"",
-    studentRequestId:requestId,
-    studentEmail:studentEmail,
-    subject:subject,
-    status:"Pending",
-    createdAt:now()
-  });
-
-  alert("Interest sent to CEO/Admin ✅");
+    alert("Login successful ✅");
+  }catch(e){
+    document.getElementById("memberLoginMsg").innerText=e.message;
+  }
 };
 
-/* ADMIN LOADERS */
+/* BLOCK 7 — TEAM */
+window.teamLogin=async function(){
+  const email=document.getElementById("teamLoginEmail").value.trim();
+  const secret=document.getElementById("teamLoginSecret").value.trim();
 
-async function loadClientRequests(){
-  const snap=await getDocs(collection(db,"clientRequests"));
-  let html="", pending=0;
+  if(!email || !secret){
+    document.getElementById("teamLoginMsg").innerText="Enter email and secret ❌";
+    return;
+  }
 
-  snap.forEach(function(item){
-    const d=item.data();
-    if(d.status==="Pending") pending++;
-    if(!matchFilter(d.status||"Pending")) return;
-
-    html+=`
-      <div class="card">
-        <h3>${d.service||""}</h3>
-        <p>${d.email||""}</p>
-        <p>${d.mobile||""}</p>
-        <p>${d.details||""}</p>
-        <p><span class="status">${d.status||"Pending"}</span></p>
-        <button class="green" onclick="updateStatus('clientRequests','${item.id}','Accepted')">Accept</button>
-        <button class="red" onclick="updateStatus('clientRequests','${item.id}','Rejected')">Reject</button>
-        <button class="dark" onclick="deleteDocById('clientRequests','${item.id}')">Delete</button>
-      </div>
-    `;
-  });
-
-  updateBadge("clientReqBadge",pending);
-  setHTML("adminClientRequestList",html||"No client requests");
-}
-
-async function loadSellerRequests(){
-  const snap=await getDocs(collection(db,"sellerRequests"));
-  let html="", pending=0;
-
-  snap.forEach(function(item){
-    const d=item.data();
-    if(d.status==="Pending") pending++;
-    if(!matchFilter(d.status||"Pending")) return;
-
-    html+=`
-      <div class="card">
-        ${d.image?`<img class="product-img" src="${d.image}">`:""}
-        <h3>${d.title||""}</h3>
-        <p>${d.price||""}</p>
-        <p>${d.desc||""}</p>
-        <p>Seller: ${d.sellerEmail||""}</p>
-        <p>Commission: 5%</p>
-        <p><span class="status">${d.status||"Pending"}</span></p>
-        <button class="green" onclick="approveSellerRequest('${item.id}')">Approve & List</button>
-        <button class="red" onclick="updateStatus('sellerRequests','${item.id}','Rejected')">Reject</button>
-      </div>
-    `;
-  });
-
-  updateBadge("sellerReqBadge",pending);
-  setHTML("adminSellerRequestList",html||"No seller requests");
-}
-
-window.approveSellerRequest=async function(id){
-  const ref=doc(db,"sellerRequests",id);
-  const snap=await getDoc(ref);
-  const d=snap.data();
-
-  await addDoc(collection(db,"marketItems"),{
-    title:d.title,
-    price:d.price,
-    image:d.image,
-    desc:d.desc,
-    sellerEmail:d.sellerEmail,
-    commission:"5%",
-    status:"Live",
-    createdAt:now()
-  });
-
-  await updateDoc(ref,{status:"Accepted"});
-  alert("Product listed ✅");
-  loadAdminAll();
-};
-
-async function loadStudentRequests(){
-  const snap=await getDocs(collection(db,"studentRequests"));
-  let html="", pending=0;
-
-  snap.forEach(function(item){
-    const d=item.data();
-    if(d.status==="Pending") pending++;
-    if(!matchFilter(d.status||"Pending")) return;
-
-    html+=`
-      <div class="card">
-        <h3>${d.className||""} - ${d.subject||""}</h3>
-        <p>Student: ${d.studentEmail||""}</p>
-        <p>WhatsApp: ${d.whatsapp||""}</p>
-        <p>${d.details||""}</p>
-        <p><span class="status">${d.status||"Pending"}</span></p>
-        <button class="green" onclick="updateStatus('studentRequests','${item.id}','Accepted')">Accept</button>
-        <button class="red" onclick="updateStatus('studentRequests','${item.id}','Rejected')">Reject</button>
-      </div>
-    `;
-  });
-
-  updateBadge("studentReqBadge",pending);
-  setHTML("adminStudentRequestList",html||"No student requests");
-}
-
-async function loadTeacherInterests(){
-  const snap=await getDocs(collection(db,"teacherInterests"));
-  let html="", pending=0;
-
-  snap.forEach(function(item){
-    const d=item.data();
-    if(d.status==="Pending") pending++;
-    if(!matchFilter(d.status||"Pending")) return;
-
-    html+=`
-      <div class="card">
-        <h3>${d.teacherName||""}</h3>
-        <p>Teacher: ${d.teacherEmail||""}</p>
-        <p>Teacher WhatsApp: ${d.teacherWhatsApp||""}</p>
-        <p>Student: ${d.studentEmail||""}</p>
-        <p>Subject: ${d.subject||""}</p>
-        <p><span class="status">${d.status||"Pending"}</span></p>
-        <button class="green" onclick="updateStatus('teacherInterests','${item.id}','Accepted')">Accept</button>
-        <button class="red" onclick="updateStatus('teacherInterests','${item.id}','Rejected')">Reject</button>
-      </div>
-    `;
-  });
-
-  updateBadge("teacherInterestBadge",pending);
-  setHTML("adminTeacherInterestList",html||"No teacher interests");
-}
-
-async function loadTeacherProfiles(){
-  const snap=await getDocs(collection(db,"teacherProfiles"));
-  let html="";
-
-  snap.forEach(function(item){
-    const d=item.data();
-    html+=`
-      <div class="card">
-        <h3>${d.name||""}</h3>
-        <p>${d.email||""}</p>
-        <p>WhatsApp: ${d.whatsapp||""}</p>
-        <p>Subjects: ${d.subjects||""}</p>
-        <p>Experience: ${d.experience||""}</p>
-        <p><span class="status">${d.status||"Pending"}</span></p>
-        <button class="green" onclick="updateStatus('teacherProfiles','${item.id}','Accepted')">Accept</button>
-        <button class="red" onclick="updateStatus('teacherProfiles','${item.id}','Rejected')">Reject</button>
-      </div>
-    `;
-  });
-
-  setHTML("adminTeacherProfileList",html||"No teacher profiles");
-  async function loadMembers(){
-  const snap=await getDocs(collection(db,"users"));
-  let html="";
-
-  snap.forEach(function(item){
-    const d=item.data();
-    html+=`
-      <div class="card">
-        <h3>${d.name||""}</h3>
-        <p>${d.email||""}</p>
-        <p>Role: ${d.role||""}</p>
-        <p>Wallet: ${d.wallet||0}</p>
-        <p>Points: ${d.points||0}</p>
-      </div>
-    `;
-  });
-
-  setHTML("adminMemberList",html||"No users");
-}
-
-window.updateStatus=async function(collectionName,id,status){
-  await updateDoc(doc(db,collectionName,id),{status:status});
-  alert("Status updated ✅");
-  loadAdminAll();
-};
-
-window.deleteDocById=async function(collectionName,id){
-  if(!confirm("Delete this item?")) return;
-  await deleteDoc(doc(db,collectionName,id));
-  alert("Deleted ✅");
-  loadAdminAll();
-};
-
-/* TASKS */
-
-window.addDailyTask=async function(){
-  await addDoc(collection(db,"dailyTasks"),{
-    type:document.getElementById("taskType").value,
-    title:document.getElementById("taskTitle").value,
-    link:document.getElementById("taskLink").value,
-    code:document.getElementById("taskCode").value,
-    points:Number(document.getElementById("taskPoints").value||0),
-    createdAt:now()
-  });
-
-  clearFields(["taskTitle","taskLink","taskCode","taskPoints"]);
-  setText("taskMsg","Task added ✅");
-  loadDailyTasksAdmin();
-};
-
-async function loadDailyTasksAdmin(){
-  const snap=await getDocs(collection(db,"dailyTasks"));
-  let html="";
-
-  snap.forEach(function(item){
-    const d=item.data();
-    html+=`
-      <div class="card">
-        <h3>${d.title||""}</h3>
-        <p>${d.type||""}</p>
-        <p>Code: ${d.code||""}</p>
-        <p>Points: ${d.points||0}</p>
-        <button class="red" onclick="deleteDocById('dailyTasks','${item.id}')">Delete</button>
-      </div>
-    `;
-  });
-
-  setHTML("adminTaskList",html||"No tasks");
-}
-
-async function loadDailyTasksMember(){
-  const snap=await getDocs(collection(db,"dailyTasks"));
-  let html="";
-
-  snap.forEach(function(item){
-    const d=item.data();
-    html+=`
-      <div class="card">
-        <h3>${d.title||""}</h3>
-        <p>${d.type||""}</p>
-        <p>${d.points||0} Points</p>
-        <a href="${d.link||"#"}" target="_blank">Open Task</a>
-      </div>
-    `;
-  });
-
-  setHTML("memberTaskList",html||"No daily tasks");
-}
-
-window.submitTaskCode=async function(){
-  if(!currentMember){alert("Login first");return;}
-
-  const code=document.getElementById("memberTaskCode").value.trim();
-  const snap=await getDocs(collection(db,"dailyTasks"));
+  const snap=await getDocs(collection(db,"teamMembers"));
   let found=null;
 
-  snap.forEach(function(item){
+  snap.forEach(item=>{
     const d=item.data();
-    if(d.code===code){found=d;}
+    if(d.email===email && d.secret===secret && d.status==="Active"){
+      found=d;
+    }
   });
 
   if(!found){
-    setText("taskCodeMsg","Wrong code ❌");
+    document.getElementById("teamLoginMsg").innerText="Invalid team login ❌";
     return;
   }
 
-  const userRef=doc(db,"users",currentMember.uid);
-  const userSnap=await getDoc(userRef);
-  const oldPoints=Number(userSnap.data().points||0);
-  const newPoints=oldPoints+Number(found.points||0);
+  currentTeam=found;
 
-  await updateDoc(userRef,{points:newPoints});
-  setText("memberPoints",newPoints);
-  setText("taskCodeMsg","Points added ✅");
-  clearFields(["memberTaskCode"]);
+  hide("teamLoginBox");
+  show("teamDashboard");
+
+  document.getElementById("teamWelcome").innerText="Welcome "+found.name;
+  clearFields(["teamLoginEmail","teamLoginSecret"]);
+  document.getElementById("teamLoginMsg").innerText="";
 };
 
-/* ANNOUNCEMENTS */
+/* BLOCK 8 — LOGOUT */
+window.logoutLocal=async function(){
+  try{
+    await signOut(auth);
+  }catch(e){}
 
-window.addAnnouncement=async function(){
-  await addDoc(collection(db,"announcements"),{
-    text:document.getElementById("announcementText").value,
-    createdAt:now()
-  });
-
-  clearFields(["announcementText"]);
-  setText("announcementMsg","Announcement added ✅");
-  loadAnnouncements();
+  location.reload();
 };
 
-async function loadAnnouncements(){
-  const snap=await getDocs(collection(db,"announcements"));
-  let html="";
-  let ticker="Welcome to Nexora Community";
+</script>
 
-  snap.forEach(function(item){
-    const d=item.data();
-    ticker+=" | "+(d.text||"");
-    html+=`
-      <div class="card">
-        <p>${d.text||""}</p>
-        <button class="red" onclick="deleteDocById('announcements','${item.id}')">Delete</button>
-      </div>
-    `;
-  });
-
-  setText("newsText",ticker);
-  setHTML("adminAnnouncementList",html||"No announcements");
-}
-
-/* MESSAGES */
-
-window.sendMessage=async function(){
-  await addDoc(collection(db,"messages"),{
-    target:document.getElementById("messageTarget").value,
-    to:document.getElementById("messageTo").value,
-    text:document.getElementById("messageText").value,
-    read:false,
-    createdAt:now()
-  });
-
-  clearFields(["messageTo","messageText"]);
-  setText("messageMsg","Message sent ✅");
-  loadMessagesAdmin();
-};
-
-async function loadMessagesFor(target,boxId,badgeId){
-  const snap=await getDocs(collection(db,"messages"));
-  let html="";
-  let unread=0;
-
-  snap.forEach(function(item){
-    const d=item.data();
-    if(d.target===target || d.target==="all"){
-      if(!d.read) unread++;
-      html+=`
-        <div class="card">
-          <p>${d.text||""}</p>
-          <p class="small">${d.createdAt||""}</p>
-          <button class="green" onclick="markMessageRead('${item.id}','${target}','${boxId}','${badgeId}')">Mark Read</button>
-        </div>
-      `;
-    }
-  });
-
-  updateBadge(badgeId,unread);
-  setHTML(boxId,html||"No messages");
-}
-
-window.markMessageRead=async function(id,target,boxId,badgeId){
-  await updateDoc(doc(db,"messages",id),{read:true});
-  loadMessagesFor(target,boxId,badgeId);
-};
-
-async function loadMessagesAdmin(){
-  const snap=await getDocs(collection(db,"messages"));
-  let html="";
-
-  snap.forEach(function(item){
-    const d=item.data();
-    html+=`
-      <div class="card">
-        <p><b>${d.target||""}</b> ${d.to||""}</p>
-        <p>${d.text||""}</p>
-        <p class="small">${d.createdAt||""}</p>
-      </div>
-    `;
-  });
-
-  setHTML("adminMessageHistory",html||"No messages");
-}
-
-/* WALLET */
-
-window.manualWalletUpdate=async function(){
-  const email=document.getElementById("walletUserEmail").value;
-  const amount=Number(document.getElementById("walletAmount").value||0);
-  const action=document.getElementById("walletAction").value;
-
-  const snap=await getDocs(collection(db,"users"));
-  let targetId=null;
-  let oldWallet=0;
-
-  snap.forEach(function(item){
-    const d=item.data();
-    if(d.email===email){
-      targetId=item.id;
-      oldWallet=Number(d.wallet||0);
-    }
-  });
-
-  if(!targetId){alert("User not found");return;}
-
-  const newWallet=action==="Add" ? oldWallet+amount : oldWallet-amount;
-  await updateDoc(doc(db,"users",targetId),{wallet:newWallet});
-
-  await addDoc(collection(db,"transactions"),{
-    email:email,
-    amount:amount,
-    action:action,
-    status:"Approved",
-    createdAt:now()
-  });
-
-  clearFields(["walletUserEmail","walletAmount"]);
-  setText("walletAdminMsg","Wallet updated ✅");
-  loadWalletAdmin();
-};
-
-window.submitDepositRequest=async function(){
-  await addDoc(collection(db,"walletRequests"),{
-    type:"Deposit",
-    amount:document.getElementById("depositAmount").value,
-    method:document.getElementById("depositMethod").value,
-    status:"Pending",
-    createdAt:now()
-  });
-
-  clearFields(["depositAmount","depositMethod"]);
-  setText("depositMsg","Deposit request sent ✅");
-};
-
-window.submitWithdrawRequest=async function(){
-  await addDoc(collection(db,"walletRequests"),{
-    type:"Withdraw",
-    amount:document.getElementById("withdrawAmount").value,
-    method:document.getElementById("withdrawMethod").value,
-    status:"Pending",
-    createdAt:now()
-  });
-
-  clearFields(["withdrawAmount","withdrawMethod"]);
-  setText("withdrawMsg","Withdraw request sent ✅");
-};
-
-async function loadWalletAdmin(){
-  const req=await getDocs(collection(db,"walletRequests"));
-  let html="";
-
-  req.forEach(function(item){
-    const d=item.data();
-    html+=`
-      <div class="card">
-        <h3>${d.type||""}</h3>
-        <p>${d.amount||""}</p>
-        <p>${d.method||""}</p>
-        <p>${d.status||"Pending"}</p>
-        <button class="green" onclick="updateStatus('walletRequests','${item.id}','Accepted')">Accept</button>
-        <button class="red" onclick="updateStatus('walletRequests','${item.id}','Rejected')">Reject</button>
-      </div>
-    `;
-  });
-
-  setHTML("adminWithdrawList",html||"No wallet requests");
-
-  const tx=await getDocs(collection(db,"transactions"));
-  let txHtml="";
-
-  tx.forEach(function(item){
-    const d=item.data();
-    txHtml+=`
-      <div class="card">
-        <p>${d.email||""}</p>
-        <p>${d.action||""}: ${d.amount||""}</p>
-        <p>${d.createdAt||""}</p>
-      </div>
-    `;
-  });
-
-  setHTML("adminTransactionList",txHtml||"No transactions");
-}
-
-/* INVESTMENT */
-
-window.addInvestmentPlan=async function(){
-  await addDoc(collection(db,"investmentPlans"),{
-    type:document.getElementById("investmentType").value,
-    title:document.getElementById("investmentTitle").value,
-    amount:document.getElementById("investmentAmount").value,
-    duration:document.getElementById("investmentDuration").value,
-    note:document.getElementById("investmentNote").value,
-    desc:document.getElementById("investmentDesc").value,
-    status:"Active",
-    createdAt:now()
-  });
-
-  clearFields(["investmentTitle","investmentAmount","investmentDuration","investmentNote","investmentDesc"]);
-  setText("investmentMsg","Investment plan added ✅");
-  loadInvestmentAdmin();
-};
-
-async function loadInvestmentAdmin(){
-  const snap=await getDocs(collection(db,"investmentPlans"));
-  let html="";
-
-  snap.forEach(function(item){
-    const d=item.data();
-    html+=`
-      <div class="card">
-        <h3>${d.title||""}</h3>
-        <p>${d.type||""}</p>
-        <p>${d.amount||""}</p>
-        <p>${d.duration||""}</p>
-        <p>${d.note||""}</p>
-        <button class="red" onclick="deleteDocById('investmentPlans','${item.id}')">Delete</button>
-      </div>
-    `;
-  });
-
-  setHTML("adminInvestmentList",html||"No investment plans");
-}
-
-async function loadInvestmentMember(){
-  const snap=await getDocs(collection(db,"investmentPlans"));
-  let html="";
-
-  snap.forEach(function(item){
-    const d=item.data();
-    html+=`
-      <div class="card">
-        <h3>${d.title||""}</h3>
-        <p>${d.type||""}</p>
-        <p>${d.amount||""}</p>
-        <p>${d.duration||""}</p>
-        <p>${d.note||""}</p>
-        <button onclick="alert('Coming Soon - Admin approval required')">Activate</button>
-      </div>
-    `;
-  });
-
-  setHTML("memberInvestmentList",html||"No investment plans");
-}
-
-/* MARKETPLACE */
-
-window.addMarketplaceItem=async function(){
-  await addDoc(collection(db,"marketItems"),{
-    title:document.getElementById("marketTitle").value,
-    category:document.getElementById("marketCategory").value,
-    price:document.getElementById("marketPrice").value,
-    image:document.getElementById("marketImage").value,
-    desc:document.getElementById("marketDesc").value,
-    sellerEmail:"Admin",
-    status:"Live",
-    createdAt:now()
-  });
-
-  clearFields(["marketTitle","marketCategory","marketPrice","marketImage","marketDesc"]);
-  setText("marketMsg","Marketplace item added ✅");
-  loadMarketplace();
-};
-
-async function loadMarketplace(){
-  const snap=await getDocs(collection(db,"marketItems"));
-  let html="";
-  let adminHtml="";
-
-  snap.forEach(function(item){
-    const d=item.data();
-    html+=`
-      <div class="card">
-        ${d.image?`<img class="product-img" src="${d.image}">`:""}
-        <h3>${d.title||""}</h3>
-        <p>${d.price||""}</p>
-        <p>${d.desc||""}</p>
-        <button class="green" onclick="buyerRequest('${d.title||""}')">Buy / Request</button>
-      </div>
-    `;
-
-    adminHtml+=`
-      <div class="card">
-        <h3>${d.title||""}</h3>
-        <p>${d.price||""}</p>
-        <button class="red" onclick="deleteDocById('marketItems','${item.id}')">Delete</button>
-      </div>
-    `;
-  });
-
-  setHTML("marketplaceList",html||"No items");
-  setHTML("adminMarketList",adminHtml||"No items");
-}
-
-window.buyerRequest=async function(product){
-  await addDoc(collection(db,"buyerRequests"),{
-    product:product,
-    status:"Pending",
-    createdAt:now()
-  });
-
-  alert("Buyer request sent ✅");
-};
-
-window.searchMarketplace=function(){
-  const q=document.getElementById("marketSearch").value.toLowerCase();
-
-  document.querySelectorAll("#marketplaceList .card").forEach(function(card){
-    card.style.display=card.innerText.toLowerCase().includes(q)?"block":"none";
-  });
-};
-
-/* COURSES */
-
-window.addLecture=async function(){
-  await addDoc(collection(db,"lectures"),{
-    className:document.getElementById("courseClass").value,
-    subject:document.getElementById("courseSubject").value,
-    chapter:document.getElementById("courseChapter").value,
-    title:document.getElementById("lectureTitle").value,
-    link:document.getElementById("lectureLink").value,
-    createdAt:now()
-  });
-
-  clearFields(["courseSubject","courseChapter","lectureTitle","lectureLink"]);
-  setText("lectureMsg","Lecture added ✅");
-  loadCoursesAdmin();
-};
-
-async function loadCoursesAdmin(){
-  const snap=await getDocs(collection(db,"lectures"));
-  let html="";
-
-  snap.forEach(function(item){
-    const d=item.data();
-    html+=`
-      <div class="card">
-        <h3>${d.className||""} - ${d.subject||""}</h3>
-        <p>${d.chapter||""}</p>
-        <a href="${d.link||"#"}" target="_blank">${d.title||"Lecture"}</a>
-        <br>
-        <button class="red" onclick="deleteDocById('lectures','${item.id}')">Delete</button>
-      </div>
-    `;
-  });
-
-  setHTML("adminLectureList",html||"No lectures");
-}
-
-async function loadCourses(){
-  const snap=await getDocs(collection(db,"lectures"));
-  const filter=document.getElementById("classFilter").value;
-  let html="";
-
-  snap.forEach(function(item){
-    const d=item.data();
-    if(filter && d.className!==filter) return;
-
-    html+=`
-      <div class="card">
-        <h3>${d.className||""} - ${d.subject||""}</h3>
-        <p>${d.chapter||""}</p>
-        <a href="${d.link||"#"}" target="_blank">${d.title||"Lecture"}</a>
-      </div>
-    `;
-  });
-
-  setHTML("courseList",html||"No lectures");
-}
-
-/* MCQ */
-
-window.addMCQ=async function(){
-  await addDoc(collection(db,"mcqs"),{
-    subject:document.getElementById("mcqSubject").value,
-    question:document.getElementById("mcqQuestion").value,
-    A:document.getElementById("mcqA").value,
-    B:document.getElementById("mcqB").value,
-    C:document.getElementById("mcqC").value,
-    D:document.getElementById("mcqD").value,
-    correct:document.getElementById("mcqCorrect").value,
-    createdAt:now()
-  });
-
-  clearFields(["mcqSubject","mcqQuestion","mcqA","mcqB","mcqC","mcqD"]);
-  setText("mcqMsg","MCQ added ✅");
-  loadMCQAdmin();
-};
-
-async function loadMCQAdmin(){
-  const snap=await getDocs(collection(db,"mcqs"));
-  let html="";
-  let subjects=[];
-
-  snap.forEach(function(item){
-    const d=item.data();
-    subjects.push(d.subject);
-
-    html+=`
-      <div class="card">
-        <h3>${d.subject||""}</h3>
-        <p>${d.question||""}</p>
-        <p>Correct: ${d.correct||""}</p>
-        <button class="red" onclick="deleteDocById('mcqs','${item.id}')">Delete</button>
-      </div>
-    `;
-  });
-
-  setHTML("adminMCQList",html||"No MCQs");
-
-  const unique=[...new Set(subjects.filter(Boolean))];
-  setHTML("mcqSubjectFilter","<option value=''>All Subjects</option>"+unique.map(function(s){return `<option>${s}</option>`;}).join(""));
-}
-
-window.loadMCQs=async function(){
-  const snap=await getDocs(collection(db,"mcqs"));
-  const filter=document.getElementById("mcqSubjectFilter").value;
-  let html="";
-  let count=0;
-
-  snap.forEach(function(item){
-    const d=item.data();
-    if(filter && d.subject!==filter) return;
-
-    count++;
-    currentMCQText = d.question+" Option A "+d.A+" Option B "+d.B+" Option C "+d.C+" Option D "+d.D;
-
-    html+=`
-      <div class="card">
-        <h3>${count}. ${d.question||""}</h3>
-        <button class="option" onclick="checkAnswer(this,'A','${d.correct}')">A. ${d.A||""}</button>
-        <button class="option" onclick="checkAnswer(this,'B','${d.correct}')">B. ${d.B||""}</button>
-        <button class="option" onclick="checkAnswer(this,'C','${d.correct}')">C. ${d.C||""}</button>
-        <button class="option" onclick="checkAnswer(this,'D','${d.correct}')">D. ${d.D||""}</button>
-      </div>
-    `;
-  });
-
-  setHTML("mcqList",html||"No MCQs");
-};
-
-window.checkAnswer=function(btn,selected,correct){
-  if(selected===correct){
-    btn.style.background="#16a34a";
-    btn.style.color="white";
-    setText("mcqScore",Number(document.getElementById("mcqScore").innerText||0)+1);
-  }else{
-    btn.style.background="#dc2626";
-    btn.style.color="white";
-    alert("Correct answer: "+correct);
-  }
-};
-
-window.speakCurrentMCQ=function(){
-  if(!currentMCQText){
-    alert("Load MCQs first");
-    return;
-  }
-
-  const utter=new SpeechSynthesisUtterance(currentMCQText);
-  utter.lang="en-US";
-  utter.rate=0.9;
-  speechSynthesis.speak(utter);
-};
-
-/* CONTROLS + SUPPORT */
-
-window.saveWebsiteControls=async function(){
-  const data={
-    logo:document.getElementById("logoInput").value,
-    news:document.getElementById("newsInput").value,
-    supportEmail:document.getElementById("supportEmailInput").value,
-    whatsapp:document.getElementById("whatsappInput").value,
-    updatedAt:now()
-  };
-
-  await setDoc(doc(db,"settings","website"),data);
-
-  if(data.logo){
-    document.getElementById("siteLogo").src=data.logo;
-    document.getElementById("siteLogo").style.display="block";
-  }
-
-  if(data.news){
-    setText("newsText",data.news);
-  }
-
-  setText("controlMsg","Controls saved ✅");
-};
-
-async function loadWebsiteControls(){
-  const snap=await getDoc(doc(db,"settings","website"));
-  if(!snap.exists()) return;
-
-  const d=snap.data();
-  if(d.supportEmail){ setText("supportEmailText",d.supportEmail); }
-  if(d.news){ setText("newsText",d.news); }
-  if(d.logo){
-    document.getElementById("siteLogo").src=d.logo;
-    document.getElementById("siteLogo").style.display="block";
-  }
-}
-
-window.openWhatsAppChannel=function(){
-  window.open("https://whatsapp.com/channel/0029VbCqlqjA2pL5hxFGvp0a","_blank");
-};
-
-window.askBot=function(){
-  const q=document.getElementById("botQuestion").value.toLowerCase();
-  let reply="Please contact support for detailed help.";
-
-  if(q.includes("login") || q.includes("password")){
-    reply="Use registered email/password. If forgotten, use support or reset option.";
-  }else if(q.includes("wallet")){
-    reply="Wallet shows balance. Deposit/withdraw requests require admin approval.";
-  }else if(q.includes("points") || q.includes("task")){
-    reply="Complete daily tasks and submit the secret task code to earn points.";
-  }else if(q.includes("market")){
-    reply="Use Marketplace to buy/request products. Sellers submit products through Client Portal.";
-  }else if(q.includes("teacher")){
-    reply="Teachers create account, then accept student requests. Admin reviews interests.";
-  }else if(q.includes("student")){
-    reply="Students create account and submit tuition requests with subject and WhatsApp.";
-  }
-
-  setHTML("botReply","<p>"+reply+"</p>");
-};
-
-/* LOGS */
-
-async function loadLogs(){
-  const snap=await getDocs(collection(db,"activityLogs"));
-  let html="";
-
-  snap.forEach(function(item){
-    const d=item.data();
-    html+=`
-      <div class="card">
-        <h3>${d.action||""}</h3>
-        <p>${d.details||""}</p>
-        <p>${d.by||""}</p>
-        <p>${d.createdAt||""}</p>
-      </div>
-    `;
-  });
-
-  setHTML("adminLogList",html||"No logs");
-}
-
-/* INIT */
-
-loadWebsiteControls();
-
-  </script>
 </body>
 </html>

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+y <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -1030,7 +1030,8 @@ import {
   getAuth,
   GoogleAuthProvider,
   signInWithPopup,
-  signOut
+  signOut,
+onAuthStateChanged
 } 
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
@@ -1075,6 +1076,25 @@ window.logoutGoogle = async function(){
 
 };
 
+    onAuthStateChanged(auth,function(user){
+
+  const logoutBtn=document.getElementById("logoutBtn");
+
+  if(user){
+
+    if(logoutBtn){
+      logoutBtn.classList.remove("hide");
+    }
+
+  }else{
+
+    if(logoutBtn){
+      logoutBtn.classList.add("hide");
+    }
+
+  }
+
+});
     window.requireGoogleLogin = async function(pageId){
 
   try{

@@ -386,6 +386,15 @@ onclick="requireGoogleLogin('communityPage')">
 
   </button>
 
+<button id="logoutBtn"
+class="red hide"
+onclick="logoutGoogle()">
+
+Logout
+
+</button>
+
+</div>
   </div>
   <!-- CEO PAGE -->
 
@@ -1049,8 +1058,21 @@ window.loginWithGoogle = async function(){
 };
 
 window.logoutGoogle = async function(){
+
   await signOut(auth);
+
   alert("Logged out ✅");
+
+  goHome();
+
+  const logoutBtn=document.getElementById("logoutBtn");
+
+  if(logoutBtn){
+
+    logoutBtn.classList.add("hide");
+
+  }
+
 };
 
     window.requireGoogleLogin = async function(pageId){
@@ -1062,6 +1084,14 @@ window.logoutGoogle = async function(){
     alert("Login Success ✅ " + result.user.email);
 
     showPage(pageId);
+
+    const logoutBtn=document.getElementById("logoutBtn");
+
+    if(logoutBtn){
+
+      logoutBtn.classList.remove("hide");
+
+    }
 
   }catch(error){
 

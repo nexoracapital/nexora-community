@@ -589,28 +589,50 @@ window.ceoLogin=async function(){
 };
 
 window.showCeoBox=function(id){
-  ["ceoMembersBox","ceoTeamBox","ceoAnnouncementBox"].forEach(hide);
+  [
+    "ceoMembersBox",
+    "ceoTeamBox",
+    "ceoAnnouncementBox",
+    "ceoTasksBox"
+  ].forEach(hide);
+
   show(id);
 };
-
 async function loadMembers(){
   const snap=await getDocs(collection(db,"users"));
-  let html="";
+  let rows="";
+  let count=0;
 
   snap.forEach(item=>{
     const d=item.data();
+
     if(d.role==="member"){
-      html+=`
-      <div class="card">
-        <h3>${d.name||""}</h3>
-        <p>${d.email||""}</p>
-        <p>Points: ${d.points||0}</p>
-        <p>Wallet: ${d.wallet||0}</p>
-      </div>`;
+      count++;
+
+      rows+=`
+        <tr>
+          <td>${count}</td>
+          <td>${d.name||""}</td>
+          <td>${d.email||""}</td>
+          <td>${d.points||0}</td>
+          <td>${d.wallet||0}</td>
+        </tr>
+      `;
     }
   });
 
-  document.getElementById("membersList").innerHTML=html||"No members yet.";
+  document.getElementById("membersList").innerHTML = rows ? `
+    <table border="1" width="100%" cellpadding="8" style="border-collapse:collapse">
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Points</th>
+        <th>Wallet</th>
+      </tr>
+      ${rows}
+    </table>
+  ` : "No members yet.";
 }
 
 window.createTeamMember=async function(){
@@ -922,12 +944,21 @@ window.submitMemberTaskCode=async function(){
   const ref=doc(db,"users",currentMember.uid);
   const userSnap=await getDoc(ref);
   const oldPoints=Number(userSnap.data().points||0);
+  const userData=userSnap.data();
+const completedTasks=userData.completedTasks || [];
+
+if(completedTasks.includes(entered)){
+  document.getElementById("memberTaskMsg").innerText=
+  "You already completed this task ✅";
+  return;
+}
   const newPoints=oldPoints+Number(found.points||0);
 
   await setDoc(ref,{
-    ...userSnap.data(),
-    points:newPoints
-  });
+  ...userSnap.data(),
+  points:newPoints,
+  completedTasks:[...completedTasks, entered]
+});
 
   document.getElementById("memberPoints").innerText=newPoints;
   document.getElementById("memberTaskCode").value="";

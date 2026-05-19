@@ -378,6 +378,21 @@ onclick="requireGoogleLogin('communityPage')">
 
 <div style="margin:16px">
 
+  <div id="userInfoBox" class="hide"
+style="
+background:white;
+padding:12px;
+border-radius:12px;
+margin-bottom:12px;
+box-shadow:0 2px 8px rgba(0,0,0,0.08);
+font-size:14px;
+font-weight:bold;
+">
+
+Logged in as:
+<span id="userEmailText"></span>
+
+  </div>
   <button id="backBtn"
   class="dark hide"
   onclick="goHome()">
@@ -395,7 +410,10 @@ Logout
 </button>
 
 </div>
-  </div>
+  <div id="userInfoBox" class="card hide">
+  <b>Logged in:</b>
+  <span id="userEmailText"></span>
+</div>
   <!-- CEO PAGE -->
 
 <div id="ceoPage" class="card hide">
@@ -1091,7 +1109,11 @@ window.logoutGoogle = async function(){
     if(logoutBtn){
       logoutBtn.classList.add("hide");
     }
+const userInfoBox=document.getElementById("userInfoBox");
 
+if(userInfoBox){
+  userInfoBox.classList.add("hide");
+    }
   }
 
 });
@@ -1105,6 +1127,16 @@ window.logoutGoogle = async function(){
 
     showPage(pageId);
 
+    const userInfoBox=document.getElementById("userInfoBox");
+const userEmailText=document.getElementById("userEmailText");
+
+if(userInfoBox && userEmailText){
+
+  userEmailText.innerText=result.user.email;
+
+  userInfoBox.classList.remove("hide");
+
+  }
     const logoutBtn=document.getElementById("logoutBtn");
 
     if(logoutBtn){

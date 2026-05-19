@@ -855,7 +855,7 @@ window.teamLogin=async function(){
 window.createDailyTask=async function(){
   const title=document.getElementById("ceoTaskTitle").value.trim();
   const link=document.getElementById("ceoTaskLink").value.trim();
-  const code=document.getElementById("ceoTaskCode").value.trim();
+  const code=document.getElementById("ceoTaskCode").value.trim().toLowerCase();
   const points=Number(document.getElementById("ceoTaskPoints").value||0);
 
   if(!title || !code || !points){
@@ -891,7 +891,7 @@ async function loadDailyTasks(){
         <h3>${d.title||""}</h3>
         <p>Code: ${d.code||""}</p>
         <p>Points: ${d.points||0}</p>
-        ${d.link?`<a href="${d.link}" target="_blank">Open Link</a>`:""}
+        ${d.link ? `<a href="${d.link}" target="_blank">Open Link</a>` : ""}
         <br><br>
         <button class="red" onclick="deleteDailyTask('${item.id}')">Delete</button>
       </div>
@@ -901,25 +901,25 @@ async function loadDailyTasks(){
       <div class="card">
         <h3>${d.title||""}</h3>
         <p>Reward: ${d.points||0} Points</p>
-        ${d.link?`<a href="${d.link}" target="_blank">Open Task</a>`:""}
+        ${d.link ? `<a href="${d.link}" target="_blank">Open Task</a>` : ""}
       </div>
     `;
   });
 
   const ceoBox=document.getElementById("ceoTasksList");
-  if(ceoBox){ceoBox.innerHTML=ceoHtml||"No tasks yet.";}
+  if(ceoBox){ ceoBox.innerHTML=ceoHtml || "No tasks yet."; }
 
   const memberBox=document.getElementById("memberTasksList");
-  if(memberBox){memberBox.innerHTML=memberHtml||"No tasks yet.";}
+  if(memberBox){ memberBox.innerHTML=memberHtml || "No tasks yet."; }
 }
 
 window.deleteDailyTask=async function(id){
   if(!confirm("Delete this task?")) return;
+
   await deleteDoc(doc(db,"dailyTasks",id));
   await loadDailyTasks();
 };
 
-window.submitMemberTaskCode=async function(){
 window.submitMemberTaskCode=async function(){
   if(!currentMember){
     document.getElementById("memberTaskMsg").innerText="Login required ❌";
@@ -927,6 +927,11 @@ window.submitMemberTaskCode=async function(){
   }
 
   const entered=document.getElementById("memberTaskCode").value.trim().toLowerCase();
+
+  if(!entered){
+    document.getElementById("memberTaskMsg").innerText="Enter code first ❌";
+    return;
+  }
 
   const snap=await getDocs(collection(db,"dailyTasks"));
   let found=null;
@@ -947,8 +952,13 @@ window.submitMemberTaskCode=async function(){
 
   const ref=doc(db,"users",currentMember.uid);
   const userSnap=await getDoc(ref);
-  const userData=userSnap.data();
 
+  if(!userSnap.exists()){
+    document.getElementById("memberTaskMsg").innerText="User not found ❌";
+    return;
+  }
+
+  const userData=userSnap.data();
   const completedTasks=userData.completedTasks || [];
 
   if(completedTasks.includes(entered)){

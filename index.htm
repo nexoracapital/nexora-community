@@ -232,7 +232,7 @@ footer{
       </p>
       
       <button
-onclick="requireGoogleLogin('communityPage')">
+onclick="requireGoogleLogin('communityPage','community')">
 
         Login with Google
 
@@ -254,7 +254,7 @@ onclick="requireGoogleLogin('communityPage')">
       </p>
 
       <button
-      onclick="requireGoogleLogin('clientPage')">
+      onclick="requireGoogleLogin('clientPage','client')">
 
         Login with Google
 
@@ -276,7 +276,7 @@ onclick="requireGoogleLogin('communityPage')">
       </p>
 
       <button
-      onclick="requireGoogleLogin('studentPage')">
+      onclick="requireGoogleLogin('studentPage','student')">
 
         Login with Google
 
@@ -298,7 +298,7 @@ onclick="requireGoogleLogin('communityPage')">
       </p>
 
       <button
-      onclick="requireGoogleLogin('teacherPage')">
+      onclick="requireGoogleLogin('teacherPage','teacher')">
         Login with Google
 
       </button>
@@ -341,7 +341,7 @@ onclick="requireGoogleLogin('communityPage')">
       </p>
 
       <button
-      onclick="requireGoogleLogin('marketplacePage')">
+      onclick="requireGoogleLogin('marketplacePage','marketplace')">
         Login with Google
 
       </button>
@@ -1117,8 +1117,7 @@ if(userInfoBox){
   }
 
 });
-    window.requireGoogleLogin = async function(pageId){
-
+    window.requireGoogleLogin = async function(pageId,userRole){
   try{
 
     const result = await signInWithPopup(auth, googleProvider);
@@ -1127,6 +1126,7 @@ if(userInfoBox){
 
     showPage(pageId);
 
+    localStorage.setItem("nexoraUserRole",userRole);
     const userInfoBox=document.getElementById("userInfoBox");
 const userEmailText=document.getElementById("userEmailText");
 

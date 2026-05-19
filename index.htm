@@ -194,7 +194,33 @@ footer{
       <h3>🌐 Members</h3>
       <button onclick="showCeoBox('ceoMembersBox')">Open</button>
     </div>
+<div class="card">
+  <h3>📋 Daily Tasks</h3>
+  <button onclick="showCeoBox('ceoTasksBox')">
+    Open
+  </button>
+</div>
 
+<div class="card">
+  <h3>💰 Wallet Control</h3>
+  <button onclick="showCeoBox('ceoWalletBox')">
+    Open
+  </button>
+</div>
+
+<div class="card">
+  <h3>📩 Messages</h3>
+  <button onclick="showCeoBox('ceoMessagesBox')">
+    Open
+  </button>
+</div>
+
+<div class="card">
+  <h3>🛒 Marketplace</h3>
+  <button onclick="showCeoBox('ceoMarketplaceBox')">
+    Open
+  </button>
+</div>
     <div class="card">
       <h3>👥 Team Members</h3>
       <button onclick="showCeoBox('ceoTeamBox')">Open</button>
@@ -296,7 +322,13 @@ footer{
       <button class="dark" onclick="memberLogin()">
         Login
       </button>
+<button type="button"
+class="blue"
+onclick="resetMemberPassword()">
 
+  Forgot Password
+
+</button>
       <p id="memberLoginMsg"></p>
     </div>
 
@@ -322,7 +354,22 @@ footer{
       </div>
 
     </div>
+<div class="card">
+  <h3>📋 Daily Tasks</h3>
 
+  <div id="memberTasks">
+
+    <div class="card">
+      <h3>🌐 Visit Website</h3>
+      <p>Reward: 10 Points</p>
+
+      <button class="blue" onclick="completeTask(10)">
+        Complete Task
+      </button>
+    </div>
+
+  </div>
+</div>
     <div class="card">
       <h3>📩 Messages</h3>
       <div id="memberMessages">
@@ -411,7 +458,8 @@ import {
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  signOut
+  signOut,
+sendPasswordResetEmail
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 import {
@@ -622,6 +670,11 @@ window.createMemberAccount=async function(){
   try{
     const name=document.getElementById("memberName").value.trim();
     const email=document.getElementById("memberEmail").value.trim();
+    if(!email.includes("@") || !email.includes(".")){
+  document.getElementById("memberCreateMsg").innerText=
+  "Enter real email ❌";
+  return;
+    }
     const password=document.getElementById("memberPassword").value;
 
     if(!name || !email || !password){
@@ -692,7 +745,34 @@ window.memberLogin=async function(){
     document.getElementById("memberLoginMsg").innerText=e.message;
   }
 };
+/* BLOCK 6B — PASSWORD RESET */
 
+window.resetMemberPassword = async function(){
+
+  try{
+
+    const email =
+    document.getElementById("memberLoginEmail").value.trim();
+
+    if(!email){
+      document.getElementById("memberLoginMsg").innerText =
+      "Enter your email first ❌";
+      return;
+    }
+
+    await sendPasswordResetEmail(auth,email);
+
+    document.getElementById("memberLoginMsg").innerText =
+    "Password reset email sent ✅";
+
+  }catch(e){
+
+    document.getElementById("memberLoginMsg").innerText =
+    e.message;
+
+  }
+
+};
 /* BLOCK 7 — TEAM */
 window.teamLogin=async function(){
   const email=document.getElementById("teamLoginEmail").value.trim();

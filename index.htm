@@ -943,7 +943,7 @@ window.submitMemberTaskCode=async function(){
 
   const ref=doc(db,"users",currentMember.uid);
   const userSnap=await getDoc(ref);
-  const oldPoints=Number(userSnap.data().points||0);
+  const oldPoints=Number(userData.points||0);
   const userData=userSnap.data();
 const completedTasks=userData.completedTasks || [];
 
@@ -955,7 +955,7 @@ if(completedTasks.includes(entered)){
   const newPoints=oldPoints+Number(found.points||0);
 
   await setDoc(ref,{
-  ...userSnap.data(),
+  ...userData,
   points:newPoints,
   completedTasks:[...completedTasks, entered]
 });

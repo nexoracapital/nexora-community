@@ -594,7 +594,17 @@ Logout
   </h2>
 
   <div class="grid">
+<div class="card">
 
+  <h3>👤 My Profile</h3>
+
+  <button onclick="showProfileBox()">
+
+    Update Profile
+
+  </button>
+
+</div>
     <div class="card">
       <h3>📋 Daily Tasks</h3>
       <button>Open</button>
@@ -644,6 +654,29 @@ Logout
 
   </div>
 
+  <div id="profileBox" class="card hide">
+
+  <h3>👤 Update Profile</h3>
+
+  <input id="profileName" placeholder="Full Name">
+
+  <input id="profileMobile" placeholder="Mobile / WhatsApp">
+
+  <input id="profileCity" placeholder="City">
+
+  <input id="profilePayment" placeholder="Payment Method">
+
+  <input id="profileAccount" placeholder="Account Number">
+
+  <button class="green" onclick="saveProfile()">
+
+    Save Profile
+
+  </button>
+
+  <p id="profileMsg"></p>
+
+  </div>
   <!-- CLIENT PAGE -->
 
 <div id="clientPage" class="card hide">
@@ -1075,6 +1108,8 @@ from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
   getFirestore,
   doc,
   setDoc,
+  updateDoc,
+  getDoc,    
   collection,
   getDocs
 }
@@ -1238,6 +1273,51 @@ usersList.innerHTML += `
   });
 
   usersList.innerHTML=html;
+
+};
+    window.showProfileBox=function(){
+
+  const profileBox=document.getElementById("profileBox");
+
+  if(profileBox){
+    profileBox.classList.remove("hide");
+  }
+
+};
+
+window.saveProfile=async function(){
+
+  const user=auth.currentUser;
+
+  if(!user){
+    alert("Please login first");
+    return;
+  }
+
+  const name=document.getElementById("profileName").value.trim();
+  const mobile=document.getElementById("profileMobile").value.trim();
+  const city=document.getElementById("profileCity").value.trim();
+  const payment=document.getElementById("profilePayment").value.trim();
+  const account=document.getElementById("profileAccount").value.trim();
+
+  if(!name || !mobile || !city || !payment || !account){
+    document.getElementById("profileMsg").innerText=
+    "Please fill all profile fields ❌";
+    return;
+  }
+
+  await updateDoc(doc(db,"users",user.uid),{
+    name:name,
+    mobile:mobile,
+    city:city,
+    paymentMethod:payment,
+    accountNumber:account,
+    profileCompleted:true,
+    profileUpdatedAt:new Date().toLocaleString()
+  });
+
+  document.getElementById("profileMsg").innerText=
+  "Profile updated successfully ✅";
 
 };
   </script>

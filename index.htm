@@ -1363,26 +1363,35 @@ return;
 
 const userDoc = await getDoc(doc(db,"users",user.uid));
 
+if(!userDoc.exists()){
+  alert("Please update profile first ⚠️");
+  showProfileBox();
+  return;
+}
+
 const userData = userDoc.data();
 
 if(!userData.profileCompleted){
 
-alert("Please update profile first ⚠️");
+  alert("Please update profile first ⚠️");
 
-showProfileBox();
+  showProfileBox();
 
-return;
+  return;
 }
 
 const withdrawBox=document.getElementById("withdrawBox");
 
 if(withdrawBox){
 
-withdrawBox.classList.remove("hide");
+  withdrawBox.classList.remove("hide");
 
-}
+  withdrawBox.scrollIntoView({
+    behavior:"smooth",
+    block:"start"
+  });
 
-};
+    }
 
 window.submitWithdraw = async function(){
 

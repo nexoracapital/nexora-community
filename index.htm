@@ -632,7 +632,9 @@ Logout
 
     <div class="card">
       <h3>📤 Withdraw</h3>
-      <button>Open</button>
+      <button onclick="openWithdrawBox()">
+  Withdraw
+</button>
     </div>
 
     <div class="card">
@@ -678,7 +680,11 @@ Logout
 
 </select>
   <input id="profileAccount" placeholder="Account Number">
+<br><br>
 
+<button class="red" onclick="closeProfileBox()">
+  Cancel
+</button>
   <button class="green" onclick="saveProfile()">
 
     Save Profile
@@ -1330,7 +1336,7 @@ window.saveProfile=async function(){
 
   document.getElementById("profileMsg").innerText=
   "Profile updated successfully ✅";
-
+closeProfileBox();
 };
   </script>
   

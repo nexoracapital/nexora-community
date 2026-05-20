@@ -1420,6 +1420,31 @@ pendingBox.innerHTML = pendingHTML;
 completedBox.innerHTML = completedHTML;
 
 };
+    window.acceptWithdraw = async function(id){
+
+await updateDoc(
+doc(db,"withdrawRequests",id),
+{
+status:"accepted"
+}
+);
+
+loadWithdrawRequests();
+
+};
+
+window.rejectWithdraw = async function(id){
+
+await updateDoc(
+doc(db,"withdrawRequests",id),
+{
+status:"rejected"
+}
+);
+
+loadWithdrawRequests();
+
+};
     window.showProfileBox=function(){
 
   const profileBox=document.getElementById("profileBox");

@@ -657,6 +657,13 @@ Logout
     <div class="card">
       <h3>💰 Wallet</h3>
       <button>Open</button>
+      <p id="communityWalletText">
+  Wallet: Rs 0
+</p>
+
+<p id="communityPendingText">
+  Pending Withdraw: Rs 0
+</p>
     </div>
 
     <div class="card">
@@ -1505,7 +1512,25 @@ if(u.email === email){
 foundId = docItem.id;
 
 oldWallet = Number(u.wallet || 0);
+window.loadCommunityWallet = async function(){
 
+  const user=auth.currentUser;
+
+  if(!user){ return; }
+
+  const userDoc=await getDoc(doc(db,"users",user.uid));
+
+  if(!userDoc.exists()){ return; }
+
+  const data=userDoc.data();
+
+  const walletText=document.getElementById("communityWalletText");
+
+  if(walletText){
+    walletText.innerHTML="Wallet: Rs " + Number(data.wallet || 0);
+  }
+
+};
 }
 
 });
@@ -1655,7 +1680,8 @@ await setDoc(doc(db,"withdrawRequests",user.uid + "_" + Date.now()),{
 });
 document.getElementById("withdrawMsg").innerHTML =
 "Withdraw request submitted ✅";
-
+document.getElementById("communityPendingText").innerHTML =
+"Pending Withdraw: Rs " + amount;
 };
   </script>
   

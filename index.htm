@@ -694,6 +694,19 @@ Logout
   <p id="profileMsg"></p>
 
   </div>
+  <div id="withdrawBox" class="card hide">
+
+  <h3>💸 Withdraw Request</h3>
+
+  <input id="withdrawAmount" placeholder="Enter Amount">
+
+  <button class="green" onclick="submitWithdraw()">
+    Submit Withdraw
+  </button>
+
+  <p id="withdrawMsg"></p>
+
+  </div>
   <!-- CLIENT PAGE -->
 
 <div id="clientPage" class="card hide">
@@ -1337,6 +1350,64 @@ window.saveProfile=async function(){
   document.getElementById("profileMsg").innerText=
   "Profile updated successfully ✅";
 closeProfileBox();
+};
+    window.openWithdraw = async function(){
+
+const user = auth.currentUser;
+
+if(!user){
+alert("Please login first");
+return;
+}
+
+const userDoc = await getDoc(doc(db,"users",user.uid));
+
+const userData = userDoc.data();
+
+if(!userData.profileCompleted){
+
+alert("Please update profile first ⚠️");
+
+showProfileBox();
+
+return;
+}
+
+const withdrawBox=document.getElementById("withdrawBox");
+
+if(withdrawBox){
+
+withdrawBox.classList.remove("hide");
+
+}
+
+};
+
+window.submitWithdraw = async function(){
+
+const user = auth.currentUser;
+
+const amount =
+document.getElementById("withdrawAmount").value;
+
+const userDoc = await getDoc(doc(db,"users",user.uid));
+
+const userData = userDoc.data();
+
+const walletBalance = Number(userData.wallet || 0);
+
+if(Number(amount) > walletBalance){
+
+document.getElementById("withdrawMsg").innerHTML =
+"Insufficient wallet balance ❌";
+
+return;
+
+}
+
+document.getElementById("withdrawMsg").innerHTML =
+"Withdraw request submitted ✅";
+
 };
   </script>
   

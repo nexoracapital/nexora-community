@@ -656,7 +656,9 @@ Logout
 
     <div class="card">
       <h3>💰 Wallet</h3>
-      <button>Open</button>
+      <button onclick="openWalletPage()">
+  Open
+</button>
       <p id="communityWalletText">
   Wallet: Rs 0
 </p>
@@ -747,6 +749,21 @@ Logout
   </button>
 
   <p id="withdrawMsg"></p>
+
+  </div>
+  <div id="walletPage" class="card hide">
+
+  <h2>💰 My Wallet</h2>
+
+  <p id="walletPageBalance">Wallet Balance: Rs 0</p>
+  <p id="walletPagePending">Pending Withdraw: Rs 0</p>
+  <p id="walletPageReceived">Total Received: Rs 0</p>
+  <p id="walletPageWithdrawn">Total Withdrawn: Rs 0</p>
+
+  <h3>📜 Wallet History</h3>
+  <div id="walletHistoryList">
+    No history yet.
+  </div>
 
   </div>
   <!-- CLIENT PAGE -->
@@ -1134,7 +1151,8 @@ function hideAllPages(){
     "marketplacePage",
     "supportPage",
 "withdrawRequestsPage",
-"walletControlPage"
+"walletControlPage",
+    "walletPage"
   ].forEach(hide);
 
 }
@@ -1529,9 +1547,40 @@ window.loadCommunityWallet = async function(){
   if(walletText){
     walletText.innerHTML="Wallet: Rs " + Number(data.wallet || 0);
   }
+    const walletPagePending =
+document.getElementById("walletPagePending");
+
+if(walletPagePending){
+
+  walletPagePending.innerHTML =
+  "Pending Withdraw: Rs " +
+  Number(data.pendingWithdraw || 0);
+
+}
+
+const walletPageReceived =
+document.getElementById("walletPageReceived");
+
+if(walletPageReceived){
+
+  walletPageReceived.innerHTML =
+  "Total Received: Rs " +
+  Number(data.totalReceived || 0);
+
+}
+
+const walletPageWithdrawn =
+document.getElementById("walletPageWithdrawn");
+
+if(walletPageWithdrawn){
+
+  walletPageWithdrawn.innerHTML =
+  "Total Withdrawn: Rs " +
+  Number(data.totalWithdrawn || 0);
+
+}
 
 };
-}
 
 });
 
@@ -1557,6 +1606,13 @@ new Date().toLocaleString()
 document.getElementById("walletMsg")
 .innerHTML =
 "Wallet balance added successfully ✅";
+
+};
+    window.openWalletPage = async function(){
+
+  showPage("walletPage");
+
+  await loadCommunityWallet();
 
 };
     window.showProfileBox=function(){

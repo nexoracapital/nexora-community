@@ -445,6 +445,15 @@ Logout
     </div>
 
     <div class="card">
+
+  <h3>👥 Users List</h3>
+
+  <button onclick="loadUsers()">
+    Open
+  </button>
+
+    </div>
+    <div class="card">
       <h3>💰 Wallet Control</h3>
       <button>Open</button>
     </div>
@@ -508,6 +517,15 @@ Logout
 
 </div>
 
+  <div id="usersPage" class="card hide">
+
+  <h2 class="section-title">
+    👥 Registered Users
+  </h2>
+
+  <div id="usersList"></div>
+
+  </div>
 <!-- TEAM PAGE -->
 
 <div id="teamPage" class="card hide">
@@ -1166,6 +1184,60 @@ if(userInfoBox && userEmailText){
     alert(error.message);
 
   }
+
+};
+    window.loadUsers = async function(){
+
+  showPage("usersPage");
+
+  const usersList=document.getElementById("usersList");
+
+  usersList.innerHTML="Loading users...";
+const snapshot = await getDocs(collection(db,"users"));
+
+usersList.innerHTML = "";
+
+snapshot.forEach((docItem)=>{
+
+const user = docItem.data();
+
+usersList.innerHTML += `
+
+<div class="card">
+
+<h3>👤 ${user.name || "No Name"}</h3>
+
+<p>📧 ${user.email}</p>
+
+<p>🛡️ Role: ${user.role}</p>
+
+<p>🕒 Last Login: ${user.lastLogin}</p>
+
+</div>
+
+`;
+
+});
+  const querySnapshot=await getDocs(collection(db,"users"));
+
+  let html="";
+
+  querySnapshot.forEach((doc)=>{
+
+    const user=doc.data();
+
+    html += `
+      <div class="card">
+        <h3>${user.name || "No Name"}</h3>
+        <p>${user.email}</p>
+        <p>Role: ${user.role}</p>
+        <p>Last Login: ${user.lastLogin}</p>
+      </div>
+    `;
+
+  });
+
+  usersList.innerHTML=html;
 
 };
   </script>

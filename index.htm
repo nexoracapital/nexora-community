@@ -455,7 +455,9 @@ Logout
     </div>
     <div class="card">
       <h3>💰 Wallet Control</h3>
-      <button>Open</button>
+      <button onclick="showPage('walletControlPage')">
+  Open
+      </button>
     </div>
 
     <div class="card">
@@ -536,6 +538,26 @@ Logout
 
   <h3>Completed / Rejected Requests</h3>
   <div id="completedWithdrawList"></div>
+
+  </div>
+  <div id="walletControlPage" class="card hide">
+
+  <h2>💰 Wallet Control</h2>
+
+  <input id="walletUserEmail"
+  placeholder="User Email">
+
+  <input id="walletAmount"
+  placeholder="Amount">
+
+  <button class="green"
+  onclick="addWalletBalance()">
+
+    Add Balance
+
+  </button>
+
+  <p id="walletMsg"></p>
 
   </div>
 <!-- TEAM PAGE -->
@@ -1104,7 +1126,8 @@ function hideAllPages(){
     "smartTestPage",
     "marketplacePage",
     "supportPage",
-"withdrawRequestsPage"
+"withdrawRequestsPage",
+"walletControlPage"
   ].forEach(hide);
 
 }
@@ -1443,6 +1466,72 @@ status:"rejected"
 );
 
 loadWithdrawRequests();
+
+};
+    window.addWalletBalance = async function(){
+
+const email =
+document.getElementById("walletUserEmail")
+.value.trim();
+
+const amount =
+Number(
+document.getElementById("walletAmount")
+.value
+);
+
+if(!email || !amount){
+
+document.getElementById("walletMsg")
+.innerHTML =
+"Please enter email and amount ❌";
+
+return;
+
+}
+
+const usersSnap =
+await getDocs(collection(db,"users"));
+
+let foundId = null;
+let oldWallet = 0;
+
+usersSnap.forEach((docItem)=>{
+
+const u = docItem.data();
+
+if(u.email === email){
+
+foundId = docItem.id;
+
+oldWallet = Number(u.wallet || 0);
+
+}
+
+});
+
+if(!foundId){
+
+document.getElementById("walletMsg")
+.innerHTML =
+"User not found ❌";
+
+return;
+
+}
+
+await updateDoc(
+doc(db,"users",foundId),
+{
+wallet: oldWallet + amount,
+walletUpdatedAt:
+new Date().toLocaleString()
+}
+);
+
+document.getElementById("walletMsg")
+.innerHTML =
+"Wallet balance added successfully ✅";
 
 };
     window.showProfileBox=function(){

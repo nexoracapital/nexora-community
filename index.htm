@@ -460,9 +460,10 @@ Logout
 
     <div class="card">
       <h3>📤 Withdraw Requests</h3>
-      <button>Open</button>
+      <button onclick="loadWithdrawRequests()">
+  Open
+</button>
     </div>
-
     <div class="card">
       <h3>📋 Daily Tasks</h3>
       <button>Open</button>
@@ -524,6 +525,17 @@ Logout
   </h2>
 
   <div id="usersList"></div>
+
+  </div>
+  <div id="withdrawRequestsPage" class="card hide">
+
+  <h2 class="section-title">📥 Withdraw Requests</h2>
+
+  <h3>Pending Requests</h3>
+  <div id="pendingWithdrawList"></div>
+
+  <h3>Completed / Rejected Requests</h3>
+  <div id="completedWithdrawList"></div>
 
   </div>
 <!-- TEAM PAGE -->
@@ -1306,6 +1318,108 @@ usersList.innerHTML += `
   usersList.innerHTML=html;
 
 };
+    window.loadWithdrawRequests = async function(){
+
+showPage("withdrawRequestsPage");
+
+const pendingBox =
+document.getElementById("pendingWithdrawList");
+
+const completedBox =
+document.getElementById("completedWithdrawList");
+
+pendingBox.innerHTML = "Loading...";
+completedBox.innerHTML = "Loading...";
+
+const snapshot =
+await getDocs(collection(db,"withdrawRequests"));
+
+let pendingHTML = `
+<table border="1" width="100%" cellpadding="8">
+
+<tr>
+<th>Name</th>
+<th>Amount</th>
+<th>Method</th>
+<th>Status</th>
+<th>Action</th>
+</tr>
+`;
+
+let completedHTML = `
+<table border="1" width="100%" cellpadding="8">
+
+<tr>
+<th>Name</th>
+<th>Amount</th>
+<th>Method</th>
+<th>Status</th>
+</tr>
+`;
+
+snapshot.forEach((docItem)=>{
+
+const data = docItem.data();
+
+if(data.status === "pending"){
+
+pendingHTML += `
+
+<tr>
+
+<td>${data.name || ""}</td>
+
+<td>${data.amount || 0}</td>
+
+<td>${data.paymentMethod || ""}</td>
+
+<td>${data.status}</td>
+
+<td>
+
+<button onclick="acceptWithdraw('${docItem.id}')">
+✅ Accept
+</button>
+
+<button onclick="rejectWithdraw('${docItem.id}')">
+❌ Reject
+</button>
+
+</td>
+
+</tr>
+
+`;
+
+}else{
+
+completedHTML += `
+
+<tr>
+
+<td>${data.name || ""}</td>
+
+<td>${data.amount || 0}</td>
+
+<td>${data.paymentMethod || ""}</td>
+
+<td>${data.status}</td>
+
+</tr>
+
+`;
+
+}
+
+});
+
+pendingHTML += `</table>`;
+completedHTML += `</table>`;
+
+pendingBox.innerHTML = pendingHTML;
+completedBox.innerHTML = completedHTML;
+
+};
     window.showProfileBox=function(){
 
   const profileBox=document.getElementById("profileBox");
@@ -1414,7 +1528,17 @@ document.getElementById("withdrawMsg").innerHTML =
 return;
 
 }
-
+await setDoc(doc(db,"withdrawRequests",user.uid + "_" + Date.now()),{
+  uid:user.uid,
+  name:userData.name || "",
+  email:userData.email || user.email,
+  mobile:userData.mobile || "",
+  amount:Number(amount),
+  paymentMethod:userData.paymentMethod || "",
+  accountNumber:userData.accountNumber || "",
+  status:"pending",
+  requestTime:new Date().toLocaleString()
+});
 document.getElementById("withdrawMsg").innerHTML =
 "Withdraw request submitted ✅";
 

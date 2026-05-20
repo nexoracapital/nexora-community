@@ -662,8 +662,21 @@ Logout
 
   <input id="profileCity" placeholder="City">
 
-  <input id="profilePayment" placeholder="Payment Method">
+  <select id="profilePayment">
 
+  <option value="">Select Payment Method</option>
+
+  <option value="Easypaisa">Easypaisa</option>
+
+  <option value="JazzCash">JazzCash</option>
+
+  <option value="Bank Account">Bank Account</option>
+
+  <option value="SadaPay">SadaPay</option>
+
+  <option value="NayaPay">NayaPay</option>
+
+</select>
   <input id="profileAccount" placeholder="Account Number">
 
   <button class="green" onclick="saveProfile()">
@@ -1279,6 +1292,7 @@ usersList.innerHTML += `
 
   if(profileBox){
     profileBox.classList.remove("hide");
+    profileBox.scrollIntoView({behavior:"smooth",block:"start"});
   }
 
 };

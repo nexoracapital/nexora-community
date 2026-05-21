@@ -759,21 +759,33 @@ Open
 
 <h2>📥 Deposit Request</h2>
 
-  <div class="card">
+<div class="card" style="border:1px solid #e5e7eb; background:#f9fafb;">
 
 <h3>🏦 Admin Payment Details</h3>
 
-<p><b>Easypaisa:</b> 0300-0000000</p>
+<p><b>English:</b> Send your deposit amount to any account below, then enter your payment method and transaction/reference ID.</p>
 
+<p><b>اردو:</b> نیچے دیے گئے کسی بھی اکاؤنٹ پر رقم بھیجیں، پھر اپنا payment method اور transaction/reference ID لکھ کر submit کریں۔</p>
+
+<hr>
+
+<p><b>EasyPaisa:</b> 0300-0000000</p>
 <p><b>JazzCash:</b> 0300-0000000</p>
-
 <p><b>SadaPay:</b> 0300-0000000</p>
-
 <p><b>Bank:</b> Demo Bank</p>
-
 <p><b>Account Title:</b> Nexora Community</p>
+<p><b>Account Number:</b> 000000000000</p>
 
-  </div>
+</div>
+
+<select id="depositMethod">
+<option value="">Select Payment Method</option>
+<option value="EasyPaisa">EasyPaisa</option>
+<option value="JazzCash">JazzCash</option>
+<option value="SadaPay">SadaPay</option>
+<option value="Bank Account">Bank Account</option>
+</select>
+<br><br>
 <input
 type="number"
 id="depositAmount"

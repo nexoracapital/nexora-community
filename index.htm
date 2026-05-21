@@ -1625,7 +1625,7 @@ await setDoc(doc(db,"walletHistory",foundId + "_" + Date.now()),{
 };
     window.openWalletPage = async function(){
 
-  const walletPage =
+const walletPage =
 document.getElementById("walletPage");
 
 if(walletPage){
@@ -1639,8 +1639,11 @@ block:"start"
 
 }
 
-  await loadCommunityWallet();
-      window.openDepositPage = function(){
+await loadCommunityWallet();
+
+};
+
+window.openDepositPage = function(){
 
 showPage("depositPage");
 

@@ -1547,11 +1547,11 @@ Number(userData.totalWithdrawn || 0)
 Number(requestData.amount || 0)
 
 });
-      await setDoc(doc(db,"walletHistory",uid + "_" + Date.now()),{
-  uid:uid,
+      await setDoc(doc(db,"walletHistory",requestData.uid + "_" + Date.now()),{
+  uid:requestData.uid,
   type:"withdraw",
   title:"Withdraw Accepted",
-  amount:Number(req.amount || 0),
+  amount:Number(requestData.amount || 0),
   time:new Date().toLocaleString()
 });
 loadWithdrawRequests();

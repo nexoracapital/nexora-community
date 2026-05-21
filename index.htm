@@ -1972,6 +1972,51 @@ if(withdrawBox){
 
     }
 };
+    window.submitDeposit = async function(){
+
+const user = auth.currentUser;
+
+if(!user){
+alert("Login required");
+return;
+}
+
+const amount =
+document.getElementById("depositAmount").value;
+
+const reference =
+document.getElementById("depositRef").value;
+
+if(!amount || !reference){
+alert("Please fill all fields");
+return;
+}
+
+const userDoc =
+await getDoc(doc(db,"users",user.uid));
+
+const userData = userDoc.data();
+
+await addDoc(
+collection(db,"depositRequests"),
+{
+uid:user.uid,
+name:userData.name || "",
+email:user.email || "",
+amount:Number(amount),
+reference:reference,
+status:"pending",
+time:new Date().toLocaleString()
+}
+);
+
+document.getElementById("depositMsg").innerHTML =
+"Deposit request submitted ✅";
+
+document.getElementById("depositAmount").value = "";
+document.getElementById("depositRef").value = "";
+
+};
 window.submitWithdraw = async function(){
 
 const user = auth.currentUser;

@@ -578,6 +578,21 @@ Open
   <p id="walletMsg"></p>
 
   </div>
+  <div id="depositRequestsPage" class="card hide">
+
+<h2 class="section-title">
+📥 Deposit Requests
+</h2>
+
+<h3>Pending Requests</h3>
+
+<div id="pendingDepositList"></div>
+
+<h3>Completed / Rejected</h3>
+
+<div id="completedDepositList"></div>
+
+  </div>
 <!-- TEAM PAGE -->
 
 <div id="teamPage" class="card hide">
@@ -1292,7 +1307,13 @@ window.showPage=function(id){
   show(id);
 
 };
+window.openDepositRequestsPage = function(){
 
+showPage("depositRequestsPage");
+
+loadDepositRequests();
+
+};
 window.goHome=function(){
 
   const depositPage =
@@ -1347,7 +1368,8 @@ from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
   updateDoc,
   getDoc,    
   collection,
-  getDocs
+  getDocs,
+  addDoc
 }
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 const firebaseConfig = {
@@ -2167,6 +2189,81 @@ status:"rejected"
 alert("Deposit Rejected ❌");
 
 loadDepositRequests();
+
+};
+    window.loadDepositRequests = async function(){
+
+const pendingDiv =
+document.getElementById("pendingDepositList");
+
+const completedDiv =
+document.getElementById("completedDepositList");
+
+if(!pendingDiv || !completedDiv) return;
+
+pendingDiv.innerHTML = "Loading...";
+completedDiv.innerHTML = "";
+
+const snapshot =
+await getDocs(collection(db,"depositRequests"));
+
+pendingDiv.innerHTML = "";
+
+snapshot.forEach((docSnap)=>{
+
+const data = docSnap.data();
+
+const card = document.createElement("div");
+
+card.className = "card";
+
+card.innerHTML = `
+
+<p><b>Name:</b> ${data.name || ""}</p>
+
+<p><b>Amount:</b> Rs ${data.amount || 0}</p>
+
+<p><b>Method:</b> ${data.method || ""}</p>
+
+<p><b>Reference:</b> ${data.reference || ""}</p>
+
+<p><b>Status:</b> ${data.status || "pending"}</p>
+
+`;
+
+if(data.status === "pending"){
+
+const approveBtn =
+document.createElement("button");
+
+approveBtn.innerText = "Approve";
+
+approveBtn.onclick = async ()=>{
+
+await updateDoc(
+doc(db,"depositRequests",docSnap.id),
+{
+status:"approved"
+}
+);
+
+alert("Deposit Approved");
+
+loadDepositRequests();
+
+};
+
+card.appendChild(approveBtn);
+
+pendingDiv.appendChild(card);
+
+}else{
+
+completedDiv.appendChild(card);
+
+}
+
+});
 
 };
   </script>

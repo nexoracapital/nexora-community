@@ -1488,6 +1488,31 @@ status:"accepted"
 }
 );
 
+      const requestDoc =
+await getDoc(doc(db,"withdrawRequests",id));
+
+const requestData = requestDoc.data();
+
+const userDoc =
+await getDoc(doc(db,"users",requestData.uid));
+
+const userData = userDoc.data();
+
+await updateDoc(doc(db,"users",requestData.uid),{
+
+wallet:
+Number(userData.wallet || 0)
+-
+Number(requestData.amount || 0),
+
+pendingWithdraw:0,
+
+totalWithdrawn:
+Number(userData.totalWithdrawn || 0)
++
+Number(requestData.amount || 0)
+
+});
 loadWithdrawRequests();
 
 };
@@ -1556,6 +1581,64 @@ loadWithdrawRequests();
   showPage("walletPage");
 
   await loadCommunityWallet();
+
+};
+    window.loadCommunityWallet = async function(){
+
+const user = auth.currentUser;
+
+if(!user){ return; }
+
+const userDoc =
+await getDoc(doc(db,"users",user.uid));
+
+if(!userDoc.exists()){ return; }
+
+const data = userDoc.data();
+
+const walletBalance =
+document.getElementById("walletPageBalance");
+
+if(walletBalance){
+
+walletBalance.innerHTML =
+"Wallet Balance: Rs " +
+Number(data.wallet || 0);
+
+}
+
+const walletPending =
+document.getElementById("walletPagePending");
+
+if(walletPending){
+
+walletPending.innerHTML =
+"Pending Withdraw: Rs " +
+Number(data.pendingWithdraw || 0);
+
+}
+
+const walletReceived =
+document.getElementById("walletPageReceived");
+
+if(walletReceived){
+
+walletReceived.innerHTML =
+"Total Received: Rs " +
+Number(data.totalReceived || 0);
+
+}
+
+const walletWithdrawn =
+document.getElementById("walletPageWithdrawn");
+
+if(walletWithdrawn){
+
+walletWithdrawn.innerHTML =
+"Total Withdrawn: Rs " +
+Number(data.totalWithdrawn || 0);
+
+}
 
 };
     window.showProfileBox=function(){
@@ -1676,6 +1759,11 @@ await setDoc(doc(db,"withdrawRequests",user.uid + "_" + Date.now()),{
   accountNumber:userData.accountNumber || "",
   status:"pending",
   requestTime:new Date().toLocaleString()
+});
+  await updateDoc(doc(db,"users",user.uid),{
+
+pendingWithdraw:Number(amount)
+
 });
 document.getElementById("withdrawMsg").innerHTML =
 "Withdraw request submitted ✅";

@@ -1645,7 +1645,19 @@ await loadCommunityWallet();
 
 window.openDepositPage = function(){
 
-showPage("depositPage");
+const depositPage =
+document.getElementById("depositPage");
+
+if(depositPage){
+
+depositPage.classList.remove("hide");
+
+depositPage.scrollIntoView({
+behavior:"smooth",
+block:"start"
+});
+
+}
 
 };
     window.loadCommunityWallet = async function(){

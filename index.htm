@@ -1517,6 +1517,13 @@ Number(userData.totalWithdrawn || 0)
 Number(requestData.amount || 0)
 
 });
+      await setDoc(doc(db,"walletHistory",uid + "_" + Date.now()),{
+  uid:uid,
+  type:"withdraw",
+  title:"Withdraw Accepted",
+  amount:Number(req.amount || 0),
+  time:new Date().toLocaleString()
+});
 loadWithdrawRequests();
 
 };
@@ -1576,7 +1583,13 @@ loadWithdrawRequests();
     totalReceived: oldReceived + amount,
     walletUpdatedAt:new Date().toLocaleString()
   });
-
+await setDoc(doc(db,"walletHistory",foundId + "_" + Date.now()),{
+  uid:foundId,
+  type:"credit",
+  title:"Balance Added",
+  amount:amount,
+  time:new Date().toLocaleString()
+});
   document.getElementById("walletMsg").innerHTML="Wallet balance added successfully ✅";
 
 };

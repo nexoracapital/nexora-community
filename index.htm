@@ -1246,7 +1246,11 @@ window.logoutGoogle = async function(){
 
   alert("Logged out ✅");
 
-  goHome();
+  hideAllPages();
+
+show("mainMenu");
+
+hide("backBtn");
 
   const logoutBtn=document.getElementById("logoutBtn");
 

@@ -2014,6 +2014,116 @@ document.getElementById("withdrawMsg").innerHTML =
 document.getElementById("communityPendingText").innerHTML =
 "Pending Withdraw: Rs " + amount;
 };
+    window.loadDepositRequests = async function(){
+
+showPage("depositRequestsPage");
+
+const pendingBox =
+document.getElementById("pendingDepositList");
+
+const completedBox =
+document.getElementById("completedDepositList");
+
+pendingBox.innerHTML = "Loading...";
+completedBox.innerHTML = "Loading...";
+
+const snapshot =
+await getDocs(collection(db,"depositRequests"));
+
+pendingBox.innerHTML = "";
+completedBox.innerHTML = "";
+
+snapshot.forEach((docSnap)=>{
+
+const data = docSnap.data();
+
+const html = `
+
+<div class="card">
+
+<h3>${data.name || "User"}</h3>
+
+<p><b>Email:</b> ${data.email || ""}</p>
+
+<p><b>Amount:</b> Rs ${data.amount || 0}</p>
+
+<p><b>Method:</b> ${data.method || ""}</p>
+
+<p><b>Reference:</b> ${data.reference || ""}</p>
+
+<p><b>Status:</b> ${data.status || "pending"}</p>
+
+</div>
+
+`;
+
+if(data.status === "pending"){
+
+pendingBox.innerHTML += html + `
+
+<button onclick="approveDeposit('${docSnap.id}')">
+Approve
+</button>
+
+<button onclick="rejectDeposit('${docSnap.id}')">
+Reject
+</button>
+
+`;
+
+}else{
+
+completedBox.innerHTML += html;
+
+}
+
+});
+
+};
+
+window.approveDeposit = async function(id){
+
+const requestRef =
+doc(db,"depositRequests",id);
+
+const requestSnap =
+await getDoc(requestRef);
+
+const requestData =
+requestSnap.data();
+
+await updateDoc(
+doc(db,"users",requestData.uid),
+{
+wallet:
+Number(requestData.amount || 0)
+}
+);
+
+await updateDoc(requestRef,{
+status:"approved"
+});
+
+alert("Deposit Approved ✅");
+
+loadDepositRequests();
+
+};
+
+window.rejectDeposit = async function(id){
+
+await updateDoc(
+doc(db,"depositRequests",id),
+{
+status:"rejected"
+}
+);
+
+alert("Deposit Rejected ❌");
+
+loadDepositRequests();
+
+};
   </script>
   
 </body>

@@ -1201,6 +1201,16 @@ window.showPage=function(id){
 
 window.goHome=function(){
 
+  const depositPage =
+document.getElementById("depositPage");
+
+if(
+depositPage &&
+!depositPage.classList.contains("hide")
+){
+showPage("communityPage");
+return;
+  }
 const walletPage =
 document.getElementById("walletPage");
 

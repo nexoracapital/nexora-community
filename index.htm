@@ -1171,11 +1171,22 @@ window.showPage=function(id){
 
 window.goHome=function(){
 
-  hideAllPages();
+const walletPage =
+document.getElementById("walletPage");
 
-  show("mainMenu");
+if(
+walletPage &&
+!walletPage.classList.contains("hide")
+){
+showPage("communityPage");
+return;
+}
 
-  hide("backBtn");
+hideAllPages();
+
+show("mainMenu");
+
+hide("backBtn");
 
 };
 
@@ -1492,120 +1503,52 @@ status:"rejected"
 
 loadWithdrawRequests();
 
-};
-    window.addWalletBalance = async function(){
+};window.addWalletBalance = async function(){
 
-const email =
-document.getElementById("walletUserEmail")
-.value.trim();
+  const email=document.getElementById("walletUserEmail").value.trim().toLowerCase();
+  const amount=Number(document.getElementById("walletAmount").value);
 
-const amount =
-Number(
-document.getElementById("walletAmount")
-.value
-);
-
-if(!email || !amount){
-
-document.getElementById("walletMsg")
-.innerHTML =
-"Please enter email and amount ❌";
-
-return;
-
-}
-
-const usersSnap =
-await getDocs(collection(db,"users"));
-
-let foundId = null;
-let oldWallet = 0;
-
-usersSnap.forEach((docItem)=>{
-
-const u = docItem.data();
-
-if(u.email === email){
-
-foundId = docItem.id;
-
-oldWallet = Number(u.wallet || 0);
-window.loadCommunityWallet = async function(){
-
-  const user=auth.currentUser;
-
-  if(!user){ return; }
-
-  const userDoc=await getDoc(doc(db,"users",user.uid));
-
-  if(!userDoc.exists()){ return; }
-
-  const data=userDoc.data();
-
-  const walletText=document.getElementById("communityWalletText");
-
-  if(walletText){
-    walletText.innerHTML="Wallet: Rs " + Number(data.wallet || 0);
+  if(!email || !amount){
+    document.getElementById("walletMsg").innerHTML="Please enter email and amount ❌";
+    return;
   }
-    const walletPagePending =
-document.getElementById("walletPagePending");
 
-if(walletPagePending){
+  const usersSnap=await getDocs(collection(db,"users"));
 
-  walletPagePending.innerHTML =
-  "Pending Withdraw: Rs " +
-  Number(data.pendingWithdraw || 0);
+  let foundId=null;
+  let foundCount=0;
+  let oldWallet=0;
+  let oldReceived=0;
 
-}
+  usersSnap.forEach((docItem)=>{
+    const u=docItem.data();
+    const userEmail=(u.email || "").toLowerCase();
 
-const walletPageReceived =
-document.getElementById("walletPageReceived");
-
-if(walletPageReceived){
-
-  walletPageReceived.innerHTML =
-  "Total Received: Rs " +
-  Number(data.totalReceived || 0);
-
-}
-
-const walletPageWithdrawn =
-document.getElementById("walletPageWithdrawn");
-
-if(walletPageWithdrawn){
-
-  walletPageWithdrawn.innerHTML =
-  "Total Withdrawn: Rs " +
-  Number(data.totalWithdrawn || 0);
-
-}
-
-};
+    if(userEmail === email){
+      foundId=docItem.id;
+      foundCount++;
+      oldWallet=Number(u.wallet || 0);
+      oldReceived=Number(u.totalReceived || 0);
     }
-});
+  });
 
-if(!foundId){
+  if(foundCount === 0){
+    document.getElementById("walletMsg").innerHTML="User not found ❌";
+    return;
+  }
 
-document.getElementById("walletMsg")
-.innerHTML =
-"User not found ❌";
+  if(foundCount > 1){
+    document.getElementById("walletMsg").innerHTML="Duplicate email found ❌";
+    return;
+  }
 
-return;
+  await updateDoc(doc(db,"users",foundId),{
+    wallet: oldWallet + amount,
+    totalReceived: oldReceived + amount,
+    walletUpdatedAt:new Date().toLocaleString()
+  });
 
-}
-
-await updateDoc(
-doc(db,"users",foundId),
-{
-wallet: oldWallet + amount,
-walletUpdatedAt:
-new Date().toLocaleString()
-}
-);
-
-document.getElementById("walletMsg")
-.innerHTML =
-"Wallet balance added successfully ✅";
+  document.getElementById("walletMsg").innerHTML="Wallet balance added successfully ✅";
 
 };
     window.openWalletPage = async function(){

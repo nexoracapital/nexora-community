@@ -1578,7 +1578,19 @@ loadWithdrawRequests();
 };
     window.openWalletPage = async function(){
 
-  showPage("walletPage");
+  const walletPage =
+document.getElementById("walletPage");
+
+if(walletPage){
+
+walletPage.classList.remove("hide");
+
+walletPage.scrollIntoView({
+behavior:"smooth",
+block:"start"
+});
+
+}
 
   await loadCommunityWallet();
 
@@ -1736,6 +1748,9 @@ if(!userData.profileCompleted){
 }
 
 const withdrawBox=document.getElementById("withdrawBox");
+      document.getElementById("withdrawAmount").value = "";
+
+document.getElementById("withdrawMsg").innerHTML = "";
 
 if(withdrawBox){
 

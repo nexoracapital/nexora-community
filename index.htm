@@ -1686,6 +1686,38 @@ if(walletWithdrawn){
 walletWithdrawn.innerHTML =
 "Total Withdrawn: Rs " +
 Number(data.totalWithdrawn || 0);
+  const historyBox =
+document.getElementById("walletHistoryList");
+
+if(historyBox){
+
+  historyBox.innerHTML = "Loading history...";
+
+  const historySnap =
+  await getDocs(collection(db,"walletHistory"));
+
+  let historyHTML = "";
+
+  historySnap.forEach((docItem)=>{
+
+    const h = docItem.data();
+
+    if(h.uid === user.uid){
+
+      historyHTML +=
+      "<p>📌 " + h.title +
+      " - Rs " + h.amount +
+      "<br><small>" + h.time +
+      "</small></p>";
+
+    }
+
+  });
+
+  historyBox.innerHTML =
+  historyHTML || "No history yet.";
+
+    }
 
 }
 

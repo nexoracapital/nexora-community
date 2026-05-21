@@ -1595,7 +1595,27 @@ await getDoc(doc(db,"users",user.uid));
 if(!userDoc.exists()){ return; }
 
 const data = userDoc.data();
+const communityWalletText =
+document.getElementById("communityWalletText");
 
+if(communityWalletText){
+
+communityWalletText.innerHTML =
+"Wallet: Rs " +
+Number(data.wallet || 0);
+
+}
+
+const communityPendingText =
+document.getElementById("communityPendingText");
+
+if(communityPendingText){
+
+communityPendingText.innerHTML =
+"Pending Withdraw: Rs " +
+Number(data.pendingWithdraw || 0);
+
+    }
 const walletBalance =
 document.getElementById("walletPageBalance");
 

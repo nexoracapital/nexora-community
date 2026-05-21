@@ -670,7 +670,9 @@ Logout
 
     <div class="card">
       <h3>📥 Deposit</h3>
-      <button>Open</button>
+      <button onclick="openDepositPage()">
+Open
+</button>
     </div>
 
     <div class="card">
@@ -1610,6 +1612,9 @@ block:"start"
 }
 
   await loadCommunityWallet();
+      window.openDepositPage = function(){
+
+showPage("depositPage");
 
 };
     window.loadCommunityWallet = async function(){

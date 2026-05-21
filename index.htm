@@ -759,33 +759,81 @@ Open
 
 <h2>📥 Deposit Request</h2>
 
-<div class="card" style="border:1px solid #e5e7eb; background:#f9fafb;">
+<div class="card">
 
-<h3>🏦 Admin Payment Details</h3>
+<h3>🏦 Deposit Methods</h3>
 
-<p><b>English:</b> Send your deposit amount to any account below, then enter your payment method and transaction/reference ID.</p>
+<p style="color:#b45309;">
+<b>Note:</b>
+For deposits up to Rs 50,000 use EasyPaisa, JazzCash, SadaPay or NayaPay.
+For higher amounts please use Bank Transfer.
+</p>
 
-<p><b>اردو:</b> نیچے دیے گئے کسی بھی اکاؤنٹ پر رقم بھیجیں، پھر اپنا payment method اور transaction/reference ID لکھ کر submit کریں۔</p>
-
-<hr>
-
-<p><b>EasyPaisa:</b> 0300-0000000</p>
-<p><b>JazzCash:</b> 0300-0000000</p>
-<p><b>SadaPay:</b> 0300-0000000</p>
-<p><b>Bank:</b> Demo Bank</p>
-<p><b>Account Title:</b> Nexora Community</p>
-<p><b>Account Number:</b> 000000000000</p>
+<p style="color:#b45309;">
+<b>نوٹ:</b>
+50 ہزار تک EasyPaisa, JazzCash, SadaPay یا NayaPay استعمال کریں۔
+اس سے زیادہ رقم کے لیے Bank Transfer استعمال کریں۔
+</p>
 
 </div>
 
-<select id="depositMethod">
-<option value="">Select Payment Method</option>
-<option value="EasyPaisa">EasyPaisa</option>
-<option value="JazzCash">JazzCash</option>
-<option value="SadaPay">SadaPay</option>
-<option value="Bank Account">Bank Account</option>
-</select>
-<br><br>
+<div class="card" style="background:#ecfdf5;border:1px solid #10b981;">
+
+<h3>🟢 EasyPaisa</h3>
+
+<p><b>Number:</b> 0300-0000000</p>
+
+<p><b>Title:</b> Nexora Community</p>
+
+<button onclick="copyText('03000000000')">
+Copy Number
+</button>
+
+</div>
+
+<div class="card" style="background:#fef9c3;border:1px solid #facc15;">
+
+<h3>🟡 JazzCash</h3>
+
+<p><b>Number:</b> 0300-0000000</p>
+
+<p><b>Title:</b> Nexora Community</p>
+
+<button onclick="copyText('03000000000')">
+Copy Number
+</button>
+
+</div>
+
+<div class="card" style="background:#eff6ff;border:1px solid #3b82f6;">
+
+<h3>🔵 SadaPay</h3>
+
+<p><b>Number:</b> 0300-0000000</p>
+
+<p><b>Title:</b> Nexora Community</p>
+
+<button onclick="copyText('03000000000')">
+Copy Number
+</button>
+
+</div>
+
+<div class="card" style="background:#f3f4f6;border:1px solid #6b7280;">
+
+<h3>🏦 Bank Transfer</h3>
+
+<p><b>Bank:</b> Demo Bank</p>
+
+<p><b>Account Title:</b> Nexora Community</p>
+
+<p><b>Account Number:</b> 000000000000</p>
+
+<button onclick="copyText('000000000000')">
+Copy Account
+</button>
+
+</div>
 <input
 type="number"
 id="depositAmount"
@@ -1679,7 +1727,13 @@ block:"start"
 await loadCommunityWallet();
 
 };
+window.copyText = function(text){
 
+navigator.clipboard.writeText(text);
+
+alert("Copied Successfully ✅");
+
+};
 window.openDepositPage = function(){
 
 const depositPage =

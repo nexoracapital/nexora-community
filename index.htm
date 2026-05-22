@@ -2211,16 +2211,33 @@ loadDepositRequests();
 };
 window.rejectDeposit = async function(id){
 
-await updateDoc(
-doc(db,"depositRequests",id),
-{
-status:"rejected"
-}
-);
+  const requestRef =
+  doc(db,"depositRequests",id);
 
-alert("Deposit Rejected ❌");
+  const requestSnap =
+  await getDoc(requestRef);
 
-loadDepositRequests();
+  if(!requestSnap.exists()){
+    alert("Request not found ❌");
+    return;
+  }
+
+  const requestData =
+  requestSnap.data();
+
+  if(requestData.status !== "pending"){
+    alert("This request is already processed ⚠️");
+    return;
+  }
+
+  await updateDoc(requestRef,{
+    status:"rejected",
+    rejectedTime:new Date().toLocaleString()
+  });
+
+  alert("Deposit Rejected ❌");
+
+  loadDepositRequests();
 
 };
     window.loadDepositRequests = async function(){

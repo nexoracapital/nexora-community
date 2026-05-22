@@ -2083,71 +2083,81 @@ document.getElementById("communityPendingText").innerHTML =
 };
     window.loadDepositRequests = async function(){
 
-showPage("depositRequestsPage");
+  showPage("depositRequestsPage");
 
-const pendingBox =
-document.getElementById("pendingDepositList");
+  const pendingBox =
+  document.getElementById("pendingDepositList");
 
-const completedBox =
-document.getElementById("completedDepositList");
+  const completedBox =
+  document.getElementById("completedDepositList");
 
-pendingBox.innerHTML = "Loading...";
-completedBox.innerHTML = "Loading...";
+  pendingBox.innerHTML = "Loading...";
+  completedBox.innerHTML = "Loading...";
 
-const snapshot =
-await getDocs(collection(db,"depositRequests"));
+  const snapshot =
+  await getDocs(collection(db,"depositRequests"));
 
-pendingBox.innerHTML = "";
-completedBox.innerHTML = "";
+  pendingBox.innerHTML = "";
+  completedBox.innerHTML = "";
 
-snapshot.forEach((docSnap)=>{
+  snapshot.forEach((docSnap)=>{
 
-const data = docSnap.data();
+    const data = docSnap.data();
 
-const html = `
+    let proofLink = "";
 
-<div class="card">
+    if(data.proofURL){
+      proofLink =
+      `<p><b>Proof:</b> <a href="${data.proofURL}" target="_blank">View Proof</a></p>`;
+    }
 
-<h3>${data.name || "User"}</h3>
+    const html = `
 
-<p><b>Email:</b> ${data.email || ""}</p>
+      <div class="card">
 
-<p><b>Amount:</b> Rs ${data.amount || 0}</p>
+        <h3>${data.name || "User"}</h3>
 
-<p><b>Method:</b> ${data.method || ""}</p>
+        <p><b>Email:</b> ${data.email || ""}</p>
 
-<p><b>Reference:</b> ${data.reference || ""}</p>
+        <p><b>Amount:</b> Rs ${data.amount || 0}</p>
 
-<p><b>Status:</b> ${data.status || "pending"}</p>
+        <p><b>Method:</b> ${data.method || ""}</p>
 
-</div>
+        <p><b>Reference:</b> ${data.reference || ""}</p>
 
-`;
+        <p><b>Time:</b> ${data.time || ""}</p>
 
-if(data.status === "pending"){
+        <p><b>Status:</b> ${data.status || "pending"}</p>
 
-pendingBox.innerHTML += html + `
+        ${proofLink}
 
-<button onclick="approveDeposit('${docSnap.id}')">
-Approve
-</button>
+      </div>
 
-<button onclick="rejectDeposit('${docSnap.id}')">
-Reject
-</button>
+    `;
 
-`;
+    if(data.status === "pending"){
 
-}else{
+      pendingBox.innerHTML += html + `
 
-completedBox.innerHTML += html;
+        <button class="green" onclick="approveDeposit('${docSnap.id}')">
+          ✅ Approve
+        </button>
 
-}
+        <button class="red" onclick="rejectDeposit('${docSnap.id}')">
+          ❌ Reject
+        </button>
 
-});
+      `;
+
+    }else{
+
+      completedBox.innerHTML += html;
+
+    }
+
+  });
 
 };
-
 window.approveDeposit = async function(id){
 
   const requestRef =
@@ -2249,81 +2259,7 @@ window.rejectDeposit = async function(id){
   loadDepositRequests();
 
 };
-    window.loadDepositRequests = async function(){
-
-const pendingDiv =
-document.getElementById("pendingDepositList");
-
-const completedDiv =
-document.getElementById("completedDepositList");
-
-if(!pendingDiv || !completedDiv) return;
-
-pendingDiv.innerHTML = "Loading...";
-completedDiv.innerHTML = "";
-
-const snapshot =
-await getDocs(collection(db,"depositRequests"));
-
-pendingDiv.innerHTML = "";
-
-snapshot.forEach((docSnap)=>{
-
-const data = docSnap.data();
-
-const card = document.createElement("div");
-
-card.className = "card";
-
-card.innerHTML = `
-
-<p><b>Name:</b> ${data.name || ""}</p>
-
-<p><b>Amount:</b> Rs ${data.amount || 0}</p>
-
-<p><b>Method:</b> ${data.method || ""}</p>
-
-<p><b>Reference:</b> ${data.reference || ""}</p>
-
-<p><b>Status:</b> ${data.status || "pending"}</p>
-
-`;
-
-if(data.status === "pending"){
-
-const approveBtn =
-document.createElement("button");
-
-approveBtn.innerText = "Approve";
-
-approveBtn.onclick = async ()=>{
-
-await updateDoc(
-doc(db,"depositRequests",docSnap.id),
-{
-status:"approved"
-}
-);
-
-alert("Deposit Approved");
-
-loadDepositRequests();
-
-};
-
-card.appendChild(approveBtn);
-
-pendingDiv.appendChild(card);
-
-}else{
-
-completedDiv.appendChild(card);
-
-}
-
-});
-
-};
+    
   </script>
   
 </body>

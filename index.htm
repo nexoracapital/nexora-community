@@ -2150,63 +2150,72 @@ completedBox.innerHTML += html;
 
 window.approveDeposit = async function(id){
 
-const requestRef =
-doc(db,"depositRequests",id);
+  const requestRef =
+  doc(db,"depositRequests",id);
 
-const requestSnap =
-await getDoc(requestRef);
+  const requestSnap =
+  await getDoc(requestRef);
 
-if(!requestSnap.exists()){
-alert("Request not found ❌");
-return;
-}
+  if(!requestSnap.exists()){
+    alert("Request not found ❌");
+    return;
+  }
 
-const requestData =
-requestSnap.data();
+  const requestData =
+  requestSnap.data();
 
-if(requestData.status === "approved"){
-alert("Already approved ⚠️");
-return;
-}
+  if(requestData.status !== "pending"){
+    alert("This request is already processed ⚠️");
+    return;
+  }
 
-const userRef =
-doc(db,"users",requestData.uid);
+  const userRef =
+  doc(db,"users",requestData.uid);
 
-const userSnap =
-await getDoc(userRef);
+  const userSnap =
+  await getDoc(userRef);
 
-const userData =
-userSnap.exists() ? userSnap.data() : {};
+  if(!userSnap.exists()){
+    alert("User not found ❌");
+    return;
+  }
 
-await updateDoc(userRef,{
+  const userData =
+  userSnap.data();
 
-wallet:
-Number(userData.wallet || 0) +
-Number(requestData.amount || 0),
+  await updateDoc(userRef,{
 
-totalReceived:
-Number(userData.totalReceived || 0) +
-Number(requestData.amount || 0)
+    wallet:
+    Number(userData.wallet || 0) +
+    Number(requestData.amount || 0),
 
-});
+    totalReceived:
+    Number(userData.totalReceived || 0) +
+    Number(requestData.amount || 0),
 
-await setDoc(doc(db,"walletHistory",requestData.uid + "_" + Date.now()),{
+    walletUpdatedAt:new Date().toLocaleString()
 
-uid:requestData.uid,
-type:"deposit",
-title:"Deposit Approved",
-amount:Number(requestData.amount || 0),
-time:new Date().toLocaleString()
+  });
 
-});
+  await setDoc(
+    doc(db,"walletHistory",requestData.uid + "_" + Date.now()),
+    {
+      uid:requestData.uid,
+      type:"deposit",
+      title:"Deposit Approved",
+      amount:Number(requestData.amount || 0),
+      time:new Date().toLocaleString()
+    }
+  );
 
-await updateDoc(requestRef,{
-status:"approved"
-});
+  await updateDoc(requestRef,{
+    status:"approved",
+    approvedTime:new Date().toLocaleString()
+  });
 
-alert("Deposit Approved & Wallet Updated ✅");
+  alert("Deposit Approved & Wallet Updated ✅");
 
-loadDepositRequests();
+  loadDepositRequests();
 
 };
 window.rejectDeposit = async function(id){

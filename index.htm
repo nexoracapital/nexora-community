@@ -2156,27 +2156,59 @@ doc(db,"depositRequests",id);
 const requestSnap =
 await getDoc(requestRef);
 
+if(!requestSnap.exists()){
+alert("Request not found ❌");
+return;
+}
+
 const requestData =
 requestSnap.data();
 
-await updateDoc(
-doc(db,"users",requestData.uid),
-{
-wallet:
-Number(requestData.amount || 0)
+if(requestData.status === "approved"){
+alert("Already approved ⚠️");
+return;
 }
-);
+
+const userRef =
+doc(db,"users",requestData.uid);
+
+const userSnap =
+await getDoc(userRef);
+
+const userData =
+userSnap.exists() ? userSnap.data() : {};
+
+await updateDoc(userRef,{
+
+wallet:
+Number(userData.wallet || 0) +
+Number(requestData.amount || 0),
+
+totalReceived:
+Number(userData.totalReceived || 0) +
+Number(requestData.amount || 0)
+
+});
+
+await setDoc(doc(db,"walletHistory",requestData.uid + "_" + Date.now()),{
+
+uid:requestData.uid,
+type:"deposit",
+title:"Deposit Approved",
+amount:Number(requestData.amount || 0),
+time:new Date().toLocaleString()
+
+});
 
 await updateDoc(requestRef,{
 status:"approved"
 });
 
-alert("Deposit Approved ✅");
+alert("Deposit Approved & Wallet Updated ✅");
 
 loadDepositRequests();
 
 };
-
 window.rejectDeposit = async function(id){
 
 await updateDoc(

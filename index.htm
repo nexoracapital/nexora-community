@@ -1996,47 +1996,104 @@ if(withdrawBox){
 };
     window.submitDeposit = async function(){
 
-const user = auth.currentUser;
+  const user = auth.currentUser;
 
-if(!user){
-alert("Login required");
-return;
-}
+  if(!user){
+    alert("Login required");
+    return;
+  }
 
-const amount =
-document.getElementById("depositAmount").value;
+  const method =
+  document.getElementById("depositMethod").value;
 
-const reference =
-document.getElementById("depositRef").value;
+  const amount =
+  Number(document.getElementById("depositAmount").value);
 
-if(!amount || !reference){
-alert("Please fill all fields");
-return;
-}
+  const reference =
+  document.getElementById("depositRef").value.trim();
 
-const userDoc =
-await getDoc(doc(db,"users",user.uid));
+  const proofFile =
+  document.getElementById("depositProof").files[0];
 
-const userData = userDoc.data();
+  if(!method || !amount || !reference || !proofFile){
+    alert("Please select method, amount, reference and proof screenshot");
+    return;
+  }
 
-await addDoc(
-collection(db,"depositRequests"),
-{
-uid:user.uid,
-name:userData.name || "",
-email:user.email || "",
-amount:Number(amount),
-reference:reference,
-status:"pending",
-time:new Date().toLocaleString()
-}
-);
+  if(amount <= 0){
+    alert("Please enter valid amount");
+    return;
+  }
 
-document.getElementById("depositMsg").innerHTML =
-"Deposit request submitted ✅";
+  const allowedTypes = [
+    "image/png",
+    "image/jpeg",
+    "image/webp",
+    "application/pdf"
+  ];
 
-document.getElementById("depositAmount").value = "";
-document.getElementById("depositRef").value = "";
+  if(!allowedTypes.includes(proofFile.type)){
+    alert("Only PNG, JPG, WEBP or PDF proof allowed");
+    return;
+  }
+
+  if(proofFile.size > 2 * 1024 * 1024){
+    alert("File size must be less than 2MB");
+    return;
+  }
+
+  document.getElementById("depositMsg").innerHTML =
+  "Submitting deposit request...";
+
+  let proofURL = "";
+
+  const cleanFileName =
+  proofFile.name.replace(/[^a-zA-Z0-9._-]/g,"_");
+
+  const filePath =
+  "depositProofs/" +
+  user.uid +
+  "/" +
+  Date.now() +
+  "_" +
+  cleanFileName;
+
+  const storageRef =
+  ref(storage,filePath);
+
+  await uploadBytes(storageRef,proofFile);
+
+  proofURL =
+  await getDownloadURL(storageRef);
+
+  const userDoc =
+  await getDoc(doc(db,"users",user.uid));
+
+  const userData =
+  userDoc.exists() ? userDoc.data() : {};
+
+  await addDoc(
+    collection(db,"depositRequests"),
+    {
+      uid:user.uid,
+      name:userData.name || user.displayName || "",
+      email:user.email || "",
+      method:method,
+      amount:amount,
+      reference:reference,
+      proofURL:proofURL,
+      status:"pending",
+      time:new Date().toLocaleString()
+    }
+  );
+
+  document.getElementById("depositMsg").innerHTML =
+  "Deposit request submitted successfully ✅";
+
+  document.getElementById("depositMethod").value = "";
+  document.getElementById("depositAmount").value = "";
+  document.getElementById("depositRef").value = "";
+  document.getElementById("depositProof").value = "";
 
 };
 window.submitWithdraw = async function(){

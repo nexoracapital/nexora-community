@@ -868,15 +868,40 @@ Copy Account
 
 </div>
 <input
+<select id="depositMethod">
+  <option value="">Select Deposit Method</option>
+  <option value="EasyPaisa">EasyPaisa</option>
+  <option value="JazzCash">JazzCash</option>
+  <option value="SadaPay">SadaPay</option>
+  <option value="NayaPay">NayaPay</option>
+  <option value="Bank Transfer">Bank Transfer</option>
+</select>
+
+<br><br>
+
+<input
 type="number"
 id="depositAmount"
 placeholder="Enter Deposit Amount"
+min="1"
 />
+
+<br><br>
 
 <input
 type="text"
 id="depositRef"
 placeholder="Transaction ID / Reference"
+/>
+
+<br><br>
+
+<label><b>Upload Payment Screenshot / Proof</b></label>
+
+<input
+type="file"
+id="depositProof"
+accept="image/png,image/jpeg,image/webp,application/pdf"
 />
 
 <button onclick="submitDeposit()">
@@ -1371,7 +1396,13 @@ from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
   getDocs,
   addDoc
 }
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import {
+  getStorage,
+  ref,
+  uploadBytes,
+  getDownloadURL
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
 const firebaseConfig = {
   apiKey: "AIzaSyAWj7dozNpK8ExbJ4fptOODj66i09lxb0s",
   authDomain: "nexoracapitalcommunity.firebaseapp.com",
@@ -1385,6 +1416,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
     const db = getFirestore(app);
+    const storage = getStorage(app);
 const googleProvider = new GoogleAuthProvider();
 
 window.loginWithGoogle = async function(){

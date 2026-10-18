@@ -3,283 +3,249 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VoltWealth - Future Yield & Assets</title>
+  <title>VoltWealth - Institutional Login Portal</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,600;0,800;0,900;1,900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700;900&display=swap" rel="stylesheet">
   <style>
     body {
-      font-family: 'Montserrat', sans-serif;
+      font-family: 'Plus Jakarta Sans', sans-serif;
     }
-    
-    .glow-gold {
-      box-shadow: 0 0 35px rgba(245, 158, 11, 0.45);
-    }
-    .text-glow-amber {
-      text-shadow: 0 0 16px rgba(251, 191, 36, 0.7);
-    }
-    .text-glow-cyan {
-      text-shadow: 0 0 16px rgba(6, 182, 212, 0.7);
+    .font-brand {
+      font-family: 'Space Grotesk', sans-serif;
     }
 
-    /* Animated Diagonal Sliced Banner */
-    .slant-banner {
-      position: absolute;
-      top: -25%;
-      right: -10%;
-      width: 65%;
-      height: 150%;
-      background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #042f2e 100%);
-      border-left: 2px solid rgba(52, 211, 153, 0.4);
-      clip-path: polygon(30% 0%, 100% 0%, 100% 100%, 0% 100%);
-      transition: all 0.75s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-      z-index: 20;
+    /* Glowing Blinking / Pulsing Border */
+    @keyframes borderPulse {
+      0%, 100% {
+        box-shadow: 0 0 25px rgba(16, 185, 129, 0.45), 0 0 50px rgba(245, 158, 11, 0.2);
+        border-color: rgba(16, 185, 129, 0.85);
+      }
+      50% {
+        box-shadow: 0 0 35px rgba(245, 158, 11, 0.65), 0 0 70px rgba(16, 185, 129, 0.4);
+        border-color: rgba(245, 158, 11, 0.95);
+      }
     }
 
-    /* When SignUp Mode Active */
-    .container-box.active .slant-banner {
-      right: 45%;
-      clip-path: polygon(0% 0%, 100% 0%, 70% 100%, 0% 100%);
-      border-left: none;
-      border-right: 2px solid rgba(245, 158, 11, 0.4);
+    .animated-border {
+      animation: borderPulse 3s infinite ease-in-out;
     }
 
-    .form-panel {
-      transition: all 0.5s ease-in-out;
+    /* Diagonal Slanted Graphic for PC/Tablet */
+    @media (min-width: 768px) {
+      .slant-banner {
+        position: absolute;
+        top: -25%;
+        right: -10%;
+        width: 62%;
+        height: 150%;
+        background: linear-gradient(135deg, #090d1a 0%, #111827 50%, #064e3b 100%);
+        border-left: 2px solid rgba(52, 211, 153, 0.5);
+        clip-path: polygon(25% 0%, 100% 0%, 100% 100%, 0% 100%);
+        transition: all 0.75s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        z-index: 20;
+      }
+
+      .container-box.active .slant-banner {
+        right: 48%;
+        clip-path: polygon(0% 0%, 100% 0%, 75% 100%, 0% 100%);
+        border-left: none;
+        border-right: 2px solid rgba(245, 158, 11, 0.6);
+      }
     }
   </style>
 </head>
-<body class="bg-[#050814] text-white min-h-screen flex items-center justify-center font-sans overflow-x-hidden selection:bg-amber-400 selection:text-black">
+<body class="bg-[#030712] text-slate-100 min-h-screen flex flex-col justify-between font-sans selection:bg-amber-400 selection:text-black">
 
-  <!-- ================= AUTH MODAL CONTAINER ================= -->
-  <div id="authContainer" class="fixed inset-0 bg-[#02040a]/90 backdrop-blur-xl z-50 flex flex-col items-center justify-center p-4">
-    
-    <!-- Top Big Header -->
-    <div class="text-center mb-6 z-10 select-none">
-      <div class="inline-flex items-center space-x-3 mb-1">
-        <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-amber-500 to-emerald-400 flex items-center justify-center shadow-lg shadow-amber-500/30">
-          <i class="fa-solid fa-bolt text-slate-950 text-2xl"></i>
-        </div>
-        <h1 class="text-4xl md:text-5xl font-black italic tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-emerald-300 to-cyan-400 drop-shadow-md">
-          VOLT<span class="text-white">WEALTH</span>
-        </h1>
+  <!-- Minimal Brand Header -->
+  <header class="py-6 px-6 text-center select-none">
+    <div class="inline-flex items-center space-x-3">
+      <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-amber-500 via-emerald-400 to-cyan-400 flex items-center justify-center shadow-lg shadow-emerald-500/20">
+        <i class="fa-solid fa-bolt text-slate-950 text-2xl"></i>
       </div>
-      <p class="text-xs uppercase tracking-[0.3em] text-slate-400 font-semibold">Future Smart Yield &amp; Global Earning Protocol</p>
+      <h1 class="text-4xl md:text-5xl font-black italic tracking-wider font-brand text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-emerald-300 to-cyan-400">
+        VOLT<span class="text-white">WEALTH</span>
+      </h1>
     </div>
+    <p class="text-xs uppercase tracking-[0.25em] text-slate-400 font-semibold mt-2">Institutional Smart Yield &amp; Digital Assets</p>
+  </header>
 
-    <!-- Auth Card Box -->
-    <div id="boxWrapper" class="container-box relative w-full max-w-3xl min-h-[550px] bg-white rounded-3xl shadow-2xl overflow-hidden text-slate-900 border border-slate-700/30">
+  <!-- Centered Interactive Auth Card -->
+  <main class="flex-1 flex items-center justify-center p-4">
+    <div id="boxWrapper" class="container-box relative w-full max-w-3xl min-h-[560px] bg-white rounded-3xl shadow-2xl overflow-hidden text-slate-900 border-2 animated-border">
       
-      <!-- ================= ANIMATED SLANT BANNER ================= -->
-      <div class="slant-banner flex items-center justify-center text-white px-8">
+      <!-- Slanted Overlay (Desktop) -->
+      <div class="slant-banner hidden md:flex items-center justify-center text-white px-8">
         <div class="absolute -top-10 -right-10 w-44 h-44 bg-emerald-500/20 rounded-full blur-2xl pointer-events-none"></div>
         <div class="absolute -bottom-10 -left-10 w-44 h-44 bg-amber-500/20 rounded-full blur-2xl pointer-events-none"></div>
 
-        <!-- Banner Content: Login Mode -->
+        <!-- Banner Content: Login -->
         <div id="loginBannerText" class="text-center select-none pl-12 transition-opacity duration-300">
           <div class="inline-block px-3 py-1 bg-amber-400/20 border border-amber-400/40 rounded-full text-amber-300 text-[10px] font-extrabold uppercase tracking-widest mb-3">
-            Secure Member Portal
+            Verified Portal
           </div>
-          <h2 class="text-3xl font-black italic tracking-wide text-white mb-2 uppercase text-glow-cyan">
+          <h2 class="text-3xl font-black italic tracking-wide text-white mb-2 uppercase font-brand">
             WELCOME<br>BACK!
           </h2>
           <p class="text-xs text-slate-300 max-w-[210px] mx-auto leading-relaxed">
-            اپنے اکاؤنٹ میں لاگ ان کریں اور ڈیلی انعامات و ٹیم کمیشن فوراً حاصل کریں۔
+            Access institutional liquidity nodes, daily dividend claims, and team profits.
           </p>
           <div class="mt-4 flex items-center justify-center space-x-2 text-emerald-400 text-xs font-bold">
-            <i class="fa-solid fa-circle-check"></i>
-            <span>Instant Cloud Sync</span>
+            <i class="fa-solid fa-shield-halved"></i>
+            <span>End-to-End Encrypted</span>
           </div>
         </div>
 
-        <!-- Banner Content: Sign Up Mode -->
+        <!-- Banner Content: Signup -->
         <div id="signupBannerText" class="text-center select-none pr-12 hidden transition-opacity duration-300">
           <div class="inline-block px-3 py-1 bg-emerald-400/20 border border-emerald-400/40 rounded-full text-emerald-300 text-[10px] font-extrabold uppercase tracking-widest mb-3">
-            New Opportunity
+            Prime Membership
           </div>
-          <h2 class="text-3xl font-black italic tracking-wide text-white mb-2 uppercase text-glow-amber">
-            START<br>EARNING!
+          <h2 class="text-3xl font-black italic tracking-wide text-white mb-2 uppercase font-brand">
+            EXPAND<br>WEALTH!
           </h2>
           <p class="text-xs text-slate-300 max-w-[210px] mx-auto leading-relaxed">
-            ابھی فری رجسٹر ہوں اور روزانہ چیک ان ریوارڈز کے ساتھ اپنی آمدنی شروع کریں۔
+            Register your node and activate a welcome incentive on your initial staking round.
           </p>
           <div class="mt-4 flex items-center justify-center space-x-2 text-amber-300 text-xs font-bold">
             <i class="fa-solid fa-gift"></i>
-            <span>$2 Welcome Reward on $6 Deposit</span>
+            <span>Instant $2.00 Welcome Match</span>
           </div>
         </div>
       </div>
 
-      <!-- ================= LOGIN FORM (Left Side) ================= -->
-      <div id="loginFormPanel" class="form-panel absolute top-0 left-0 w-1/2 h-full p-8 md:p-10 flex flex-col justify-center z-10 bg-white">
+      <!-- ================= LOGIN FORM ================= -->
+      <div id="loginFormPanel" class="w-full md:w-1/2 p-7 md:p-10 flex flex-col justify-center bg-white z-10 min-h-[560px]">
         <div class="mb-5">
-          <h2 class="text-2xl font-black text-slate-900 tracking-tight">Login Portal</h2>
-          <div class="w-10 h-1.5 bg-gradient-to-r from-amber-500 to-emerald-500 mt-1 rounded-full"></div>
+          <h2 class="text-2xl font-black text-slate-900 tracking-tight font-brand">Account Login</h2>
+          <div class="w-12 h-1 bg-gradient-to-r from-amber-500 to-emerald-500 mt-1.5 rounded-full"></div>
         </div>
 
         <form onsubmit="handleLogin(event)" class="space-y-4">
           <div>
-            <label class="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Gmail or Mobile Number</label>
-            <div class="relative mt-1">
-              <input type="text" id="loginIdentifier" required placeholder="example@gmail.com or 03XXXXXXXXX" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs font-semibold text-slate-800 outline-none focus:border-amber-500 focus:bg-white transition shadow-sm pr-9">
-              <i class="fa-solid fa-user-check absolute right-3 top-3 text-xs text-slate-400"></i>
+            <label class="text-[11px] font-bold text-slate-500 uppercase tracking-wider block mb-1">Gmail or Mobile Number</label>
+            <div class="relative">
+              <input type="text" id="loginIdentifier" required placeholder="name@gmail.com or 03001234567" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs font-medium text-slate-800 outline-none focus:border-emerald-600 focus:bg-white transition shadow-sm pr-9">
+              <i class="fa-solid fa-user-check absolute right-3.5 top-3 text-xs text-slate-400"></i>
             </div>
           </div>
 
           <div>
-            <label class="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Password</label>
-            <div class="relative mt-1">
-              <input type="password" id="loginPass" required placeholder="••••••••" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs font-semibold text-slate-800 outline-none focus:border-amber-500 focus:bg-white transition shadow-sm pr-9">
-              <i class="fa-solid fa-lock absolute right-3 top-3 text-xs text-slate-400"></i>
+            <label class="text-[11px] font-bold text-slate-500 uppercase tracking-wider block mb-1">Account Password</label>
+            <div class="relative">
+              <input type="password" id="loginPass" required placeholder="Enter your password" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs font-medium text-slate-800 outline-none focus:border-emerald-600 focus:bg-white transition shadow-sm pr-9">
+              <i class="fa-solid fa-lock absolute right-3.5 top-3 text-xs text-slate-400"></i>
             </div>
           </div>
 
-          <button type="submit" class="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black py-2.5 rounded-xl text-xs uppercase tracking-wider transition shadow-md shadow-amber-500/20 active:scale-95 flex items-center justify-center space-x-2">
-            <span>Secure Login</span>
+          <button type="submit" class="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black py-3 rounded-xl text-xs uppercase tracking-wider transition shadow-md shadow-amber-500/20 active:scale-95 flex items-center justify-center space-x-2">
+            <span>Access Dashboard</span>
             <i class="fa-solid fa-arrow-right-to-bracket text-xs"></i>
           </button>
         </form>
 
         <p class="text-xs text-slate-500 mt-6 text-center font-medium">
-          اکاؤنٹ نہیں ہے؟ 
-          <button onclick="toggleAuth(true)" class="font-extrabold text-amber-600 hover:text-amber-700 underline ml-1 cursor-pointer">سائن اپ کریں</button>
+          New to VoltWealth? 
+          <button onclick="toggleAuth(true)" class="font-extrabold text-amber-600 hover:text-amber-700 underline ml-1 cursor-pointer">Register Here</button>
         </p>
       </div>
 
-      <!-- ================= SIGN UP FORM (Right Side) ================= -->
-      <div id="signupFormPanel" class="form-panel absolute top-0 right-0 w-1/2 h-full p-8 md:p-10 flex flex-col justify-center z-10 bg-white">
-        <div class="mb-3">
-          <h2 class="text-2xl font-black text-slate-900 tracking-tight">Create Account</h2>
-          <div class="w-10 h-1.5 bg-gradient-to-r from-emerald-500 to-cyan-500 mt-1 rounded-full"></div>
+      <!-- ================= SIGN UP FORM ================= -->
+      <div id="signupFormPanel" class="w-full md:w-1/2 p-7 md:p-10 flex flex-col justify-center bg-white z-10 hidden md:absolute md:top-0 md:right-0 md:h-full">
+        <div class="mb-4">
+          <h2 class="text-2xl font-black text-slate-900 tracking-tight font-brand">Create Account</h2>
+          <div class="w-12 h-1 bg-gradient-to-r from-emerald-500 to-cyan-500 mt-1.5 rounded-full"></div>
         </div>
 
-        <form onsubmit="handleSignup(event)" class="space-y-2">
+        <form onsubmit="handleSignup(event)" class="space-y-3">
           <div>
-            <label class="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Full Name</label>
-            <input type="text" id="regName" required placeholder="Ali Khan" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-1.5 text-xs font-semibold text-slate-800 outline-none focus:border-emerald-500 focus:bg-white transition shadow-sm">
+            <label class="text-[10px] font-bold text-slate-500 uppercase tracking-wider block mb-0.5">Full Name</label>
+            <input type="text" id="regName" required placeholder="Alex Mercer" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs font-medium text-slate-800 outline-none focus:border-emerald-500 focus:bg-white transition shadow-sm">
           </div>
 
           <div>
-            <label class="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Gmail Address</label>
-            <input type="email" id="regGmail" required placeholder="user@gmail.com" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-1.5 text-xs font-semibold text-slate-800 outline-none focus:border-emerald-500 focus:bg-white transition shadow-sm">
+            <label class="text-[10px] font-bold text-slate-500 uppercase tracking-wider block mb-0.5">Gmail Address</label>
+            <input type="email" id="regGmail" required placeholder="alex@gmail.com" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs font-medium text-slate-800 outline-none focus:border-emerald-500 focus:bg-white transition shadow-sm">
           </div>
 
           <div>
-            <label class="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Mobile Number</label>
-            <input type="tel" id="regMobile" required placeholder="03001234567" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-1.5 text-xs font-semibold text-slate-800 outline-none focus:border-emerald-500 focus:bg-white transition shadow-sm">
+            <label class="text-[10px] font-bold text-slate-500 uppercase tracking-wider block mb-0.5">Mobile Number</label>
+            <input type="tel" id="regMobile" required placeholder="03001234567" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs font-medium text-slate-800 outline-none focus:border-emerald-500 focus:bg-white transition shadow-sm">
           </div>
 
           <div>
-            <label class="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Password</label>
-            <input type="password" id="regPass" required placeholder="6+ Characters" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-1.5 text-xs font-semibold text-slate-800 outline-none focus:border-emerald-500 focus:bg-white transition shadow-sm">
+            <label class="text-[10px] font-bold text-slate-500 uppercase tracking-wider block mb-0.5">Password</label>
+            <input type="password" id="regPass" required placeholder="Minimum 6 characters" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs font-medium text-slate-800 outline-none focus:border-emerald-500 focus:bg-white transition shadow-sm">
           </div>
 
           <div>
-            <label class="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Referral Code (Optional)</label>
-            <input type="text" id="regRef" placeholder="VOLT786" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-1.5 text-xs font-mono font-bold uppercase text-emerald-600 outline-none focus:border-emerald-500 focus:bg-white transition shadow-sm">
+            <label class="text-[10px] font-bold text-slate-500 uppercase tracking-wider block mb-0.5">Referral Code (Optional)</label>
+            <input type="text" id="regRef" placeholder="VOLT786" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs font-mono font-bold uppercase text-emerald-600 outline-none focus:border-emerald-500 focus:bg-white transition shadow-sm">
           </div>
 
-          <button type="submit" class="w-full bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-slate-950 font-black py-2 rounded-xl text-xs uppercase tracking-wider transition shadow-md shadow-emerald-500/20 active:scale-95 mt-1 flex items-center justify-center space-x-2">
+          <button type="submit" class="w-full bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-slate-950 font-black py-2.5 rounded-xl text-xs uppercase tracking-wider transition shadow-md shadow-emerald-500/20 active:scale-95 mt-1 flex items-center justify-center space-x-2">
             <span>Register &amp; Claim Bonus</span>
             <i class="fa-solid fa-user-plus text-xs"></i>
           </button>
         </form>
 
         <p class="text-xs text-slate-500 mt-3 text-center font-medium">
-          پہلے سے ممبر ہیں؟ 
-          <button onclick="toggleAuth(false)" class="font-extrabold text-emerald-600 hover:text-emerald-700 underline ml-1 cursor-pointer">لاگ ان کریں</button>
+          Already registered? 
+          <button onclick="toggleAuth(false)" class="font-extrabold text-emerald-600 hover:text-emerald-700 underline ml-1 cursor-pointer">Login Here</button>
         </p>
       </div>
 
     </div>
-  </div>
+  </main>
 
-
-  <!-- ================= MAIN DASHBOARD (Protected View) ================= -->
-  <div id="mainDashboard" class="w-full min-h-screen flex flex-col hidden bg-[#050814]">
-    <!-- Top Bar -->
-    <header class="border-b border-slate-800 bg-slate-900/80 backdrop-blur sticky top-0 z-40 px-6 py-4 flex justify-between items-center">
-      <div class="flex items-center space-x-3">
-        <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-amber-500 to-emerald-400 flex items-center justify-center font-black text-black">
-          <i class="fa-solid fa-bolt"></i>
-        </div>
-        <span class="text-xl font-extrabold tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-amber-300 to-emerald-400">
-          VOLT<span class="text-white">WEALTH</span>
-        </span>
+  <!-- Minimal Institutional Footer -->
+  <footer class="py-6 px-6 text-center text-xs text-slate-500 border-t border-slate-900 bg-slate-950/60">
+    <div class="max-w-4xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-3">
+      <div class="flex items-center space-x-2">
+        <i class="fa-solid fa-bolt text-emerald-400"></i>
+        <span class="text-slate-400 font-semibold">VoltWealth Protocol Ltd.</span>
+        <span>&copy; 2026</span>
       </div>
-      <div class="flex items-center space-x-4">
-        <div class="bg-slate-800/80 border border-slate-700 px-4 py-1.5 rounded-full text-xs">
-          Member: <span id="displayUserName" class="text-emerald-400 font-bold">Member</span>
-        </div>
-        <div class="bg-slate-800/80 border border-slate-700 px-4 py-1.5 rounded-full text-xs">
-          Balance: <span id="userBalance" class="text-amber-400 font-bold">$0.00</span>
-        </div>
-        <button onclick="logout()" class="text-xs text-rose-400 hover:underline">Logout</button>
+      <div class="flex space-x-6 text-slate-400">
+        <a href="#" class="hover:text-amber-400 transition">Privacy</a>
+        <a href="#" class="hover:text-amber-400 transition">Terms</a>
+        <a href="#" class="hover:text-amber-400 transition">Node Status: Active</a>
       </div>
-    </header>
-
-    <!-- Main Content -->
-    <main class="flex-1 max-w-5xl mx-auto px-4 py-8 w-full space-y-8">
-      <div class="bg-gradient-to-r from-slate-900 via-indigo-950/40 to-slate-900 border border-emerald-500/30 rounded-3xl p-8 text-center relative overflow-hidden glow-gold">
-        <span class="bg-amber-400/20 text-amber-300 border border-amber-400/30 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
-          Official High-Yield Node
-        </span>
-        <h1 class="text-4xl md:text-5xl font-black italic mt-4 mb-2 text-white">DEPOSIT $6 &amp; GET INSTANT REWARD</h1>
-        <p class="text-slate-300 text-sm max-w-xl mx-auto mb-6">فوری اکاؤنٹ ایکٹیو کریں، ٹیم بنا کر کمیشن حاصل کریں اور ڈیلی انعامات کلیم کریں۔</p>
-        <button onclick="alert('USDT Address Copied: 0xVOLT786...99Y')" class="bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 text-slate-950 font-black px-8 py-3 rounded-full text-sm uppercase tracking-wide transition shadow-lg shadow-amber-400/30">
-          Deposit USDT Now
-        </button>
-      </div>
-
-      <!-- Cards Grid -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <!-- Daily Check-In -->
-        <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-6">
-          <div class="flex items-center space-x-3 mb-2">
-            <i class="fa-solid fa-calendar-check text-emerald-400 text-xl"></i>
-            <h3 class="font-bold text-base">Daily Check-In ($0.50)</h3>
-          </div>
-          <p class="text-xs text-slate-400 mb-4">ہر 24 گھنٹے بعد لاگ ان ہو کر مفت ڈیلی ریوارڈ کلیم کریں۔</p>
-          <button id="checkinBtn" onclick="claimDaily()" class="w-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold py-2.5 rounded-xl text-xs transition">
-            Claim Daily Check-In
-          </button>
-        </div>
-
-        <!-- Referral Link -->
-        <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-6">
-          <div class="flex items-center space-x-3 mb-2">
-            <i class="fa-solid fa-users text-amber-400 text-xl"></i>
-            <h3 class="font-bold text-base">Referral Link</h3>
-          </div>
-          <p class="text-xs text-slate-400 mb-3">اپنے ریفرل لنک سے دوستوں کو جوڑیں اور 10% بونس حاصل کریں۔</p>
-          <div class="flex">
-            <input id="refOutput" readonly class="bg-slate-950 border border-slate-800 text-xs px-3 py-2 rounded-l-xl w-full text-slate-300 outline-none">
-            <button onclick="copyRef()" class="bg-slate-800 hover:bg-slate-700 px-4 rounded-r-xl text-xs font-semibold">Copy</button>
-          </div>
-        </div>
-      </div>
-    </main>
-  </div>
+    </div>
+  </footer>
 
   <script>
     const box = document.getElementById('boxWrapper');
     const loginText = document.getElementById('loginBannerText');
     const signupText = document.getElementById('signupBannerText');
+    const loginPanel = document.getElementById('loginFormPanel');
+    const signupPanel = document.getElementById('signupFormPanel');
 
-    // Smooth Form Switcher
+    // Switch between Login and Signup
     function toggleAuth(isSignUp) {
-      if (isSignUp) {
-        box.classList.add('active');
-        loginText.classList.add('hidden');
-        signupText.classList.remove('hidden');
+      if (window.innerWidth < 768) {
+        if (isSignUp) {
+          loginPanel.classList.add('hidden');
+          signupPanel.classList.remove('hidden');
+        } else {
+          signupPanel.classList.add('hidden');
+          loginPanel.classList.remove('hidden');
+        }
       } else {
-        box.classList.remove('active');
-        signupText.classList.add('hidden');
-        loginText.classList.remove('hidden');
+        if (isSignUp) {
+          box.classList.add('active');
+          loginText.classList.add('hidden');
+          signupText.classList.remove('hidden');
+          signupPanel.classList.remove('hidden');
+        } else {
+          box.classList.remove('active');
+          signupText.classList.add('hidden');
+          loginText.classList.remove('hidden');
+        }
       }
     }
 
-    // Sign Up Logic (Name, Gmail, Mobile, Password, Referral)
+    // Sign Up Handler -> Saves Data and Moves to Dashboard
     function handleSignup(e) {
       e.preventDefault();
       const name = document.getElementById('regName').value.trim();
@@ -290,13 +256,15 @@
 
       const userData = { name, gmail, mobile, pass, ref };
       localStorage.setItem('volt_user', JSON.stringify(userData));
-      localStorage.setItem('volt_balance', '0.00');
-      
-      alert('مبارک ہو! آپ کا VoltWealth اکاؤنٹ کامیابی سے بن گیا ہے۔ اب Gmail یا موبائل نمبر سے لاگ ان کریں۔');
-      toggleAuth(false);
+      if (!localStorage.getItem('volt_balance')) {
+        localStorage.setItem('volt_balance', '0.00');
+      }
+
+      alert('Account registered successfully! Redirecting to dashboard...');
+      window.location.href = 'dashboard.html';
     }
 
-    // Login Logic (Gmail OR Mobile Number + Password)
+    // Login Handler -> Checks Data and Moves to Dashboard
     function handleLogin(e) {
       e.preventDefault();
       const identifier = document.getElementById('loginIdentifier').value.trim().toLowerCase();
@@ -306,55 +274,23 @@
       if (saved) {
         const matchesUser = (saved.gmail.toLowerCase() === identifier || saved.mobile === identifier);
         if (matchesUser && saved.pass === pass) {
-          openDashboard(saved.name);
+          window.location.href = 'dashboard.html';
           return;
         }
       }
 
-      // Demo login fallback
-      if (!saved && identifier && pass) {
-        openDashboard(identifier.split('@')[0]);
+      // Guest / Demo Entry
+      if (identifier && pass) {
+        const fallbackName = identifier.includes('@') ? identifier.split('@')[0] : identifier;
+        localStorage.setItem('volt_user', JSON.stringify({ name: fallbackName, gmail: identifier, mobile: identifier }));
+        if (!localStorage.getItem('volt_balance')) {
+          localStorage.setItem('volt_balance', '0.00');
+        }
+        window.location.href = 'dashboard.html';
       } else {
-        alert('درج کردہ Gmail / موبائل نمبر یا پاس ورڈ درست نہیں ہے!');
+        alert('Invalid Gmail/Mobile or Password!');
       }
-    }
-
-    function openDashboard(username) {
-      document.getElementById('authContainer').classList.add('hidden');
-      document.getElementById('mainDashboard').classList.remove('hidden');
-      document.getElementById('displayUserName').innerText = username;
-
-      const bal = parseFloat(localStorage.getItem('volt_balance')) || 0.00;
-      document.getElementById('userBalance').innerText = `$${bal.toFixed(2)}`;
-      document.getElementById('refOutput').value = `${window.location.origin}?ref=VOLT${Math.floor(1000 + Math.random()*9000)}`;
-    }
-
-    function claimDaily() {
-      let bal = parseFloat(localStorage.getItem('volt_balance')) || 0.00;
-      bal += 0.50;
-      localStorage.setItem('volt_balance', bal.toString());
-      document.getElementById('userBalance').innerText = `$${bal.toFixed(2)}`;
-      
-      const btn = document.getElementById('checkinBtn');
-      btn.disabled = true;
-      btn.innerText = 'آج کا ریوارڈ کلیم ہو گیا!';
-      btn.classList.add('opacity-50', 'cursor-not-allowed');
-      alert('+$0.50 بیلنس میں شامل کر دیے گئے ہیں!');
-    }
-
-    function copyRef() {
-      const copyText = document.getElementById('refOutput');
-      copyText.select();
-      navigator.clipboard.writeText(copyText.value);
-      alert('ریفرل لنک کاپی ہو گیا!');
-    }
-
-    function logout() {
-      document.getElementById('mainDashboard').classList.add('hidden');
-      document.getElementById('authContainer').classList.remove('hidden');
-      toggleAuth(false);
     }
   </script>
 </body>
-  </html>
-  
+</html>

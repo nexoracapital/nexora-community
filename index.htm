@@ -2,250 +2,309 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VoltWealth - Institutional Login Portal</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>VoltWealth</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@700;900&display=swap" rel="stylesheet">
   <style>
     body {
       font-family: 'Plus Jakarta Sans', sans-serif;
+      touch-action: manipulation;
     }
     .font-brand {
       font-family: 'Space Grotesk', sans-serif;
     }
 
-    /* Glowing Blinking / Pulsing Border */
-    @keyframes borderPulse {
+    /* Logo Flag-Waving Animation */
+    @keyframes flagWave {
       0%, 100% {
-        box-shadow: 0 0 25px rgba(16, 185, 129, 0.45), 0 0 50px rgba(245, 158, 11, 0.2);
-        border-color: rgba(16, 185, 129, 0.85);
+        transform: perspective(400px) rotateY(0deg) skewY(0deg) translateY(0);
+      }
+      25% {
+        transform: perspective(400px) rotateY(14deg) skewY(2deg) translateY(-2px);
       }
       50% {
-        box-shadow: 0 0 35px rgba(245, 158, 11, 0.65), 0 0 70px rgba(16, 185, 129, 0.4);
-        border-color: rgba(245, 158, 11, 0.95);
+        transform: perspective(400px) rotateY(-8deg) skewY(-2deg) translateY(2px);
+      }
+      75% {
+        transform: perspective(400px) rotateY(10deg) skewY(1deg) translateY(-1px);
       }
     }
-
-    .animated-border {
-      animation: borderPulse 3s infinite ease-in-out;
+    .logo-wave {
+      transform-origin: left center;
+      animation: flagWave 4s ease-in-out infinite;
+      will-change: transform;
     }
 
-    /* Diagonal Slanted Graphic for PC/Tablet */
-    @media (min-width: 768px) {
-      .slant-banner {
-        position: absolute;
-        top: -25%;
-        right: -10%;
-        width: 62%;
-        height: 150%;
-        background: linear-gradient(135deg, #090d1a 0%, #111827 50%, #064e3b 100%);
-        border-left: 2px solid rgba(52, 211, 153, 0.5);
-        clip-path: polygon(25% 0%, 100% 0%, 100% 100%, 0% 100%);
-        transition: all 0.75s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-        z-index: 20;
+    /* Compact Card Shimmer Border */
+    @keyframes neonPulse {
+      0%, 100% {
+        box-shadow: 0 0 15px rgba(16, 185, 129, 0.35), 0 0 30px rgba(245, 158, 11, 0.2);
+        border-color: rgba(16, 185, 129, 0.8);
       }
+      50% {
+        box-shadow: 0 0 25px rgba(245, 158, 11, 0.5), 0 0 45px rgba(16, 185, 129, 0.3);
+        border-color: rgba(245, 158, 11, 0.85);
+      }
+    }
+    .compact-glow-border {
+      animation: neonPulse 3s infinite ease-in-out;
+    }
 
-      .container-box.active .slant-banner {
-        right: 48%;
-        clip-path: polygon(0% 0%, 100% 0%, 75% 100%, 0% 100%);
-        border-left: none;
-        border-right: 2px solid rgba(245, 158, 11, 0.6);
-      }
+    /* Continuous Smooth Marquee */
+    @keyframes scrollTicker {
+      0% { transform: translateX(100%); }
+      100% { transform: translateX(-100%); }
+    }
+    .ticker-content {
+      display: inline-block;
+      white-space: nowrap;
+      animation: scrollTicker 22s linear infinite;
+    }
+    .ticker-content:hover {
+      animation-play-state: paused;
+    }
+
+    /* Slide Switch Transitions */
+    .view-slider {
+      transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
     }
   </style>
 </head>
-<body class="bg-[#030712] text-slate-100 min-h-screen flex flex-col justify-between font-sans selection:bg-amber-400 selection:text-black">
+<body class="bg-[#030712] text-slate-100 h-screen w-screen overflow-hidden flex flex-col justify-between items-center py-2 px-3 selection:bg-amber-400 selection:text-black">
 
-  <!-- Minimal Brand Header -->
-  <header class="py-6 px-6 text-center select-none">
-    <div class="inline-flex items-center space-x-3">
-      <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-amber-500 via-emerald-400 to-cyan-400 flex items-center justify-center shadow-lg shadow-emerald-500/20">
-        <i class="fa-solid fa-bolt text-slate-950 text-2xl"></i>
+  <!-- ================= TOP BRAND HEADER ================= -->
+  <header class="text-center select-none pt-1 flex flex-col items-center">
+    <div class="inline-flex items-center space-x-2.5">
+      
+      <!-- Flag Waving Relatable Futuristic SVG Logo -->
+      <div class="logo-wave w-9 h-9 rounded-xl bg-gradient-to-tr from-amber-500 via-emerald-400 to-cyan-400 p-[2px] shadow-lg shadow-emerald-500/25 flex items-center justify-center">
+        <div class="w-full h-full bg-[#030712] rounded-[10px] flex items-center justify-center relative overflow-hidden">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 3L11 19L14 12L20 21" stroke="url(#logoGrad)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M13 3L8 15" stroke="#F59E0B" stroke-width="2.2" stroke-linecap="round"/>
+            <defs>
+              <linearGradient id="logoGrad" x1="4" y1="3" x2="20" y2="21" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#34D399"/>
+                <stop offset="0.5" stop-color="#10B981"/>
+                <stop offset="1" stop-color="#F59E0B"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
       </div>
-      <h1 class="text-4xl md:text-5xl font-black italic tracking-wider font-brand text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-emerald-300 to-cyan-400">
+
+      <h1 class="text-2xl sm:text-3xl font-black italic tracking-wider font-brand text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-emerald-300 to-cyan-400">
         VOLT<span class="text-white">WEALTH</span>
       </h1>
     </div>
-    <p class="text-xs uppercase tracking-[0.25em] text-slate-400 font-semibold mt-2">Institutional Smart Yield &amp; Digital Assets</p>
+    <p class="text-[9px] uppercase tracking-[0.2em] text-slate-400 font-bold mt-0.5">Smart Yield &amp; Digital Assets</p>
   </header>
 
-  <!-- Centered Interactive Auth Card -->
-  <main class="flex-1 flex items-center justify-center p-4">
-    <div id="boxWrapper" class="container-box relative w-full max-w-3xl min-h-[560px] bg-white rounded-3xl shadow-2xl overflow-hidden text-slate-900 border-2 animated-border">
+  <!-- ================= LIVE ACTIVITY TICKER BAR ================= -->
+  <div class="w-full max-w-[340px] bg-slate-900/90 border border-slate-800/90 rounded-xl px-2.5 py-1.5 overflow-hidden flex items-center space-x-2 shadow-inner my-1">
+    <div class="flex items-center space-x-1.5 text-amber-400 text-[10px] font-black uppercase tracking-wider shrink-0 bg-amber-400/10 px-2 py-0.5 rounded border border-amber-400/30">
+      <i class="fa-solid fa-bolt-lightning animate-bounce text-[9px]"></i>
+      <span>Live</span>
+    </div>
+    <div class="overflow-hidden relative w-full text-[10px] text-slate-300">
+      <div id="liveTicker" class="ticker-content font-medium">
+        Loading real-time transactions...
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= COMPACT INTERACTIVE CARD ================= -->
+  <main class="w-full max-w-[340px] my-auto">
+    <div class="relative bg-white rounded-2xl shadow-2xl overflow-hidden text-slate-900 border-2 compact-glow-border">
       
-      <!-- Slanted Overlay (Desktop) -->
-      <div class="slant-banner hidden md:flex items-center justify-center text-white px-8">
-        <div class="absolute -top-10 -right-10 w-44 h-44 bg-emerald-500/20 rounded-full blur-2xl pointer-events-none"></div>
-        <div class="absolute -bottom-10 -left-10 w-44 h-44 bg-amber-500/20 rounded-full blur-2xl pointer-events-none"></div>
+      <div id="sliderWrapper" class="view-slider flex w-[200%]">
 
-        <!-- Banner Content: Login -->
-        <div id="loginBannerText" class="text-center select-none pl-12 transition-opacity duration-300">
-          <div class="inline-block px-3 py-1 bg-amber-400/20 border border-amber-400/40 rounded-full text-amber-300 text-[10px] font-extrabold uppercase tracking-widest mb-3">
-            Verified Portal
-          </div>
-          <h2 class="text-3xl font-black italic tracking-wide text-white mb-2 uppercase font-brand">
-            WELCOME<br>BACK!
-          </h2>
-          <p class="text-xs text-slate-300 max-w-[210px] mx-auto leading-relaxed">
-            Access institutional liquidity nodes, daily dividend claims, and team profits.
-          </p>
-          <div class="mt-4 flex items-center justify-center space-x-2 text-emerald-400 text-xs font-bold">
-            <i class="fa-solid fa-shield-halved"></i>
-            <span>End-to-End Encrypted</span>
-          </div>
-        </div>
-
-        <!-- Banner Content: Signup -->
-        <div id="signupBannerText" class="text-center select-none pr-12 hidden transition-opacity duration-300">
-          <div class="inline-block px-3 py-1 bg-emerald-400/20 border border-emerald-400/40 rounded-full text-emerald-300 text-[10px] font-extrabold uppercase tracking-widest mb-3">
-            Prime Membership
-          </div>
-          <h2 class="text-3xl font-black italic tracking-wide text-white mb-2 uppercase font-brand">
-            EXPAND<br>WEALTH!
-          </h2>
-          <p class="text-xs text-slate-300 max-w-[210px] mx-auto leading-relaxed">
-            Register your node and activate a welcome incentive on your initial staking round.
-          </p>
-          <div class="mt-4 flex items-center justify-center space-x-2 text-amber-300 text-xs font-bold">
-            <i class="fa-solid fa-gift"></i>
-            <span>Instant $2.00 Welcome Match</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- ================= LOGIN FORM ================= -->
-      <div id="loginFormPanel" class="w-full md:w-1/2 p-7 md:p-10 flex flex-col justify-center bg-white z-10 min-h-[560px]">
-        <div class="mb-5">
-          <h2 class="text-2xl font-black text-slate-900 tracking-tight font-brand">Account Login</h2>
-          <div class="w-12 h-1 bg-gradient-to-r from-amber-500 to-emerald-500 mt-1.5 rounded-full"></div>
-        </div>
-
-        <form onsubmit="handleLogin(event)" class="space-y-4">
+        <!-- ================= PANEL 1: LOGIN ================= -->
+        <div class="w-1/2 p-4 sm:p-5 flex flex-col justify-between">
           <div>
-            <label class="text-[11px] font-bold text-slate-500 uppercase tracking-wider block mb-1">Gmail or Mobile Number</label>
-            <div class="relative">
-              <input type="text" id="loginIdentifier" required placeholder="name@gmail.com or 03001234567" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs font-medium text-slate-800 outline-none focus:border-emerald-600 focus:bg-white transition shadow-sm pr-9">
-              <i class="fa-solid fa-user-check absolute right-3.5 top-3 text-xs text-slate-400"></i>
+            <div class="flex items-center justify-between mb-2.5">
+              <h2 class="text-lg sm:text-xl font-black text-slate-900 font-brand">Sign In</h2>
+              <span class="text-[9px] bg-slate-100 text-slate-600 font-bold px-2 py-0.5 rounded-full border border-slate-200">v2.4</span>
             </div>
-          </div>
 
-          <div>
-            <label class="text-[11px] font-bold text-slate-500 uppercase tracking-wider block mb-1">Account Password</label>
-            <div class="relative">
-              <input type="password" id="loginPass" required placeholder="Enter your password" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs font-medium text-slate-800 outline-none focus:border-emerald-600 focus:bg-white transition shadow-sm pr-9">
-              <i class="fa-solid fa-lock absolute right-3.5 top-3 text-xs text-slate-400"></i>
+            <!-- Login Mode Buttons (Mobile vs Gmail) -->
+            <div class="bg-slate-100 p-1 rounded-xl flex items-center mb-3 text-xs font-bold text-slate-600">
+              <button type="button" id="tabMobile" onclick="switchLoginMode('mobile')" class="flex-1 py-1 rounded-lg bg-white text-slate-900 shadow-sm transition flex items-center justify-center space-x-1 text-[11px]">
+                <i class="fa-solid fa-mobile-screen-button text-[10px]"></i>
+                <span>Mobile</span>
+              </button>
+              <button type="button" id="tabGmail" onclick="switchLoginMode('gmail')" class="flex-1 py-1 rounded-lg text-slate-500 hover:text-slate-800 transition flex items-center justify-center space-x-1 text-[11px]">
+                <i class="fa-regular fa-envelope text-[10px]"></i>
+                <span>Gmail</span>
+              </button>
             </div>
+
+            <form onsubmit="handleLogin(event)" class="space-y-2.5">
+              <!-- Dynamic Field -->
+              <div>
+                <label id="loginLabel" class="text-[9px] font-bold text-slate-500 uppercase tracking-wider block mb-0.5">
+                  Mobile Number
+                </label>
+                <div class="relative">
+                  <input type="tel" id="loginIdentifier" required placeholder="03001234567" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-1.5 text-xs font-semibold text-slate-800 outline-none focus:border-amber-500 focus:bg-white transition pr-8">
+                  <i id="loginIcon" class="fa-solid fa-phone absolute right-3 top-2 text-xs text-slate-400"></i>
+                </div>
+              </div>
+
+              <div>
+                <label class="text-[9px] font-bold text-slate-500 uppercase tracking-wider block mb-0.5">Password</label>
+                <div class="relative">
+                  <input type="password" id="loginPass" required placeholder="••••••••" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-1.5 text-xs font-semibold text-slate-800 outline-none focus:border-amber-500 focus:bg-white transition pr-8">
+                  <i class="fa-solid fa-lock absolute right-3 top-2 text-xs text-slate-400"></i>
+                </div>
+              </div>
+
+              <button type="submit" class="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black py-2 rounded-xl text-xs uppercase tracking-wider transition shadow-md shadow-amber-500/20 active:scale-95 flex items-center justify-center space-x-2 mt-2">
+                <span>Access Dashboard</span>
+                <i class="fa-solid fa-arrow-right text-[10px]"></i>
+              </button>
+            </form>
           </div>
 
-          <button type="submit" class="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black py-3 rounded-xl text-xs uppercase tracking-wider transition shadow-md shadow-amber-500/20 active:scale-95 flex items-center justify-center space-x-2">
-            <span>Access Dashboard</span>
-            <i class="fa-solid fa-arrow-right-to-bracket text-xs"></i>
-          </button>
-        </form>
-
-        <p class="text-xs text-slate-500 mt-6 text-center font-medium">
-          New to VoltWealth? 
-          <button onclick="toggleAuth(true)" class="font-extrabold text-amber-600 hover:text-amber-700 underline ml-1 cursor-pointer">Register Here</button>
-        </p>
-      </div>
-
-      <!-- ================= SIGN UP FORM ================= -->
-      <div id="signupFormPanel" class="w-full md:w-1/2 p-7 md:p-10 flex flex-col justify-center bg-white z-10 hidden md:absolute md:top-0 md:right-0 md:h-full">
-        <div class="mb-4">
-          <h2 class="text-2xl font-black text-slate-900 tracking-tight font-brand">Create Account</h2>
-          <div class="w-12 h-1 bg-gradient-to-r from-emerald-500 to-cyan-500 mt-1.5 rounded-full"></div>
+          <p class="text-[10px] text-slate-500 text-center font-medium mt-3">
+            New Member? 
+            <button onclick="goToSlide(true)" class="font-bold text-emerald-600 hover:underline">Register Here</button>
+          </p>
         </div>
 
-        <form onsubmit="handleSignup(event)" class="space-y-3">
+        <!-- ================= PANEL 2: COMPACT SIGN UP ================= -->
+        <div class="w-1/2 p-4 sm:p-5 flex flex-col justify-between">
           <div>
-            <label class="text-[10px] font-bold text-slate-500 uppercase tracking-wider block mb-0.5">Full Name</label>
-            <input type="text" id="regName" required placeholder="Alex Mercer" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs font-medium text-slate-800 outline-none focus:border-emerald-500 focus:bg-white transition shadow-sm">
+            <div class="flex items-center justify-between mb-2">
+              <h2 class="text-lg sm:text-xl font-black text-slate-900 font-brand">Create Node</h2>
+              <span class="text-[9px] bg-emerald-100 text-emerald-700 font-bold px-2 py-0.5 rounded-full">+ $2 Bonus</span>
+            </div>
+
+            <form onsubmit="handleSignup(event)" class="space-y-1.5">
+              <div>
+                <label class="text-[8px] font-bold text-slate-500 uppercase tracking-wider block">Full Name</label>
+                <input type="text" id="regName" required placeholder="Ali Khan" class="w-full bg-slate-50 border border-slate-300 rounded-md px-2.5 py-1 text-xs font-semibold text-slate-800 outline-none focus:border-emerald-500">
+              </div>
+
+              <div>
+                <label class="text-[8px] font-bold text-slate-500 uppercase tracking-wider block">Gmail</label>
+                <input type="email" id="regGmail" required placeholder="user@gmail.com" class="w-full bg-slate-50 border border-slate-300 rounded-md px-2.5 py-1 text-xs font-semibold text-slate-800 outline-none focus:border-emerald-500">
+              </div>
+
+              <div>
+                <label class="text-[8px] font-bold text-slate-500 uppercase tracking-wider block">Mobile Number</label>
+                <input type="tel" id="regMobile" required placeholder="03001234567" class="w-full bg-slate-50 border border-slate-300 rounded-md px-2.5 py-1 text-xs font-semibold text-slate-800 outline-none focus:border-emerald-500">
+              </div>
+
+              <div>
+                <label class="text-[8px] font-bold text-slate-500 uppercase tracking-wider block">Password</label>
+                <input type="password" id="regPass" required placeholder="••••••••" class="w-full bg-slate-50 border border-slate-300 rounded-md px-2.5 py-1 text-xs font-semibold text-slate-800 outline-none focus:border-emerald-500">
+              </div>
+
+              <div>
+                <label class="text-[8px] font-bold text-slate-500 uppercase tracking-wider block">Referral Code</label>
+                <input type="text" id="regRef" placeholder="VOLT786" class="w-full bg-slate-50 border border-slate-300 rounded-md px-2.5 py-1 text-xs font-mono font-bold uppercase text-emerald-600 outline-none focus:border-emerald-500">
+              </div>
+
+              <button type="submit" class="w-full bg-gradient-to-r from-emerald-500 to-teal-600 text-slate-950 font-black py-1.5 rounded-xl text-xs uppercase tracking-wider transition shadow-md shadow-emerald-500/20 active:scale-95 mt-1">
+                Register &amp; Claim
+              </button>
+            </form>
           </div>
 
-          <div>
-            <label class="text-[10px] font-bold text-slate-500 uppercase tracking-wider block mb-0.5">Gmail Address</label>
-            <input type="email" id="regGmail" required placeholder="alex@gmail.com" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs font-medium text-slate-800 outline-none focus:border-emerald-500 focus:bg-white transition shadow-sm">
-          </div>
+          <p class="text-[10px] text-slate-500 text-center font-medium mt-2">
+            Existing User? 
+            <button onclick="goToSlide(false)" class="font-bold text-amber-600 hover:underline">Log In</button>
+          </p>
+        </div>
 
-          <div>
-            <label class="text-[10px] font-bold text-slate-500 uppercase tracking-wider block mb-0.5">Mobile Number</label>
-            <input type="tel" id="regMobile" required placeholder="03001234567" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs font-medium text-slate-800 outline-none focus:border-emerald-500 focus:bg-white transition shadow-sm">
-          </div>
-
-          <div>
-            <label class="text-[10px] font-bold text-slate-500 uppercase tracking-wider block mb-0.5">Password</label>
-            <input type="password" id="regPass" required placeholder="Minimum 6 characters" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs font-medium text-slate-800 outline-none focus:border-emerald-500 focus:bg-white transition shadow-sm">
-          </div>
-
-          <div>
-            <label class="text-[10px] font-bold text-slate-500 uppercase tracking-wider block mb-0.5">Referral Code (Optional)</label>
-            <input type="text" id="regRef" placeholder="VOLT786" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs font-mono font-bold uppercase text-emerald-600 outline-none focus:border-emerald-500 focus:bg-white transition shadow-sm">
-          </div>
-
-          <button type="submit" class="w-full bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-slate-950 font-black py-2.5 rounded-xl text-xs uppercase tracking-wider transition shadow-md shadow-emerald-500/20 active:scale-95 mt-1 flex items-center justify-center space-x-2">
-            <span>Register &amp; Claim Bonus</span>
-            <i class="fa-solid fa-user-plus text-xs"></i>
-          </button>
-        </form>
-
-        <p class="text-xs text-slate-500 mt-3 text-center font-medium">
-          Already registered? 
-          <button onclick="toggleAuth(false)" class="font-extrabold text-emerald-600 hover:text-emerald-700 underline ml-1 cursor-pointer">Login Here</button>
-        </p>
       </div>
-
     </div>
   </main>
 
-  <!-- Minimal Institutional Footer -->
-  <footer class="py-6 px-6 text-center text-xs text-slate-500 border-t border-slate-900 bg-slate-950/60">
-    <div class="max-w-4xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-3">
-      <div class="flex items-center space-x-2">
-        <i class="fa-solid fa-bolt text-emerald-400"></i>
-        <span class="text-slate-400 font-semibold">VoltWealth Protocol Ltd.</span>
-        <span>&copy; 2026</span>
-      </div>
-      <div class="flex space-x-6 text-slate-400">
-        <a href="#" class="hover:text-amber-400 transition">Privacy</a>
-        <a href="#" class="hover:text-amber-400 transition">Terms</a>
-        <a href="#" class="hover:text-amber-400 transition">Node Status: Active</a>
-      </div>
+  <!-- ================= MINIMAL FOOTER (ONLY ACTIVE) ================= -->
+  <footer class="pb-1 flex items-center justify-center space-x-2 text-[11px] select-none">
+    <div class="flex items-center space-x-1.5 bg-slate-900/90 border border-slate-800 px-3 py-1 rounded-full text-slate-300 shadow-sm">
+      <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+      <span class="w-2 h-2 rounded-full bg-emerald-400 absolute"></span>
+      <span class="font-semibold text-slate-200">Active</span>
     </div>
   </footer>
 
   <script>
-    const box = document.getElementById('boxWrapper');
-    const loginText = document.getElementById('loginBannerText');
-    const signupText = document.getElementById('signupBannerText');
-    const loginPanel = document.getElementById('loginFormPanel');
-    const signupPanel = document.getElementById('signupFormPanel');
+    const slider = document.getElementById('sliderWrapper');
+    let currentMode = 'mobile';
 
-    // Switch between Login and Signup
-    function toggleAuth(isSignUp) {
-      if (window.innerWidth < 768) {
-        if (isSignUp) {
-          loginPanel.classList.add('hidden');
-          signupPanel.classList.remove('hidden');
-        } else {
-          signupPanel.classList.add('hidden');
-          loginPanel.classList.remove('hidden');
-        }
+    // Slide animation between Login and Register
+    function goToSlide(isSignup) {
+      if (isSignup) {
+        slider.style.transform = 'translateX(-50%)';
       } else {
-        if (isSignUp) {
-          box.classList.add('active');
-          loginText.classList.add('hidden');
-          signupText.classList.remove('hidden');
-          signupPanel.classList.remove('hidden');
-        } else {
-          box.classList.remove('active');
-          signupText.classList.add('hidden');
-          loginText.classList.remove('hidden');
-        }
+        slider.style.transform = 'translateX(0%)';
       }
     }
 
-    // Sign Up Handler -> Saves Data and Moves to Dashboard
+    // Toggle between Mobile and Gmail login input
+    function switchLoginMode(mode) {
+      currentMode = mode;
+      const tabMobile = document.getElementById('tabMobile');
+      const tabGmail = document.getElementById('tabGmail');
+      const label = document.getElementById('loginLabel');
+      const input = document.getElementById('loginIdentifier');
+      const icon = document.getElementById('loginIcon');
+
+      if (mode === 'mobile') {
+        tabMobile.className = 'flex-1 py-1 rounded-lg bg-white text-slate-900 shadow-sm transition flex items-center justify-center space-x-1 text-[11px]';
+        tabGmail.className = 'flex-1 py-1 rounded-lg text-slate-500 hover:text-slate-800 transition flex items-center justify-center space-x-1 text-[11px]';
+        label.innerText = 'Mobile Number';
+        input.type = 'tel';
+        input.placeholder = '03001234567';
+        icon.className = 'fa-solid fa-phone absolute right-3 top-2 text-xs text-slate-400';
+      } else {
+        tabGmail.className = 'flex-1 py-1 rounded-lg bg-white text-slate-900 shadow-sm transition flex items-center justify-center space-x-1 text-[11px]';
+        tabMobile.className = 'flex-1 py-1 rounded-lg text-slate-500 hover:text-slate-800 transition flex items-center justify-center space-x-1 text-[11px]';
+        label.innerText = 'Gmail Address';
+        input.type = 'email';
+        input.placeholder = 'user@gmail.com';
+        icon.className = 'fa-regular fa-envelope absolute right-3 top-2 text-xs text-slate-400';
+      }
+      input.value = '';
+      input.focus();
+    }
+
+    // Dynamic Live Ticker with Hidden Gmail Format (First Letter Big + **** + @gmail.com)
+    function generateLiveTicker() {
+      const names = ['A', 'M', 'K', 'S', 'Z', 'F', 'H', 'R', 'T', 'W'];
+      const actions = [
+        { type: 'deposit', template: (g, amt) => `<span class="text-amber-400 font-bold">${g}</span> has been successfully deposited <strong class="text-emerald-400">$${amt}.00</strong>` },
+        { type: 'plan', template: (g, p) => `<span class="text-amber-400 font-bold">${g}</span> has been successfully activated <strong class="text-cyan-400">PLAN ${p}</strong>` },
+        { type: 'withdraw', template: (g, amt) => `<span class="text-amber-400 font-bold">${g}</span> has been successfully withdrew <strong class="text-amber-300">$${amt}.00</strong>` }
+      ];
+
+      let tickerItems = [];
+      for (let i = 0; i < 9; i++) {
+        const initial = names[Math.floor(Math.random() * names.length)];
+        const hiddenGmail = `${initial}****@gmail.com`;
+        const act = actions[i % actions.length];
+        
+        let content = '';
+        if (act.type === 'deposit') {
+          content = act.template(hiddenGmail, [6, 12, 25, 50, 100][Math.floor(Math.random() * 5)]);
+        } else if (act.type === 'plan') {
+          content = act.template(hiddenGmail, Math.floor(Math.random() * 4) + 1);
+        } else {
+          content = act.template(hiddenGmail, [15, 30, 75, 120, 250][Math.floor(Math.random() * 5)]);
+        }
+        tickerItems.push(content);
+      }
+
+      document.getElementById('liveTicker').innerHTML = tickerItems.join(' &nbsp;•&nbsp; ');
+    }
+    generateLiveTicker();
+
+    // Handle User Sign Up
     function handleSignup(e) {
       e.preventDefault();
       const name = document.getElementById('regName').value.trim();
@@ -260,35 +319,50 @@
         localStorage.setItem('volt_balance', '0.00');
       }
 
-      alert('Account registered successfully! Redirecting to dashboard...');
+      alert('Node registered successfully! Redirecting...');
       window.location.href = 'dashboard.html';
     }
 
-    // Login Handler -> Checks Data and Moves to Dashboard
+    // Handle User & CEO Secret Login
     function handleLogin(e) {
       e.preventDefault();
       const identifier = document.getElementById('loginIdentifier').value.trim().toLowerCase();
       const pass = document.getElementById('loginPass').value;
+
+      // ================= SECRET CEO GATEWAY =================
+      // CEO Credentials (کوئی بھی یوزر نہیں جان سکے گا)
+      const CEO_GMAIL = 'ceo@voltwealth.com';
+      const CEO_PASS = 'admin1234';
+
+      if (identifier === CEO_GMAIL && pass === CEO_PASS) {
+        localStorage.setItem('volt_auth_role', 'CEO');
+        window.location.href = 'ceo-dashboard.html';
+        return;
+      }
+
+      // ================= REGULAR USER LOGIN =================
       const saved = JSON.parse(localStorage.getItem('volt_user'));
 
       if (saved) {
-        const matchesUser = (saved.gmail.toLowerCase() === identifier || saved.mobile === identifier);
-        if (matchesUser && saved.pass === pass) {
+        const match = (saved.mobile === identifier || saved.gmail.toLowerCase() === identifier);
+        if (match && saved.pass === pass) {
+          localStorage.setItem('volt_auth_role', 'USER');
           window.location.href = 'dashboard.html';
           return;
         }
       }
 
-      // Guest / Demo Entry
+      // Demo User Fallback
       if (identifier && pass) {
         const fallbackName = identifier.includes('@') ? identifier.split('@')[0] : identifier;
         localStorage.setItem('volt_user', JSON.stringify({ name: fallbackName, gmail: identifier, mobile: identifier }));
         if (!localStorage.getItem('volt_balance')) {
           localStorage.setItem('volt_balance', '0.00');
         }
+        localStorage.setItem('volt_auth_role', 'USER');
         window.location.href = 'dashboard.html';
       } else {
-        alert('Invalid Gmail/Mobile or Password!');
+        alert('Invalid Credentials!');
       }
     }
   </script>

@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>VoltWealth - Member Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@700;900&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .font-brand {
+      font-family: 'Space Grotesk', sans-serif;
+    }
+    .glow-gold {
+      box-shadow: 0 0 25px rgba(245, 158, 11, 0.35);
+    }
+    .glow-green {
+      box-shadow: 0 0 25px rgba(16, 185, 129, 0.35);
+    }
+  </style>
+</head>
+<body class="bg-[#030712] text-slate-100 min-h-screen flex flex-col font-sans selection:bg-amber-400 selection:text-black">
+
+  <!-- ================= TOP HEADER NAVIGATION ================= -->
+  <header class="border-b border-slate-800/80 bg-slate-900/90 backdrop-blur sticky top-0 z-40 px-4 sm:px-6 py-3 flex justify-between items-center">
+    <div class="flex items-center space-x-2.5">
+      <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-amber-500 via-emerald-400 to-cyan-400 p-[2px] flex items-center justify-center">
+        <div class="w-full h-full bg-[#030712] rounded-[9px] flex items-center justify-center">
+          <i class="fa-solid fa-bolt text-amber-400 text-xs"></i>
+        </div>
+      </div>
+      <span class="text-xl font-black italic tracking-wider font-brand text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-emerald-300 to-cyan-400">
+        VOLT<span class="text-white">WEALTH</span>
+      </span>
+    </div>
+
+    <!-- User Profile & Action Strip -->
+    <div class="flex items-center space-x-3">
+      <div class="hidden sm:flex items-center space-x-1.5 bg-slate-800/80 border border-slate-700/80 px-3 py-1 rounded-full text-xs text-slate-300">
+        <i class="fa-regular fa-circle-user text-emerald-400"></i>
+        <span id="navUserName">Investor</span>
+      </div>
+      <button onclick="logout()" class="bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/30 text-xs font-bold px-3 py-1 rounded-full transition flex items-center space-x-1">
+        <i class="fa-solid fa-power-off text-[10px]"></i>
+        <span>Logout</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ================= MAIN DASHBOARD CONTAINER ================= -->
+  <main class="flex-1 max-w-5xl mx-auto px-4 py-6 w-full space-y-6">
+
+    <!-- Overview Balance Banner -->
+    <div class="relative bg-gradient-to-br from-slate-900 via-indigo-950/40 to-slate-900 border border-emerald-500/30 rounded-3xl p-6 sm:p-8 glow-green overflow-hidden">
+      <div class="absolute -top-12 -right-12 w-48 h-48 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+      <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 relative z-10">
+        <div>
+          <span class="text-[10px] uppercase tracking-widest font-bold px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-400/30">
+            Node Live • Yield Staking
+          </span>
+          <div class="text-slate-400 text-xs font-semibold mt-3">Total Active Balance</div>
+          <div class="text-4xl sm:text-5xl font-black text-amber-400 font-brand mt-1 flex items-baseline space-x-2">
+            <span id="totalBalanceDisplay">$0.00</span>
+            <span class="text-xs text-slate-400 font-sans tracking-normal">USDT</span>
+          </div>
+        </div>
+
+        <!-- Quick Balance Action Buttons -->
+        <div class="flex flex-wrap items-center gap-3 w-full md:w-auto">
+          <button onclick="openModal('depositModal')" class="flex-1 md:flex-initial bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 text-slate-950 font-black px-6 py-2.5 rounded-xl text-xs uppercase tracking-wider transition shadow-lg shadow-amber-400/20 flex items-center justify-center space-x-2">
+            <i class="fa-solid fa-wallet"></i>
+            <span>Deposit</span>
+          </button>
+          <button onclick="openModal('withdrawModal')" class="flex-1 md:flex-initial bg-slate-800 hover:bg-slate-700 text-white font-bold px-6 py-2.5 rounded-xl text-xs uppercase tracking-wider transition border border-slate-700 flex items-center justify-center space-x-2">
+            <i class="fa-solid fa-arrow-up-from-bracket"></i>
+            <span>Withdraw</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Functional Utilities Grid (Daily Check-in + Referral Link) -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+      <!-- Daily Dividend Check-in -->
+      <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex justify-between items-center mb-2">
+            <h3 class="font-bold text-sm flex items-center space-x-2">
+              <i class="fa-solid fa-calendar-check text-emerald-400"></i>
+              <span>Daily Attendance Yield</span>
+            </h3>
+            <span class="text-[10px] bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2 py-0.5 rounded font-bold">+$0.50 Daily</span>
+          </div>
+          <p class="text-xs text-slate-400 mb-4">Claim your node dividend once every 24 hours to keep yield streaks active.</p>
+        </div>
+
+        <div>
+          <button id="claimBtn" onclick="handleClaimCheckin()" class="w-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold py-2.5 rounded-xl text-xs transition active:scale-95 flex items-center justify-center space-x-2">
+            <i class="fa-solid fa-gift"></i>
+            <span id="claimBtnText">Claim Daily $0.50</span>
+          </button>
+          <p id="cooldownTimer" class="text-[10px] text-slate-500 text-center mt-2 hidden"></p>
+        </div>
+      </div>
+
+      <!-- Referral Link & Team Commission -->
+      <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex justify-between items-center mb-2">
+            <h3 class="font-bold text-sm flex items-center space-x-2">
+              <i class="fa-solid fa-users text-amber-400"></i>
+              <span>Partnership Commission</span>
+            </h3>
+            <span class="text-[10px] bg-amber-500/10 text-amber-400 border border-amber-500/20 px-2 py-0.5 rounded font-bold">15% Daily</span>
+          </div>
+          <p class="text-xs text-slate-400 mb-3">Share your invitation link to earn tier-based recurring revenue.</p>
+        </div>
+
+        <div>
+          <div class="flex items-center">
+            <input type="text" id="refLinkInput" readonly class="bg-slate-950 border border-slate-800 text-xs px-3 py-2 rounded-l-xl w-full text-slate-300 outline-none font-mono">
+            <button onclick="copyRefLink()" class="bg-slate-800 hover:bg-slate-700 px-4 py-2 rounded-r-xl text-xs font-bold transition border-l border-slate-700 text-amber-400">
+              Copy
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ================= INVESTMENT PLANS TIERS (Plans 1 - 4) ================= -->
+    <div class="space-y-4 pt-2">
+      <div class="flex flex-col sm:flex-row justify-between sm:items-end gap-1">
+        <div>
+          <h2 class="text-xl font-black font-brand text-white">Investment Tiers</h2>
+          <p class="text-xs text-slate-400">Choose a smart staking package to automate daily returns.</p>
+        </div>
+        <span class="text-[11px] font-bold text-amber-400 self-start sm:self-auto bg-amber-400/10 px-2.5 py-1 rounded-full border border-amber-400/30">
+          15% Referral Commission Daily
+        </span>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        
+        <!-- Plan 1 -->
+        <div class="bg-slate-900/90 border border-amber-500/30 hover:border-amber-400 rounded-2xl p-4 flex flex-col justify-between text-center transition hover:-translate-y-1">
+          <div>
+            <div class="bg-amber-400 text-black font-black py-1.5 rounded-xl uppercase text-xs tracking-wider mb-3 font-brand">PLAN 1</div>
+            <div class="text-[10px] text-slate-400 uppercase font-semibold">Investment</div>
+            <div class="text-xl font-black text-white font-brand mb-2">890 <span class="text-xs text-slate-400">USDT</span></div>
+            
+            <div class="space-y-1.5 border-t border-b border-slate-800 py-2.5 text-xs">
+              <div class="flex justify-between text-slate-300">
+                <span>Daily Profit:</span>
+                <strong class="text-emerald-400">445 USDT</strong>
+              </div>
+              <div class="flex justify-between text-slate-300">
+                <span>Total Profit:</span>
+                <strong class="text-amber-400">22,250 USDT</strong>
+              </div>
+              <div class="flex justify-between text-slate-400 text-[10px]">
+                <span>Duration:</span>
+                <span>45 Days</span>
+              </div>
+            </div>
+          </div>
+          <button onclick="subscribePlan('PLAN 1', 890)" class="mt-3 w-full bg-slate-800 hover:bg-amber-400 hover:text-black text-white font-bold py-2 rounded-xl text-xs transition">
+            Activate Plan
+          </button>
+        </div>
+
+        <!-- Plan 2 -->
+        <div class="bg-slate-900/90 border border-amber-500/30 hover:border-amber-400 rounded-2xl p-4 flex flex-col justify-between text-center transition hover:-translate-y-1">
+          <div>
+            <div class="bg-amber-400 text-black font-black py-1.5 rounded-xl uppercase text-xs tracking-wider mb-3 font-brand">PLAN 2</div>
+            <div class="text-[10px] text-slate-400 uppercase font-semibold">Investment</div>
+            <div class="text-xl font-black text-white font-brand mb-2">2,890 <span class="text-xs text-slate-400">USDT</span></div>
+            
+            <div class="space-y-1.5 border-t border-b border-slate-800 py-2.5 text-xs">
+              <div class="flex justify-between text-slate-300">
+                <span>Daily Profit:</span>
+                <strong class="text-emerald-400">1,445 USDT</strong>
+              </div>
+              <div class="flex justify-between text-slate-300">
+                <span>Total Profit:</span>
+                <strong class="text-amber-400">72,250 USDT</strong>
+              </div>
+              <div class="flex justify-between text-slate-400 text-[10px]">
+                <span>Duration:</span>
+                <span>45 Days</span>
+              </div>
+            </div>
+          </div>
+          <button onclick="subscribePlan('PLAN 2', 2890)" class="mt-3 w-full bg-slate-800 hover:bg-amber-400 hover:text-black text-white font-bold py-2 rounded-xl text-xs transition">
+            Activate Plan
+          </button>
+        </div>
+
+        <!-- Plan 3 -->
+        <div class="bg-slate-900/90 border border-amber-500/30 hover:border-amber-400 rounded-2xl p-4 flex flex-col justify-between text-center transition hover:-translate-y-1">
+          <div>
+            <div class="bg-amber-400 text-black font-black py-1.5 rounded-xl uppercase text-xs tracking-wider mb-3 font-brand">PLAN 3</div>
+            <div class="text-[10px] text-slate-400 uppercase font-semibold">Investment</div>
+            <div class="text-xl font-black text-white font-brand mb-2">5,890 <span class="text-xs text-slate-400">USDT</span></div>
+            
+            <div class="space-y-1.5 border-t border-b border-slate-800 py-2.5 text-xs">
+              <div class="flex justify-between text-slate-300">
+                <span>Daily Profit:</span>
+                <strong class="text-emerald-400">3,495 USDT</strong>
+              </div>
+              <div class="flex justify-between text-slate-300">
+                <span>Total Profit:</span>
+                <strong class="text-amber-400">174,750 USDT</strong>
+              </div>
+              <div class="flex justify-between text-slate-400 text-[10px]">
+                <span>Duration:</span>
+                <span>45 Days</span>
+              </div>
+            </div>
+          </div>
+          <button onclick="subscribePlan('PLAN 3', 5890)" class="mt-3 w-full bg-slate-800 hover:bg-amber-400 hover:text-black text-white font-bold py-2 rounded-xl text-xs transition">
+            Activate Plan
+          </button>
+        </div>
+
+        <!-- Plan 4 -->
+        <div class="bg-slate-900/90 border border-amber-500/30 hover:border-amber-400 rounded-2xl p-4 flex flex-col justify-between text-center transition hover:-translate-y-1">
+          <div>
+            <div class="bg-amber-400 text-black font-black py-1.5 rounded-xl uppercase text-xs tracking-wider mb-3 font-brand">PLAN 4</div>
+            <div class="text-[10px] text-slate-400 uppercase font-semibold">Investment</div>
+            <div class="text-xl font-black text-white font-brand mb-2">12,990 <span class="text-xs text-slate-400">USDT</span></div>
+            
+            <div class="space-y-1.5 border-t border-b border-slate-800 py-2.5 text-xs">
+              <div class="flex justify-between text-slate-300">
+                <span>Daily Profit:</span>
+                <strong class="text-emerald-400">7,495 USDT</strong>
+              </div>
+              <div class="flex justify-between text-slate-300">
+                <span>Total Profit:</span>
+                <strong class="text-amber-400">374,750 USDT</strong>
+              </div>
+              <div class="flex justify-between text-slate-400 text-[10px]">
+                <span>Duration:</span>
+                <span>45 Days</span>
+              </div>
+            </div>
+          </div>
+          <button onclick="subscribePlan('PLAN 4', 12990)" class="mt-3 w-full bg-slate-800 hover:bg-amber-400 hover:text-black text-white font-bold py-2 rounded-xl text-xs transition">
+            Activate Plan
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ================= POPUP MODAL: DEPOSIT ================= -->
+  <div id="depositModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-slate-900 border border-slate-700 max-w-sm w-full rounded-2xl p-6 space-y-4">
+      <div class="flex justify-between items-center">
+        <h3 class="font-bold text-base text-white">Deposit USDT</h3>
+        <button onclick="closeModal('depositModal')" class="text-slate-400 hover:text-white text-lg">&times;</button>
+      </div>
+      <p class="text-xs text-slate-400">Deposit minimum $6 to receive an instant $2.00 match bonus.</p>
+      
+      <div>
+        <label class="text-[11px] text-slate-400 uppercase font-semibold block mb-1">Deposit Amount ($)</label>
+        <input type="number" id="depositAmountInput" value="6" min="1" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-white text-sm outline-none focus:border-emerald-500">
+      </div>
+
+      <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 text-[11px] space-y-1 text-slate-300">
+        <div>Network: <strong class="text-emerald-400 font-mono">TRC20 / BEP20</strong></div>
+        <div class="truncate">Address: <code class="text-slate-400">TX9yZaeVoltWealthNode786DemoAddress</code></div>
+      </div>
+
+      <button onclick="processDeposit()" class="w-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold py-2.5 rounded-xl text-xs uppercase tracking-wider transition">
+        Confirm Deposit
+      </button>
+    </div>
+  </div>
+
+  <!-- ================= POPUP MODAL: WITHDRAW ================= -->
+  <div id="withdrawModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-slate-900 border border-slate-700 max-w-sm w-full rounded-2xl p-6 space-y-4">
+      <div class="flex justify-between items-center">
+        <h3 class="font-bold text-base text-white">Withdraw Funds</h3>
+        <button onclick="closeModal('withdrawModal')" class="text-slate-400 hover:text-white text-lg">&times;</button>
+      </div>
+
+      <div>
+        <label class="text-[11px] text-slate-400 uppercase font-semibold block mb-1">Your USDT Address (TRC20)</label>
+        <input type="text" id="withdrawAddressInput" placeholder="T..." class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-white text-xs outline-none focus:border-amber-500">
+      </div>
+
+      <div>
+        <label class="text-[11px] text-slate-400 uppercase font-semibold block mb-1">Withdraw Amount ($)</label>
+        <input type="number" id="withdrawAmountInput" placeholder="Min $5.00" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-white text-sm outline-none focus:border-amber-500">
+      </div>
+
+      <button onclick="processWithdrawal()" class="w-full bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold py-2.5 rounded-xl text-xs uppercase tracking-wider transition">
+        Submit Withdrawal
+      </button>
+    </div>
+  </div>
+
+  <!-- Professional Footer -->
+  <footer class="border-t border-slate-900 bg-slate-950 py-5 px-6 text-center text-[10px] text-slate-500 mt-10">
+    <div class="max-w-4xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-2">
+      <div>&copy; 2026 VoltWealth Protocol. 256-Bit SSL Encrypted.</div>
+      <div class="flex space-x-4 text-slate-400">
+        <a href="#" class="hover:text-amber-400">Audit</a>
+        <a href="#" class="hover:text-amber-400">Support</a>
+        <a href="#" class="hover:text-amber-400">Terms</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ================= SESSION & ACCESS CONTROL =================
+    const activeSession = JSON.parse(sessionStorage.getItem('volt_active_session'));
+    if (!activeSession) {
+      // بغیر لاگ ان سیدھا داخل ہونے والے کو واپس بھیجیں
+      window.location.href = 'index.html';
+    }
+
+    document.getElementById('navUserName').innerText = activeSession.name || 'Investor';
+
+    // State
+    let balance = parseFloat(localStorage.getItem('volt_balance')) || 0.00;
+    let lastClaimTime = localStorage.getItem('volt_last_claim');
+
+    function updateBalanceUI() {
+      document.getElementById('totalBalanceDisplay').innerText = `$${balance.toFixed(2)}`;
+      localStorage.setItem('volt_balance', balance.toString());
+      checkCooldown();
+    }
+
+    // Cooldown logic for Daily 24 Hours Check-in
+    function checkCooldown() {
+      if (!lastClaimTime) return;
+      const elapsedHours = (Date.now() - parseInt(lastClaimTime)) / (1000 * 60 * 60);
+      const btn = document.getElementById('claimBtn');
+      const btnText = document.getElementById('claimBtnText');
+      const timer = document.getElementById('cooldownTimer');
+
+      if (elapsedHours < 24) {
+        btn.disabled = true;
+        btn.classList.add('opacity-50', 'cursor-not-allowed');
+        btnText.innerText = 'Claimed for Today';
+        timer.classList.remove('hidden');
+        const remainingHours = Math.ceil(24 - elapsedHours);
+        timer.innerText = `Next dividend unlocks in ~${remainingHours} hours`;
+      } else {
+        btn.disabled = false;
+        btn.classList.remove('opacity-50', 'cursor-not-allowed');
+        btnText.innerText = 'Claim Daily $0.50';
+        timer.classList.add('hidden');
+      }
+    }
+
+    function handleClaimCheckin() {
+      balance += 0.50;
+      lastClaimTime = Date.now().toString();
+      localStorage.setItem('volt_last_claim', lastClaimTime);
+      alert('Success! +$0.50 Daily Dividend credited to balance.');
+      updateBalanceUI();
+    }
+
+    // Referral setup
+    const userRefCode = activeSession.ref || 'VOLT' + Math.floor(1000 + Math.random() * 9000);
+    document.getElementById('refLinkInput').value = `${window.location.origin}/index

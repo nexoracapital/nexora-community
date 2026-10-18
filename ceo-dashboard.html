@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>VoltWealth - Executive Control Center (CEO)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@700;900&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .font-brand {
+      font-family: 'Space Grotesk', sans-serif;
+    }
+    .glow-amber {
+      box-shadow: 0 0 25px rgba(245, 158, 11, 0.25);
+    }
+  </style>
+</head>
+<body class="bg-[#030712] text-slate-100 min-h-screen flex flex-col font-sans selection:bg-amber-400 selection:text-black">
+
+  <!-- ================= CEO TOP NAVIGATION ================= -->
+  <header class="border-b border-slate-800/80 bg-slate-900/95 backdrop-blur sticky top-0 z-40 px-4 sm:px-6 py-3 flex justify-between items-center">
+    <div class="flex items-center space-x-2.5">
+      <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-amber-500 via-rose-500 to-indigo-500 p-[2px] flex items-center justify-center shadow-lg shadow-amber-500/20">
+        <div class="w-full h-full bg-[#030712] rounded-[9px] flex items-center justify-center">
+          <i class="fa-solid fa-crown text-amber-400 text-xs"></i>
+        </div>
+      </div>
+      <span class="text-xl font-black italic tracking-wider font-brand text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-rose-300 to-indigo-400">
+        VOLT<span class="text-white">CORE</span>
+      </span>
+      <span class="text-[9px] bg-amber-500/10 text-amber-400 border border-amber-500/30 px-2 py-0.5 rounded-full font-bold uppercase tracking-wider ml-1">
+        Executive Console
+      </span>
+    </div>
+
+    <div class="flex items-center space-x-3">
+      <div class="hidden sm:flex items-center space-x-1.5 bg-slate-800 border border-slate-700 px-3 py-1 rounded-full text-xs text-slate-300">
+        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        <span class="font-bold text-amber-300">Root Admin</span>
+      </div>
+      <button onclick="ceoLogout()" class="bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/30 text-xs font-bold px-3 py-1 rounded-full transition flex items-center space-x-1">
+        <i class="fa-solid fa-arrow-right-from-bracket text-[10px]"></i>
+        <span>Exit Console</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ================= MAIN CEO CONTENT ================= -->
+  <main class="flex-1 max-w-6xl mx-auto px-4 py-6 w-full space-y-6">
+
+    <!-- Overview Financial Metrics -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
+      
+      <!-- Metric 1: Total Staked -->
+      <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-4">
+        <div class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Total Volume</div>
+        <div class="text-xl sm:text-2xl font-black font-brand text-emerald-400 mt-1">$48,290.00</div>
+        <div class="text-[10px] text-emerald-500 font-semibold mt-1"><i class="fa-solid fa-arrow-trend-up"></i> +14.2% Today</div>
+      </div>
+
+      <!-- Metric 2: Pending Withdrawals -->
+      <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-4">
+        <div class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Pending Payouts</div>
+        <div id="pendingWithdrawDisplay" class="text-xl sm:text-2xl font-black font-brand text-amber-400 mt-1">$1,240.00</div>
+        <div class="text-[10px] text-amber-500 font-semibold mt-1">3 Queue Actions</div>
+      </div>
+
+      <!-- Metric 3: Active Members -->
+      <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-4">
+        <div class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Active Nodes</div>
+        <div class="text-xl sm:text-2xl font-black font-brand text-cyan-400 mt-1">1,489</div>
+        <div class="text-[10px] text-cyan-500 font-semibold mt-1">Decentralized network</div>
+      </div>
+
+      <!-- Metric 4: Platform Reserve -->
+      <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-4">
+        <div class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Reserve Vault</div>
+        <div class="text-xl sm:text-2xl font-black font-brand text-indigo-400 mt-1">$92,600.00</div>
+        <div class="text-[10px] text-indigo-500 font-semibold mt-1">Multisig Secured</div>
+      </div>
+
+    </div>
+
+    <!-- Management Sections Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+      <!-- Left Column: Pending Withdrawal Requests (2 Cols) -->
+      <div class="lg:col-span-2 bg-slate-900/90 border border-slate-800 rounded-2xl p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex justify-between items-center mb-4">
+            <div>
+              <h3 class="text-base font-bold font-brand text-white flex items-center space-x-2">
+                <i class="fa-solid fa-hand-holding-dollar text-amber-400"></i>
+                <span>Withdrawal Requests Approval</span>
+              </h3>
+              <p class="text-xs text-slate-400">Review and authorize member balance payouts directly to blockchain nodes.</p>
+            </div>
+            <span class="text-[10px] bg-slate-800 border border-slate-700 px-2.5 py-1 rounded-full text-slate-300 font-bold">
+              Real-Time
+            </span>
+          </div>
+
+          <!-- Withdrawal Table / List -->
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs text-slate-300">
+              <thead class="bg-slate-950 text-slate-400 uppercase text-[10px] border-b border-slate-800">
+                <tr>
+                  <th class="py-2.5 px-3">User</th>
+                  <th class="py-2.5 px-3">Amount</th>
+                  <th class="py-2.5 px-3">USDT Address</th>
+                  <th class="py-2.5 px-3 text-right">Action</th>
+                </tr>
+              </thead>
+              <tbody id="withdrawRequestsTable" class="divide-y divide-slate-800/60 font-medium">
+                <!-- Row 1 -->
+                <tr id="req-row-1">
+                  <td class="py-3 px-3">
+                    <div class="font-bold text-white">Hamza Tariq</div>
+                    <div class="text-[10px] text-slate-500">h****q@gmail.com</div>
+                  </td>
+                  <td class="py-3 px-3 text-amber-400 font-bold">$150.00</td>
+                  <td class="py-3 px-3 font-mono text-[11px] text-slate-400 truncate max-w-[120px]">
+                    TX9yZae...8z1P
+                  </td>
+                  <td class="py-3 px-3 text-right space-x-1.5 whitespace-nowrap">
+                    <button onclick="approveWithdraw('req-row-1', 150)" class="bg-emerald-500/20 hover:bg-emerald-500 text-emerald-300 hover:text-black px-2.5 py-1 rounded-lg text-[10px] font-bold transition">
+                      Approve
+                    </button>
+                    <button onclick="rejectWithdraw('req-row-1')" class="bg-rose-500/20 hover:bg-rose-500 text-rose-300 hover:text-white px-2.5 py-1 rounded-lg text-[10px] font-bold transition">
+                      Reject
+                    </button>
+                  </td>
+                </tr>
+
+                <!-- Row 2 -->
+                <tr id="req-row-2">
+                  <td class="py-3 px-3">
+                    <div class="font-bold text-white">Sarmad Bilal</div>
+                    <div class="text-[10px] text-slate-500">s****d@gmail.com</div>
+                  </td>
+                  <td class="py-3 px-3 text-amber-400 font-bold">$45.00</td>
+                  <td class="py-3 px-3 font-mono text-[11px] text-slate-400 truncate max-w-[120px]">
+                    TReq87X...91Lq
+                  </td>
+                  <td class="py-3 px-3 text-right space-x-1.5 whitespace-nowrap">
+                    <button onclick="approveWithdraw('req-row-2', 45)" class="bg-emerald-500/20 hover:bg-emerald-500 text-emerald-300 hover:text-black px-2.5 py-1 rounded-lg text-[10px] font-bold transition">
+                      Approve
+                    </button>
+                    <button onclick="rejectWithdraw('req-row-2')" class="bg-rose-500/20 hover:bg-rose-500 text-rose-300 hover:text-white px-2.5 py-1 rounded-lg text-[10px] font-bold transition">
+                      Reject
+                    </button>
+                  </td>
+                </tr>
+
+                <!-- Row 3 -->
+                <tr id="req-row-3">
+                  <td class="py-3 px-3">
+                    <div class="font-bold text-white">Farhan Ali</div>
+                    <div class="text-[10px] text-slate-500">f****n@gmail.com</div>
+                  </td>
+                  <td class="py-3 px-3 text-amber-400 font-bold">$300.00</td>
+                  <td class="py-3 px-3 font-mono text-[11px] text-slate-400 truncate max-w-[120px]">
+                    TNode44W...55Pp
+                  </td>
+                  <td class="py-3 px-3 text-right space-x-1.5 whitespace-nowrap">
+                    <button onclick="approveWithdraw('req-row-3', 300)" class="bg-emerald-500/20 hover:bg-emerald-500 text-emerald-300 hover:text-black px-2.5 py-1 rounded-lg text-[10px] font-bold transition">
+                      Approve
+                    </button>
+                    <button onclick="rejectWithdraw('req-row-3')" class="bg-rose-500/20 hover:bg-rose-500 text-rose-300 hover:text-white px-2.5 py-1 rounded-lg text-[10px] font-bold transition">
+                      Reject
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Protocol Controls -->
+      <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 space-y-4 flex flex-col justify-between">
+        <div>
+          <h3 class="text-base font-bold font-brand text-white flex items-center space-x-2 mb-3">
+            <i class="fa-solid fa-sliders text-cyan-400"></i>
+            <span>System Parameters</span>
+          </h3>
+
+          <div class="space-y-3">
+            <div>
+              <label class="text-[10px] font-bold uppercase text-slate-400 block mb-1">Signup Bonus ($)</label>
+              <input type="number" id="cfgBonus" value="2.00" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white outline-none focus:border-amber-500">
+            </div>
+
+            <div>
+              <label class="text-[10px] font-bold uppercase text-slate-400 block mb-1">Daily Attendance Yield ($)</label>
+              <input type="number" id="cfgDaily" value="0.50" step="0.1" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white outline-none focus:border-amber-500">
+            </div>
+
+            <div>
+              <label class="text-[10px] font-bold uppercase text-slate-400 block mb-1">System Deposit Address (TRC20)</label>
+              <input type="text" value="TX9yZaeVoltWealthNode786DemoAddress" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-[11px] font-mono text-slate-300 outline-none focus:border-amber-500">
+            </div>
+          </div>
+        </div>
+
+        <button onclick="saveSystemConfig()" class="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 text-slate-950 font-black py-2.5 rounded-xl text-xs uppercase tracking-wider transition shadow-md shadow-amber-500/20">
+          Update Node Settings
+        </button>
+      </div>
+
+    </div>
+
+    <!-- Active User Records -->
+    <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5">
+      <div class="flex justify-between items-center mb-4">
+        <div>
+          <h3 class="text-base font-bold font-brand text-white flex items-center space-x-2">
+            <i class="fa-solid fa-users-gear text-emerald-400"></i>
+            <span>Registered Node Accounts</span>
+          </h3>
+          <p class="text-xs text-slate-400">List of investors currently participating in VoltWealth staking pools.</p>
+        </div>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-xs text-slate-300">
+          <thead class="bg-slate-950 text-slate-400 uppercase text-[10px] border-b border-slate-800">
+            <tr>
+              <th class="py-2.5 px-3">Node Name</th>
+              <th class="py-2.5 px-3">Gmail</th>
+              <th class="py-2.5 px-3">Mobile</th>
+              <th class="py-2.5 px-3">Current Balance</th>
+              <th class="py-2.5 px-3">Status</th>
+            </tr>
+          </thead>
+          <tbody id="userListTable" class="divide-y divide-slate-800/60 font-medium">
+            <tr>
+              <td class="py-3 px-3 font-bold text-white">Ali Raza</td>
+              <td class="py-3 px-3 text-slate-400">a****a@gmail.com</td>
+              <td class="py-3 px-3">03011234567</td>
+              <td class="py-3 px-3 text-emerald-400 font-bold">$2,890.00</td>
+              <td class="py-3 px-3"><span class="bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">Plan 2 Active</span></td>
+            </tr>
+            <tr>
+              <td class="py-3 px-3 font-bold text-white">Zainab Noor</td>
+              <td class="py-3 px-3 text-slate-400">z****r@gmail.com</td>
+              <td class="py-3 px-3">03229876543</td>
+              <td class="py-3 px-3 text-emerald-400 font-bold">$890.00</td>
+              <td class="py-3 px-3"><span class="bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">Plan 1 Active</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Minimal CEO Footer -->
+  <footer class="border-t border-slate-900 bg-slate-950 py-4 px-6 text-center text-[10px] text-slate-500 mt-10">
+    <div class="max-w-6xl mx-auto flex justify-between items-center">
+      <div>VoltWealth Protocol &copy; 2026 • CEO Root Privilege</div>
+      <div class="text-emerald-400 font-semibold"><i class="fa-solid fa-lock"></i> Node Encrypted</div>
+    </div>
+  </footer>
+
+  <script>
+    // ================= STRICT CEO ACCESS CONTROL =================
+    const userRole = sessionStorage.getItem('volt_auth_role');
+    if (userRole !== 'CEO') {
+      // غیر متعلقہ شخص کو فوراً مین پیج پر نکال دیا جائے گا
+      window.location.href = 'index.html';
+    }
+
+    // Approve Withdrawal Action
+    function approveWithdraw(rowId, amt) {
+      if (confirm(`Approve blockchain payout for $${amt}.00?`)) {
+        document.getElementById(rowId).remove();
+        alert(`Withdrawal of $${amt}.00 successfully approved and transmitted to TRC20 node!`);
+        checkEmptyTable();
+      }
+    }
+
+    // Reject Withdrawal Action
+    function rejectWithdraw(rowId) {
+      if (confirm('Are you sure you want to reject this withdrawal request? Balance will refund to user.')) {
+        document.getElementById(rowId).remove();
+        alert('Withdrawal rejected. Funds returned to user balance.');
+        checkEmptyTable();
+      }
+    }
+
+    function checkEmptyTable() {
+      const rows = document.querySelectorAll('#withdrawRequestsTable tr');
+      if (rows.length === 0) {
+        document.getElementById('withdrawRequestsTable').innerHTML = `
+          <tr><td colspan="4" class="py-6 text-center text-slate-500 text-xs">No pending withdrawal requests in queue.</td></tr>
+        `;
+        document.getElementById('pendingWithdrawDisplay').innerText = '$0.00';
+      }
+    }
+
+    // Save System Parameters
+    function saveSystemConfig() {
+      const bonus = document.getElementById('cfgBonus').value;
+      const daily = document.getElementById('cfgDaily').value;
+      alert(`Configuration Updated Successfully!\nNew Match Bonus: $${bonus}\nNew Daily Attendance: $${daily}`);
+    }
+
+    // CEO Logout (Wipes Session)
+    function ceoLogout() {
+      sessionStorage.clear();
+      window.location.href = 'index.html';
+    }
+  </script>
+</body>
+</html>

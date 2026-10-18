@@ -1,2356 +1,360 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Nexora Community | V3.6 Phase 1</title>
-
-<style>
-
-*{
-  box-sizing:border-box;
-}
-
-body{
-  margin:0;
-  font-family:Arial,sans-serif;
-  background:#eef2f7;
-  color:#111827;
-}
-
-header{
-  background:linear-gradient(135deg,#071a3d,#0f4c81);
-  color:white;
-  text-align:center;
-  padding:35px 16px;
-}
-
-.card{
-  background:white;
-  margin:16px;
-  padding:20px;
-  border-radius:18px;
-  box-shadow:0 4px 14px rgba(0,0,0,.10);
-  max-width:100%;
-overflow:hidden;
-word-wrap:break-word;
-}
-
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
-  gap:14px;
-}
-
-button{
-  border:none;
-  border-radius:12px;
-  padding:10px 14px;
-  background:#f5b301;
-  color:#000;
-  font-weight:bold;
-  font-size:14px;
-  cursor:pointer;
-  margin-top:12px;
-
-  width:100%;
-max-width:220px;
-  
-  min-width:auto;
-  min-height:auto;
-}
-
-
-.dark{
-  background:#111827;
-  color:white;
-}
-
-.green{
-  background:#16a34a;
-  color:white;
-}
-
-.red{
-  background:#dc2626;
-  color:white;
-}
-
-.blue{
-  background:#2563eb;
-  color:white;
-}
-
-.hide{
-  display:none!important;
-}
-
-.bbutton{
-  border:none;
-  border-radius:12px;
-  padding:10px 14px;
-  background:#f5b301;
-  color:#000;
-  font-weight:bold;
-  font-size:14px;
-  cursor:pointer;
-  margin-top:12px;
-
-  min-width:auto;
-  min-height:auto;
-}adge{
-  background:#dc2626;
-  color:white;
-  border-radius:50%;
-  padding:3px 8px;
-  font-size:12px;
-}
-
-.ticker{
-  background:#f5b301;
-  padding:10px;
-  font-weight:bold;
-  white-space:nowrap;
-  overflow:hidden;
-}
-
-.ticker span{
-  display:inline-block;
-  padding-left:100%;
-  animation:move 20s linear infinite;
-}
-
-@keyframes move{
-  from{
-    transform:translateX(0);
-  }
-
-  to{
-    transform:translateX(-100%);
-  }
-}
-
-footer{
-  background:#071a3d;
-  color:white;
-  text-align:center;
-  padding:18px;
-  margin-top:25px;
-}
-
-.section-title{
-  margin-top:0;
-}
-input,select{
-  width:100%;
-  box-sizing:border-box;
-}
-</style>
-</head>
-
-<body>
-
-<header>
-
-  <h1>Nexora Community</h1>
-
-  <p>
-    Learning • Marketplace • Community • Smart Test • Services
-  </p>
-
-</header>
-
-<div class="ticker">
-
-  <span>
-
-    Welcome to Nexora Community —
-    Smart Learning, Marketplace,
-    Community Rewards and Services Platform.
-
-  </span>
-
-</div>
-
-<!-- MAIN DASHBOARD -->
-
-<div id="mainMenu" class="card">
-
-  <h2 class="section-title">
-    🏠 Main Dashboard
-  </h2>
-
-  <div class="grid">
-
-    <!-- CEO -->
-
-    <div class="card">
-
-      <h3>
-        👑 CEO / Admin / Manager
-      </h3>
-
-      <p>
-        System control, approvals,
-        finance and settings.
-      </p>
-
-      <button class="dark"
-      onclick="showPage('ceoPage')">
-
-        Open
-
-      </button>
-
-    </div>
-
-    <!-- TEAM -->
-
-    <div class="card">
-
-      <h3>
-        👥 Team Member
-      </h3>
-
-      <p>
-        Assigned work, wallet,
-        points and messages.
-      </p>
-
-      <button
-      onclick="showPage('teamPage')">
-
-        Open
-
-      </button>
-
-    </div>
-
-    <!-- COMMUNITY -->
-
-    <div class="card">
-
-      <h3>
-        🌐 Community Member
-      </h3>
-
-      <p>
-        Daily tasks, rewards,
-        wallet and investment.
-      </p>
-      
-      <button
-onclick="requireGoogleLogin('communityPage','community')">
-
-        Login with Google
-
-      </button>
-
-    </div>
-
-    <!-- CLIENT -->
-
-    <div class="card">
-
-      <h3>
-        💼 Client
-      </h3>
-
-      <p>
-        Service requests,
-        listing requests and support.
-      </p>
-
-      <button
-      onclick="requireGoogleLogin('clientPage','client')">
-
-        Login with Google
-
-      </button>
-
-    </div>
-
-    <!-- STUDENT -->
-
-    <div class="card">
-
-      <h3>
-        🎓 Student
-      </h3>
-
-      <p>
-        Tuition, homework,
-        live classes and support.
-      </p>
-
-      <button
-      onclick="requireGoogleLogin('studentPage','student')">
-
-        Login with Google
-
-      </button>
-
-    </div>
-
-    <!-- TEACHER -->
-
-    <div class="card">
-
-      <h3>
-        👨‍🏫 Teacher
-      </h3>
-
-      <p>
-        Assignments, test maker,
-        students and fees.
-      </p>
-
-      <button
-      onclick="requireGoogleLogin('teacherPage','teacher')">
-        Login with Google
-
-      </button>
-
-    </div>
-
-    <!-- SMART TEST -->
-
-    <div class="card">
-
-      <h3>
-        🧠 Smart Test
-      </h3>
-
-      <p>
-        MCQs, online tests,
-        notes and subjects.
-      </p>
-
-      <button
-      onclick="showPage('smartTestPage')">
-
-        Open
-
-      </button>
-
-    </div>
-
-    <!-- MARKETPLACE -->
-
-    <div class="card">
-
-      <h3>
-        🛒 Marketplace
-      </h3>
-
-      <p>
-        Buying, selling and
-        product listing system.
-      </p>
-
-      <button
-      onclick="requireGoogleLogin('marketplacePage','marketplace')">
-        Login with Google
-
-      </button>
-
-    </div>
-
-    <!-- SUPPORT -->
-
-    <div class="card">
-
-      <h3>
-        📞 Support
-      </h3>
-
-      <p>
-        Email support,
-        WhatsApp and AI chatbot.
-      </p>
-
-      <button
-      onclick="showPage('supportPage')">
-
-        Open
-
-      </button>
-
-    </div>
-
-  </div>
-
-</div>
-
-<!-- BACK BUTTON -->
-
-<div style="margin:16px">
-
-  <div id="userInfoBox" class="hide"
-style="
-background:white;
-padding:12px;
-border-radius:12px;
-margin-bottom:12px;
-box-shadow:0 2px 8px rgba(0,0,0,0.08);
-font-size:14px;
-font-weight:bold;
-">
-
-Logged in as:
-<span id="userEmailText"></span>
-
-  </div>
-  <button id="backBtn"
-  class="dark hide"
-  onclick="goHome()">
-
-    ⬅ Back To Main Menu
-
-  </button>
-
-<button id="logoutBtn"
-class="red hide"
-onclick="logoutGoogle()">
-
-Logout
-
-</button>
-
-</div>
-  <div id="userInfoBox" class="card hide">
-  <b>Logged in:</b>
-  <span id="userEmailText"></span>
-</div>
-  <!-- CEO PAGE -->
-
-<div id="ceoPage" class="card hide">
-
-  <h2 class="section-title">
-    👑 CEO / Admin / Manager Dashboard
-  </h2>
-
-  <div class="grid">
-
-    <div class="card">
-      <h3>👤 Create Admin</h3>
-      <button>Open</button>
-    </div>
-
-    <div class="card">
-      <h3>⚙️ Create Manager</h3>
-      <button>Open</button>
-    </div>
-
-    <div class="card">
-      <h3>👥 Create Team Member</h3>
-      <button>Open</button>
-    </div>
-
-    <div class="card">
-      <h3>🌐 Community Members</h3>
-      <button>Open</button>
-    </div>
-
-    <div class="card">
-
-  <h3>👥 Users List</h3>
-
-  <button onclick="loadUsers()">
-    Open
-  </button>
-
-    </div>
-    <div class="card">
-      <h3>💰 Wallet Control</h3>
-      <button onclick="showPage('walletControlPage')">
-  Open
-      </button>
-    </div>
-
-    <div class="card">
-      <h3>📤 Withdraw Requests</h3>
-      <button onclick="loadWithdrawRequests()">
-  Open
-</button>
-    </div>
-    <div class="card">
-
-<h3>📥 Deposit Requests</h3>
-
-<button onclick="openDepositRequestsPage()">
-Open
-</button>
-
-    </div>
-    <div class="card">
-      <h3>📋 Daily Tasks</h3>
-      <button>Open</button>
-    </div>
-
-    <div class="card">
-      <h3>📩 Messages</h3>
-      <button>Open</button>
-    </div>
-
-    <div class="card">
-      <h3>📢 Announcements</h3>
-      <button>Open</button>
-    </div>
-
-    <div class="card">
-      <h3>🧠 Smart Test Control</h3>
-      <button>Open</button>
-    </div>
-
-    <div class="card">
-      <h3>🛒 Marketplace Control</h3>
-      <button>Open</button>
-    </div>
-
-    <div class="card">
-      <h3>🎓 Student Requests</h3>
-      <button>Open</button>
-    </div>
-
-    <div class="card">
-      <h3>👨‍🏫 Teacher Requests</h3>
-      <button>Open</button>
-    </div>
-
-    <div class="card">
-      <h3>💼 Client Requests</h3>
-      <button>Open</button>
-    </div>
-
-    <div class="card">
-      <h3>📞 Support Control</h3>
-      <button>Open</button>
-    </div>
-
-    <div class="card">
-      <h3>⚡ System Settings</h3>
-      <button>Open</button>
-    </div>
-
-  </div>
-
-</div>
-
-  <div id="usersPage" class="card hide">
-
-  <h2 class="section-title">
-    👥 Registered Users
-  </h2>
-
-  <div id="usersList"></div>
-
-  </div>
-  <div id="withdrawRequestsPage" class="card hide">
-
-  <h2 class="section-title">📥 Withdraw Requests</h2>
-
-  <h3>Pending Requests</h3>
-  <div id="pendingWithdrawList"></div>
-
-  <h3>Completed / Rejected Requests</h3>
-  <div id="completedWithdrawList"></div>
-
-  </div>
-  <div id="walletControlPage" class="card hide">
-
-  <h2>💰 Wallet Control</h2>
-
-  <input id="walletUserEmail"
-  placeholder="User Email">
-
-  <input id="walletAmount"
-  placeholder="Amount">
-
-  <button class="green"
-  onclick="addWalletBalance()">
-
-    Add Balance
-
-  </button>
-
-  <p id="walletMsg"></p>
-
-  </div>
-  <div id="depositRequestsPage" class="card hide">
-
-<h2 class="section-title">
-📥 Deposit Requests
-</h2>
-
-<h3>Pending Requests</h3>
-
-<div id="pendingDepositList"></div>
-
-<h3>Completed / Rejected</h3>
-
-<div id="completedDepositList"></div>
-
-  </div>
-<!-- TEAM PAGE -->
-
-<div id="teamPage" class="card hide">
-
-  <h2 class="section-title">
-    👥 Team Member Dashboard
-  </h2>
-
-  <div class="grid">
-
-    <div class="card">
-      <h3>📋 Assigned Work</h3>
-      <button>Open</button>
-    </div>
-
-    <div class="card">
-      <h3>⭐ Reward Points</h3>
-      <button>Open</button>
-    </div>
-
-    <div class="card">
-      <h3>💰 Wallet</h3>
-      <button>Open</button>
-    </div>
-
-    <div class="card">
-      <h3>📥 Deposit</h3>
-      <button>Open</button>
-    </div>
-
-    <div class="card">
-      <h3>📤 Withdraw</h3>
-      <button>Open</button>
-    </div>
-
-    <div class="card">
-      <h3>✅ Accept Work</h3>
-      <button>Open</button>
-    </div>
-
-    <div class="card">
-      <h3>❌ Reject Work</h3>
-      <button>Open</button>
-    </div>
-
-    <div class="card">
-      <h3>📩 Messages</h3>
-      <button>Open</button>
-    </div>
-
-    <div class="card">
-      <h3>📞 Support</h3>
-      <button>Open</button>
-    </div>
-
-  </div>
-
-</div>
-
-<!-- COMMUNITY PAGE -->
-
-<div id="communityPage" class="card hide">
-
-  <h2 class="section-title">
-    🌐 Community Member Dashboard
-  </h2>
-
-  <div class="grid">
-<div class="card">
-
-  <h3>👤 My Profile</h3>
-
-  <button onclick="showProfileBox()">
-
-    Update Profile
-
-  </button>
-
-</div>
-    <div class="card">
-      <h3>📋 Daily Tasks</h3>
-      <button>Open</button>
-    </div>
-
-    <div class="card">
-      <h3>🔐 Submit Code</h3>
-      <button>Open</button>
-    </div>
-
-    <div class="card">
-      <h3>⭐ Reward Points</h3>
-      <button>Open</button>
-    </div>
-
-    <div class="card">
-      <h3>💰 Wallet</h3>
-      <button onclick="openWalletPage()">
-  Open
-</button>
-      <p id="communityWalletText">
-  Wallet: Rs 0
-</p>
-
-<p id="communityPendingText">
-  Pending Withdraw: Rs 0
-</p>
-    </div>
-
-    <div class="card">
-      <h3>📥 Deposit</h3>
-      <button onclick="openDepositPage()">
-Open
-</button>
-    </div>
-
-    <div class="card">
-      <h3>📤 Withdraw</h3>
-      <button onclick="openWithdraw()">
-  Withdraw
-</button>
-      
-    </div>
-
-    <div class="card">
-      <h3>📈 Investment</h3>
-      <button>Open</button>
-    </div>
-
-    <div class="card">
-      <h3>📩 Messages</h3>
-      <button>Open</button>
-    </div>
-
-    <div class="card">
-      <h3>📞 Support</h3>
-      <button>Open</button>
-    </div>
-
-  </div>
-
-  <div id="profileBox" class="card hide">
-
-  <h3>👤 Update Profile</h3>
-
-  <input id="profileName" placeholder="Full Name">
-
-  <input id="profileMobile" placeholder="Mobile / WhatsApp">
-
-  <input id="profileCity" placeholder="City">
-
-  <select id="profilePayment">
-
-  <option value="">Select Payment Method</option>
-
-  <option value="Easypaisa">Easypaisa</option>
-
-  <option value="JazzCash">JazzCash</option>
-
-  <option value="Bank Account">Bank Account</option>
-
-  <option value="SadaPay">SadaPay</option>
-
-  <option value="NayaPay">NayaPay</option>
-
-</select>
-  <input id="profileAccount" placeholder="Account Number">
-<br><br>
-
-<button class="red" onclick="closeProfileBox()">
-  Cancel
-</button>
-  <button class="green" onclick="saveProfile()">
-
-    Save Profile
-
-  </button>
-
-  <p id="profileMsg"></p>
-
-  </div>
-  <div id="withdrawBox" class="card hide">
-
-  <h3>💸 Withdraw Request</h3>
-
-  <input id="withdrawAmount" placeholder="Enter Amount">
-
-  <button class="green" onclick="submitWithdraw()">
-    Submit Withdraw
-  </button>
-
-  <p id="withdrawMsg"></p>
-
-  </div>
-<div id="depositPage" class="card hide">
-
-<div class="card">
-
-<h2>📥 Deposit Request</h2>
-
-<div class="card">
-
-<h3>🏦 Deposit Methods</h3>
-
-<p style="color:#b45309;">
-<b>Note:</b>
-For deposits up to Rs 50,000 use EasyPaisa, JazzCash, SadaPay or NayaPay.
-For higher amounts please use Bank Transfer.
-</p>
-
-<p style="color:#b45309;">
-<b>نوٹ:</b>
-50 ہزار تک EasyPaisa, JazzCash, SadaPay یا NayaPay استعمال کریں۔
-اس سے زیادہ رقم کے لیے Bank Transfer استعمال کریں۔
-</p>
-
-</div>
-
-<div class="card" style="background:#ecfdf5;border:1px solid #10b981;">
-
-<h3>🟢 EasyPaisa</h3>
-
-<p><b>Number:</b> 0300-0000000</p>
-
-<p><b>Title:</b> Nexora Community</p>
-
-<button onclick="copyText('03000000000')">
-Copy Number
-</button>
-
-</div>
-
-<div class="card" style="background:#fef9c3;border:1px solid #facc15;">
-
-<h3>🟡 JazzCash</h3>
-
-<p><b>Number:</b> 0300-0000000</p>
-
-<p><b>Title:</b> Nexora Community</p>
-
-<button onclick="copyText('03000000000')">
-Copy Number
-</button>
-
-</div>
-
-<div class="card" style="background:#eff6ff;border:1px solid #3b82f6;">
-
-<h3>🔵 SadaPay</h3>
-
-<p><b>Number:</b> 0300-0000000</p>
-
-<p><b>Title:</b> Nexora Community</p>
-
-<button onclick="copyText('03000000000')">
-Copy Number
-</button>
-
-</div>
-
-<div class="card" style="background:#f3f4f6;border:1px solid #6b7280;">
-
-<h3>🏦 Bank Transfer</h3>
-
-<p><b>Bank:</b> Demo Bank</p>
-
-<p><b>Account Title:</b> Nexora Community</p>
-
-<p><b>Account Number:</b> 000000000000</p>
-
-<button onclick="copyText('000000000000')">
-Copy Account
-</button>
-
-</div>
-<input
-<select id="depositMethod">
-  <option value="">Select Deposit Method</option>
-  <option value="EasyPaisa">EasyPaisa</option>
-  <option value="JazzCash">JazzCash</option>
-  <option value="SadaPay">SadaPay</option>
-  <option value="NayaPay">NayaPay</option>
-  <option value="Bank Transfer">Bank Transfer</option>
-</select>
-
-<br><br>
-
-<input
-type="number"
-id="depositAmount"
-placeholder="Enter Deposit Amount"
-min="1"
-/>
-
-<br><br>
-
-<input
-type="text"
-id="depositRef"
-placeholder="Transaction ID / Reference"
-/>
-
-<br><br>
-
-<label><b>Upload Payment Screenshot / Proof</b></label>
-
-<input
-type="file"
-id="depositProof"
-accept="image/png,image/jpeg,image/webp,application/pdf"
-/>
-
-<button onclick="submitDeposit()">
-Submit Deposit
-</button>
-
-<p id="depositMsg"></p>
-
-</div>
-
-  </div>
-  <div id="walletPage" class="card hide">
-
-  <h2>💰 My Wallet</h2>
-
-  <p id="walletPageBalance">Wallet Balance: Rs 0</p>
-  <p id="walletPagePending">Pending Withdraw: Rs 0</p>
-  <p id="walletPageReceived">Total Received: Rs 0</p>
-  <p id="walletPageWithdrawn">Total Withdrawn: Rs 0</p>
-
-  <h3>📜 Wallet History</h3>
-  <div id="walletHistoryList">
-    No history yet.
-  </div>
-
-  </div>
-  <!-- CLIENT PAGE -->
-
-<div id="clientPage" class="card hide">
-
-  <h2 class="section-title">
-    💼 Client Dashboard
-  </h2>
-
-  <div class="grid">
-
-    <div class="card">
-      <h3>📨 Request Services</h3>
-      <button>Open</button>
-    </div>
-
-    <div class="card">
-      <h3>🛒 Product Listing Request</h3>
-      <button>Open</button>
-    </div>
-
-    <div class="card">
-      <h3>💰 Wallet</h3>
-      <button>Open</button>
-    </div>
-
-    <div class="card">
-      <h3>📥 Deposit</h3>
-      <button>Open</button>
-    </div>
-
-    <div class="card">
-      <h3>📤 Withdraw</h3>
-      <button>Open</button>
-    </div>
-
-    <div class="card">
-      <h3>📦 Product Management</h3>
-      <button>Open</button>
-    </div>
-
-    <div class="card">
-      <h3>📩 Messages</h3>
-      <button>Open</button>
-    </div>
-
-    <div class="card">
-      <h3>📞 Support</h3>
-      <button>Open</button>
-    </div>
-
-  </div>
-
-</div>
-
-<!-- STUDENT PAGE -->
-
-<div id="studentPage" class="card hide">
-
-  <h2 class="section-title">
-    🎓 Student Dashboard
-  </h2>
-
-  <div class="grid">
-
-    <div class="card">
-      <h3>📝 Submit Assignment</h3>
-      <button>Open</button>
-    </div>
-
-    <div class="card">
-      <h3>📚 Homework</h3>
-      <button>Open</button>
-    </div>
-
-    <div class="card">
-      <h3>👨‍🏫 Teacher Profiles</h3>
-      <button>Open</button>
-    </div>
-
-    <div class="card">
-      <h3>🎥 Live Classes</h3>
-      <button>Open</button>
-    </div>
-
-    <div class="card">
-      <h3>📖 Subjects</h3>
-      <button>Open</button>
-    </div>
-
-    <div class="card">
-      <h3>📨 Request Tuition</h3>
-      <button>Open</button>
-    </div>
-
-    <div class="card">
-      <h3>💰 Wallet</h3>
-      <button>Open</button>
-    </div>
-
-    <div class="card">
-      <h3>📩 Messages</h3>
-      <button>Open</button>
-    </div>
-
-    <div class="card">
-      <h3>📞 Support</h3>
-      <button>Open</button>
-    </div>
-
-  </div>
-
-</div>
-
-<!-- TEACHER PAGE -->
-
-<div id="teacherPage" class="card hide">
-
-  <h2 class="section-title">
-    👨‍🏫 Teacher Dashboard
-  </h2>
-
-  <div class="grid">
-
-    <div class="card">
-      <h3>📝 Assign Homework</h3>
-      <button>Open</button>
-    </div>
-
-    <div class="card">
-      <h3>🎥 Live Classes</h3>
-      <button>Open</button>
-    </div>
-
-    <div class="card">
-      <h3>👨‍🎓 Student Profiles</h3>
-      <button>Open</button>
-    </div>
-
-    <div class="card">
-      <h3>📚 Subjects</h3>
-      <button>Open</button>
-    </div>
-
-    <div class="card">
-      <h3>💵 Fees Setup</h3>
-      <button>Open</button>
-    </div>
-
-    <div class="card">
-      <h3>🧠 Test Maker</h3>
-      <button>Open</button>
-    </div>
-
-    <div class="card">
-      <h3>💰 Wallet</h3>
-      <button>Open</button>
-    </div>
-
-    <div class="card">
-      <h3>📩 Messages</h3>
-      <button>Open</button>
-    </div>
-
-    <div class="card">
-      <h3>📞 Support</h3>
-      <button>Open</button>
-    </div>
-
-  </div>
-
-</div>
-
-<!-- SMART TEST PAGE -->
-
-<div id="smartTestPage" class="card hide">
-
-  <h2 class="section-title">
-    🧠 Smart Test Dashboard
-  </h2>
-
-  <div class="grid">
-
-    <div class="card">
-      <h3>📚 Subjects</h3>
-      <button>Open</button>
-    </div>
-
-    <div class="card">
-      <h3>❓ MCQs</h3>
-      <button>Open</button>
-    </div>
-
-    <div class="card">
-      <h3>📝 Online Tests</h3>
-      <button>Open</button>
-    </div>
-
-    <div class="card">
-      <h3>📊 Results</h3>
-      <button>Open</button>
-    </div>
-
-    <div class="card">
-      <h3>📥 Notes Download</h3>
-      <button>Open</button>
-    </div>
-
-    <div class="card">
-      <h3>📰 Blog Posts</h3>
-      <button>Open</button>
-    </div>
-
-  </div>
-
-  </div>
-
-  <!-- MARKETPLACE PAGE -->
-
-<div id="marketplacePage" class="card hide">
-
-  <h2 class="section-title">
-    🛒 Marketplace Dashboard
-  </h2>
-
-  <div class="ticker">
-    <span>
-      Live Marketplace —
-      Buying • Selling • Listings • Sold Products • 5% Commission System
-    </span>
-  </div>
-
-  <div class="grid">
-
-    <div class="card">
-      <h3>🛍️ Buying</h3>
-      <button>Open</button>
-    </div>
-
-    <div class="card">
-      <h3>🏪 Selling</h3>
-      <button>Open</button>
-    </div>
-
-    <div class="card">
-      <h3>📦 Live Products</h3>
-      <button>Open</button>
-    </div>
-
-    <div class="card">
-      <h3>📝 Product Posts</h3>
-      <button>Open</button>
-    </div>
-
-    <div class="card">
-      <h3>✅ Sold Products</h3>
-      <button>Open</button>
-    </div>
-
-    <div class="card">
-      <h3>📨 Listing Request</h3>
-      <button>Open</button>
-    </div>
-
-    <div class="card">
-      <h3>💰 Wallet</h3>
-      <button>Open</button>
-    </div>
-
-    <div class="card">
-      <h3>📥 Deposit</h3>
-      <button>Open</button>
-    </div>
-
-    <div class="card">
-      <h3>📤 Withdraw</h3>
-      <button>Open</button>
-    </div>
-
-  </div>
-
-</div>
-
-<!-- SUPPORT PAGE -->
-
-<div id="supportPage" class="card hide">
-
-  <h2 class="section-title">
-    📞 Support Center
-  </h2>
-
-  <div class="grid">
-
-    <div class="card">
-
-      <h3>📧 Email Support</h3>
-
-      <p>
-        Official support email system.
-      </p>
-
-      <button class="blue">
-        Open
-      </button>
-
-    </div>
-
-    <div class="card">
-
-      <h3>📱 WhatsApp Support</h3>
-
-      <p>
-        Join WhatsApp support channel.
-      </p>
-
-      <button class="green">
-        Open
-      </button>
-
-    </div>
-
-    <div class="card">
-
-      <h3>🤖 AI Chatbot</h3>
-
-      <p>
-        Smart AI assistant support.
-      </p>
-
-      <button class="dark">
-        Open
-      </button>
-
-    </div>
-
-  </div>
-
-</div>
-
-<!-- FOOTER -->
-
-<footer>
-
-  © 2026 Nexora Community —
-  V3.6 Phase 1 Stable UI Architecture
-
-</footer>
-
-<!-- NAVIGATION SCRIPT -->
-
-<script>
-
-function hide(id){
-
-  const el=document.getElementById(id);
-
-  if(el){
-    el.classList.add("hide");
-  }
-
-}
-
-function show(id){
-
-  const el=document.getElementById(id);
-
-  if(el){
-    el.classList.remove("hide");
-  }
-
-}
-
-function hideAllPages(){
-
-  [
-
-    "ceoPage",
-    "usersPage",
-    "teamPage",
-    "communityPage",
-    "clientPage",
-    "studentPage",
-    "teacherPage",
-    "smartTestPage",
-    "marketplacePage",
-    "supportPage",
-"withdrawRequestsPage",
-"walletControlPage",
-    "walletPage",
-    "depositPage",
-    "depositRequestsPage",
-  ].forEach(hide);
-
-}
-
-window.showPage=function(id){
-
-  hideAllPages();
-
-  hide("mainMenu");
-
-  show("backBtn");
-
-  show(id);
-
-};
-window.openDepositRequestsPage = function(){
-
-showPage("depositRequestsPage");
-
-loadDepositRequests();
-
-};
-window.goHome=function(){
-
-  const depositPage =
-document.getElementById("depositPage");
-
-if(
-depositPage &&
-!depositPage.classList.contains("hide")
-){
-showPage("communityPage");
-return;
-  }
-const walletPage =
-document.getElementById("walletPage");
-
-if(
-walletPage &&
-!walletPage.classList.contains("hide")
-){
-showPage("communityPage");
-return;
-}
-
-hideAllPages();
-
-show("mainMenu");
-
-hide("backBtn");
-
-};
-
-</script>
-
-  <script type="module">
-
-import { initializeApp } 
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-
-import { 
-  getAuth,
-  GoogleAuthProvider,
-  signInWithPopup,
-  signOut,
-onAuthStateChanged
-} 
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
-    import {
-  getFirestore,
-  doc,
-  setDoc,
-  updateDoc,
-  getDoc,    
-  collection,
-  getDocs,
-  addDoc
-}
-import {
-  getStorage,
-  ref,
-  uploadBytes,
-  getDownloadURL
-}
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
-const firebaseConfig = {
-  apiKey: "AIzaSyAWj7dozNpK8ExbJ4fptOODj66i09lxb0s",
-  authDomain: "nexoracapitalcommunity.firebaseapp.com",
-  projectId: "nexoracapitalcommunity",
-  storageBucket: "nexoracapitalcommunity.firebasestorage.app",
-  messagingSenderId: "714723891713",
-  appId: "1:714723891713:web:65f70b7d3902f2aac7be00",
-  measurementId: "G-QC11PMN306"
-};
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-    const db = getFirestore(app);
-    const storage = getStorage(app);
-const googleProvider = new GoogleAuthProvider();
-
-window.loginWithGoogle = async function(){
-  try{
-    const result = await signInWithPopup(auth, googleProvider);
-    alert("Google Login Success ✅ " + result.user.email);
-  }catch(error){
-    alert(error.message);
-  }
-};
-
-window.logoutGoogle = async function(){
-
-  await signOut(auth);
-
-  alert("Logged out ✅");
-
-  hideAllPages();
-
-show("mainMenu");
-
-hide("backBtn");
-
-  const logoutBtn=document.getElementById("logoutBtn");
-
-  if(logoutBtn){
-
-    logoutBtn.classList.add("hide");
-
-  }
-
-};
-
-    onAuthStateChanged(auth,function(user){
-
-  const logoutBtn=document.getElementById("logoutBtn");
-
-  if(user){
-
-    if(logoutBtn){
-      logoutBtn.classList.remove("hide");
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VoltWealth - Future Yield & Assets</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,600;0,800;0,900;1,900&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Montserrat', sans-serif;
     }
-
-  }else{
-
-    if(logoutBtn){
-      logoutBtn.classList.add("hide");
-    }
-const userInfoBox=document.getElementById("userInfoBox");
-
-if(userInfoBox){
-  userInfoBox.classList.add("hide");
-    }
-  }
-
-});
-    window.requireGoogleLogin = async function(pageId,userRole){
-  try{
-
-    const result = await signInWithPopup(auth, googleProvider);
-
-    alert("Login Success ✅ " + result.user.email);
-
-    showPage(pageId);
-
-    localStorage.setItem("nexoraUserRole",userRole);
-    await setDoc(doc(db,"users",result.user.uid),{
-  uid:result.user.uid,
-  name:result.user.displayName || "",
-  email:result.user.email,
-  role:userRole,
-  lastLogin:new Date().toLocaleString()
-},{merge:true});
-    const userInfoBox=document.getElementById("userInfoBox");
-const userEmailText=document.getElementById("userEmailText");
-
-if(userInfoBox && userEmailText){
-
-  userEmailText.innerText=result.user.email;
-
-  userInfoBox.classList.remove("hide");
-
-  }
-    const logoutBtn=document.getElementById("logoutBtn");
-
-    if(logoutBtn){
-
-      logoutBtn.classList.remove("hide");
-
-    }
-
-  }catch(error){
-
-    alert(error.message);
-
-  }
-
-};
-    window.loadUsers = async function(){
-
-  showPage("usersPage");
-
-  const usersList=document.getElementById("usersList");
-
-  usersList.innerHTML="Loading users...";
-const snapshot = await getDocs(collection(db,"users"));
-
-usersList.innerHTML = "";
-
-snapshot.forEach((docItem)=>{
-
-const user = docItem.data();
-
-usersList.innerHTML += `
-
-<div class="card">
-
-<h3>👤 ${user.name || "No Name"}</h3>
-
-<p>📧 ${user.email}</p>
-
-<p>🛡️ Role: ${user.role}</p>
-
-<p>🕒 Last Login: ${user.lastLogin}</p>
-
-</div>
-
-`;
-
-});
-  const querySnapshot=await getDocs(collection(db,"users"));
-
-  let html="";
-
-  querySnapshot.forEach((doc)=>{
-
-    const user=doc.data();
-
-    html += `
-      <div class="card">
-        <h3>${user.name || "No Name"}</h3>
-        <p>${user.email}</p>
-        <p>Role: ${user.role}</p>
-        <p>Last Login: ${user.lastLogin}</p>
-      </div>
-    `;
-
-  });
-
-  usersList.innerHTML=html;
-
-};
-    window.loadWithdrawRequests = async function(){
-
-showPage("withdrawRequestsPage");
-
-const pendingBox =
-document.getElementById("pendingWithdrawList");
-
-const completedBox =
-document.getElementById("completedWithdrawList");
-
-pendingBox.innerHTML = "Loading...";
-completedBox.innerHTML = "Loading...";
-
-const snapshot =
-await getDocs(collection(db,"withdrawRequests"));
-
-let pendingHTML = `
-<table border="1" width="100%" cellpadding="8">
-
-<tr>
-<th>Name</th>
-<th>Amount</th>
-<th>Method</th>
-<th>Status</th>
-<th>Action</th>
-</tr>
-`;
-
-let completedHTML = `
-<table border="1" width="100%" cellpadding="8">
-
-<tr>
-<th>Name</th>
-<th>Amount</th>
-<th>Method</th>
-<th>Status</th>
-</tr>
-`;
-
-snapshot.forEach((docItem)=>{
-
-const data = docItem.data();
-
-if(data.status === "pending"){
-
-pendingHTML += `
-
-<tr>
-
-<td>${data.name || ""}</td>
-
-<td>${data.amount || 0}</td>
-
-<td>${data.paymentMethod || ""}</td>
-
-<td>${data.status}</td>
-
-<td>
-
-<button onclick="acceptWithdraw('${docItem.id}')">
-✅ Accept
-</button>
-
-<button onclick="rejectWithdraw('${docItem.id}')">
-❌ Reject
-</button>
-
-</td>
-
-</tr>
-
-`;
-
-}else{
-
-completedHTML += `
-
-<tr>
-
-<td>${data.name || ""}</td>
-
-<td>${data.amount || 0}</td>
-
-<td>${data.paymentMethod || ""}</td>
-
-<td>${data.status}</td>
-
-</tr>
-
-`;
-
-}
-
-});
-
-pendingHTML += `</table>`;
-completedHTML += `</table>`;
-
-pendingBox.innerHTML = pendingHTML;
-completedBox.innerHTML = completedHTML;
-
-};
-    window.acceptWithdraw = async function(id){
-
-await updateDoc(
-doc(db,"withdrawRequests",id),
-{
-status:"accepted"
-}
-);
-
-      const requestDoc =
-await getDoc(doc(db,"withdrawRequests",id));
-
-const requestData = requestDoc.data();
-
-const userDoc =
-await getDoc(doc(db,"users",requestData.uid));
-
-const userData = userDoc.data();
-
-await updateDoc(doc(db,"users",requestData.uid),{
-
-wallet:
-Number(userData.wallet || 0)
--
-Number(requestData.amount || 0),
-
-pendingWithdraw:0,
-
-totalWithdrawn:
-Number(userData.totalWithdrawn || 0)
-+
-Number(requestData.amount || 0)
-
-});
-      await setDoc(doc(db,"walletHistory",requestData.uid + "_" + Date.now()),{
-  uid:requestData.uid,
-  type:"withdraw",
-  title:"Withdraw Accepted",
-  amount:Number(requestData.amount || 0),
-  time:new Date().toLocaleString()
-});
-loadWithdrawRequests();
-
-};
-
-window.rejectWithdraw = async function(id){
-
-await updateDoc(
-doc(db,"withdrawRequests",id),
-{
-status:"rejected"
-}
-);
-
-loadWithdrawRequests();
-
-};window.addWalletBalance = async function(){
-
-  const email=document.getElementById("walletUserEmail").value.trim().toLowerCase();
-  const amount=Number(document.getElementById("walletAmount").value);
-
-  if(!email || !amount){
-    document.getElementById("walletMsg").innerHTML="Please enter email and amount ❌";
-    return;
-  }
-
-  const usersSnap=await getDocs(collection(db,"users"));
-
-  let foundId=null;
-  let foundCount=0;
-  let oldWallet=0;
-  let oldReceived=0;
-
-  usersSnap.forEach((docItem)=>{
-    const u=docItem.data();
-    const userEmail=(u.email || "").toLowerCase();
-
-    if(userEmail === email){
-      foundId=docItem.id;
-      foundCount++;
-      oldWallet=Number(u.wallet || 0);
-      oldReceived=Number(u.totalReceived || 0);
-    }
-  });
-
-  if(foundCount === 0){
-    document.getElementById("walletMsg").innerHTML="User not found ❌";
-    return;
-  }
-
-  if(foundCount > 1){
-    document.getElementById("walletMsg").innerHTML="Duplicate email found ❌";
-    return;
-  }
-
-  await updateDoc(doc(db,"users",foundId),{
-    wallet: oldWallet + amount,
-    totalReceived: oldReceived + amount,
-    walletUpdatedAt:new Date().toLocaleString()
-  });
-await setDoc(doc(db,"walletHistory",foundId + "_" + Date.now()),{
-  uid:foundId,
-  type:"credit",
-  title:"Balance Added",
-  amount:amount,
-  time:new Date().toLocaleString()
-});
-  document.getElementById("walletMsg").innerHTML="Wallet balance added successfully ✅";
-
-};
-    window.openWalletPage = async function(){
-
-const walletPage =
-document.getElementById("walletPage");
-
-if(walletPage){
-
-walletPage.classList.remove("hide");
-
-walletPage.scrollIntoView({
-behavior:"smooth",
-block:"start"
-});
-
-}
-
-await loadCommunityWallet();
-
-};
-window.copyText = function(text){
-
-navigator.clipboard.writeText(text);
-
-alert("Copied Successfully ✅");
-
-};
-window.openDepositPage = function(){
-
-const depositPage =
-document.getElementById("depositPage");
-
-if(depositPage){
-
-depositPage.classList.remove("hide");
-
-depositPage.scrollIntoView({
-behavior:"smooth",
-block:"start"
-});
-hide("walletPage");
-hide("withdrawBox");
-hide("profileBox");
-}
-
-};
-    window.loadCommunityWallet = async function(){
-
-const user = auth.currentUser;
-
-if(!user){ return; }
-
-const userDoc =
-await getDoc(doc(db,"users",user.uid));
-
-if(!userDoc.exists()){ return; }
-
-const data = userDoc.data();
-const communityWalletText =
-document.getElementById("communityWalletText");
-
-if(communityWalletText){
-
-communityWalletText.innerHTML =
-"Wallet: Rs " +
-Number(data.wallet || 0);
-
-}
-
-const communityPendingText =
-document.getElementById("communityPendingText");
-
-if(communityPendingText){
-
-communityPendingText.innerHTML =
-"Pending Withdraw: Rs " +
-Number(data.pendingWithdraw || 0);
-
-    }
-const walletBalance =
-document.getElementById("walletPageBalance");
-
-if(walletBalance){
-
-walletBalance.innerHTML =
-"Wallet Balance: Rs " +
-Number(data.wallet || 0);
-
-}
-
-const walletPending =
-document.getElementById("walletPagePending");
-
-if(walletPending){
-
-walletPending.innerHTML =
-"Pending Withdraw: Rs " +
-Number(data.pendingWithdraw || 0);
-
-}
-
-const walletReceived =
-document.getElementById("walletPageReceived");
-
-if(walletReceived){
-
-walletReceived.innerHTML =
-"Total Received: Rs " +
-Number(data.totalReceived || 0);
-
-}
-
-const walletWithdrawn =
-document.getElementById("walletPageWithdrawn");
-
-if(walletWithdrawn){
-
-walletWithdrawn.innerHTML =
-"Total Withdrawn: Rs " +
-Number(data.totalWithdrawn || 0);
-  const historyBox =
-document.getElementById("walletHistoryList");
-
-if(historyBox){
-
-  historyBox.innerHTML = "Loading history...";
-
-  const historySnap =
-  await getDocs(collection(db,"walletHistory"));
-
-  let historyHTML = "";
-
-  historySnap.forEach((docItem)=>{
-
-    const h = docItem.data();
-
-    if(h.uid === user.uid){
-
-      historyHTML +=
-      "<p>📌 " + h.title +
-      " - Rs " + h.amount +
-      "<br><small>" + h.time +
-      "</small></p>";
-
-    }
-
-  });
-
-  historyBox.innerHTML =
-  historyHTML || "No history yet.";
-
-    }
-
-}
-
-};
-    window.showProfileBox=function(){
-
-  const profileBox=document.getElementById("profileBox");
-
-  if(profileBox){
-    profileBox.classList.remove("hide");
-    profileBox.scrollIntoView({behavior:"smooth",block:"start"});
-  }
-
-};
-
-window.saveProfile=async function(){
-
-  const user=auth.currentUser;
-
-  if(!user){
-    alert("Please login first");
-    return;
-  }
-
-  const name=document.getElementById("profileName").value.trim();
-  const mobile=document.getElementById("profileMobile").value.trim();
-  const city=document.getElementById("profileCity").value.trim();
-  const payment=document.getElementById("profilePayment").value.trim();
-  const account=document.getElementById("profileAccount").value.trim();
-
-  if(!name || !mobile || !city || !payment || !account){
-    document.getElementById("profileMsg").innerText=
-    "Please fill all profile fields ❌";
-    return;
-  }
-
-  await updateDoc(doc(db,"users",user.uid),{
-    name:name,
-    mobile:mobile,
-    city:city,
-    paymentMethod:payment,
-    accountNumber:account,
-    profileCompleted:true,
-    profileUpdatedAt:new Date().toLocaleString()
-  });
-
-  document.getElementById("profileMsg").innerText=
-  "Profile updated successfully ✅";
-closeProfileBox();
-};
-    window.openWithdraw = async function(){
-
-const user = auth.currentUser;
-
-if(!user){
-alert("Please login first");
-return;
-}
-
-const userDoc = await getDoc(doc(db,"users",user.uid));
-
-if(!userDoc.exists()){
-  alert("Please update profile first ⚠️");
-  showProfileBox();
-  return;
-}
-
-const userData = userDoc.data();
-
-if(!userData.profileCompleted){
-
-  alert("Please update profile first ⚠️");
-
-  showProfileBox();
-
-  return;
-}
-
-const withdrawBox=document.getElementById("withdrawBox");
-      document.getElementById("withdrawAmount").value = "";
-
-document.getElementById("withdrawMsg").innerHTML = "";
-
-if(withdrawBox){
-
-  withdrawBox.classList.remove("hide");
-
-  withdrawBox.scrollIntoView({
-    behavior:"smooth",
-    block:"start"
-  });
-
-    }
-};
-    window.submitDeposit = async function(){
-
-  const user = auth.currentUser;
-
-  if(!user){
-    alert("Login required");
-    return;
-  }
-
-  const method =
-  document.getElementById("depositMethod").value;
-
-  const amount =
-  Number(document.getElementById("depositAmount").value);
-
-  const reference =
-  document.getElementById("depositRef").value.trim();
-
-  const proofFile =
-  document.getElementById("depositProof").files[0];
-
-  if(!method || !amount || !reference || !proofFile){
-    alert("Please select method, amount, reference and proof screenshot");
-    return;
-  }
-
-  if(amount <= 0){
-    alert("Please enter valid amount");
-    return;
-  }
-
-  const allowedTypes = [
-    "image/png",
-    "image/jpeg",
-    "image/webp",
-    "application/pdf"
-  ];
-
-  if(!allowedTypes.includes(proofFile.type)){
-    alert("Only PNG, JPG, WEBP or PDF proof allowed");
-    return;
-  }
-
-  if(proofFile.size > 2 * 1024 * 1024){
-    alert("File size must be less than 2MB");
-    return;
-  }
-
-  document.getElementById("depositMsg").innerHTML =
-  "Submitting deposit request...";
-
-  let proofURL = "";
-
-  const cleanFileName =
-  proofFile.name.replace(/[^a-zA-Z0-9._-]/g,"_");
-
-  const filePath =
-  "depositProofs/" +
-  user.uid +
-  "/" +
-  Date.now() +
-  "_" +
-  cleanFileName;
-
-  const storageRef =
-  ref(storage,filePath);
-
-  await uploadBytes(storageRef,proofFile);
-
-  proofURL =
-  await getDownloadURL(storageRef);
-
-  const userDoc =
-  await getDoc(doc(db,"users",user.uid));
-
-  const userData =
-  userDoc.exists() ? userDoc.data() : {};
-
-  await addDoc(
-    collection(db,"depositRequests"),
-    {
-      uid:user.uid,
-      name:userData.name || user.displayName || "",
-      email:user.email || "",
-      method:method,
-      amount:amount,
-      reference:reference,
-      proofURL:proofURL,
-      status:"pending",
-      time:new Date().toLocaleString()
-    }
-  );
-
-  document.getElementById("depositMsg").innerHTML =
-  "Deposit request submitted successfully ✅";
-
-  document.getElementById("depositMethod").value = "";
-  document.getElementById("depositAmount").value = "";
-  document.getElementById("depositRef").value = "";
-  document.getElementById("depositProof").value = "";
-
-};
-window.submitWithdraw = async function(){
-
-const user = auth.currentUser;
-
-const amount =
-document.getElementById("withdrawAmount").value;
-
-const userDoc = await getDoc(doc(db,"users",user.uid));
-
-const userData = userDoc.data();
-
-const walletBalance = Number(userData.wallet || 0);
-
-if(Number(amount) > walletBalance){
-
-document.getElementById("withdrawMsg").innerHTML =
-"Insufficient wallet balance ❌";
-
-return;
-
-}
-await setDoc(doc(db,"withdrawRequests",user.uid + "_" + Date.now()),{
-  uid:user.uid,
-  name:userData.name || "",
-  email:userData.email || user.email,
-  mobile:userData.mobile || "",
-  amount:Number(amount),
-  paymentMethod:userData.paymentMethod || "",
-  accountNumber:userData.accountNumber || "",
-  status:"pending",
-  requestTime:new Date().toLocaleString()
-});
-  await updateDoc(doc(db,"users",user.uid),{
-
-pendingWithdraw:Number(amount)
-
-});
-document.getElementById("withdrawMsg").innerHTML =
-"Withdraw request submitted ✅";
-document.getElementById("communityPendingText").innerHTML =
-"Pending Withdraw: Rs " + amount;
-};
-    window.loadDepositRequests = async function(){
-
-  showPage("depositRequestsPage");
-
-  const pendingBox =
-  document.getElementById("pendingDepositList");
-
-  const completedBox =
-  document.getElementById("completedDepositList");
-
-  pendingBox.innerHTML = "Loading...";
-  completedBox.innerHTML = "Loading...";
-
-  const snapshot =
-  await getDocs(collection(db,"depositRequests"));
-
-  pendingBox.innerHTML = "";
-  completedBox.innerHTML = "";
-
-  snapshot.forEach((docSnap)=>{
-
-    const data = docSnap.data();
-
-    let proofLink = "";
-
-    if(data.proofURL){
-      proofLink =
-      `<p><b>Proof:</b> <a href="${data.proofURL}" target="_blank">View Proof</a></p>`;
-    }
-
-    const html = `
-
-      <div class="card">
-
-        <h3>${data.name || "User"}</h3>
-
-        <p><b>Email:</b> ${data.email || ""}</p>
-
-        <p><b>Amount:</b> Rs ${data.amount || 0}</p>
-
-        <p><b>Method:</b> ${data.method || ""}</p>
-
-        <p><b>Reference:</b> ${data.reference || ""}</p>
-
-        <p><b>Time:</b> ${data.time || ""}</p>
-
-        <p><b>Status:</b> ${data.status || "pending"}</p>
-
-        ${proofLink}
-
-      </div>
-
-    `;
-
-    if(data.status === "pending"){
-
-      pendingBox.innerHTML += html + `
-
-        <button class="green" onclick="approveDeposit('${docSnap.id}')">
-          ✅ Approve
-        </button>
-
-        <button class="red" onclick="rejectDeposit('${docSnap.id}')">
-          ❌ Reject
-        </button>
-
-      `;
-
-    }else{
-
-      completedBox.innerHTML += html;
-
-    }
-
-  });
-
-};
-window.approveDeposit = async function(id){
-
-  const requestRef =
-  doc(db,"depositRequests",id);
-
-  const requestSnap =
-  await getDoc(requestRef);
-
-  if(!requestSnap.exists()){
-    alert("Request not found ❌");
-    return;
-  }
-
-  const requestData =
-  requestSnap.data();
-
-  if(requestData.status !== "pending"){
-    alert("This request is already processed ⚠️");
-    return;
-  }
-
-  const userRef =
-  doc(db,"users",requestData.uid);
-
-  const userSnap =
-  await getDoc(userRef);
-
-  if(!userSnap.exists()){
-    alert("User not found ❌");
-    return;
-  }
-
-  const userData =
-  userSnap.data();
-
-  await updateDoc(userRef,{
-
-    wallet:
-    Number(userData.wallet || 0) +
-    Number(requestData.amount || 0),
-
-    totalReceived:
-    Number(userData.totalReceived || 0) +
-    Number(requestData.amount || 0),
-
-    walletUpdatedAt:new Date().toLocaleString()
-
-  });
-
-  await setDoc(
-    doc(db,"walletHistory",requestData.uid + "_" + Date.now()),
-    {
-      uid:requestData.uid,
-      type:"deposit",
-      title:"Deposit Approved",
-      amount:Number(requestData.amount || 0),
-      time:new Date().toLocaleString()
-    }
-  );
-
-  await updateDoc(requestRef,{
-    status:"approved",
-    approvedTime:new Date().toLocaleString()
-  });
-
-  alert("Deposit Approved & Wallet Updated ✅");
-
-  loadDepositRequests();
-
-};
-window.rejectDeposit = async function(id){
-
-  const requestRef =
-  doc(db,"depositRequests",id);
-
-  const requestSnap =
-  await getDoc(requestRef);
-
-  if(!requestSnap.exists()){
-    alert("Request not found ❌");
-    return;
-  }
-
-  const requestData =
-  requestSnap.data();
-
-  if(requestData.status !== "pending"){
-    alert("This request is already processed ⚠️");
-    return;
-  }
-
-  await updateDoc(requestRef,{
-    status:"rejected",
-    rejectedTime:new Date().toLocaleString()
-  });
-
-  alert("Deposit Rejected ❌");
-
-  loadDepositRequests();
-
-};
     
+    .glow-gold {
+      box-shadow: 0 0 35px rgba(245, 158, 11, 0.45);
+    }
+    .text-glow-amber {
+      text-shadow: 0 0 16px rgba(251, 191, 36, 0.7);
+    }
+    .text-glow-cyan {
+      text-shadow: 0 0 16px rgba(6, 182, 212, 0.7);
+    }
+
+    /* Animated Diagonal Sliced Banner */
+    .slant-banner {
+      position: absolute;
+      top: -25%;
+      right: -10%;
+      width: 65%;
+      height: 150%;
+      background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #042f2e 100%);
+      border-left: 2px solid rgba(52, 211, 153, 0.4);
+      clip-path: polygon(30% 0%, 100% 0%, 100% 100%, 0% 100%);
+      transition: all 0.75s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      z-index: 20;
+    }
+
+    /* When SignUp Mode Active */
+    .container-box.active .slant-banner {
+      right: 45%;
+      clip-path: polygon(0% 0%, 100% 0%, 70% 100%, 0% 100%);
+      border-left: none;
+      border-right: 2px solid rgba(245, 158, 11, 0.4);
+    }
+
+    .form-panel {
+      transition: all 0.5s ease-in-out;
+    }
+  </style>
+</head>
+<body class="bg-[#050814] text-white min-h-screen flex items-center justify-center font-sans overflow-x-hidden selection:bg-amber-400 selection:text-black">
+
+  <!-- ================= AUTH MODAL CONTAINER ================= -->
+  <div id="authContainer" class="fixed inset-0 bg-[#02040a]/90 backdrop-blur-xl z-50 flex flex-col items-center justify-center p-4">
+    
+    <!-- Top Big Header -->
+    <div class="text-center mb-6 z-10 select-none">
+      <div class="inline-flex items-center space-x-3 mb-1">
+        <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-amber-500 to-emerald-400 flex items-center justify-center shadow-lg shadow-amber-500/30">
+          <i class="fa-solid fa-bolt text-slate-950 text-2xl"></i>
+        </div>
+        <h1 class="text-4xl md:text-5xl font-black italic tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-emerald-300 to-cyan-400 drop-shadow-md">
+          VOLT<span class="text-white">WEALTH</span>
+        </h1>
+      </div>
+      <p class="text-xs uppercase tracking-[0.3em] text-slate-400 font-semibold">Future Smart Yield &amp; Global Earning Protocol</p>
+    </div>
+
+    <!-- Auth Card Box -->
+    <div id="boxWrapper" class="container-box relative w-full max-w-3xl min-h-[550px] bg-white rounded-3xl shadow-2xl overflow-hidden text-slate-900 border border-slate-700/30">
+      
+      <!-- ================= ANIMATED SLANT BANNER ================= -->
+      <div class="slant-banner flex items-center justify-center text-white px-8">
+        <div class="absolute -top-10 -right-10 w-44 h-44 bg-emerald-500/20 rounded-full blur-2xl pointer-events-none"></div>
+        <div class="absolute -bottom-10 -left-10 w-44 h-44 bg-amber-500/20 rounded-full blur-2xl pointer-events-none"></div>
+
+        <!-- Banner Content: Login Mode -->
+        <div id="loginBannerText" class="text-center select-none pl-12 transition-opacity duration-300">
+          <div class="inline-block px-3 py-1 bg-amber-400/20 border border-amber-400/40 rounded-full text-amber-300 text-[10px] font-extrabold uppercase tracking-widest mb-3">
+            Secure Member Portal
+          </div>
+          <h2 class="text-3xl font-black italic tracking-wide text-white mb-2 uppercase text-glow-cyan">
+            WELCOME<br>BACK!
+          </h2>
+          <p class="text-xs text-slate-300 max-w-[210px] mx-auto leading-relaxed">
+            اپنے اکاؤنٹ میں لاگ ان کریں اور ڈیلی انعامات و ٹیم کمیشن فوراً حاصل کریں۔
+          </p>
+          <div class="mt-4 flex items-center justify-center space-x-2 text-emerald-400 text-xs font-bold">
+            <i class="fa-solid fa-circle-check"></i>
+            <span>Instant Cloud Sync</span>
+          </div>
+        </div>
+
+        <!-- Banner Content: Sign Up Mode -->
+        <div id="signupBannerText" class="text-center select-none pr-12 hidden transition-opacity duration-300">
+          <div class="inline-block px-3 py-1 bg-emerald-400/20 border border-emerald-400/40 rounded-full text-emerald-300 text-[10px] font-extrabold uppercase tracking-widest mb-3">
+            New Opportunity
+          </div>
+          <h2 class="text-3xl font-black italic tracking-wide text-white mb-2 uppercase text-glow-amber">
+            START<br>EARNING!
+          </h2>
+          <p class="text-xs text-slate-300 max-w-[210px] mx-auto leading-relaxed">
+            ابھی فری رجسٹر ہوں اور روزانہ چیک ان ریوارڈز کے ساتھ اپنی آمدنی شروع کریں۔
+          </p>
+          <div class="mt-4 flex items-center justify-center space-x-2 text-amber-300 text-xs font-bold">
+            <i class="fa-solid fa-gift"></i>
+            <span>$2 Welcome Reward on $6 Deposit</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= LOGIN FORM (Left Side) ================= -->
+      <div id="loginFormPanel" class="form-panel absolute top-0 left-0 w-1/2 h-full p-8 md:p-10 flex flex-col justify-center z-10 bg-white">
+        <div class="mb-5">
+          <h2 class="text-2xl font-black text-slate-900 tracking-tight">Login Portal</h2>
+          <div class="w-10 h-1.5 bg-gradient-to-r from-amber-500 to-emerald-500 mt-1 rounded-full"></div>
+        </div>
+
+        <form onsubmit="handleLogin(event)" class="space-y-4">
+          <div>
+            <label class="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Gmail or Mobile Number</label>
+            <div class="relative mt-1">
+              <input type="text" id="loginIdentifier" required placeholder="example@gmail.com or 03XXXXXXXXX" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs font-semibold text-slate-800 outline-none focus:border-amber-500 focus:bg-white transition shadow-sm pr-9">
+              <i class="fa-solid fa-user-check absolute right-3 top-3 text-xs text-slate-400"></i>
+            </div>
+          </div>
+
+          <div>
+            <label class="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Password</label>
+            <div class="relative mt-1">
+              <input type="password" id="loginPass" required placeholder="••••••••" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs font-semibold text-slate-800 outline-none focus:border-amber-500 focus:bg-white transition shadow-sm pr-9">
+              <i class="fa-solid fa-lock absolute right-3 top-3 text-xs text-slate-400"></i>
+            </div>
+          </div>
+
+          <button type="submit" class="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black py-2.5 rounded-xl text-xs uppercase tracking-wider transition shadow-md shadow-amber-500/20 active:scale-95 flex items-center justify-center space-x-2">
+            <span>Secure Login</span>
+            <i class="fa-solid fa-arrow-right-to-bracket text-xs"></i>
+          </button>
+        </form>
+
+        <p class="text-xs text-slate-500 mt-6 text-center font-medium">
+          اکاؤنٹ نہیں ہے؟ 
+          <button onclick="toggleAuth(true)" class="font-extrabold text-amber-600 hover:text-amber-700 underline ml-1 cursor-pointer">سائن اپ کریں</button>
+        </p>
+      </div>
+
+      <!-- ================= SIGN UP FORM (Right Side) ================= -->
+      <div id="signupFormPanel" class="form-panel absolute top-0 right-0 w-1/2 h-full p-8 md:p-10 flex flex-col justify-center z-10 bg-white">
+        <div class="mb-3">
+          <h2 class="text-2xl font-black text-slate-900 tracking-tight">Create Account</h2>
+          <div class="w-10 h-1.5 bg-gradient-to-r from-emerald-500 to-cyan-500 mt-1 rounded-full"></div>
+        </div>
+
+        <form onsubmit="handleSignup(event)" class="space-y-2">
+          <div>
+            <label class="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Full Name</label>
+            <input type="text" id="regName" required placeholder="Ali Khan" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-1.5 text-xs font-semibold text-slate-800 outline-none focus:border-emerald-500 focus:bg-white transition shadow-sm">
+          </div>
+
+          <div>
+            <label class="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Gmail Address</label>
+            <input type="email" id="regGmail" required placeholder="user@gmail.com" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-1.5 text-xs font-semibold text-slate-800 outline-none focus:border-emerald-500 focus:bg-white transition shadow-sm">
+          </div>
+
+          <div>
+            <label class="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Mobile Number</label>
+            <input type="tel" id="regMobile" required placeholder="03001234567" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-1.5 text-xs font-semibold text-slate-800 outline-none focus:border-emerald-500 focus:bg-white transition shadow-sm">
+          </div>
+
+          <div>
+            <label class="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Password</label>
+            <input type="password" id="regPass" required placeholder="6+ Characters" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-1.5 text-xs font-semibold text-slate-800 outline-none focus:border-emerald-500 focus:bg-white transition shadow-sm">
+          </div>
+
+          <div>
+            <label class="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Referral Code (Optional)</label>
+            <input type="text" id="regRef" placeholder="VOLT786" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-1.5 text-xs font-mono font-bold uppercase text-emerald-600 outline-none focus:border-emerald-500 focus:bg-white transition shadow-sm">
+          </div>
+
+          <button type="submit" class="w-full bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-slate-950 font-black py-2 rounded-xl text-xs uppercase tracking-wider transition shadow-md shadow-emerald-500/20 active:scale-95 mt-1 flex items-center justify-center space-x-2">
+            <span>Register &amp; Claim Bonus</span>
+            <i class="fa-solid fa-user-plus text-xs"></i>
+          </button>
+        </form>
+
+        <p class="text-xs text-slate-500 mt-3 text-center font-medium">
+          پہلے سے ممبر ہیں؟ 
+          <button onclick="toggleAuth(false)" class="font-extrabold text-emerald-600 hover:text-emerald-700 underline ml-1 cursor-pointer">لاگ ان کریں</button>
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ================= MAIN DASHBOARD (Protected View) ================= -->
+  <div id="mainDashboard" class="w-full min-h-screen flex flex-col hidden bg-[#050814]">
+    <!-- Top Bar -->
+    <header class="border-b border-slate-800 bg-slate-900/80 backdrop-blur sticky top-0 z-40 px-6 py-4 flex justify-between items-center">
+      <div class="flex items-center space-x-3">
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-amber-500 to-emerald-400 flex items-center justify-center font-black text-black">
+          <i class="fa-solid fa-bolt"></i>
+        </div>
+        <span class="text-xl font-extrabold tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-amber-300 to-emerald-400">
+          VOLT<span class="text-white">WEALTH</span>
+        </span>
+      </div>
+      <div class="flex items-center space-x-4">
+        <div class="bg-slate-800/80 border border-slate-700 px-4 py-1.5 rounded-full text-xs">
+          Member: <span id="displayUserName" class="text-emerald-400 font-bold">Member</span>
+        </div>
+        <div class="bg-slate-800/80 border border-slate-700 px-4 py-1.5 rounded-full text-xs">
+          Balance: <span id="userBalance" class="text-amber-400 font-bold">$0.00</span>
+        </div>
+        <button onclick="logout()" class="text-xs text-rose-400 hover:underline">Logout</button>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1 max-w-5xl mx-auto px-4 py-8 w-full space-y-8">
+      <div class="bg-gradient-to-r from-slate-900 via-indigo-950/40 to-slate-900 border border-emerald-500/30 rounded-3xl p-8 text-center relative overflow-hidden glow-gold">
+        <span class="bg-amber-400/20 text-amber-300 border border-amber-400/30 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+          Official High-Yield Node
+        </span>
+        <h1 class="text-4xl md:text-5xl font-black italic mt-4 mb-2 text-white">DEPOSIT $6 &amp; GET INSTANT REWARD</h1>
+        <p class="text-slate-300 text-sm max-w-xl mx-auto mb-6">فوری اکاؤنٹ ایکٹیو کریں، ٹیم بنا کر کمیشن حاصل کریں اور ڈیلی انعامات کلیم کریں۔</p>
+        <button onclick="alert('USDT Address Copied: 0xVOLT786...99Y')" class="bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 text-slate-950 font-black px-8 py-3 rounded-full text-sm uppercase tracking-wide transition shadow-lg shadow-amber-400/30">
+          Deposit USDT Now
+        </button>
+      </div>
+
+      <!-- Cards Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Daily Check-In -->
+        <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-6">
+          <div class="flex items-center space-x-3 mb-2">
+            <i class="fa-solid fa-calendar-check text-emerald-400 text-xl"></i>
+            <h3 class="font-bold text-base">Daily Check-In ($0.50)</h3>
+          </div>
+          <p class="text-xs text-slate-400 mb-4">ہر 24 گھنٹے بعد لاگ ان ہو کر مفت ڈیلی ریوارڈ کلیم کریں۔</p>
+          <button id="checkinBtn" onclick="claimDaily()" class="w-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold py-2.5 rounded-xl text-xs transition">
+            Claim Daily Check-In
+          </button>
+        </div>
+
+        <!-- Referral Link -->
+        <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-6">
+          <div class="flex items-center space-x-3 mb-2">
+            <i class="fa-solid fa-users text-amber-400 text-xl"></i>
+            <h3 class="font-bold text-base">Referral Link</h3>
+          </div>
+          <p class="text-xs text-slate-400 mb-3">اپنے ریفرل لنک سے دوستوں کو جوڑیں اور 10% بونس حاصل کریں۔</p>
+          <div class="flex">
+            <input id="refOutput" readonly class="bg-slate-950 border border-slate-800 text-xs px-3 py-2 rounded-l-xl w-full text-slate-300 outline-none">
+            <button onclick="copyRef()" class="bg-slate-800 hover:bg-slate-700 px-4 rounded-r-xl text-xs font-semibold">Copy</button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    const box = document.getElementById('boxWrapper');
+    const loginText = document.getElementById('loginBannerText');
+    const signupText = document.getElementById('signupBannerText');
+
+    // Smooth Form Switcher
+    function toggleAuth(isSignUp) {
+      if (isSignUp) {
+        box.classList.add('active');
+        loginText.classList.add('hidden');
+        signupText.classList.remove('hidden');
+      } else {
+        box.classList.remove('active');
+        signupText.classList.add('hidden');
+        loginText.classList.remove('hidden');
+      }
+    }
+
+    // Sign Up Logic (Name, Gmail, Mobile, Password, Referral)
+    function handleSignup(e) {
+      e.preventDefault();
+      const name = document.getElementById('regName').value.trim();
+      const gmail = document.getElementById('regGmail').value.trim().toLowerCase();
+      const mobile = document.getElementById('regMobile').value.trim();
+      const pass = document.getElementById('regPass').value;
+      const ref = document.getElementById('regRef').value.trim();
+
+      const userData = { name, gmail, mobile, pass, ref };
+      localStorage.setItem('volt_user', JSON.stringify(userData));
+      localStorage.setItem('volt_balance', '0.00');
+      
+      alert('مبارک ہو! آپ کا VoltWealth اکاؤنٹ کامیابی سے بن گیا ہے۔ اب Gmail یا موبائل نمبر سے لاگ ان کریں۔');
+      toggleAuth(false);
+    }
+
+    // Login Logic (Gmail OR Mobile Number + Password)
+    function handleLogin(e) {
+      e.preventDefault();
+      const identifier = document.getElementById('loginIdentifier').value.trim().toLowerCase();
+      const pass = document.getElementById('loginPass').value;
+      const saved = JSON.parse(localStorage.getItem('volt_user'));
+
+      if (saved) {
+        const matchesUser = (saved.gmail.toLowerCase() === identifier || saved.mobile === identifier);
+        if (matchesUser && saved.pass === pass) {
+          openDashboard(saved.name);
+          return;
+        }
+      }
+
+      // Demo login fallback
+      if (!saved && identifier && pass) {
+        openDashboard(identifier.split('@')[0]);
+      } else {
+        alert('درج کردہ Gmail / موبائل نمبر یا پاس ورڈ درست نہیں ہے!');
+      }
+    }
+
+    function openDashboard(username) {
+      document.getElementById('authContainer').classList.add('hidden');
+      document.getElementById('mainDashboard').classList.remove('hidden');
+      document.getElementById('displayUserName').innerText = username;
+
+      const bal = parseFloat(localStorage.getItem('volt_balance')) || 0.00;
+      document.getElementById('userBalance').innerText = `$${bal.toFixed(2)}`;
+      document.getElementById('refOutput').value = `${window.location.origin}?ref=VOLT${Math.floor(1000 + Math.random()*9000)}`;
+    }
+
+    function claimDaily() {
+      let bal = parseFloat(localStorage.getItem('volt_balance')) || 0.00;
+      bal += 0.50;
+      localStorage.setItem('volt_balance', bal.toString());
+      document.getElementById('userBalance').innerText = `$${bal.toFixed(2)}`;
+      
+      const btn = document.getElementById('checkinBtn');
+      btn.disabled = true;
+      btn.innerText = 'آج کا ریوارڈ کلیم ہو گیا!';
+      btn.classList.add('opacity-50', 'cursor-not-allowed');
+      alert('+$0.50 بیلنس میں شامل کر دیے گئے ہیں!');
+    }
+
+    function copyRef() {
+      const copyText = document.getElementById('refOutput');
+      copyText.select();
+      navigator.clipboard.writeText(copyText.value);
+      alert('ریفرل لنک کاپی ہو گیا!');
+    }
+
+    function logout() {
+      document.getElementById('mainDashboard').classList.add('hidden');
+      document.getElementById('authContainer').classList.remove('hidden');
+      toggleAuth(false);
+    }
   </script>
-  
 </body>
-</html>
+  </html>
+  

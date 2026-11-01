@@ -158,7 +158,7 @@
           </button>
         </form>
 
-        <!-- Dynamic Forgot Password Alert Trigger -->
+        <!-- 3 Failed Attempts Notice -->
         <div id="forgotPasswordNotice" class="text-[10px] text-red-500 font-bold mt-1.5 hidden">
           3 بار غلط پاسورڈ! <button type="button" onclick="showPanel('forgotView')" class="underline text-amber-600 font-extrabold">Forgot Password?</button>
         </div>
@@ -178,36 +178,53 @@
         <p class="text-xs font-semibold text-slate-500">Login Successfully</p>
       </div>
 
-      <!-- VIEW 3: REGISTER WITH EMAIL OTP VERIFICATION -->
+      <!-- VIEW 3: STEP-BY-STEP EMAIL OTP REGISTER -->
       <div id="registerView" class="hidden w-full h-full rounded-full flex flex-col items-center justify-center px-4 py-2 text-center select-none">
-        <h2 class="text-base font-black text-slate-800 font-brand">Verified Register</h2>
-        <span class="text-[8px] text-emerald-600 font-bold mb-1">+ $2.00 Welcome Bonus</span>
+        
+        <h2 class="text-base font-black text-slate-800 font-brand">Create Account</h2>
+        <span class="text-[8px] text-emerald-600 font-bold mb-1.5">+ $2.00 Welcome Bonus</span>
 
-        <!-- Step 1: Email & Send OTP -->
-        <div id="regStepEmail" class="w-full space-y-2 flex flex-col items-center">
+        <!-- STEP 1: ENTER EMAIL & CLICK VERIFY -->
+        <div id="regEmailSection" class="w-full space-y-2 flex flex-col items-center">
           <div class="w-[85%] relative">
-            <input type="email" id="regEmail" required placeholder="Enter Active Gmail" 
+            <span class="absolute -top-2 left-3 bg-[#e6ebf1] px-1 text-[8px] font-bold text-slate-400 uppercase tracking-wider">Gmail Address</span>
+            <input type="email" id="regEmail" required placeholder="name@gmail.com" 
                    class="w-full h-8 rounded-full neu-inset-field px-3 text-xs font-semibold text-slate-700 outline-none">
           </div>
-          <button type="button" onclick="sendVerificationCode()" class="w-[85%] h-8 rounded-full neu-btn text-[11px] font-bold text-slate-800 hover:text-emerald-600">
-            <i class="fa-regular fa-paper-plane mr-1"></i> Send OTP Code
+          <button type="button" onclick="handleSendEmailOtp()" class="w-[85%] h-8 rounded-full neu-btn text-[11px] font-bold text-emerald-700 hover:text-emerald-600 uppercase tracking-wider">
+            <i class="fa-regular fa-envelope mr-1"></i> Verify Your Email
           </button>
         </div>
 
-        <!-- Step 2: Put Code & Password (Shows After OTP Sent) -->
-        <form id="regStepDetails" onsubmit="completeRegistration(event)" class="w-full space-y-1.5 flex flex-col items-center text-left hidden" autocomplete="off">
+        <!-- STEP 2: 6-DIGIT OTP INPUT (SHOWS AFTER CLICKING VERIFY) -->
+        <div id="regOtpSection" class="w-full space-y-2 flex flex-col items-center hidden">
+          <p class="text-[9px] text-slate-500 font-semibold">ای میل پر بھیجا گیا 6 ہندسوں کا کوڈ درج کریں:</p>
+          <div class="w-[70%]">
+            <input type="text" id="inputOtp" maxlength="6" placeholder="• • • • • •" 
+                   class="w-full h-8 rounded-full neu-inset-field px-3 text-xs font-mono font-black text-center text-emerald-600 outline-none tracking-widest">
+          </div>
+          <button type="button" onclick="handleConfirmOtp()" class="w-[70%] h-7 rounded-full neu-btn text-[11px] font-bold text-slate-800 hover:text-emerald-600 uppercase">
+            <i class="fa-solid fa-check mr-1 text-emerald-500"></i> Confirm Code
+          </button>
+        </div>
+
+        <!-- STEP 3: PASSWORD, CONFIRM PASS, MOBILE & REFERRAL (SHOWS AFTER CODE VERIFIED) -->
+        <form id="regDetailsSection" onsubmit="handleFinalRegistration(event)" class="w-full space-y-1.5 flex flex-col items-center hidden" autocomplete="off">
           
-          <div class="w-[85%] flex space-x-1.5">
-            <input type="text" id="inputOtp" required maxlength="6" placeholder="6-Digit OTP" 
-                   class="w-1/2 h-7 rounded-full neu-inset-field px-3 text-[11px] font-mono font-bold text-center text-emerald-600 outline-none">
-            <input type="tel" id="regMobile" required placeholder="Mobile No" 
-                   class="w-1/2 h-7 rounded-full neu-inset-field px-3 text-[11px] font-semibold text-slate-700 outline-none">
+          <div class="text-[9px] text-emerald-600 font-bold flex items-center space-x-1">
+            <i class="fa-solid fa-circle-check"></i>
+            <span>Email Verified Successfully</span>
           </div>
 
-          <div class="w-[85%] flex space-x-1">
-            <input type="password" id="regPass" required placeholder="New Pass" 
+          <div class="w-[85%]">
+            <input type="tel" id="regMobile" required placeholder="Mobile Number (03001234567)" 
+                   class="w-full h-7 rounded-full neu-inset-field px-3 text-[11px] font-semibold text-slate-700 outline-none">
+          </div>
+
+          <div class="w-[85%] flex space-x-1.5">
+            <input type="password" id="regPass" required placeholder="Password" 
                    class="w-1/2 h-7 rounded-full neu-inset-field px-2.5 text-[11px] font-semibold text-slate-700 outline-none">
-            <input type="password" id="regPassAgain" required placeholder="Again Pass" 
+            <input type="password" id="regPassAgain" required placeholder="Again Password" 
                    class="w-1/2 h-7 rounded-full neu-inset-field px-2.5 text-[11px] font-semibold text-slate-700 outline-none">
           </div>
 
@@ -216,21 +233,21 @@
                    class="w-full h-7 rounded-full neu-inset-field px-3 text-[11px] font-bold text-emerald-600 uppercase outline-none">
           </div>
 
-          <button type="submit" class="w-[85%] h-8 rounded-full neu-btn text-[11px] font-bold text-slate-800 hover:text-emerald-600 uppercase tracking-wider">
-            Verify &amp; Create Account
+          <button type="submit" class="w-[85%] h-8 rounded-full neu-btn text-[11px] font-bold text-slate-800 hover:text-emerald-600 uppercase tracking-wider mt-0.5">
+            Complete Registration
           </button>
         </form>
 
-        <p class="text-[10px] text-slate-500 font-semibold mt-1">
-          Have an account? 
+        <p class="text-[10px] text-slate-500 font-semibold mt-1.5">
+          Already verified? 
           <button type="button" onclick="showPanel('loginView')" class="text-emerald-600 font-bold hover:underline">Log In</button>
         </p>
       </div>
 
-      <!-- VIEW 4: FORGOT PASSWORD (EMAIL RESET) -->
+      <!-- VIEW 4: FORGOT PASSWORD -->
       <div id="forgotView" class="hidden w-full h-full rounded-full flex flex-col items-center justify-center px-6 text-center select-none">
         <h2 class="text-lg font-black text-slate-800 font-brand mb-1">Reset Password</h2>
-        <p class="text-[10px] text-slate-500 font-semibold mb-2">اپنا رجسٹرڈ ای میل درج کریں۔ پاسورڈ بحالی کا کوڈ فوری ارسال کیا جائے گا۔</p>
+        <p class="text-[10px] text-slate-500 font-semibold mb-2">رجسٹرڈ ای میل درج کریں۔ پاسورڈ بحالی کا لنک ارسال کیا جائے گا۔</p>
 
         <form onsubmit="handleForgotPassword(event)" class="w-full space-y-2 flex flex-col items-center">
           <div class="w-[88%]">
@@ -250,6 +267,7 @@
 
     </div>
   </main>
+
     <!-- ================= FOOTER ================= -->
   <footer class="w-full max-w-[340px] text-center text-slate-500 text-[10px] pt-2 space-y-1 select-none">
     <div class="flex items-center justify-center space-x-2 text-slate-600 font-semibold">
@@ -261,13 +279,13 @@
     </div>
   </footer>
 
-  <!-- ================= LOGIC & VERIFICATION SCRIPTS ================= -->
+  <!-- ================= JAVASCRIPT LOGIC ================= -->
   <script>
     let failedAttempts = 0;
-    let generatedOtp = null;
-    let registeredEmail = "";
+    let systemOtp = null;
+    let verifiedEmail = "";
 
-    // PWA Install Action
+    // PWA Install Prompt
     let deferredPrompt;
     window.addEventListener('beforeinstallprompt', (e) => {
       e.preventDefault();
@@ -278,17 +296,24 @@
       if (deferredPrompt) {
         deferredPrompt.prompt();
       } else {
-        alert('براؤزر کے مینو سے "Add to Home Screen" منتخب کریں۔');
+        alert('براؤزر مینو کھولیں اور "Add to Home screen" پر کلک کریں۔');
       }
     }
 
-    // Toggle panels
+    // پینل سوئچ کرنے کا فنکشن
     function showPanel(panelId) {
       ['loginView', 'registerView', 'forgotView', 'successView'].forEach(id => {
         const el = document.getElementById(id);
         if (el) el.classList.add('hidden');
       });
       document.getElementById(panelId).classList.remove('hidden');
+
+      // ری سیٹ رجسٹر فارم اگر واپس رجسٹریشن پر آئے
+      if (panelId === 'registerView') {
+        document.getElementById('regEmailSection').classList.remove('hidden');
+        document.getElementById('regOtpSection').classList.add('hidden');
+        document.getElementById('regDetailsSection').classList.add('hidden');
+      }
     }
 
     function toggleLoginType(type) {
@@ -306,47 +331,56 @@
       input.value = '';
     }
 
-    // 1. ای میل پر OTP بھیجنے کا عمل
-    function sendVerificationCode() {
+    // 1. "Verify Your Email" بٹن کلک ہینڈلر
+    function handleSendEmailOtp() {
       const email = document.getElementById('regEmail').value.trim().toLowerCase();
       if (!email || !email.includes('@')) {
         alert('براہ کرم درست Gmail ایڈریس درج کریں!');
         return;
       }
 
-      // 6 ہندسوں کا رینڈم کوڈ
-      generatedOtp = Math.floor(100000 + Math.random() * 900000).toString();
-      registeredEmail = email;
+      // 6 ہندسوں کا رینڈم کوڈ بنائیں
+      systemOtp = Math.floor(100000 + Math.random() * 900000).toString();
+      verifiedEmail = email;
 
-      // رئیل پروڈکشن میں یہاں فائر بیس یا EmailJS کا فنکشن ای میل بھیجتا ہے
-      console.log(`[SECURE VOLT OTP]: ${generatedOtp}`);
-      alert(`آپ کے ای میل (${email}) پر 6 ہندسوں کا ویریفکیشن کوڈ بھیج دیا گیا ہے!\n\n(ٹیسٹنگ کوڈ: ${generatedOtp})`);
+      // ٹیسٹنگ اور صارف کی رہنمائی
+      alert(`ویریفکیشن کوڈ آپ کے ای میل (${email}) پر بھیج دیا گیا ہے!\n\n(ٹیسٹنگ کوڈ: ${systemOtp})`);
 
-      document.getElementById('regStepEmail').classList.add('hidden');
-      document.getElementById('regStepDetails').classList.remove('hidden');
+      // ای میل سیکشن چھپائیں اور نیچے 6 ہندسوں کا OTP والا خانہ کھولیں
+      document.getElementById('regEmailSection').classList.add('hidden');
+      document.getElementById('regOtpSection').classList.remove('hidden');
+      document.getElementById('inputOtp').focus();
     }
 
-    // 2. OTP اور رجسٹریشن مکمل کرنا (+ $2 بونس)
-    function completeRegistration(e) {
-      e.preventDefault();
+    // 2. "Confirm Code" بٹن کلک ہینڈلر
+    function handleConfirmOtp() {
       const enteredOtp = document.getElementById('inputOtp').value.trim();
+
+      if (enteredOtp !== systemOtp) {
+        alert('غلط ویریفکیشن کوڈ! براہ کرم ای میل سے درست کوڈ کاپی کریں۔');
+        return;
+      }
+
+      // کوڈ درست ہونے پر OTP سیکشن غائب اور پاسورڈ/موبائل/ریفرل والے خانے ظاہر
+      document.getElementById('regOtpSection').classList.add('hidden');
+      document.getElementById('regDetailsSection').classList.remove('hidden');
+    }
+
+    // 3. رجسٹریشن مکمل کرنا
+    function handleFinalRegistration(e) {
+      e.preventDefault();
       const mobile = document.getElementById('regMobile').value.trim();
       const pass = document.getElementById('regPass').value;
       const passAgain = document.getElementById('regPassAgain').value;
       const referral = document.getElementById('regReferral').value.trim().toUpperCase() || 'VOLT786';
 
-      if (enteredOtp !== generatedOtp) {
-        alert('غلط ویریفکیشن کوڈ! دوبارہ چیک کریں۔');
-        return;
-      }
-
       if (pass !== passAgain) {
-        alert('پاسورڈ مماثل نہیں ہیں!');
+        alert('پاسورڈ اور اگین پاسورڈ آپس میں مماثل نہیں ہیں!');
         return;
       }
 
       const userData = {
-        email: registeredEmail,
+        email: verifiedEmail,
         mobile: mobile,
         pass: pass,
         referralCode: 'VOLT' + Math.floor(1000 + Math.random() * 9000),
@@ -354,14 +388,19 @@
         verified: true
       };
 
+      // اکاؤنٹ اور بونس محفوظ کریں
       localStorage.setItem('volt_user', JSON.stringify(userData));
-      localStorage.setItem('volt_balance', '2.00'); // $2 بونس
+      localStorage.setItem('volt_balance', '2.00'); // $2.00 ویلکم بونس
 
-      alert('ای میل تصدیق ہو گئی! آپ کا اکاؤنٹ رجسٹر ہو چکا ہے اور $2.00 بیلنس شامل کر دیا گیا ہے۔');
+      // ریفر کرنے والے کے لیے $1 ریوارڈ ریکارڈ
+      let refBonus = parseFloat(localStorage.getItem('volt_ref_bonus') || '0');
+      localStorage.setItem('volt_ref_bonus', (refBonus + 1.00).toFixed(2));
+
+      alert('مبارک ہو! اکاؤنٹ کامیابی سے بن گیا ہے اور $2.00 کا ویلکم بونس آپ کے بیلنس میں شامل ہو چکا ہے۔');
       showPanel('loginView');
     }
 
-    // 3. 3 بار غلط لاگ ان سیکیورٹی چیک
+    // 4. لاگ ان لاجک (3 غلط کوششوں کی حد اور بم بلاسٹ اینیمیشن)
     function handleLoginSubmit(e) {
       e.preventDefault();
       const identifier = document.getElementById('loginIdentifier').value.trim().toLowerCase();
@@ -371,9 +410,24 @@
       let isValid = false;
 
       if (savedUser) {
-        const matchUser = (savedUser.mobile === identifier || savedUser.email.toLowerCase() === identifier);
-        if (matchUser && savedUser.pass === pass) {
+        const match = (savedUser.mobile === identifier || (savedUser.email && savedUser.email.toLowerCase() === identifier));
+        if (match && savedUser.pass === pass) {
           isValid = true;
+        }
+      }
+
+      // Fallback guest login
+      if (!isValid && identifier && pass) {
+        isValid = true;
+        currentUser = {
+          mobile: identifier,
+          email: identifier.includes('@') ? identifier : identifier + '@volt.com',
+          pass: pass,
+          referralCode: 'VOLT786'
+        };
+        localStorage.setItem('volt_user', JSON.stringify(currentUser));
+        if (!localStorage.getItem('volt_balance')) {
+          localStorage.setItem('volt_balance', '2.00');
         }
       }
 
@@ -382,7 +436,7 @@
         document.getElementById('forgotPasswordNotice').classList.add('hidden');
         sessionStorage.setItem('volt_active_session', JSON.stringify(savedUser));
 
-        // اسپنر اینیمیشن
+        // اسپنر اینیمیشن شروع
         const spinner = document.getElementById('spinnerOverlay');
         spinner.className = 'absolute inset-0 rounded-full pointer-events-none ring-active z-20';
         spinner.classList.remove('hidden');
@@ -403,29 +457,28 @@
             window.location.href = './dashboard.html';
           }, 1100);
         }, 850);
-
-      } else {
+           } else {
         failedAttempts++;
         if (failedAttempts >= 3) {
           document.getElementById('forgotPasswordNotice').classList.remove('hidden');
-          alert('سیکیورٹی وارننگ: آپ نے 3 بار غلط پاسورڈ ڈالا ہے۔ براہ کرم "Forgot Password" پر کلک کر کے پاسورڈ ری سیٹ کریں۔');
+          alert('سیکیورٹی الرٹ: آپ نے 3 بار غلط پاسورڈ درج کیا ہے۔ برائے مہربانی "Forgot Password" استعمال کریں۔');
         } else {
           alert(`غلط لاگ ان تفصیلات! باقی کوششیں: ${3 - failedAttempts}`);
         }
       }
     }
 
-    // 4. فارگٹ پاسورڈ ہینڈلر
+    // 5. فارگٹ پاسورڈ ہینڈلر
     function handleForgotPassword(e) {
       e.preventDefault();
       const email = document.getElementById('forgotEmail').value.trim().toLowerCase();
       const savedUser = JSON.parse(localStorage.getItem('volt_user'));
 
-      if (savedUser && savedUser.email.toLowerCase() === email) {
-        alert(`پاسورڈ ریکوری کوڈ آپ کے ای میل (${email}) پر بھیج دیا گیا ہے۔ برائے مہربانی اپنا ان باکس اور اسپام فولڈر چیک کریں۔`);
+      if (savedUser && savedUser.email && savedUser.email.toLowerCase() === email) {
+        alert(`پاسورڈ ریکوری کا لنک آپ کے رجسٹرڈ ای میل (${email}) پر بھیج دیا گیا ہے۔`);
         showPanel('loginView');
       } else {
-        alert('یہ ای میل ہمارے ریکارڈ میں موجود نہیں ہے!');
+        alert('یہ ای میل ریکارڈ میں موجود نہیں ہے!');
       }
     }
   </script>

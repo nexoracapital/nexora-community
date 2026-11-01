@@ -63,7 +63,7 @@
       animation: blastZoom 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
     }
 
-    /* Slow Ticker */
+    /* Slow Activity Ticker */
     @keyframes scrollTickerSlow {
       0% { transform: translateX(100%); }
       100% { transform: translateX(-100%); }
@@ -196,7 +196,7 @@
           </button>
         </div>
 
-        <!-- STEP 2: 6-DIGIT OTP INPUT (SHOWS AFTER CLICKING VERIFY) -->
+        <!-- STEP 2: 6-DIGIT OTP INPUT -->
         <div id="regOtpSection" class="w-full space-y-2 flex flex-col items-center hidden">
           <p class="text-[9px] text-slate-500 font-semibold">ای میل پر بھیجا گیا 6 ہندسوں کا کوڈ درج کریں:</p>
           <div class="w-[70%]">
@@ -208,7 +208,7 @@
           </button>
         </div>
 
-        <!-- STEP 3: PASSWORD, CONFIRM PASS, MOBILE & REFERRAL (SHOWS AFTER CODE VERIFIED) -->
+        <!-- STEP 3: PASSWORD, CONFIRM PASS, MOBILE & REFERRAL -->
         <form id="regDetailsSection" onsubmit="handleFinalRegistration(event)" class="w-full space-y-1.5 flex flex-col items-center hidden" autocomplete="off">
           
           <div class="text-[9px] text-emerald-600 font-bold flex items-center space-x-1">
@@ -268,7 +268,7 @@
     </div>
   </main>
 
-    <!-- ================= FOOTER ================= -->
+  <!-- ================= FOOTER ================= -->
   <footer class="w-full max-w-[340px] text-center text-slate-500 text-[10px] pt-2 space-y-1 select-none">
     <div class="flex items-center justify-center space-x-2 text-slate-600 font-semibold">
       <i class="fa-solid fa-shield-halved text-emerald-500"></i>
@@ -278,8 +278,7 @@
       &copy; 2026 VoltWealth Protocol. All Rights Reserved.
     </div>
   </footer>
-
-  <!-- ================= JAVASCRIPT LOGIC ================= -->
+    <!-- ================= JAVASCRIPT LOGIC ================= -->
   <script>
     let failedAttempts = 0;
     let systemOtp = null;
@@ -308,7 +307,6 @@
       });
       document.getElementById(panelId).classList.remove('hidden');
 
-      // ری سیٹ رجسٹر فارم اگر واپس رجسٹریشن پر آئے
       if (panelId === 'registerView') {
         document.getElementById('regEmailSection').classList.remove('hidden');
         document.getElementById('regOtpSection').classList.add('hidden');
@@ -339,14 +337,19 @@
         return;
       }
 
-      // 6 ہندسوں کا رینڈم کوڈ بنائیں
+      const usersList = JSON.parse(localStorage.getItem('volt_users_list')) || [];
+      const alreadyExists = usersList.some(u => u.email.toLowerCase() === email);
+      if (alreadyExists) {
+        alert('یہ ای میل پہلے سے رجسٹرڈ ہے! براہ کرم براہِ راست لاگ ان کریں۔');
+        showPanel('loginView');
+        return;
+      }
+
       systemOtp = Math.floor(100000 + Math.random() * 900000).toString();
       verifiedEmail = email;
 
-      // ٹیسٹنگ اور صارف کی رہنمائی
       alert(`ویریفکیشن کوڈ آپ کے ای میل (${email}) پر بھیج دیا گیا ہے!\n\n(ٹیسٹنگ کوڈ: ${systemOtp})`);
 
-      // ای میل سیکشن چھپائیں اور نیچے 6 ہندسوں کا OTP والا خانہ کھولیں
       document.getElementById('regEmailSection').classList.add('hidden');
       document.getElementById('regOtpSection').classList.remove('hidden');
       document.getElementById('inputOtp').focus();
@@ -357,16 +360,15 @@
       const enteredOtp = document.getElementById('inputOtp').value.trim();
 
       if (enteredOtp !== systemOtp) {
-        alert('غلط ویریفکیشن کوڈ! براہ کرم ای میل سے درست کوڈ کاپی کریں۔');
+        alert('غلط ویریفکیشن کوڈ! براہ کرم ای میل سے درست کوڈ درج کریں۔');
         return;
       }
 
-      // کوڈ درست ہونے پر OTP سیکشن غائب اور پاسورڈ/موبائل/ریفرل والے خانے ظاہر
       document.getElementById('regOtpSection').classList.add('hidden');
       document.getElementById('regDetailsSection').classList.remove('hidden');
     }
 
-    // 3. رجسٹریشن مکمل کرنا
+    // 3. رجسٹریشن مکمل کرنا (ملٹی یوزر ڈیٹا بیس)
     function handleFinalRegistration(e) {
       e.preventDefault();
       const mobile = document.getElementById('regMobile').value.trim();
@@ -379,62 +381,59 @@
         return;
       }
 
-      const userData = {
+      let usersList = JSON.parse(localStorage.getItem('volt_users_list')) || [];
+
+      if (usersList.some(u => u.mobile === mobile)) {
+        alert('یہ موبائل نمبر پہلے سے رجسٹرڈ ہے!');
+        return;
+      }
+
+      const newUser = {
         email: verifiedEmail,
         mobile: mobile,
         pass: pass,
+        balance: 2.00, // $2.00 ویلکم بونس
         referralCode: 'VOLT' + Math.floor(1000 + Math.random() * 9000),
         referredBy: referral,
-        verified: true
+        verified: true,
+        createdAt: new Date().toISOString()
       };
 
-      // اکاؤنٹ اور بونس محفوظ کریں
-      localStorage.setItem('volt_user', JSON.stringify(userData));
-      localStorage.setItem('volt_balance', '2.00'); // $2.00 ویلکم بونس
+      // ریفر کرنے والے کے لیے $1 ریوارڈ
+      usersList = usersList.map(u => {
+        if (u.referralCode === referral) {
+          u.balance = (parseFloat(u.balance || 0) + 1.00);
+        }
+        return u;
+      });
 
-      // ریفر کرنے والے کے لیے $1 ریوارڈ ریکارڈ
-      let refBonus = parseFloat(localStorage.getItem('volt_ref_bonus') || '0');
-      localStorage.setItem('volt_ref_bonus', (refBonus + 1.00).toFixed(2));
+      usersList.push(newUser);
+      localStorage.setItem('volt_users_list', JSON.stringify(usersList));
 
-      alert('مبارک ہو! اکاؤنٹ کامیابی سے بن گیا ہے اور $2.00 کا ویلکم بونس آپ کے بیلنس میں شامل ہو چکا ہے۔');
+      alert('مبارک ہو! اکاؤنٹ کامیابی سے بن گیا ہے اور $2.00 کا ویلکم بونس شامل ہو چکا ہے۔');
       showPanel('loginView');
     }
 
-    // 4. لاگ ان لاجک (3 غلط کوششوں کی حد اور بم بلاسٹ اینیمیشن)
+    // 4. لاگ ان لاجک (ہر یوزر کا الگ اکاؤنٹ لوڈ ہوگا)
     function handleLoginSubmit(e) {
       e.preventDefault();
       const identifier = document.getElementById('loginIdentifier').value.trim().toLowerCase();
       const pass = document.getElementById('loginPass').value;
 
-      const savedUser = JSON.parse(localStorage.getItem('volt_user'));
-      let isValid = false;
+      const usersList = JSON.parse(localStorage.getItem('volt_users_list')) || [];
 
-      if (savedUser) {
-        const match = (savedUser.mobile === identifier || (savedUser.email && savedUser.email.toLowerCase() === identifier));
-        if (match && savedUser.pass === pass) {
-          isValid = true;
-        }
-      }
+      // درست یوزر کو لسٹ سے تلاش کرنا
+      const targetUser = usersList.find(u => 
+        (u.email.toLowerCase() === identifier || u.mobile === identifier) && u.pass === pass
+      );
 
-      // Fallback guest login
-      if (!isValid && identifier && pass) {
-        isValid = true;
-        currentUser = {
-          mobile: identifier,
-          email: identifier.includes('@') ? identifier : identifier + '@volt.com',
-          pass: pass,
-          referralCode: 'VOLT786'
-        };
-        localStorage.setItem('volt_user', JSON.stringify(currentUser));
-        if (!localStorage.getItem('volt_balance')) {
-          localStorage.setItem('volt_balance', '2.00');
-        }
-      }
-
-      if (isValid) {
+      if (targetUser) {
         failedAttempts = 0;
         document.getElementById('forgotPasswordNotice').classList.add('hidden');
-        sessionStorage.setItem('volt_active_session', JSON.stringify(savedUser));
+
+        // صرف موجودہ یوزر کا سیشن بنائیں
+        sessionStorage.setItem('volt_active_session', JSON.stringify(targetUser));
+        localStorage.setItem('volt_balance', targetUser.balance.toFixed(2));
 
         // اسپنر اینیمیشن شروع
         const spinner = document.getElementById('spinnerOverlay');
@@ -457,7 +456,8 @@
             window.location.href = './dashboard.html';
           }, 1100);
         }, 850);
-           } else {
+
+      } else {
         failedAttempts++;
         if (failedAttempts >= 3) {
           document.getElementById('forgotPasswordNotice').classList.remove('hidden');
@@ -472,9 +472,11 @@
     function handleForgotPassword(e) {
       e.preventDefault();
       const email = document.getElementById('forgotEmail').value.trim().toLowerCase();
-      const savedUser = JSON.parse(localStorage.getItem('volt_user'));
+      const usersList = JSON.parse(localStorage.getItem('volt_users_list')) || [];
 
-      if (savedUser && savedUser.email && savedUser.email.toLowerCase() === email) {
+      const exists = usersList.find(u => u.email.toLowerCase() === email);
+
+      if (exists) {
         alert(`پاسورڈ ریکوری کا لنک آپ کے رجسٹرڈ ای میل (${email}) پر بھیج دیا گیا ہے۔`);
         showPanel('loginView');
       } else {

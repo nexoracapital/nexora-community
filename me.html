@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>VoltWealth - Member Profile</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@700;900&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .font-brand {
+      font-family: 'Space Grotesk', sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-[#030712] text-slate-100 min-h-screen flex flex-col justify-between pb-20 selection:bg-amber-400 selection:text-black">
+
+  <!-- ================= TOP HEADER ================= -->
+  <header class="sticky top-0 z-40 bg-slate-900/90 backdrop-blur border-b border-slate-800 px-4 py-3 flex justify-between items-center">
+    <div class="flex items-center space-x-2">
+      <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-amber-500 via-emerald-400 to-cyan-400 p-[2px] flex items-center justify-center">
+        <div class="w-full h-full bg-[#030712] rounded-[9px] flex items-center justify-center">
+          <i class="fa-solid fa-bolt text-amber-400 text-xs"></i>
+        </div>
+      </div>
+      <span class="text-lg font-black italic tracking-wider font-brand text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-emerald-300 to-cyan-400">
+        VOLT<span class="text-white">ACCOUNT</span>
+      </span>
+    </div>
+    <span class="text-[10px] bg-slate-800 border border-slate-700 px-2.5 py-0.5 rounded-full text-slate-300 font-bold">
+      VIP Node Member
+    </span>
+  </header>
+
+  <!-- ================= MAIN CONTENT ================= -->
+  <main class="max-w-md mx-auto w-full px-4 py-4 space-y-4">
+
+    <!-- Profile Overview Card -->
+    <div class="bg-gradient-to-r from-slate-900 to-indigo-950/40 border border-slate-800 rounded-2xl p-5 shadow-lg relative overflow-hidden">
+      <div class="flex items-center space-x-3.5">
+        <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-amber-400 to-emerald-400 flex items-center justify-center text-slate-950 font-black text-xl shadow-md">
+          <i class="fa-regular fa-user"></i>
+        </div>
+        <div>
+          <h2 id="userNameDisplay" class="text-base font-bold text-white font-brand">Investor Name</h2>
+          <div id="userEmailDisplay" class="text-xs text-slate-400 mt-0.5">user@gmail.com</div>
+          <div id="userMobileDisplay" class="text-[10px] text-emerald-400 font-mono mt-0.5">03001234567</div>
+        </div>
+      </div>
+
+      <!-- Balance Strip -->
+      <div class="grid grid-cols-2 gap-3 mt-4 pt-3.5 border-t border-slate-800/80 text-center">
+        <div class="bg-slate-950/70 border border-slate-800 p-2.5 rounded-xl">
+          <div class="text-[9px] uppercase font-semibold text-slate-400">Available Balance</div>
+          <div id="walletBalanceDisplay" class="text-lg font-black text-amber-400 font-brand mt-0.5">$0.00</div>
+        </div>
+        <div class="bg-slate-950/70 border border-slate-800 p-2.5 rounded-xl">
+          <div class="text-[9px] uppercase font-semibold text-slate-400">Min Withdrawal</div>
+          <div class="text-lg font-black text-emerald-400 font-brand mt-0.5">$20.00</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Financial Operations (Recharge & Withdraw) -->
+    <div class="grid grid-cols-2 gap-3">
+      <button onclick="openModal('rechargeModal')" class="bg-slate-900/90 border border-emerald-500/30 hover:border-emerald-400 p-4 rounded-2xl flex flex-col items-center justify-center space-y-2 transition shadow-md active:scale-95">
+        <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-lg">
+          <i class="fa-solid fa-wallet"></i>
+        </div>
+        <span class="text-xs font-bold font-brand text-white">Recharge (Deposit)</span>
+      </button>
+
+      <button onclick="openModal('withdrawModal')" class="bg-slate-900/90 border border-amber-500/30 hover:border-amber-400 p-4 rounded-2xl flex flex-col items-center justify-center space-y-2 transition shadow-md active:scale-95">
+        <div class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center text-lg">
+          <i class="fa-solid fa-arrow-up-from-bracket"></i>
+        </div>
+        <span class="text-xs font-bold font-brand text-white">Withdraw Funds</span>
+      </button>
+    </div>
+
+    <!-- Account Actions List -->
+    <div class="bg-slate-900/90 border border-slate-800 rounded-2xl divide-y divide-slate-800/80 overflow-hidden text-xs">
+      
+      <!-- Change Password -->
+      <button onclick="openModal('passwordModal')" class="w-full px-4 py-3.5 flex items-center justify-between text-slate-300 hover:text-white hover:bg-slate-800/40 transition">
+        <div class="flex items-center space-x-3">
+          <div class="w-7 h-7 rounded-lg bg-slate-800 flex items-center justify-center text-amber-400">
+            <i class="fa-solid fa-key text-[11px]"></i>
+          </div>
+          <span class="font-semibold">Change Security Password</span>
+        </div>
+        <i class="fa-solid fa-chevron-right text-[10px] text-slate-500"></i>
+      </button>
+
+      <!-- Customer Service Contact -->
+      <a href="https://t.me/" target="_blank" class="w-full px-4 py-3.5 flex items-center justify-between text-slate-300 hover:text-white hover:bg-slate-800/40 transition">
+        <div class="flex items-center space-x-3">
+          <div class="w-7 h-7 rounded-lg bg-slate-800 flex items-center justify-center text-cyan-400">
+            <i class="fa-solid fa-headset text-[11px]"></i>
+          </div>
+          <span class="font-semibold">24/7 Online Support</span>
+        </div>
+        <i class="fa-solid fa-chevron-right text-[10px] text-slate-500"></i>
+      </a>
+
+      <!-- Sign Out -->
+      <button onclick="signOut()" class="w-full px-4 py-3.5 flex items-center justify-between text-rose-400 hover:bg-rose-500/10 transition">
+        <div class="flex items-center space-x-3">
+          <div class="w-7 h-7 rounded-lg bg-rose-500/10 flex items-center justify-center text-rose-400">
+            <i class="fa-solid fa-power-off text-[11px]"></i>
+          </div>
+          <span class="font-bold">Sign Out</span>
+        </div>
+        <i class="fa-solid fa-chevron-right text-[10px] text-rose-500/50"></i>
+      </button>
+
+    </div>
+
+  </main>
+
+  <!-- ================= POPUP MODAL: RECHARGE (DEPOSIT) ================= -->
+  <div id="rechargeModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-slate-900 border border-slate-700 max-w-sm w-full rounded-2xl p-5 space-y-4">
+      <div class="flex justify-between items-center">
+        <h3 class="font-bold text-sm text-white font-brand">Recharge Account</h3>
+        <button onclick="closeModal('rechargeModal')" class="text-slate-400 hover:text-white text-lg">&times;</button>
+      </div>
+
+      <div class="space-y-3 text-xs">
+        <div>
+          <label class="text-[10px] text-slate-400 uppercase font-semibold block mb-1">Transfer Network</label>
+          <div class="bg-slate-950 border border-slate-800 p-2 rounded-xl text-emerald-400 font-mono font-bold">
+            USDT (TRC20 / BEP20)
+          </div>
+        </div>
+
+        <div>
+          <label class="text-[10px] text-slate-400 uppercase font-semibold block mb-1">Deposit Address</label>
+          <div class="flex items-center">
+            <input type="text" id="officialDepositAddress" readonly value="TX9yZaeVoltWealthNode786Official" class="bg-slate-950 border border-slate-800 text-[11px] px-3 py-2 rounded-l-xl w-full text-slate-300 outline-none font-mono">
+            <button onclick="copyDepositAddress()" class="bg-slate-800 hover:bg-slate-700 px-3 py-2 rounded-r-xl font-bold text-amber-400 border-l border-slate-700 text-xs">
+              Copy
+            </button>
+          </div>
+        </div>
+
+        <div>
+          <label class="text-[10px] text-slate-400 uppercase font-semibold block mb-1">Recharge Amount ($)</label>
+          <input type="number" id="rechargeAmtInput" placeholder="Min $6.00" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-white outline-none focus:border-emerald-500">
+        </div>
+
+        <button onclick="confirmRecharge()" class="w-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black py-2.5 rounded-xl text-xs uppercase tracking-wider transition shadow-md shadow-emerald-500/20">
+          Submit Recharge (Demo)
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= POPUP MODAL: WITHDRAW (MIN $20) ================= -->
+  <div id="withdrawModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-slate-900 border border-slate-700 max-w-sm w-full rounded-2xl p-5 space-y-4">
+      <div class="flex justify-between items-center">
+        <h3 class="font-bold text-sm text-white font-brand">Withdraw Funds</h3>
+        <button onclick="closeModal('withdrawModal')" class="text-slate-400 hover:text-white text-lg">&times;</button>
+      </div>
+
+      <div class="bg-amber-500/10 border border-amber-500/30 p-2.5 rounded-xl text-[11px] text-amber-300 font-medium">
+        <i class="fa-solid fa-circle-info mr-1"></i>
+        Minimum withdrawal amount is <strong>$20.00 USDT</strong>.
+      </div>
+
+      <div class="space-y-3 text-xs">
+        <div>
+          <label class="text-[10px] text-slate-400 uppercase font-semibold block mb-1">Destination Address (USDT)</label>
+          <input type="text" id="withdrawAddressInput" placeholder="Enter your TRC20 address" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-white outline-none focus:border-amber-500 font-mono text-[11px]">
+        </div>
+
+        <div>
+          <label class="text-[10px] text-slate-400 uppercase font-semibold block mb-1">Withdrawal Amount ($)</label>
+          <input type="number" id="withdrawAmtInput" placeholder="Minimum 20" min="20" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-white outline-none focus:border-amber-500">
+        </div>
+
+        <div>
+          <label class="text-[10px] text-slate-400 uppercase font-semibold block mb-1">Account Password</label>
+          <input type="password" id="withdrawPasswordInput" placeholder="Confirm your password" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-white outline-none focus:border-amber-500">
+        </div>
+
+        <button onclick="confirmWithdrawal()" class="w-full bg-amber-400 hover:bg-amber-300 text-slate-950 font-black py-2.5 rounded-xl text-xs uppercase tracking-wider transition shadow-md shadow-amber-400/20">
+          Confirm Withdrawal
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= POPUP MODAL: CHANGE PASSWORD ================= -->
+  <div id="passwordModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-slate-900 border border-slate-700 max-w-sm w-full rounded-2xl p-5 space-y-4">
+      <div class="flex justify-between items-center">
+        <h3 class="font-bold text-sm text-white font-brand">Update Password</h3>
+        <button onclick="closeModal('passwordModal')" class="text-slate-400 hover:text-white text-lg">&times;</button>
+      </div>
+
+      <div class="space-y-3 text-xs">
+        <div>
+          <label class="text-[10px] text-slate-400 uppercase font-semibold block mb-1">Current Password</label>
+          <input type="password" id="currentPassInput" placeholder="••••••••" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-white outline-none focus:border-amber-500">
+        </div>
+
+        <div>
+          <label class="text-[10px] text-slate-400 uppercase font-semibold block mb-1">New Password</label>
+          <input type="password" id="newPassInput" placeholder="Min 6 characters" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-white outline-none focus:border-amber-500">
+        </div>
+
+        <button onclick="changePassword()" class="w-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold py-2.5 rounded-xl text-xs uppercase tracking-wider transition">
+          Update Security Key
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= BOTTOM NAVIGATION BAR ================= -->
+  <nav class="fixed bottom-0 left-0 right-0 z-50 bg-slate-900/95 backdrop-blur border-t border-slate-800 px-6 py-2">
+    <div class="max-w-md mx-auto flex justify-between items-center text-[10px] font-medium text-slate-400">
+      <a href="dashboard.html" class="flex flex-col items-center space-y-1 hover:text-amber-400 transition">
+        <i class="fa-solid fa-house text-base"></i>
+        <span>Home</span>
+      </a>
+      <a href="team.html" class="flex flex-col items-center space-y-1 hover:text-amber-400 transition">
+        <i class="fa-solid fa-users text-base"></i>
+        <span>Team</span>
+      </a>
+      <a href="vip.html" class="flex flex-col items-center space-y-1 hover:text-amber-400 transition">
+        <i class="fa-solid fa-gem text-base"></i>
+        <span>VIP</span>
+      </a>
+      <a href="me.html" class="flex flex-col items-center space-y-1 text-amber-400 font-bold transition">
+        <div class="w-9 h-9 rounded-full bg-amber-400 text-black flex items-center justify-center -mt-4 shadow-lg shadow-amber-400/30">
+          <i class="fa-solid fa-circle-user text-base"></i>
+        </div>
+        <span>Profile</span>
+      </a>
+    </div>
+  </nav>
+
+  <script>
+    // Authentication Check
+    const activeSession = JSON.parse(sessionStorage.getItem('volt_active_session'));
+    if (!activeSession) {
+      window.location.href = 'index.html';
+    }
+
+    // Populate user profile info
+    document.getElementById('userNameDisplay').innerText = activeSession.name || 'Member';
+    document.getElementById('userEmailDisplay').innerText = activeSession.gmail || 'user@gmail.com';
+    document.getElementById('userMobileDisplay').innerText = activeSession.mobile || 'Not Linked';
+
+    let currentBalance = parseFloat(localStorage.getItem('volt_balance')) || 0.00;
+    function updateUI() {
+      document.getElementById('walletBalanceDisplay').innerText = `$${currentBalance.toFixed(2)}`;
+      localStorage.setItem('volt_balance', currentBalance.toString());
+    }
+    updateUI();
+
+    // Modal Helpers
+    function openModal(id) {
+      document.getElementById(id).classList.remove('hidden');
+    }
+    function closeModal(id) {
+      document.getElementById(id).classList.add('hidden');
+    }
+
+    // Copy Deposit Address
+    function copyDepositAddress() {
+      const addr = document.getElementById('officialDepositAddress');
+      addr.select();
+      navigator.clipboard.writeText(addr.value);
+      alert('Deposit TRC20 Address copied!');
+    }
+
+    // Confirm Recharge
+    function confirmRecharge() {
+      const amt = parseFloat(document.getElementById('rechargeAmtInput').value);
+      if (isNaN(amt) || amt < 6) {
+        alert('Minimum deposit amount is $6.00.');
+        return;
+      }
+      currentBalance += amt;
+      updateUI();
+      closeModal('rechargeModal');
+      alert(`Recharge of $${amt.toFixed(2)} submitted successfully! Balance updated.`);
+    }
+
+    // Confirm Withdrawal with strict $20 rule
+    function confirmWithdrawal() {
+      const addr = document.getElementById('withdrawAddressInput').value.trim();
+      const amt = parseFloat(document.getElementById('withdrawAmtInput').value);
+      const pass = document.getElementById('withdrawPasswordInput').value;
+
+      if (!addr || addr.length < 15) {
+        alert('Please enter a valid USDT TRC20 withdrawal address.');
+        return;
+      }
+      if (isNaN(amt) || amt < 20) {
+        alert('Withdrawal failed! Minimum withdrawal limit is $20.00 USDT.');
+        return;
+      }
+      if (amt > currentBalance) {
+        alert('Insufficient wallet balance!');
+        return;
+      }
+      if (pass !== activeSession.pass) {
+        alert('Incorrect password! Verification failed.');
+        return;
+      }
+
+      currentBalance -= amt;
+      updateUI();
+      closeModal('withdrawModal');
+      alert(`Withdrawal request of $${amt.toFixed(2)} submitted. Payout node is processing.`);
+    }
+
+    // Change Password
+    function changePassword() {
+      const cur = document.getElementById('currentPassInput').value;
+      const newP = document.getElementById('newPassInput').value;
+
+      if (cur !== activeSession.pass) {
+        alert('Current password does not match!');
+        return;
+      }
+      if (!newP || newP.length < 6) {
+        alert('New password must be at least 6 characters.');
+        return;
+      }
+
+      activeSession.pass = newP;
+      sessionStorage.setItem('volt_active_session', JSON.stringify(activeSession));
+      localStorage.setItem('volt_registered_user', JSON.stringify(activeSession));
+      closeModal('passwordModal');
+      alert('Password updated successfully!');
+    }
+
+    // Sign Out
+    function signOut() {
+      sessionStorage.clear();
+      window.location.href = 'index.html';
+    }
+  </script>
+</body>
+</html>

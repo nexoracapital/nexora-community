@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>VoltWealth - VIP Nodes & Yield Contracts</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@700;900&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      touch-action: manipulation;
+    }
+    .font-brand {
+      font-family: 'Space Grotesk', sans-serif;
+    }
+    .glow-card {
+      box-shadow: 0 0 20px rgba(16, 185, 129, 0.15);
+    }
+  </style>
+</head>
+<body class="bg-[#030712] text-slate-100 min-h-screen flex flex-col justify-between pb-24 selection:bg-amber-400 selection:text-black">
+
+  <!-- ================= TOP HEADER ================= -->
+  <header class="sticky top-0 z-40 bg-slate-900/90 backdrop-blur border-b border-slate-800 px-4 py-3 flex justify-between items-center">
+    <div class="flex items-center space-x-2">
+      <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-amber-500 via-emerald-400 to-cyan-400 p-[2px] flex items-center justify-center">
+        <div class="w-full h-full bg-[#030712] rounded-[9px] flex items-center justify-center">
+          <i class="fa-solid fa-gem text-amber-400 text-xs"></i>
+        </div>
+      </div>
+      <span class="text-lg font-black italic tracking-wider font-brand text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-emerald-300 to-cyan-400">
+        VOLT<span class="text-white">VIP</span>
+      </span>
+    </div>
+    <div class="bg-slate-800/90 border border-slate-700/80 px-3 py-1 rounded-full text-[11px] text-slate-300 font-semibold flex items-center space-x-1.5">
+      <span class="text-slate-400">Balance:</span>
+      <span id="userBalanceDisplay" class="text-amber-400 font-bold font-mono">$0.00</span>
+    </div>
+  </header>
+
+  <!-- ================= MAIN CONTENT ================= -->
+  <main class="max-w-md mx-auto w-full px-4 py-4 space-y-4">
+
+    <!-- Contract Terms Box -->
+    <div class="bg-gradient-to-br from-slate-900 via-indigo-950/40 to-slate-900 border border-emerald-500/30 rounded-2xl p-4 shadow-lg relative overflow-hidden">
+      <div class="flex items-center justify-between">
+        <span class="text-[9px] font-extrabold uppercase tracking-wider text-emerald-400 bg-emerald-400/10 px-2.5 py-0.5 rounded-full border border-emerald-400/20">
+          30-Day Staking Cycle
+        </span>
+        <span class="text-[10px] text-amber-300 font-bold flex items-center space-x-1">
+          <i class="fa-solid fa-shield-check text-emerald-400"></i>
+          <span>100% Principal Safe</span>
+        </span>
+      </div>
+      <h2 class="text-base font-black font-brand text-white mt-2">Sustainable Liquidity Protocol</h2>
+      <p class="text-[11px] text-slate-400 mt-1 leading-relaxed">
+        Invest in verified institutional nodes to receive <strong class="text-emerald-400">35% net profit monthly</strong> (1.16% daily) plus 3-tier team rebates (<strong class="text-amber-300">7% - 3% - 1%</strong>).
+      </p>
+    </div>
+
+    <!-- Active Staking Status -->
+    <div id="activeNodeBanner" class="hidden bg-emerald-500/10 border border-emerald-500/30 rounded-2xl p-3 flex items-center justify-between text-xs">
+      <div class="flex items-center space-x-2.5">
+        <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
+        <div>
+          <div class="font-bold text-white"><span id="activeNodeTitle">VIP 1</span> Currently Active</div>
+          <div class="text-[10px] text-slate-400">Daily yield credited every 24h</div>
+        </div>
+      </div>
+      <span class="text-[10px] font-bold text-emerald-400 font-mono bg-emerald-400/10 px-2 py-1 rounded-lg">Running</span>
+    </div>
+
+    <!-- ================= VIP NODES LIST ================= -->
+    <div class="space-y-3">
+
+      <!-- VIP 1 ($100) -->
+      <div class="bg-slate-900/90 border border-slate-800 hover:border-emerald-500/40 rounded-2xl p-4 transition-all glow-card">
+        <div class="flex items-center justify-between mb-2">
+          <div class="flex items-center space-x-2">
+            <span class="bg-amber-400 text-black text-[10px] font-black px-2 py-0.5 rounded-md uppercase font-brand">VIP 1</span>
+            <span class="text-xs font-bold text-white">Starter Node</span>
+          </div>
+          <div class="text-right">
+            <span class="text-[10px] text-slate-400 uppercase font-semibold">Stake:</span>
+            <span class="text-sm font-black text-amber-400 font-brand ml-1">$100.00</span>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-3 gap-2 bg-slate-950/70 p-2.5 rounded-xl border border-slate-800/80 text-center my-3">
+          <div>
+            <div class="text-[9px] text-slate-400 uppercase font-semibold">Daily Yield</div>
+            <div class="text-xs font-bold text-emerald-400 mt-0.5">$1.16</div>
+          </div>
+          <div>
+            <div class="text-[9px] text-slate-400 uppercase font-semibold">30D Profit</div>
+            <div class="text-xs font-bold text-amber-300 mt-0.5">+$35.00</div>
+          </div>
+          <div>
+            <div class="text-[9px] text-slate-400 uppercase font-semibold">Total Return</div>
+            <div class="text-xs font-bold text-white mt-0.5">$135.00</div>
+          </div>
+        </div>
+
+        <button onclick="unlockNode('VIP 1', 100)" class="w-full bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-slate-950 font-black py-2.5 rounded-xl text-xs uppercase tracking-wider transition active:scale-95 shadow-md shadow-emerald-500/20">
+          Unlock VIP 1 ($100.00)
+        </button>
+      </div>
+
+      <!-- VIP 2 ($250) -->
+      <div class="bg-slate-900/90 border border-slate-800 hover:border-emerald-500/40 rounded-2xl p-4 transition-all glow-card">
+        <div class="flex items-center justify-between mb-2">
+          <div class="flex items-center space-x-2">
+            <span class="bg-amber-400 text-black text-[10px] font-black px-2 py-0.5 rounded-md uppercase font-brand">VIP 2</span>
+            <span class="text-xs font-bold text-white">Growth Node</span>
+          </div>
+          <div class="text-right">
+            <span class="text-[10px] text-slate-400 uppercase font-semibold">Stake:</span>
+            <span class="text-sm font-black text-amber-400 font-brand ml-1">$250.00</span>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-3 gap-2 bg-slate-950/70 p-2.5 rounded-xl border border-slate-800/80 text-center my-3">
+          <div>
+            <div class="text-[9px] text-slate-400 uppercase font-semibold">Daily Yield</div>
+            <div class="text-xs font-bold text-emerald-400 mt-0.5">$2.91</div>
+          </div>
+          <div>
+            <div class="text-[9px] text-slate-400 uppercase font-semibold">30D Profit</div>
+            <div class="text-xs font-bold text-amber-300 mt-0.5">+$87.50</div>
+          </div>
+          <div>
+            <div class="text-[9px] text-slate-400 uppercase font-semibold">Total Return</div>
+            <div class="text-xs font-bold text-white mt-0.5">$337.50</div>
+          </div>
+        </div>
+
+        <button onclick="unlockNode('VIP 2', 250)" class="w-full bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-slate-950 font-black py-2.5 rounded-xl text-xs uppercase tracking-wider transition active:scale-95 shadow-md shadow-emerald-500/20">
+          Unlock VIP 2 ($250.00)
+        </button>
+      </div>
+
+      <!-- VIP 3 ($500) -->
+      <div class="bg-slate-900/90 border border-slate-800 hover:border-emerald-500/40 rounded-2xl p-4 transition-all glow-card">
+        <div class="flex items-center justify-between mb-2">
+          <div class="flex items-center space-x-2">
+            <span class="bg-amber-400 text-black text-[10px] font-black px-2 py-0.5 rounded-md uppercase font-brand">VIP 3</span>
+            <span class="text-xs font-bold text-white">Advanced Node</span>
+          </div>
+          <div class="text-right">
+            <span class="text-[10px] text-slate-400 uppercase font-semibold">Stake:</span>
+            <span class="text-sm font-black text-amber-400 font-brand ml-1">$500.00</span>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-3 gap-2 bg-slate-950/70 p-2.5 rounded-xl border border-slate-800/80 text-center my-3">
+          <div>
+            <div class="text-[9px] text-slate-400 uppercase font-semibold">Daily Yield</div>
+            <div class="text-xs font-bold text-emerald-400 mt-0.5">$5.83</div>
+          </div>
+          <div>
+            <div class="text-[9px] text-slate-400 uppercase font-semibold">30D Profit</div>
+            <div class="text-xs font-bold text-amber-300 mt-0.5">+$175.00</div>
+          </div>
+          <div>
+            <div class="text-[9px] text-slate-400 uppercase font-semibold">Total Return</div>
+            <div class="text-xs font-bold text-white mt-0.5">$675.00</div>
+          </div>
+        </div>
+
+        <button onclick="unlockNode('VIP 3', 500)" class="w-full bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-slate-950 font-black py-2.5 rounded-xl text-xs uppercase tracking-wider transition active:scale-95 shadow-md shadow-emerald-500/20">
+          Unlock VIP 3 ($500.00)
+        </button>
+      </div>
+
+      <!-- VIP 4 ($1000) -->
+      <div class="bg-slate-900/90 border border-slate-800 hover:border-emerald-500/40 rounded-2xl p-4 transition-all glow-card">
+        <div class="flex items-center justify-between mb-2">
+          <div class="flex items-center space-x-2">
+            <span class="bg-amber-400 text-black text-[10px] font-black px-2 py-0.5 rounded-md uppercase font-brand">VIP 4</span>
+            <span class="text-xs font-bold text-white">Institutional Node</span>
+          </div>
+          <div class="text-right">
+            <span class="text-[10px] text-slate-400 uppercase font-semibold">Stake:</span>
+            <span class="text-sm font-black text-amber-400 font-brand ml-1">$1,000.00</span>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-3 gap-2 bg-slate-950/70 p-2.5 rounded-xl border border-slate-800/80 text-center my-3">
+          <div>
+            <div class="text-[9px] text-slate-400 uppercase font-semibold">Daily Yield</div>
+            <div class="text-xs font-bold text-emerald-400 mt-0.5">$11.66</div>
+          </div>
+          <div>
+            <div class="text-[9px] text-slate-400 uppercase font-semibold">30D Profit</div>
+            <div class="text-xs font-bold text-amber-300 mt-0.5">+$350.00</div>
+          </div>
+          <div>
+            <div class="text-[9px] text-slate-400 uppercase font-semibold">Total Return</div>
+            <div class="text-xs font-bold text-white mt-0.5">$1,350.00</div>
+          </div>
+        </div>
+
+        <button onclick="unlockNode('VIP 4', 1000)" class="w-full bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-slate-950 font-black py-2.5 rounded-xl text-xs uppercase tracking-wider transition active:scale-95 shadow-md shadow-emerald-500/20">
+          Unlock VIP 4 ($1,000.00)
+        </button>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- ================= FIXED BOTTOM NAVIGATION BAR ================= -->
+  <nav class="fixed bottom-0 left-0 right-0 z-50 bg-slate-900/95 backdrop-blur border-t border-slate-800 px-6 py-2.5">
+    <div class="max-w-md mx-auto flex justify-between items-center text-[10px] font-medium text-slate-400">
+      <a href="dashboard.html" class="flex flex-col items-center space-y-1 hover:text-amber-400 transition">
+        <i class="fa-solid fa-house text-base"></i>
+        <span>Home</span>
+      </a>
+      <a href="team.html" class="flex flex-col items-center space-y-1 hover:text-amber-400 transition">
+        <i class="fa-solid fa-users text-base"></i>
+        <span>Team</span>
+      </a>
+      <a href="vip.html" class="flex flex-col items-center space-y-1 text-amber-400 font-bold transition">
+        <div class="w-9 h-9 rounded-full bg-amber-400 text-black flex items-center justify-center -mt-4 shadow-lg shadow-amber-400/30">
+          <i class="fa-solid fa-gem text-base"></i>
+        </div>
+        <span>VIP</span>
+      </a>
+      <a href="me.html" class="flex flex-col items-center space-y-1 hover:text-amber-400 transition">
+        <i class="fa-solid fa-circle-user text-base"></i>
+        <span>Profile</span>
+      </a>
+    </div>
+  </nav>
+
+  <script>
+    // Session Guard: Check login session
+    const activeSession = JSON.parse(sessionStorage.getItem('volt_active_session'));
+    if (!activeSession) {
+      window.location.href = 'index.html';
+    }
+
+    let currentBalance = parseFloat(localStorage.getItem('volt_balance')) || 0.00;
+    
+    function refreshBalanceUI() {
+      document.getElementById('userBalanceDisplay').innerText = `$${currentBalance.toFixed(2)}`;
+      localStorage.setItem('volt_balance', currentBalance.toString());
+
+      const activePlan = localStorage.getItem('volt_active_plan');
+      if (activePlan) {
+        document.getElementById('activeNodeBanner').classList.remove('hidden');
+        document.getElementById('activeNodeTitle').innerText = activePlan;
+      }
+    }
+    refreshBalanceUI();
+
+    // Node Activation Handler
+    function unlockNode(planName, cost) {
+      if (currentBalance < cost) {
+        alert(`Insufficient Balance! Your balance is $${currentBalance.toFixed(2)}. Please recharge your account with at least $${cost.toFixed(2)} USDT.`);
+        window.location.href = 'me.html';
+        return;
+      }
+
+      if (confirm(`Confirm activation of ${planName} for $${cost}.00 USDT? (30-Day Period • 35% Net Return)`)) {
+        currentBalance -= cost;
+        localStorage.setItem('volt_active_plan', planName);
+        localStorage.setItem('volt_plan_start', Date.now().toString());
+        refreshBalanceUI();
+        alert(`Success! ${planName} node activated successfully. Daily yields will be credited to your balance.`);
+      }
+    }
+  </script>
+</body>
+  </html>
+  

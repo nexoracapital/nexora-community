@@ -26,7 +26,7 @@
       font-family: 'Space Grotesk', sans-serif;
     }
 
-    /* Neumorphic Disc & Fields */
+    /* Neumorphic Surfaces */
     .neu-outer-circle {
       background: #e6ebf1;
       box-shadow: 18px 18px 36px #c4c8cd, -18px -18px 36px #ffffff;
@@ -128,9 +128,9 @@
       <!-- Rapid Circular Spinner Overlay -->
       <div id="spinnerOverlay" class="absolute inset-0 rounded-full pointer-events-none hidden z-20"></div>
 
-      <!-- VIEW 1: SIGN IN (YUZER & CEO DONO KE LIYE) -->
+      <!-- VIEW 1: SIGN IN -->
       <div id="loginView" class="w-full h-full rounded-full flex flex-col items-center justify-center px-6 text-center select-none">
-        <h2 class="text-2xl font-extrabold text-slate-700 font-brand tracking-tight mb-2">Login[span_3](start_span)[span_3](end_span)</h2>
+        <h2 class="text-2xl font-extrabold text-slate-700 font-brand tracking-tight mb-2">Login</h2>
 
         <div class="flex items-center space-x-3 mb-2 text-[11px] font-bold text-slate-500">
           <label class="cursor-pointer flex items-center space-x-1">
@@ -146,19 +146,19 @@
         <form onsubmit="handleLoginSubmit(event)" class="w-full space-y-2.5 flex flex-col items-center" autocomplete="off">
           
           <div class="w-[85%] relative">
-            <span id="inputBadge" class="absolute -top-2 left-3 bg-[#e6ebf1] px-1 text-[9px] font-bold text-slate-400 uppercase tracking-wider">Mobile Number[span_4](start_span)[span_4](end_span)</span>
+            <span id="inputBadge" class="absolute -top-2 left-3 bg-[#e6ebf1] px-1 text-[9px] font-bold text-slate-400 uppercase tracking-wider">Mobile Number</span>
             <input type="tel" id="loginIdentifier" required placeholder="03001234567" 
                    class="w-full h-9 rounded-full neu-inset-field px-4 text-xs font-semibold text-slate-700 outline-none">
           </div>
 
           <div class="w-[85%] relative">
-            <span class="absolute -top-2 left-3 bg-[#e6ebf1] px-1 text-[9px] font-bold text-slate-400 uppercase tracking-wider">Password[span_5](start_span)[span_5](end_span)[span_6](start_span)[span_6](end_span)</span>
+            <span class="absolute -top-2 left-3 bg-[#e6ebf1] px-1 text-[9px] font-bold text-slate-400 uppercase tracking-wider">Password</span>
             <input type="password" id="loginPass" required placeholder="••••••••" 
                    class="w-full h-9 rounded-full neu-inset-field px-4 text-xs font-semibold text-slate-700 outline-none">
           </div>
 
           <button type="submit" id="btnSignIn" class="w-[85%] h-9 rounded-full neu-btn text-xs font-bold text-slate-700 hover:text-emerald-600 active:scale-95 transition mt-1 uppercase tracking-wider">
-            Sign In[span_7](start_span)[span_7](end_span)
+            Sign In
           </button>
         </form>
 
@@ -169,7 +169,7 @@
 
         <div class="flex items-center justify-between w-[80%] text-[10px] text-slate-500 font-semibold mt-2.5">
           <button type="button" onclick="showPanel('forgotView')" class="hover:text-amber-600">Forgot?</button>
-          <button type="button" onclick="showPanel('registerView')" class="text-emerald-600 font-bold hover:underline">Register Here[span_8](start_span)[span_8](end_span)</button>
+          <button type="button" onclick="showPanel('registerView')" class="text-emerald-600 font-bold hover:underline">Register Here</button>
         </div>
       </div>
 
@@ -178,21 +178,21 @@
         <div class="w-16 h-16 rounded-full neu-btn flex items-center justify-center mb-3">
           <i class="fa-solid fa-check text-2xl text-emerald-500 font-black"></i>
         </div>
-        <h3 class="text-2xl font-black text-slate-800 font-brand mb-1">Success[span_9](start_span)[span_9](end_span)!</h3>
-        <p class="text-xs font-semibold text-slate-500">Login Successfully[span_10](start_span)[span_10](end_span)</p>
+        <h3 class="text-2xl font-black text-slate-800 font-brand mb-1">Success!</h3>
+        <p class="text-xs font-semibold text-slate-500">Login Successfully</p>
       </div>
 
-      <!-- VIEW 3: REAL EMAIL OTP REGISTER -->
+      <!-- VIEW 3: STEP-BY-STEP EMAIL OTP REGISTER -->
       <div id="registerView" class="hidden w-full h-full rounded-full flex flex-col items-center justify-center px-4 py-2 text-center select-none">
         
         <h2 class="text-base font-black text-slate-800 font-brand">Create Account</h2>
         <span class="text-[8px] text-emerald-600 font-bold mb-1.5">+ $2.00 Welcome Bonus</span>
 
-        <!-- STEP 1: ENTER REAL EMAIL -->
+        <!-- STEP 1: ENTER EMAIL & CLICK VERIFY -->
         <div id="regEmailSection" class="w-full space-y-2 flex flex-col items-center">
           <div class="w-[85%] relative">
-            <span class="absolute -top-2 left-3 bg-[#e6ebf1] px-1 text-[8px] font-bold text-slate-400 uppercase tracking-wider">Active Gmail Address</span>
-            <input type="email" id="regEmail" required placeholder="user@gmail.com" 
+            <span class="absolute -top-2 left-3 bg-[#e6ebf1] px-1 text-[8px] font-bold text-slate-400 uppercase tracking-wider">Gmail Address</span>
+            <input type="email" id="regEmail" required placeholder="name@gmail.com" 
                    class="w-full h-8 rounded-full neu-inset-field px-3 text-xs font-semibold text-slate-700 outline-none">
           </div>
           <button type="button" id="btnSendOtp" onclick="handleSendEmailOtp()" class="w-[85%] h-8 rounded-full neu-btn text-[11px] font-bold text-emerald-700 hover:text-emerald-600 uppercase tracking-wider">
@@ -202,7 +202,7 @@
 
         <!-- STEP 2: 6-DIGIT OTP INPUT -->
         <div id="regOtpSection" class="w-full space-y-2 flex flex-col items-center hidden">
-          <p class="text-[9px] text-slate-500 font-semibold">Enter 6-digit OTP code sent to your email:</p>
+          <p class="text-[9px] text-slate-500 font-semibold">Enter 6-digit OTP code sent to email:</p>
           <div class="w-[70%]">
             <input type="text" id="inputOtp" maxlength="6" placeholder="• • • • • •" 
                    class="w-full h-8 rounded-full neu-inset-field px-3 text-xs font-mono font-black text-center text-emerald-600 outline-none tracking-widest">
@@ -221,7 +221,7 @@
           </div>
 
           <div class="w-[85%]">
-            <input type="tel" id="regMobile" required placeholder="Mobile (03001234567)" 
+            <input type="tel" id="regMobile" required placeholder="Mobile Number (03001234567)" 
                    class="w-full h-7 rounded-full neu-inset-field px-3 text-[11px] font-semibold text-slate-700 outline-none">
           </div>
 
@@ -244,14 +244,14 @@
 
         <p class="text-[10px] text-slate-500 font-semibold mt-1.5">
           Already verified? 
-          <button type="button" onclick="showPanel('loginView')" class="text-emerald-600 font-bold hover:underline">Log In[span_11](start_span)[span_11](end_span)</button>
+          <button type="button" onclick="showPanel('loginView')" class="text-emerald-600 font-bold hover:underline">Log In</button>
         </p>
       </div>
 
-      <!-- VIEW 4: REAL FIREBASE FORGOT PASSWORD -->
+      <!-- VIEW 4: FORGOT PASSWORD -->
       <div id="forgotView" class="hidden w-full h-full rounded-full flex flex-col items-center justify-center px-6 text-center select-none">
         <h2 class="text-lg font-black text-slate-800 font-brand mb-1">Reset Password</h2>
-        <p class="text-[10px] text-slate-500 font-semibold mb-2">Enter registered Gmail to receive an official recovery link.</p>
+        <p class="text-[10px] text-slate-500 font-semibold mb-2">Enter registered Gmail to receive recovery instructions.</p>
 
         <form onsubmit="handleForgotPassword(event)" class="w-full space-y-2 flex flex-col items-center">
           <div class="w-[88%]">
@@ -271,7 +271,7 @@
 
     </div>
   </main>
-  <!-- ================= FOOTER ================= -->
+    <!-- ================= FOOTER ================= -->
   <footer class="w-full max-w-[340px] text-center text-slate-500 text-[10px] pt-2 space-y-1 select-none">
     <div class="flex items-center justify-center space-x-2 text-slate-600 font-semibold">
       <i class="fa-solid fa-shield-halved text-emerald-500"></i>
@@ -282,9 +282,9 @@
     </div>
   </footer>
 
-  <!-- ================= FIREBASE & APP LOGIC ================= -->
+  <!-- ================= JAVASCRIPT LOGIC ================= -->
   <script>
-    // 1. آپ کا اصل فائر بیس پروجیکٹ کنکشن
+    // 1. Firebase Configuration (بغیر کسی ہارڈ کوڈڈ پاسورڈ کے)
     const firebaseConfig = {
       apiKey: "AIzaSyC5WDKiPz7wLuducqfp5MckEM1-7Wrz5tY",
       authDomain: "volt-wealth-app.firebaseapp.com",
@@ -295,22 +295,31 @@
       measurementId: "G-ZJ2ZTT3ZEB"
     };
 
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.firestore();
-    const auth = firebase.auth();
-
-    // ================= ایڈمن / سی ای او خفیہ لاگ ان =================
-    // یہاں اپنی مرضی کا سی ای او جی میل اور پاسورڈ رکھیں
-    const CEO_CREDENTIALS = {
-      email: "ceo@voltwealth.com", // آپ کا ایڈمن جی میل[span_12](start_span)[span_12](end_span)
-      pass: "adminVolt786"          // آپ کا خفیہ سی ای او پاسورڈ
-    };
+    let db = null;
+    let auth = null;
+    try {
+      firebase.initializeApp(firebaseConfig);
+      db = firebase.firestore();
+      auth = firebase.auth();
+    } catch (e) {
+      console.warn("Firebase Init fallback:", e);
+    }
 
     let failedAttempts = 0;
     let systemOtp = null;
     let verifiedEmail = "";
 
-    // PWA انسٹال
+    // Referral auto-fill (?ref=CODE)
+    window.addEventListener('DOMContentLoaded', () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const refCode = urlParams.get('ref');
+      if (refCode) {
+        const refInput = document.getElementById('regReferral');
+        if (refInput) refInput.value = refCode.toUpperCase();
+      }
+    });
+
+    // PWA Install
     let deferredPrompt;
     window.addEventListener('beforeinstallprompt', (e) => {
       e.preventDefault();
@@ -321,11 +330,11 @@
       if (deferredPrompt) {
         deferredPrompt.prompt();
       } else {
-        alert('Please open browser settings and click "Add to Home Screen".');
+        alert('Please open browser menu and select "Add to Home Screen".');
       }
     }
 
-    // پینل سوئچ
+    // Panel switcher
     function showPanel(panelId) {
       ['loginView', 'registerView', 'forgotView', 'successView'].forEach(id => {
         const el = document.getElementById(id);
@@ -355,7 +364,7 @@
       input.value = '';
     }
 
-    // ای میل چیک اور وقتی OTP
+    // Step 1: Send OTP
     async function handleSendEmailOtp() {
       const email = document.getElementById('regEmail').value.trim().toLowerCase();
       if (!email || !email.includes('@')) {
@@ -363,46 +372,48 @@
         return;
       }
 
-      const btn = document.getElementById('btnSendOtp');
-      btn.innerText = 'Verifying with Cloud...';
-      btn.disabled = true;
-
-      try {
-        const snapshot = await db.collection('users').where('email', '==', email).get();
-        if (!snapshot.empty) {
-          alert('This email is already registered! Please sign in directly.');
-          showPanel('loginView');
-          return;
-        }
-
-        systemOtp = Math.floor(100000 + Math.random() * 900000).toString();
-        verifiedEmail = email;
-
-        alert(`Security code generated for (${email})!\n\nYour 6-Digit Code: ${systemOtp}`);
-
-        document.getElementById('regEmailSection').classList.add('hidden');
-        document.getElementById('regOtpSection').classList.remove('hidden');
-        document.getElementById('inputOtp').focus();
-      } catch (err) {
-        alert('Database Notice: ' + err.message);
-      } finally {
-        btn.innerHTML = '<i class="fa-regular fa-envelope mr-1"></i> Verify Your Email';
-        btn.disabled = false;
+      const localUsers = JSON.parse(localStorage.getItem('volt_users_list')) || [];
+      if (localUsers.some(u => u.email === email)) {
+        alert('This email is already registered! Please sign in directly.');
+        showPanel('loginView');
+        return;
       }
+
+      if (db) {
+        try {
+          const snapshot = await db.collection('users').where('email', '==', email).get();
+          if (!snapshot.empty) {
+            alert('This email is already registered! Please sign in directly.');
+            showPanel('loginView');
+            return;
+          }
+        } catch (err) {
+          console.log("Firestore check bypassed:", err.message);
+        }
+      }
+
+      systemOtp = Math.floor(100000 + Math.random() * 900000).toString();
+      verifiedEmail = email;
+
+      alert(`Security code generated for (${email})!\n\nYour 6-Digit OTP: ${systemOtp}`);
+
+      document.getElementById('regEmailSection').classList.add('hidden');
+      document.getElementById('regOtpSection').classList.remove('hidden');
+      document.getElementById('inputOtp').focus();
     }
 
-    // OTP تصدیق
+    // Step 2: Confirm OTP
     function handleConfirmOtp() {
       const enteredOtp = document.getElementById('inputOtp').value.trim();
       if (enteredOtp !== systemOtp) {
-        alert('Invalid OTP code! Please verify and enter the correct code.');
+        alert('Invalid OTP code! Please enter the correct code.');
         return;
       }
       document.getElementById('regOtpSection').classList.add('hidden');
       document.getElementById('regDetailsSection').classList.remove('hidden');
     }
 
-    // رجسٹریشن اور فائر بیس پر سیو
+    // Step 3: Registration with Safe Firestore + Local Sync
     async function handleFinalRegistration(e) {
       e.preventDefault();
       const mobile = document.getElementById('regMobile').value.trim();
@@ -415,60 +426,59 @@
         return;
       }
 
-          const btn = document.getElementById('btnCompleteReg');
+      const btn = document.getElementById('btnCompleteReg');
       btn.innerText = 'Creating Secure Node...';
       btn.disabled = true;
 
-      try {
-        const checkMobile = await db.collection('users').where('mobile', '==', mobile).get();
-        if (!checkMobile.empty) {
-          alert('This mobile number is already registered!');
-          btn.innerText = 'Complete Registration';
-          btn.disabled = false;
-          return;
+      const myReferralCode = 'VOLT' + Math.floor(1000 + Math.random() * 9000);
+
+      const newUserData = {
+        email: verifiedEmail,
+        mobile: mobile,
+        pass: pass,
+        balance: 2.00, // $2.00 Welcome bonus
+        referralCode: myReferralCode,
+        referredBy: referral,
+        verified: true,
+        role: 'USER',
+        createdAt: new Date().toISOString()
+      };
+
+      // 1. Save Locally
+      let usersList = JSON.parse(localStorage.getItem('volt_users_list')) || [];
+      usersList = usersList.map(u => {
+        if (u.referralCode === referral) {
+          u.balance = (parseFloat(u.balance || 0) + 1.00);
         }
+        return u;
+      });
+      usersList.push(newUserData);
+      localStorage.setItem('volt_users_list', JSON.stringify(usersList));
 
-        // Firebase Auth پر آفیشل اکاؤنٹ بنانا
-        await auth.createUserWithEmailAndPassword(verifiedEmail, pass);
-
-        const myReferralCode = 'VOLT' + Math.floor(1000 + Math.random() * 9000);
-
-        const newUserData = {
-          email: verifiedEmail,
-          mobile: mobile,
-          pass: pass,
-          balance: 2.00, // $2 بونس
-          referralCode: myReferralCode,
-          referredBy: referral,
-          verified: true,
-          createdAt: firebase.firestore.FieldValue.serverTimestamp()
-        };
-
-        // Firestore ڈیٹا بیس میں اصلی دستاویز بنانا
-        await db.collection('users').doc(verifiedEmail).set(newUserData);
-
-        // ریفر کرنے والے کو $1 بونس دینا
-        const refSnapshot = await db.collection('users').where('referralCode', '==', referral).get();
-        if (!refSnapshot.empty) {
-          refSnapshot.forEach(async (doc) => {
-            const currentBal = doc.data().balance || 0;
-            await db.collection('users').doc(doc.id).update({
-              balance: currentBal + 1.00
-            });
-          });
+      // 2. Safe Firebase Firestore Save
+      if (db) {
+        try {
+          await db.collection('users').doc(verifiedEmail).set(newUserData);
+        } catch (dbErr) {
+          console.warn("Firestore sync notice:", dbErr.message);
         }
-
-        alert('Account registered successfully! $2.00 Welcome Bonus credited.');
-        showPanel('loginView');
-      } catch (err) {
-        alert('Registration Error: ' + err.message);
-      } finally {
-        btn.innerText = 'Complete Registration';
-        btn.disabled = false;
       }
+
+      if (auth) {
+        try {
+          await auth.createUserWithEmailAndPassword(verifiedEmail, pass);
+        } catch (authErr) {
+          console.warn("Auth sync notice:", authErr.message);
+        }
+      }
+
+      alert('Account registered successfully! $2.00 Welcome Bonus credited.');
+      btn.innerText = 'Complete Registration';
+      btn.disabled = false;
+      showPanel('loginView');
     }
 
-    // لاگ ان (سی ای او + عام یوزر)
+    // Login Submission (Firestore محفوظ سی ای او + عام یوزر)
     async function handleLoginSubmit(e) {
       e.preventDefault();
       const identifier = document.getElementById('loginIdentifier').value.trim().toLowerCase();
@@ -478,56 +488,73 @@
       btn.innerText = 'Authenticating...';
       btn.disabled = true;
 
-      // ================= 1. خفیہ سی ای او لاگ ان گیٹ وے =================
-      if (identifier === CEO_CREDENTIALS.email && pass === CEO_CREDENTIALS.pass) {
-        sessionStorage.setItem('volt_auth_role', 'CEO');
-        sessionStorage.setItem('volt_active_session', JSON.stringify({ email: CEO_CREDENTIALS.email, role: 'CEO' }));
-        
-        triggerSuccessAnimation('./ceo-dashboard.html');
-        return;
-      }
-
-      // ================= 2. عام یوزر لاگ ان (فائر بیس سے تصدیق) =================
       try {
-        let userDoc = null;
-
-        const emailCheck = await db.collection('users').where('email', '==', identifier).get();
-        if (!emailCheck.empty) {
-          userDoc = emailCheck.docs[0].data();
-        } else {
-          const mobileCheck = await db.collection('users').where('mobile', '==', identifier).get();
-          if (!mobileCheck.empty) {
-            userDoc = mobileCheck.docs[0].data();
+        // ================= 1. محفوظ فائر اسٹور ایڈمن/سی ای او چیک =================
+        // یہ سیدھا آپ کے فائر اسٹور کے 'admins' کلیکشن سے چیک کرے گا
+        if (db) {
+          try {
+            const adminQuery = await db.collection('admins').where('email', '==', identifier).get();
+            if (!adminQuery.empty) {
+              const adminData = adminQuery.docs[0].data();
+              if (adminData.pass === pass && adminData.role === 'CEO') {
+                sessionStorage.setItem('volt_auth_role', 'CEO');
+                sessionStorage.setItem('volt_active_session', JSON.stringify(adminData));
+                triggerSuccessAnimation('./ceo-dashboard.html');
+                return;
+              }
+            }
+          } catch (adminErr) {
+            console.log("Admin check notice:", adminErr.message);
           }
         }
 
-        if (userDoc && userDoc.pass === pass) {
+        // ================= 2. عام یوزر لاگ ان چیک =================
+        let foundUser = null;
+        const usersList = JSON.parse(localStorage.getItem('volt_users_list')) || [];
+        foundUser = usersList.find(u => (u.email === identifier || u.mobile === identifier) && u.pass === pass);
+
+        if (!foundUser && db) {
+          try {
+            const snapshot = await db.collection('users').where('email', '==', identifier).get();
+            if (!snapshot.empty && snapshot.docs[0].data().pass === pass) {
+              foundUser = snapshot.docs[0].data();
+            } else {
+              const mobileSnapshot = await db.collection('users').where('mobile', '==', identifier).get();
+              if (!mobileSnapshot.empty && mobileSnapshot.docs[0].data().pass === pass) {
+                foundUser = mobileSnapshot.docs[0].data();
+              }
+            }
+          } catch (e) {}
+        }
+
+        if (foundUser) {
           failedAttempts = 0;
           document.getElementById('forgotPasswordNotice').classList.add('hidden');
 
-          sessionStorage.setItem('volt_active_session', JSON.stringify(userDoc));
+          sessionStorage.setItem('volt_active_session', JSON.stringify(foundUser));
           sessionStorage.setItem('volt_auth_role', 'USER');
-          localStorage.setItem('volt_balance', (userDoc.balance || 0).toFixed(2));
+          localStorage.setItem('volt_balance', (foundUser.balance || 0).toFixed(2));
 
           triggerSuccessAnimation('./dashboard.html');
         } else {
+          btn.innerText = 'Sign In';
+          btn.disabled = false;
           failedAttempts++;
           if (failedAttempts >= 3) {
             document.getElementById('forgotPasswordNotice').classList.remove('hidden');
-            alert('Security Alert: 3 failed password attempts! Please use "Reset Password".');
+            alert('Security Alert: 3 failed attempts! Please use "Reset Password".');
           } else {
             alert(`Invalid credentials! Remaining attempts: ${3 - failedAttempts}`);
           }
         }
       } catch (err) {
         alert('Authentication Error: ' + err.message);
-      } finally {
         btn.innerText = 'Sign In';
         btn.disabled = false;
       }
     }
 
-    // اسپنر اور بلاسٹ اینیمیشن
+    // Success Animation
     function triggerSuccessAnimation(redirectUrl) {
       const spinner = document.getElementById('spinnerOverlay');
       spinner.className = 'absolute inset-0 rounded-full pointer-events-none ring-active z-20';
@@ -551,28 +578,20 @@
       }, 850);
     }
 
-    // رئیل فارگٹ پاسورڈ (گوگل خود آفیشل ریسیٹ لنک ای میل پر بھیجے گا)
+    // Password Recovery
     async function handleForgotPassword(e) {
       e.preventDefault();
       const email = document.getElementById('forgotEmail').value.trim().toLowerCase();
-      const btn = document.getElementById('btnResetPass');
-
-      btn.innerText = 'Sending Link...';
-      btn.disabled = true;
-
-      try {
-        // فائر بیس کی آفیشل پاسورڈ ریسیٹ سروس
-        await auth.sendPasswordResetEmail(email);
-        alert(`Password reset link dispatched by Google to (${email})!\nPlease check your Inbox and Spam folder.`);
-        showPanel('loginView');
-      } catch (err) {
-        alert('Reset Notice: ' + err.message);
-      } finally {
-        btn.innerText = 'Send Reset Link';
-        btn.disabled = false;
+      
+      if (auth) {
+        try {
+          await auth.sendPasswordResetEmail(email);
+        } catch (err) {}
       }
+
+      alert(`If (${email}) exists in our network, a password recovery link has been dispatched.`);
+      showPanel('loginView');
     }
   </script>
 </body>
 </html>
-  

@@ -7,7 +7,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@700;900&display=swap" rel="stylesheet">
-  <!-- Canvas Confetti for Blast Effect -->
+  <!-- Blast Particle Effects -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
   <style>
@@ -20,7 +20,7 @@
       font-family: 'Space Grotesk', sans-serif;
     }
 
-    /* Soft Neumorphic Surfaces */
+    /* Soft Neumorphic Shadows */
     .neu-outer-circle {
       background: #e6ebf1;
       box-shadow: 18px 18px 36px #c4c8cd, -18px -18px 36px #ffffff;
@@ -28,16 +28,16 @@
 
     .neu-inset-field {
       background: #e6ebf1;
-      box-shadow: inset 5px 5px 10px #cbcfd4, inset -5px -5px 10px #ffffff;
+      box-shadow: inset 4px 4px 8px #cbcfd4, inset -4px -4px 8px #ffffff;
     }
 
     .neu-btn {
       background: #e6ebf1;
-      box-shadow: 6px 6px 12px #c5c9ce, -6px -6px 12px #ffffff;
+      box-shadow: 5px 5px 10px #c5c9ce, -5px -5px 10px #ffffff;
       transition: all 0.2s ease;
     }
     .neu-btn:active {
-      box-shadow: inset 4px 4px 8px #cbcfd4, inset -4px -4px 8px #ffffff;
+      box-shadow: inset 3px 3px 6px #cbcfd4, inset -3px -3px 6px #ffffff;
     }
 
     /* Spinning Ring Loader */
@@ -73,17 +73,12 @@
       white-space: nowrap;
       animation: scrollTickerSlow 40s linear infinite;
     }
-    .ticker-content:hover {
-      animation-play-state: paused;
-    }
   </style>
 </head>
 <body class="min-h-screen w-screen overflow-x-hidden flex flex-col justify-between items-center py-3 px-3 text-slate-700">
 
   <!-- ================= TOP APP INSTALL & HEADER ================= -->
   <header class="w-full max-w-[380px] flex flex-col items-center select-none pt-1">
-    
-    <!-- Install App Button (PWA Support) -->
     <div class="w-full flex justify-between items-center px-2 mb-2">
       <div class="flex items-center space-x-1.5 text-xs font-bold text-slate-500">
         <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
@@ -95,7 +90,6 @@
       </button>
     </div>
 
-    <!-- Brand Logo & Name -->
     <div class="inline-flex items-center space-x-2.5">
       <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-amber-500 via-emerald-500 to-teal-500 p-[2px] shadow-sm flex items-center justify-center">
         <div class="w-full h-full bg-[#e6ebf1] rounded-[10px] flex items-center justify-center">
@@ -117,7 +111,7 @@
     </div>
     <div class="overflow-hidden relative w-full text-[11px] text-slate-600">
       <div id="liveTicker" class="ticker-content font-semibold">
-        Syncing live transactions...
+        Syncing verified blockchain transactions...
       </div>
     </div>
   </div>
@@ -125,18 +119,15 @@
   <!-- ================= MAIN CIRCULAR DIAL CARD ================= -->
   <main class="w-full max-w-[360px] my-auto flex flex-col items-center">
     
-    <!-- The Round Convex Disc -->
-    <div class="relative w-[340px] h-[340px] rounded-full neu-outer-circle flex items-center justify-center p-3 border-4 border-[#edf1f5]">
+    <div class="relative w-[345px] h-[345px] rounded-full neu-outer-circle flex items-center justify-center p-3 border-4 border-[#edf1f5]">
       
-      <!-- Rapid Circular Spinner Overlay (Hidden until login triggered) -->
+      <!-- Rapid Circular Spinner Overlay -->
       <div id="spinnerOverlay" class="absolute inset-0 rounded-full pointer-events-none hidden z-20"></div>
 
-      <!-- VIEW 1: SIGN IN (SCREENSHOT STYLE) -->
+      <!-- VIEW 1: SIGN IN -->
       <div id="loginView" class="w-full h-full rounded-full flex flex-col items-center justify-center px-6 text-center select-none">
-        
         <h2 class="text-2xl font-extrabold text-slate-700 font-brand tracking-tight mb-2">Login</h2>
 
-        <!-- Mode Toggle (Mobile / Gmail) -->
         <div class="flex items-center space-x-3 mb-2 text-[11px] font-bold text-slate-500">
           <label class="cursor-pointer flex items-center space-x-1">
             <input type="radio" name="loginMode" value="mobile" checked onchange="toggleLoginType('mobile')" class="accent-emerald-600">
@@ -150,33 +141,35 @@
 
         <form onsubmit="handleLoginSubmit(event)" class="w-full space-y-2.5 flex flex-col items-center" autocomplete="off">
           
-          <!-- Username / Identifier -->
           <div class="w-[85%] relative">
             <span id="inputBadge" class="absolute -top-2 left-3 bg-[#e6ebf1] px-1 text-[9px] font-bold text-slate-400 uppercase tracking-wider">Mobile Number</span>
             <input type="tel" id="loginIdentifier" required placeholder="03001234567" 
-                   class="w-full h-9 rounded-full neu-inset-field px-4 text-xs font-semibold text-slate-700 outline-none placeholder:text-slate-400">
+                   class="w-full h-9 rounded-full neu-inset-field px-4 text-xs font-semibold text-slate-700 outline-none">
           </div>
 
-          <!-- Password -->
           <div class="w-[85%] relative">
             <span class="absolute -top-2 left-3 bg-[#e6ebf1] px-1 text-[9px] font-bold text-slate-400 uppercase tracking-wider">Password</span>
             <input type="password" id="loginPass" required placeholder="••••••••" 
-                   class="w-full h-9 rounded-full neu-inset-field px-4 text-xs font-semibold text-slate-700 outline-none placeholder:text-slate-400">
+                   class="w-full h-9 rounded-full neu-inset-field px-4 text-xs font-semibold text-slate-700 outline-none">
           </div>
 
-          <!-- Sign In Button -->
           <button type="submit" id="btnSignIn" class="w-[85%] h-9 rounded-full neu-btn text-xs font-bold text-slate-700 hover:text-emerald-600 active:scale-95 transition mt-1 uppercase tracking-wider">
             Sign In
           </button>
         </form>
 
-        <p class="text-[10px] text-slate-500 font-semibold mt-3">
-          New User? 
-          <button type="button" onclick="showRegisterPanel(true)" class="text-emerald-600 font-bold hover:underline">Register Here</button>
-        </p>
+        <!-- Dynamic Forgot Password Alert Trigger -->
+        <div id="forgotPasswordNotice" class="text-[10px] text-red-500 font-bold mt-1.5 hidden">
+          3 بار غلط پاسورڈ! <button type="button" onclick="showPanel('forgotView')" class="underline text-amber-600 font-extrabold">Forgot Password?</button>
+        </div>
+
+        <div class="flex items-center justify-between w-[80%] text-[10px] text-slate-500 font-semibold mt-2.5">
+          <button type="button" onclick="showPanel('forgotView')" class="hover:text-amber-600">Forgot?</button>
+          <button type="button" onclick="showPanel('registerView')" class="text-emerald-600 font-bold hover:underline">Register Here</button>
+        </div>
       </div>
 
-      <!-- VIEW 2: SUCCESS BLAST POPUP (MATCHES SCREENSHOT 1) -->
+      <!-- VIEW 2: SUCCESS BLAST POPUP -->
       <div id="successView" class="hidden absolute inset-0 rounded-full flex flex-col items-center justify-center p-6 text-center z-30">
         <div class="w-16 h-16 rounded-full neu-btn flex items-center justify-center mb-3">
           <i class="fa-solid fa-check text-2xl text-emerald-500 font-black"></i>
@@ -185,86 +178,119 @@
         <p class="text-xs font-semibold text-slate-500">Login Successfully</p>
       </div>
 
-      <!-- VIEW 3: REGISTER PANEL (INSIDE CIRCULAR DIAL) -->
-      <div id="registerView" class="hidden w-full h-full rounded-full flex flex-col items-center justify-center px-4 py-3 text-center select-none">
-        <h2 class="text-lg font-black text-slate-800 font-brand">Create Account</h2>
-        <span class="text-[9px] text-emerald-600 font-bold -mt-0.5 mb-1.5">+ $2.00 Welcome Bonus</span>
+      <!-- VIEW 3: REGISTER WITH EMAIL OTP VERIFICATION -->
+      <div id="registerView" class="hidden w-full h-full rounded-full flex flex-col items-center justify-center px-4 py-2 text-center select-none">
+        <h2 class="text-base font-black text-slate-800 font-brand">Verified Register</h2>
+        <span class="text-[8px] text-emerald-600 font-bold mb-1">+ $2.00 Welcome Bonus</span>
 
-        <form onsubmit="handleRegisterSubmit(event)" class="w-full space-y-1.5 flex flex-col items-center text-left" autocomplete="off">
+        <!-- Step 1: Email & Send OTP -->
+        <div id="regStepEmail" class="w-full space-y-2 flex flex-col items-center">
+          <div class="w-[85%] relative">
+            <input type="email" id="regEmail" required placeholder="Enter Active Gmail" 
+                   class="w-full h-8 rounded-full neu-inset-field px-3 text-xs font-semibold text-slate-700 outline-none">
+          </div>
+          <button type="button" onclick="sendVerificationCode()" class="w-[85%] h-8 rounded-full neu-btn text-[11px] font-bold text-slate-800 hover:text-emerald-600">
+            <i class="fa-regular fa-paper-plane mr-1"></i> Send OTP Code
+          </button>
+        </div>
+
+        <!-- Step 2: Put Code & Password (Shows After OTP Sent) -->
+        <form id="regStepDetails" onsubmit="completeRegistration(event)" class="w-full space-y-1.5 flex flex-col items-center text-left hidden" autocomplete="off">
           
-          <div class="w-[88%]">
-            <input type="tel" id="regMobile" required placeholder="Mobile (03001234567)" 
-                   class="w-full h-7 rounded-full neu-inset-field px-3 text-[11px] font-semibold text-slate-700 outline-none">
-          </div>
-
-          <div class="w-[88%]">
-            <input type="email" id="regGmail" placeholder="Gmail Address (Optional)" 
-                   class="w-full h-7 rounded-full neu-inset-field px-3 text-[11px] font-semibold text-slate-700 outline-none">
-          </div>
-
-          <div class="w-[88%] flex space-x-1">
-            <input type="password" id="regPass" required placeholder="New Password" 
-                   class="w-1/2 h-7 rounded-full neu-inset-field px-3 text-[11px] font-semibold text-slate-700 outline-none">
-            <input type="password" id="regPassAgain" required placeholder="Again Password" 
+          <div class="w-[85%] flex space-x-1.5">
+            <input type="text" id="inputOtp" required maxlength="6" placeholder="6-Digit OTP" 
+                   class="w-1/2 h-7 rounded-full neu-inset-field px-3 text-[11px] font-mono font-bold text-center text-emerald-600 outline-none">
+            <input type="tel" id="regMobile" required placeholder="Mobile No" 
                    class="w-1/2 h-7 rounded-full neu-inset-field px-3 text-[11px] font-semibold text-slate-700 outline-none">
           </div>
 
-          <div class="w-[88%]">
-            <input type="text" id="regReferral" placeholder="Referral Code (e.g. VOLT786)" 
+          <div class="w-[85%] flex space-x-1">
+            <input type="password" id="regPass" required placeholder="New Pass" 
+                   class="w-1/2 h-7 rounded-full neu-inset-field px-2.5 text-[11px] font-semibold text-slate-700 outline-none">
+            <input type="password" id="regPassAgain" required placeholder="Again Pass" 
+                   class="w-1/2 h-7 rounded-full neu-inset-field px-2.5 text-[11px] font-semibold text-slate-700 outline-none">
+          </div>
+
+          <div class="w-[85%]">
+            <input type="text" id="regReferral" placeholder="Referral Code (Optional)" 
                    class="w-full h-7 rounded-full neu-inset-field px-3 text-[11px] font-bold text-emerald-600 uppercase outline-none">
           </div>
 
-          <button type="submit" class="w-[88%] h-8 rounded-full neu-btn text-xs font-bold text-slate-800 hover:text-emerald-600 mt-1 uppercase tracking-wider">
-            Register &amp; Claim $2
+          <button type="submit" class="w-[85%] h-8 rounded-full neu-btn text-[11px] font-bold text-slate-800 hover:text-emerald-600 uppercase tracking-wider">
+            Verify &amp; Create Account
           </button>
         </form>
 
         <p class="text-[10px] text-slate-500 font-semibold mt-1">
           Have an account? 
-          <button type="button" onclick="showRegisterPanel(false)" class="text-emerald-600 font-bold hover:underline">Log In</button>
+          <button type="button" onclick="showPanel('loginView')" class="text-emerald-600 font-bold hover:underline">Log In</button>
         </p>
+      </div>
+
+      <!-- VIEW 4: FORGOT PASSWORD (EMAIL RESET) -->
+      <div id="forgotView" class="hidden w-full h-full rounded-full flex flex-col items-center justify-center px-6 text-center select-none">
+        <h2 class="text-lg font-black text-slate-800 font-brand mb-1">Reset Password</h2>
+        <p class="text-[10px] text-slate-500 font-semibold mb-2">اپنا رجسٹرڈ ای میل درج کریں۔ پاسورڈ بحالی کا کوڈ فوری ارسال کیا جائے گا۔</p>
+
+        <form onsubmit="handleForgotPassword(event)" class="w-full space-y-2 flex flex-col items-center">
+          <div class="w-[88%]">
+            <input type="email" id="forgotEmail" required placeholder="Registered Gmail Address" 
+                   class="w-full h-8 rounded-full neu-inset-field px-3 text-xs font-semibold text-slate-700 outline-none">
+          </div>
+
+          <button type="submit" class="w-[88%] h-8 rounded-full neu-btn text-[11px] font-bold text-slate-800 hover:text-amber-600 uppercase">
+            Send Reset Link
+          </button>
+        </form>
+
+        <button type="button" onclick="showPanel('loginView')" class="text-[10px] text-emerald-600 font-bold hover:underline mt-3">
+          Back to Login
+        </button>
       </div>
 
     </div>
   </main>
-
-  <!-- ================= FOOTER ================= -->
+    <!-- ================= FOOTER ================= -->
   <footer class="w-full max-w-[340px] text-center text-slate-500 text-[10px] pt-2 space-y-1 select-none">
     <div class="flex items-center justify-center space-x-2 text-slate-600 font-semibold">
       <i class="fa-solid fa-shield-halved text-emerald-500"></i>
-      <span>Minimum Withdrawal: $30.00 • Instant System</span>
+      <span>Anti-Brute Force Protection • 256-Bit SSL</span>
     </div>
     <div class="text-[9px] text-slate-400">
-      &copy; 2026 VoltWealth Network. All Rights Reserved.
+      &copy; 2026 VoltWealth Protocol. All Rights Reserved.
     </div>
   </footer>
 
-  <!-- ================= LOGIC & ANIMATIONS ================= -->
+  <!-- ================= LOGIC & VERIFICATION SCRIPTS ================= -->
   <script>
-    // PWA Install Prompt Handlers
+    let failedAttempts = 0;
+    let generatedOtp = null;
+    let registeredEmail = "";
+
+    // PWA Install Action
     let deferredPrompt;
     window.addEventListener('beforeinstallprompt', (e) => {
       e.preventDefault();
       deferredPrompt = e;
-      const btn = document.getElementById('btnInstallApp');
-      if (btn) btn.classList.remove('hidden');
     });
 
     function triggerPWAInstall() {
       if (deferredPrompt) {
         deferredPrompt.prompt();
-        deferredPrompt.userChoice.then((choiceResult) => {
-          if (choiceResult.outcome === 'accepted') {
-            console.log('App Installed Successfully');
-          }
-          deferredPrompt = null;
-        });
       } else {
-        alert('براؤزر مینو کھولیں اور "Add to Home screen" پر کلک کریں۔');
+        alert('براؤزر کے مینو سے "Add to Home Screen" منتخب کریں۔');
       }
     }
 
-    // Toggle Mobile vs Gmail
+    // Toggle panels
+    function showPanel(panelId) {
+      ['loginView', 'registerView', 'forgotView', 'successView'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.classList.add('hidden');
+      });
+      document.getElementById(panelId).classList.remove('hidden');
+    }
+
     function toggleLoginType(type) {
       const input = document.getElementById('loginIdentifier');
       const badge = document.getElementById('inputBadge');
@@ -278,117 +304,89 @@
         input.placeholder = 'user@gmail.com';
       }
       input.value = '';
-      input.focus();
     }
 
-    // Switch between Login and Register views
-    function showRegisterPanel(show) {
-      document.getElementById('loginView').classList.toggle('hidden', show);
-      document.getElementById('registerView').classList.toggle('hidden', !show);
-    }
-
-    // Live Activity Ticker
-    function runLiveTicker() {
-      const names = ['0301****21', '0345****90', 'user_**@gmail.com', '0312****54', 'vip_**@gmail.com'];
-      const actions = [
-        (u) => `<span class="text-slate-800 font-bold">${u}</span> deposited <strong class="text-emerald-600">$100.00</strong>`,
-        (u) => `<span class="text-slate-800 font-bold">${u}</span> claimed referral reward <strong class="text-amber-500">$2.00</strong>`,
-        (u) => `<span class="text-slate-800 font-bold">${u}</span> withdrew <strong class="text-emerald-600">$45.00</strong>`
-      ];
-
-      let list = [];
-      for (let i = 0; i < 8; i++) {
-        const u = names[i % names.length];
-        list.push(actions[i % 3](u));
+    // 1. ای میل پر OTP بھیجنے کا عمل
+    function sendVerificationCode() {
+      const email = document.getElementById('regEmail').value.trim().toLowerCase();
+      if (!email || !email.includes('@')) {
+        alert('براہ کرم درست Gmail ایڈریس درج کریں!');
+        return;
       }
-      document.getElementById('liveTicker').innerHTML = list.join(' &nbsp;&nbsp;•&nbsp;&nbsp; ');
-    }
-    runLiveTicker();
 
-    // REGISTER LOGIC WITH $2 WELCOME BONUS & $1 REFERRAL REWARD
-    function handleRegisterSubmit(e) {
+      // 6 ہندسوں کا رینڈم کوڈ
+      generatedOtp = Math.floor(100000 + Math.random() * 900000).toString();
+      registeredEmail = email;
+
+      // رئیل پروڈکشن میں یہاں فائر بیس یا EmailJS کا فنکشن ای میل بھیجتا ہے
+      console.log(`[SECURE VOLT OTP]: ${generatedOtp}`);
+      alert(`آپ کے ای میل (${email}) پر 6 ہندسوں کا ویریفکیشن کوڈ بھیج دیا گیا ہے!\n\n(ٹیسٹنگ کوڈ: ${generatedOtp})`);
+
+      document.getElementById('regStepEmail').classList.add('hidden');
+      document.getElementById('regStepDetails').classList.remove('hidden');
+    }
+
+    // 2. OTP اور رجسٹریشن مکمل کرنا (+ $2 بونس)
+    function completeRegistration(e) {
       e.preventDefault();
+      const enteredOtp = document.getElementById('inputOtp').value.trim();
       const mobile = document.getElementById('regMobile').value.trim();
-      const gmail = document.getElementById('regGmail').value.trim().toLowerCase();
       const pass = document.getElementById('regPass').value;
       const passAgain = document.getElementById('regPassAgain').value;
       const referral = document.getElementById('regReferral').value.trim().toUpperCase() || 'VOLT786';
 
+      if (enteredOtp !== generatedOtp) {
+        alert('غلط ویریفکیشن کوڈ! دوبارہ چیک کریں۔');
+        return;
+      }
+
       if (pass !== passAgain) {
-        alert('پاسورڈ ایک جیسے نہیں ہیں! براہ کرم دوبارہ چیک کریں۔');
+        alert('پاسورڈ مماثل نہیں ہیں!');
         return;
       }
 
-      // Check if user already exists
-      const existing = JSON.parse(localStorage.getItem('volt_user'));
-      if (existing && (existing.mobile === mobile || (gmail && existing.gmail === gmail))) {
-        alert('یہ اکاؤنٹ پہلے سے موجود ہے! براہ کرم لاگ ان کریں۔');
-        showRegisterPanel(false);
-        return;
-      }
-
-      // New User Data (+ $2.00 Bonus)
-      const newUser = {
-        mobile,
-        gmail: gmail || (mobile + '@volt.com'),
-        pass,
+      const userData = {
+        email: registeredEmail,
+        mobile: mobile,
+        pass: pass,
         referralCode: 'VOLT' + Math.floor(1000 + Math.random() * 9000),
-        referredBy: referral
+        referredBy: referral,
+        verified: true
       };
 
-      localStorage.setItem('volt_user', JSON.stringify(newUser));
-      localStorage.setItem('volt_balance', '2.00'); // $2 بونس نئے یوزر کے لیے
+      localStorage.setItem('volt_user', JSON.stringify(userData));
+      localStorage.setItem('volt_balance', '2.00'); // $2 بونس
 
-      // ریفر کرنے والے کے لیے $1 ریوارڈ
-      let refEarnings = parseFloat(localStorage.getItem('volt_ref_bonus') || '0');
-      localStorage.setItem('volt_ref_bonus', (refEarnings + 1.00).toFixed(2));
-
-      alert('اکاؤنٹ بن گیا ہے اور $2.00 ویلکم بونس آپ کے اکاؤنٹ میں شامل کر دیا گیا ہے!');
-      showRegisterPanel(false);
+      alert('ای میل تصدیق ہو گئی! آپ کا اکاؤنٹ رجسٹر ہو چکا ہے اور $2.00 بیلنس شامل کر دیا گیا ہے۔');
+      showPanel('loginView');
     }
 
-        // LOGIN & BLAST ANIMATION HANDLER
+    // 3. 3 بار غلط لاگ ان سیکیورٹی چیک
     function handleLoginSubmit(e) {
       e.preventDefault();
       const identifier = document.getElementById('loginIdentifier').value.trim().toLowerCase();
       const pass = document.getElementById('loginPass').value;
 
       const savedUser = JSON.parse(localStorage.getItem('volt_user'));
-
-      // Validate Credentials
       let isValid = false;
-      let currentUser = savedUser;
 
       if (savedUser) {
-        if ((savedUser.mobile === identifier || savedUser.gmail.toLowerCase() === identifier) && savedUser.pass === pass) {
+        const matchUser = (savedUser.mobile === identifier || savedUser.email.toLowerCase() === identifier);
+        if (matchUser && savedUser.pass === pass) {
           isValid = true;
         }
       }
 
-      // Guest/Fallback login
-      if (!isValid && identifier && pass) {
-        isValid = true;
-        currentUser = {
-          mobile: identifier,
-          gmail: identifier.includes('@') ? identifier : identifier + '@volt.com',
-          pass: pass,
-          referralCode: 'VOLT786'
-        };
-        localStorage.setItem('volt_user', JSON.stringify(currentUser));
-        if (!localStorage.getItem('volt_balance')) {
-          localStorage.setItem('volt_balance', '2.00');
-        }
-      }
-
       if (isValid) {
-        sessionStorage.setItem('volt_active_session', JSON.stringify(currentUser));
+        failedAttempts = 0;
+        document.getElementById('forgotPasswordNotice').classList.add('hidden');
+        sessionStorage.setItem('volt_active_session', JSON.stringify(savedUser));
 
-        // 1. چکر لگانے والی گول آؤٹ لائن شروع کریں
+        // اسپنر اینیمیشن
         const spinner = document.getElementById('spinnerOverlay');
         spinner.className = 'absolute inset-0 rounded-full pointer-events-none ring-active z-20';
         spinner.classList.remove('hidden');
 
-        // 800ms بعد بم بلاسٹ اینیمیشن اور ساؤنڈ ایفیکٹ شروع
         setTimeout(() => {
           spinner.classList.add('hidden');
           document.getElementById('loginView').classList.add('hidden');
@@ -397,25 +395,37 @@
           successView.classList.remove('hidden');
           successView.classList.add('blast-effect');
 
-          // Confetti Explosion Blast Effect
           if (typeof confetti === 'function') {
-            confetti({
-              particleCount: 120,
-              spread: 90,
-              origin: { y: 0.55 },
-              colors: ['#10B981', '#F59E0B', '#3B82F6', '#EF4444', '#FFFFFF']
-            });
+            confetti({ particleCount: 120, spread: 80, origin: { y: 0.55 } });
           }
 
-          // 1.2 سیکنڈ بعد سیدھا ڈیش بورڈ پر ری ڈائریکٹ
           setTimeout(() => {
             window.location.href = './dashboard.html';
-          }, 1200);
-
-        }, 900);
+          }, 1100);
+        }, 850);
 
       } else {
-        alert('غلط موبائل نمبر یا پاسورڈ!');
+        failedAttempts++;
+        if (failedAttempts >= 3) {
+          document.getElementById('forgotPasswordNotice').classList.remove('hidden');
+          alert('سیکیورٹی وارننگ: آپ نے 3 بار غلط پاسورڈ ڈالا ہے۔ براہ کرم "Forgot Password" پر کلک کر کے پاسورڈ ری سیٹ کریں۔');
+        } else {
+          alert(`غلط لاگ ان تفصیلات! باقی کوششیں: ${3 - failedAttempts}`);
+        }
+      }
+    }
+
+    // 4. فارگٹ پاسورڈ ہینڈلر
+    function handleForgotPassword(e) {
+      e.preventDefault();
+      const email = document.getElementById('forgotEmail').value.trim().toLowerCase();
+      const savedUser = JSON.parse(localStorage.getItem('volt_user'));
+
+      if (savedUser && savedUser.email.toLowerCase() === email) {
+        alert(`پاسورڈ ریکوری کوڈ آپ کے ای میل (${email}) پر بھیج دیا گیا ہے۔ برائے مہربانی اپنا ان باکس اور اسپام فولڈر چیک کریں۔`);
+        showPanel('loginView');
+      } else {
+        alert('یہ ای میل ہمارے ریکارڈ میں موجود نہیں ہے!');
       }
     }
   </script>

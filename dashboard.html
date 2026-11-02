@@ -7,168 +7,539 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@700;900&display=swap" rel="stylesheet">
+  <!-- Confetti library -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   <style>
-    body { font-family: 'Plus Jakarta Sans', sans-serif; touch-action: manipulation; }
+    body { font-family: 'Plus Jakarta Sans', sans-serif; touch-action: manipulation; background-color: #f1f5f9; }
     .font-brand { font-family: 'Space Grotesk', sans-serif; }
-    .glow-gold { box-shadow: 0 0 25px rgba(245, 158, 11, 0.25); }
-    .glow-card { box-shadow: 0 0 18px rgba(16, 185, 129, 0.15); }
+    
+    /* Clean app-card shadow mimicking the reference layout */
+    .app-card {
+      background: #ffffff;
+      border-radius: 24px;
+      box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.06), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      border: 1px solid rgba(226, 232, 240, 0.8);
+    }
+    .app-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 14px 28px -4px rgba(15, 23, 42, 0.1);
+    }
+    .app-card:active {
+      transform: scale(0.97);
+    }
+
+    .plan-locked {
+      filter: grayscale(0.85);
+      opacity: 0.55;
+      pointer-events: none !important;
+      cursor: not-allowed !important;
+    }
+
+    /* Modal animation */
+    @keyframes modalPop {
+      0% { opacity: 0; transform: scale(0.92); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+    .modal-enter {
+      animation: modalPop 0.25s ease-out forwards;
+    }
+
+    /* Subtle ticker animation */
+    @keyframes scrollTickerSlow {
+      0% { transform: translateX(100%); }
+      100% { transform: translateX(-100%); }
+    }
+    .ticker-content {
+      display: inline-block;
+      white-space: nowrap;
+      animation: scrollTickerSlow 35s linear infinite;
+    }
+    .ticker-content:hover {
+      animation-play-state: paused;
+    }
   </style>
 </head>
-<body class="bg-[#030712] text-slate-100 min-h-screen flex flex-col justify-between pb-24 selection:bg-amber-400 selection:text-black">
+<body class="min-h-screen text-slate-800 flex flex-col justify-between pb-24 selection:bg-amber-400 selection:text-black">
 
-  <!-- Top Bar -->
-  <header class="sticky top-0 z-40 bg-slate-900/90 backdrop-blur border-b border-slate-800 px-4 py-3 flex justify-between items-center">
-    <div class="flex items-center space-x-2">
-      <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-amber-500 via-emerald-400 to-cyan-400 p-[2px] flex items-center justify-center">
-        <div class="w-full h-full bg-[#030712] rounded-[9px] flex items-center justify-center">
+  <!-- ================= TOP HEADER ================= -->
+  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-slate-200/80 px-4 py-3 flex justify-between items-center shadow-xs">
+    <div class="flex items-center space-x-2.5">
+      <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-amber-500 via-emerald-400 to-teal-500 p-[2px] flex items-center justify-center shadow-xs">
+        <div class="w-full h-full bg-slate-900 rounded-[10px] flex items-center justify-center">
           <i class="fa-solid fa-bolt text-amber-400 text-xs"></i>
         </div>
       </div>
-      <span class="text-lg font-black italic tracking-wider font-brand text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-emerald-300 to-cyan-400">
-        VOLT<span class="text-white">WEALTH</span>
+      <span class="text-lg font-black italic tracking-wider font-brand text-slate-900">
+        VOLT<span class="text-emerald-600">WEALTH</span>
       </span>
     </div>
     <div class="flex items-center space-x-2">
-      <div class="bg-slate-800 border border-slate-700 px-3 py-1 rounded-full text-[11px] text-slate-300 font-semibold">
-        <span id="navUserDisplay">Investor</span>
+      <div class="bg-slate-100 border border-slate-200 px-3 py-1 rounded-full text-[11px] text-slate-700 font-bold flex items-center space-x-1.5">
+        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+        <span id="navUserDisplay">User</span>
       </div>
-      <button onclick="logout()" class="bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/30 text-[10px] font-bold px-2.5 py-1 rounded-full transition">
+      <button onclick="logout()" class="bg-rose-50 hover:bg-rose-100 text-rose-500 border border-rose-200 text-xs font-bold w-7 h-7 rounded-full flex items-center justify-center transition">
         <i class="fa-solid fa-power-off"></i>
       </button>
     </div>
   </header>
 
-  <!-- Main Content -->
+  <!-- ================= MAIN CONTAINER ================= -->
   <main class="max-w-md mx-auto w-full px-4 py-4 space-y-4">
 
-    <!-- Hero Announcement Card -->
-    <div class="bg-gradient-to-br from-slate-900 via-indigo-950/40 to-slate-900 border border-emerald-500/30 rounded-2xl p-5 shadow-lg relative overflow-hidden glow-gold">
-      <div class="flex items-center justify-between">
-        <span class="text-[9px] font-extrabold uppercase tracking-wider text-amber-300 bg-amber-400/10 px-2.5 py-0.5 rounded-full border border-amber-400/20">
-          Volt Core v2.4
+    <!-- Broadcast Ticker Bar -->
+    <div class="bg-white border border-slate-200/80 rounded-xl px-3 py-1.5 overflow-hidden flex items-center space-x-2 shadow-xs">
+      <div class="flex items-center space-x-1 text-emerald-600 text-[10px] font-black uppercase tracking-wider shrink-0 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+        <i class="fa-solid fa-bullhorn text-[9px] animate-pulse"></i>
+        <span>Live</span>
+      </div>
+      <div class="overflow-hidden relative w-full text-[11px] text-slate-600 font-medium">
+        <div id="liveTicker" class="ticker-content">
+          Loading verified network dividend check-ins and plan activations...
+        </div>
+      </div>
+    </div>
+
+    <!-- User Wallet Card -->
+    <div class="bg-gradient-to-br from-slate-900 via-slate-800 to-indigo-950 text-white rounded-3xl p-5 shadow-lg relative overflow-hidden border border-slate-700">
+      <div class="flex items-center justify-between text-[10px] font-bold">
+        <span class="text-amber-300 bg-amber-400/10 px-2.5 py-0.5 rounded-full border border-amber-400/20">
+          Volt Network Node
         </span>
-        <span class="text-[10px] text-emerald-400 font-bold">256-Bit SSL Live</span>
+        <span class="text-emerald-400 flex items-center space-x-1">
+          <i class="fa-solid fa-shield-halved"></i>
+          <span>Secure Smart Yield</span>
+        </span>
       </div>
 
       <div class="mt-3">
-        <div class="text-[10px] text-slate-400 uppercase font-semibold">Available Balance</div>
-        <div class="text-3xl font-black text-amber-400 font-brand mt-0.5">
+        <div class="text-[10px] text-slate-400 uppercase font-semibold tracking-wider">Total Available Balance</div>
+        <div class="text-3xl font-black text-white font-brand mt-0.5 flex items-baseline space-x-1.5">
           <span id="homeBalanceDisplay">$0.00</span>
-          <span class="text-xs text-slate-400 font-sans">USDT</span>
+          <span class="text-xs text-amber-400 font-sans font-bold">USDT</span>
         </div>
       </div>
 
-      <div class="grid grid-cols-2 gap-2 mt-4 pt-3 border-t border-slate-800">
-        <a href="me.html" class="bg-amber-400 hover:bg-amber-300 text-black text-xs font-black py-2 rounded-xl text-center uppercase tracking-wider transition">
-          Recharge
-        </a>
-        <a href="me.html" class="bg-slate-800 hover:bg-slate-700 text-white text-xs font-bold py-2 rounded-xl text-center uppercase tracking-wider border border-slate-700 transition">
-          Withdraw ($20+)
-        </a>
+      <div class="flex items-center justify-between mt-3 pt-3 border-t border-slate-700/80 text-[11px]">
+        <div>
+          <span class="text-slate-400 text-[10px] block">Current Active Plan</span>
+          <span id="activePlanBadge" class="text-emerald-400 font-bold">Free Tier (No Plan)</span>
+        </div>
+        <div class="text-right">
+          <span class="text-slate-400 text-[10px] block">Daily Return</span>
+          <span id="dailyEarningRate" class="text-amber-400 font-bold">$0.01 / Day</span>
+        </div>
       </div>
     </div>
 
-    <!-- Daily Attendance Reward Section -->
-    <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 flex flex-col justify-between">
-      <div class="flex justify-between items-center mb-2">
-        <div class="flex items-center space-x-2">
-          <i class="fa-solid fa-calendar-check text-emerald-400 text-base"></i>
-          <h3 class="text-xs font-bold text-white">Daily Dividend Check-In</h3>
+    <!-- Daily Check-In Attendance Button Card -->
+    <div class="bg-white border border-slate-200/90 rounded-3xl p-4 shadow-sm flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <div class="w-11 h-11 rounded-2xl bg-amber-50 border border-amber-200/70 text-amber-600 flex items-center justify-center text-lg">
+          <i class="fa-solid fa-calendar-check"></i>
         </div>
-        <span class="text-[9px] bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2 py-0.5 rounded font-bold">+$0.50 USDT</span>
+        <div>
+          <h3 class="text-xs font-bold text-slate-900">Daily Dividend Check-In</h3>
+          <p id="checkinRewardLabel" class="text-[10px] text-slate-500 font-medium">Claim your daily profit: <strong class="text-emerald-600">$0.01</strong></p>
+        </div>
       </div>
-      <p class="text-[11px] text-slate-400 mb-3">Claim your free node reward once every 24 hours.</p>
-
-      <button id="checkinBtn" onclick="claimDaily()" class="w-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black py-2 rounded-xl text-xs uppercase tracking-wider transition">
-        Claim $0.50 Reward
+      <button id="checkinBtn" onclick="claimDaily()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-4 py-2 rounded-xl text-xs uppercase tracking-wider transition shadow-sm active:scale-95">
+        Check In
       </button>
-      <p id="checkinNotice" class="text-[10px] text-slate-500 text-center mt-2 hidden"></p>
     </div>
 
-    <!-- Quick Links Grid -->
-    <div class="grid grid-cols-2 gap-3">
-      <a href="vip.html" class="bg-slate-900/90 border border-slate-800 hover:border-amber-400/50 p-4 rounded-2xl flex flex-col items-center justify-center space-y-2 transition glow-card">
-        <div class="w-10 h-10 rounded-xl bg-amber-400/10 text-amber-400 flex items-center justify-center text-lg">
-          <i class="fa-solid fa-gem"></i>
+    <!-- Active Plan Notice -->
+    <div id="activePlanBanner" class="hidden bg-emerald-50 border border-emerald-200 rounded-2xl p-3 text-[11px] text-emerald-800 flex items-center space-x-2">
+      <i class="fa-solid fa-circle-check text-emerald-600 text-base shrink-0"></i>
+      <div>
+        <p class="font-bold" id="activePlanNameText">Plan Active</p>
+        <p class="text-[10px] text-emerald-700">One plan active limit reached. Other plans are locked and blurred.</p>
+      </div>
+    </div>
+
+    <!-- Section Title -->
+    <div class="flex items-center justify-between pt-1">
+      <h2 class="text-xs font-extrabold text-slate-500 uppercase tracking-wider">Services &amp; Investment Plans</h2>
+      <span class="text-[10px] text-emerald-600 font-bold bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">Select Once to Activate</span>
+    </div>
+
+    <!-- ================= 2-COLUMN APP-STYLE CLEAN GRID (Like Screenshot) ================= -->
+    <div class="grid grid-cols-2 gap-3.5" id="servicesGrid">
+
+      <!-- 1. WEEKLY LUCKY SPIN BUTTON -->
+      <a href="spin.html" class="app-card p-4 flex flex-col items-center justify-center text-center cursor-pointer">
+        <div class="w-14 h-14 rounded-2xl bg-amber-50 border border-amber-200/60 flex items-center justify-center mb-2.5">
+          <i class="fa-solid fa-dharmachakra text-2xl text-amber-500 animate-spin" style="animation-duration: 12s;"></i>
         </div>
-        <span class="text-xs font-bold text-white font-brand">VIP Nodes (35%)</span>
-        <span class="text-[9px] text-slate-400">Starter to Pro</span>
+        <span class="text-xs font-black text-slate-900 font-brand">Weekly Spin</span>
+        <span class="text-[9px] font-bold text-amber-600 mt-0.5">$5 Entry • 50/50 Draw</span>
+        <div class="w-8 h-1 bg-amber-400 rounded-full mt-2"></div>
       </a>
 
-      <a href="team.html" class="bg-slate-900/90 border border-slate-800 hover:border-cyan-400/50 p-4 rounded-2xl flex flex-col items-center justify-center space-y-2 transition glow-card">
-        <div class="w-10 h-10 rounded-xl bg-cyan-400/10 text-cyan-400 flex items-center justify-center text-lg">
-          <i class="fa-solid fa-users"></i>
+      <!-- 2. TEAM & MULTI-TIER REBATES -->
+      <a href="team.html" class="app-card p-4 flex flex-col items-center justify-center text-center cursor-pointer">
+        <div class="w-14 h-14 rounded-2xl bg-indigo-50 border border-indigo-200/60 flex items-center justify-center mb-2.5">
+          <i class="fa-solid fa-users-viewfinder text-2xl text-indigo-500"></i>
         </div>
-        <span class="text-xs font-bold text-white font-brand">Team (7%-3%-1%)</span>
-        <span class="text-[9px] text-slate-400">Multi-Tier Rebates</span>
+        <span class="text-xs font-black text-slate-900 font-brand">Team Tiers</span>
+        <span class="text-[9px] font-bold text-indigo-600 mt-0.5">Tier 1, 2, 3 Rebates</span>
+        <div class="w-8 h-1 bg-indigo-400 rounded-full mt-2"></div>
       </a>
+
+      <!-- 3. PLAN 1: $30 -->
+      <div id="planCard-30" onclick="openPlanModal(30, 37, 1.23, 'Tier 1 Starter')" class="app-card p-4 flex flex-col items-center justify-center text-center cursor-pointer">
+        <div class="w-14 h-14 rounded-2xl bg-emerald-50 border border-emerald-200/60 flex items-center justify-center mb-2.5">
+          <i class="fa-solid fa-vault text-2xl text-emerald-600"></i>
+        </div>
+        <span class="text-xs font-black text-slate-900 font-brand">Plan $30</span>
+        <span class="text-[9px] font-bold text-emerald-600 mt-0.5">Return $37 (+$7 Net)</span>
+        <div class="w-8 h-1 bg-emerald-500 rounded-full mt-2"></div>
+      </div>
+
+      <!-- 4. PLAN 2: $50 -->
+      <div id="planCard-50" onclick="openPlanModal(50, 61, 2.03, 'Tier 2 Basic')" class="app-card p-4 flex flex-col items-center justify-center text-center cursor-pointer">
+        <div class="w-14 h-14 rounded-2xl bg-teal-50 border border-teal-200/60 flex items-center justify-center mb-2.5">
+          <i class="fa-solid fa-chart-line text-2xl text-teal-600"></i>
+        </div>
+        <span class="text-xs font-black text-slate-900 font-brand">Plan $50</span>
+        <span class="text-[9px] font-bold text-teal-600 mt-0.5">Return $61 (+$11 Net)</span>
+        <div class="w-8 h-1 bg-teal-500 rounded-full mt-2"></div>
+      </div>
+
+      <!-- 5. PLAN 3: $100 -->
+      <div id="planCard-100" onclick="openPlanModal(100, 126, 4.20, 'Tier 3 Growth')" class="app-card p-4 flex flex-col items-center justify-center text-center cursor-pointer">
+        <div class="w-14 h-14 rounded-2xl bg-blue-50 border border-blue-200/60 flex items-center justify-center mb-2.5">
+          <i class="fa-solid fa-sack-dollar text-2xl text-blue-600"></i>
+        </div>
+        <span class="text-xs font-black text-slate-900 font-brand">Plan $100</span>
+        <span class="text-[9px] font-bold text-blue-600 mt-0.5">Return $126 (+$26 Net)</span>
+        <div class="w-8 h-1 bg-blue-500 rounded-full mt-2"></div>
+      </div>
+
+      <!-- 6. PLAN 4: $250 -->
+      <div id="planCard-250" onclick="openPlanModal(250, 320, 10.66, 'Tier 4 Premium')" class="app-card p-4 flex flex-col items-center justify-center text-center cursor-pointer">
+        <div class="w-14 h-14 rounded-2xl bg-cyan-50 border border-cyan-200/60 flex items-center justify-center mb-2.5">
+          <i class="fa-solid fa-briefcase text-2xl text-cyan-600"></i>
+        </div>
+        <span class="text-xs font-black text-slate-900 font-brand">Plan $250</span>
+        <span class="text-[9px] font-bold text-cyan-600 mt-0.5">Return $320 (+$70 Net)</span>
+        <div class="w-8 h-1 bg-cyan-500 rounded-full mt-2"></div>
+      </div>
+
+      <!-- 7. PLAN 5: $500 -->
+      <div id="planCard-500" onclick="openPlanModal(500, 650, 21.66, 'Tier 5 Gold')" class="app-card p-4 flex flex-col items-center justify-center text-center cursor-pointer">
+        <div class="w-14 h-14 rounded-2xl bg-amber-50 border border-amber-200/60 flex items-center justify-center mb-2.5">
+          <i class="fa-solid fa-award text-2xl text-amber-600"></i>
+        </div>
+        <span class="text-xs font-black text-slate-900 font-brand">Plan $500</span>
+        <span class="text-[9px] font-bold text-amber-600 mt-0.5">Return $650 (+$150 Net)</span>
+        <div class="w-8 h-1 bg-amber-500 rounded-full mt-2"></div>
+      </div>
+
+      <!-- 8. PLAN 6: $750 -->
+      <div id="planCard-750" onclick="openPlanModal(750, 990, 33.00, 'Tier 6 Platinum')" class="app-card p-4 flex flex-col items-center justify-center text-center cursor-pointer">
+        <div class="w-14 h-14 rounded-2xl bg-purple-50 border border-purple-200/60 flex items-center justify-center mb-2.5">
+          <i class="fa-solid fa-gem text-2xl text-purple-600"></i>
+        </div>
+        <span class="text-xs font-black text-slate-900 font-brand">Plan $750</span>
+        <span class="text-[9px] font-bold text-purple-600 mt-0.5">Return $990 (+$240 Net)</span>
+        <div class="w-8 h-1 bg-purple-500 rounded-full mt-2"></div>
+      </div>
+
+      <!-- 9. PLAN 7: $1000 -->
+      <div id="planCard-1000" onclick="openPlanModal(1000, 1350, 45.00, 'Tier 7 Diamond')" class="app-card p-4 flex flex-col items-center justify-center text-center cursor-pointer">
+        <div class="w-14 h-14 rounded-2xl bg-rose-50 border border-rose-200/60 flex items-center justify-center mb-2.5">
+          <i class="fa-solid fa-crown text-2xl text-rose-600"></i>
+        </div>
+        <span class="text-xs font-black text-slate-900 font-brand">Plan $1,000</span>
+        <span class="text-[9px] font-bold text-rose-600 mt-0.5">Return $1,350 (+$350 Net)</span>
+        <div class="w-8 h-1 bg-rose-500 rounded-full mt-2"></div>
+      </div>
+
+      <!-- 10. PLAN 8: $2000 -->
+      <div id="planCard-2000" onclick="openPlanModal(2000, 2750, 91.66, 'Tier 8 Executive')" class="app-card p-4 flex flex-col items-center justify-center text-center cursor-pointer">
+        <div class="w-14 h-14 rounded-2xl bg-orange-50 border border-orange-200/60 flex items-center justify-center mb-2.5">
+          <i class="fa-solid fa-building-columns text-2xl text-orange-600"></i>
+        </div>
+        <span class="text-xs font-black text-slate-900 font-brand">Plan $2,000</span>
+        <span class="text-[9px] font-bold text-orange-600 mt-0.5">Return $2,750 (+$750 Net)</span>
+        <div class="w-8 h-1 bg-orange-500 rounded-full mt-2"></div>
+      </div>
+
+      <!-- 11. PLAN 9: $5000 -->
+      <div id="planCard-5000" onclick="openPlanModal(5000, 7000, 233.33, 'Tier 9 Whale')" class="app-card p-4 flex flex-col items-center justify-center text-center cursor-pointer">
+        <div class="w-14 h-14 rounded-2xl bg-sky-50 border border-sky-200/60 flex items-center justify-center mb-2.5">
+          <i class="fa-solid fa-shield-virus text-2xl text-sky-600"></i>
+        </div>
+        <span class="text-xs font-black text-slate-900 font-brand">Plan $5,000</span>
+        <span class="text-[9px] font-bold text-sky-600 mt-0.5">Return $7,000 (+$2,000 Net)</span>
+        <div class="w-8 h-1 bg-sky-500 rounded-full mt-2"></div>
+      </div>
+
+      <!-- 12. PLAN 10: $10000 -->
+      <div id="planCard-10000" onclick="openPlanModal(10000, 14500, 483.33, 'Tier 10 Institutional')" class="app-card p-4 flex flex-col items-center justify-center text-center cursor-pointer">
+        <div class="w-14 h-14 rounded-2xl bg-emerald-50 border border-emerald-200/60 flex items-center justify-center mb-2.5">
+          <i class="fa-solid fa-hand-holding-dollar text-2xl text-emerald-600"></i>
+        </div>
+        <span class="text-xs font-black text-slate-900 font-brand">Plan $10,000</span>
+        <span class="text-[9px] font-bold text-emerald-600 mt-0.5">Return $14,500 (+$4,500 Net)</span>
+        <div class="w-8 h-1 bg-emerald-500 rounded-full mt-2"></div>
+      </div>
+
     </div>
 
   </main>
+  <!-- ================= PLAN CONFIRMATION MODAL ================= -->
+  <div id="planModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-50 flex items-center justify-center px-4 hidden">
+    <div class="bg-white rounded-3xl max-w-sm w-full p-5 shadow-2xl modal-enter border border-slate-200">
+      <div class="flex justify-between items-center mb-3">
+        <h3 class="text-sm font-black text-slate-900 font-brand" id="modalPlanTitle">Activate Plan</h3>
+        <button onclick="closePlanModal()" class="w-7 h-7 rounded-full bg-slate-100 text-slate-500 hover:text-slate-900 flex items-center justify-center text-xs">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
 
-  <!-- Bottom Navigation -->
-  <nav class="fixed bottom-0 left-0 right-0 z-50 bg-slate-900/95 backdrop-blur border-t border-slate-800 px-6 py-2.5">
-    <div class="max-w-md mx-auto flex justify-between items-center text-[10px] font-medium text-slate-400">
-      <a href="dashboard.html" class="flex flex-col items-center space-y-1 text-amber-400 font-bold transition">
+      <div class="bg-slate-50 border border-slate-200 rounded-2xl p-3.5 space-y-2 text-xs mb-4">
+        <div class="flex justify-between">
+          <span class="text-slate-500">Required Deposit:</span>
+          <strong class="text-slate-800" id="modalPlanCost">$0.00</strong>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-slate-500">Daily Return (30 Days):</span>
+          <strong class="text-emerald-600" id="modalDailyReturn">$0.00 / day</strong>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-slate-500">Total Capital + Profit:</span>
+          <strong class="text-amber-600 font-bold" id="modalTotalReturn">$0.00</strong>
+        </div>
+        <div class="flex justify-between border-t border-slate-200 pt-1.5 text-[11px]">
+          <span class="text-slate-500">Policy:</span>
+          <span class="text-rose-500 font-bold">1 Plan Limit (Permanent Lock)</span>
+        </div>
+      </div>
+
+      <div class="space-y-2">
+        <button id="modalConfirmBtn" onclick="confirmActivatePlan()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-black py-2.5 rounded-xl text-xs uppercase tracking-wider transition shadow-sm active:scale-95">
+          Confirm &amp; Lock Plan
+        </button>
+        <button onclick="closePlanModal()" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold py-2 rounded-xl text-xs uppercase transition">
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= BOTTOM NAVIGATION ================= -->
+  <nav class="fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur border-t border-slate-200 px-6 py-2.5 shadow-lg">
+    <div class="max-w-md mx-auto flex justify-between items-center text-[10px] font-medium text-slate-500">
+      <a href="dashboard.html" class="flex flex-col items-center space-y-1 text-emerald-600 font-bold transition">
         <i class="fa-solid fa-house text-base"></i>
         <span>Home</span>
       </a>
-      <a href="team.html" class="flex flex-col items-center space-y-1 hover:text-amber-400 transition">
+      <a href="spin.html" class="flex flex-col items-center space-y-1 hover:text-amber-500 transition">
+        <i class="fa-solid fa-dharmachakra text-base"></i>
+        <span>Spin</span>
+      </a>
+      <a href="team.html" class="flex flex-col items-center space-y-1 hover:text-indigo-600 transition">
         <i class="fa-solid fa-users text-base"></i>
         <span>Team</span>
       </a>
-      <a href="vip.html" class="flex flex-col items-center space-y-1 hover:text-amber-400 transition">
-        <div class="w-9 h-9 rounded-full bg-amber-400 text-black flex items-center justify-center -mt-4 shadow-lg shadow-amber-400/30">
-          <i class="fa-solid fa-gem text-base"></i>
-        </div>
-        <span>VIP</span>
-      </a>
-      <a href="me.html" class="flex flex-col items-center space-y-1 hover:text-amber-400 transition">
+      <a href="me.html" class="flex flex-col items-center space-y-1 hover:text-slate-800 transition">
         <i class="fa-solid fa-circle-user text-base"></i>
         <span>Profile</span>
       </a>
     </div>
   </nav>
 
+  <!-- ================= LOGIC SCRIPT ================= -->
   <script>
-    const user = JSON.parse(sessionStorage.getItem('volt_active_session'));
-    if (!user) {
+    // 1. Session verification
+    const activeSession = JSON.parse(sessionStorage.getItem('volt_active_session'));
+    if (!activeSession) {
       window.location.href = 'index.html';
     }
-    document.getElementById('navUserDisplay').innerText = user.name || 'Investor';
 
-    let balance = parseFloat(localStorage.getItem('volt_balance')) || 0.00;
-    function updateUI() {
+    const userEmail = (activeSession.email || activeSession.mobile || 'user').toLowerCase();
+    document.getElementById('navUserDisplay').innerText = activeSession.name || activeSession.mobile || 'Investor';
+
+    // 2. User State Management
+    let balance = parseFloat(localStorage.getItem('volt_balance') || '2.00');
+    let activePlan = JSON.parse(localStorage.getItem('volt_active_plan_' + userEmail)) || null;
+
+    // Plans Definition (Cost, Total Return, Daily Rate, Title)
+    const planList = [30, 50, 100, 250, 500, 750, 1000, 2000, 5000, 10000];
+
+    let pendingPlanData = null;
+
+    function refreshUI() {
       document.getElementById('homeBalanceDisplay').innerText = `$${balance.toFixed(2)}`;
-      localStorage.setItem('volt_balance', balance.toString());
+      localStorage.setItem('volt_balance', balance.toFixed(2));
 
-      const lastClaim = localStorage.getItem('volt_last_claim');
+      if (activePlan) {
+        document.getElementById('activePlanBadge').innerText = `${activePlan.title} ($${activePlan.cost})`;
+        document.getElementById('dailyEarningRate').innerText = `$${activePlan.daily.toFixed(2)} / Day`;
+        document.getElementById('checkinRewardLabel').innerHTML = `Daily check-in profit: <strong class="text-emerald-600">$${activePlan.daily.toFixed(2)}</strong>`;
+        
+        document.getElementById('activePlanBanner').classList.remove('hidden');
+        document.getElementById('activePlanNameText').innerText = `Active: ${activePlan.title} ($${activePlan.cost}) - Locked`;
+
+        // Blur & Lock all plan cards permanently
+        planList.forEach(cost => {
+          const card = document.getElementById(`planCard-${cost}`);
+          if (card) {
+            card.classList.add('plan-locked');
+            if (activePlan.cost === cost && !card.innerHTML.includes('ACTIVE PLAN')) {
+              card.innerHTML += `<span class="text-[9px] bg-emerald-600 text-white font-bold px-2 py-0.5 rounded-full mt-1.5 shadow-xs">ACTIVE PLAN</span>`;
+            }
+          }
+        });
+      } else {
+        document.getElementById('activePlanBadge').innerText = 'Free Tier (No Plan)';
+        document.getElementById('dailyEarningRate').innerText = '$0.01 / Day';
+        document.getElementById('checkinRewardLabel').innerHTML = `Free daily check-in: <strong class="text-emerald-600">$0.01</strong>`;
+      }
+
+      // Daily check-in button state (24-hour lock)
+      const lastClaim = localStorage.getItem('volt_last_claim_' + userEmail);
+      const btn = document.getElementById('checkinBtn');
       if (lastClaim) {
-        const diff = (Date.now() - parseInt(lastClaim)) / (1000 * 60 * 60);
-        const btn = document.getElementById('checkinBtn');
-        const notice = document.getElementById('checkinNotice');
-        if (diff < 24) {
+        const diffHours = (Date.now() - parseInt(lastClaim)) / (1000 * 60 * 60);
+        if (diffHours < 24) {
           btn.disabled = true;
           btn.classList.add('opacity-50', 'cursor-not-allowed');
-          btn.innerText = 'Claimed for Today';
-          notice.classList.remove('hidden');
-          notice.innerText = `Next claim in ~${Math.ceil(24 - diff)} hours`;
+          btn.innerText = 'Claimed Today';
+        } else {
+          btn.disabled = false;
+          btn.classList.remove('opacity-50', 'cursor-not-allowed');
+          btn.innerText = 'Check In';
         }
       }
     }
-    updateUI();
 
+    // Daily Claim Logic
     function claimDaily() {
-      balance += 0.50;
-      localStorage.setItem('volt_last_claim', Date.now().toString());
-      alert('+$0.50 added to your account balance!');
-      updateUI();
+      const lastClaim = localStorage.getItem('volt_last_claim_' + userEmail);
+      if (lastClaim) {
+        const diffHours = (Date.now() - parseInt(lastClaim)) / (1000 * 60 * 60);
+        if (diffHours < 24) {
+          alert(`You have already claimed today! Next claim available in ~${Math.ceil(24 - diffHours)} hours.`);
+          return;
+        }
+      }
+
+      const dailyReward = activePlan ? parseFloat(activePlan.daily) : 0.01;
+      balance += dailyReward;
+      localStorage.setItem('volt_last_claim_' + userEmail, Date.now().toString());
+
+      confetti({ particleCount: 60, spread: 50, origin: { y: 0.6 } });
+      alert(`🎉 Check-In Success! Added +$${dailyReward.toFixed(2)} to your wallet balance.`);
+      refreshUI();
+    }
+
+    // Open Plan Activation Modal
+    function openPlanModal(cost, totalReturn, daily, title) {
+      if (activePlan) {
+        alert('You already have an active plan! Only one plan can be active at a time.');
+        return;
+      }
+
+      pendingPlanData = { cost, totalReturn, daily, title };
+      document.getElementById('modalPlanTitle').innerText = title;
+      document.getElementById('modalPlanCost').innerText = `$${cost}.00 USDT`;
+      document.getElementById('modalDailyReturn').innerText = `$${daily.toFixed(2)} USDT / day`;
+      document.getElementById('modalTotalReturn').innerText = `$${totalReturn}.00 USDT (30 Days)`;
+
+      document.getElementById('planModal').classList.remove('hidden');
+    }
+
+    function closePlanModal() {
+      document.getElementById('planModal').classList.add('hidden');
+      pendingPlanData = null;
+    }
+
+    // Confirm Plan Activation
+    function confirmActivatePlan() {
+      if (!pendingPlanData) return;
+
+      const { cost, totalReturn, daily, title } = pendingPlanData;
+
+      if (balance < cost) {
+        alert(`Insufficient balance! You need $${cost}.00 USDT. Please recharge your wallet first.`);
+        closePlanModal();
+        return;
+      }
+
+      if (!confirm(`Are you sure you want to activate ${title} for $${cost}.00? This choice will be permanent for 30 days.`)) {
+        return;
+      }
+
+      balance -= cost;
+      activePlan = {
+        cost,
+        totalReturn,
+        daily,
+        title,
+        activatedAt: Date.now()
+      };
+
+      localStorage.setItem('volt_active_plan_' + userEmail, JSON.stringify(activePlan));
+
+      // Multi-Tier Rebates trigger (7% - 3% - 1%)
+      distributeRebates(cost);
+
+      confetti({ particleCount: 120, spread: 80, origin: { y: 0.5 } });
+      alert(`🎉 Success! ${title} ($${cost}) is now active! All other plans are now locked.`);
+      closePlanModal();
+      refreshUI();
+    }
+
+    function distributeRebates(planCost) {
+      const usersList = JSON.parse(localStorage.getItem('volt_users_list')) || [];
+      const refCode = activeSession.referredBy;
+      if (!refCode || refCode === 'NONE') return;
+
+      // Tier 1 sponsor (7%)
+      const sponsorL1 = usersList.find(u => u.referralCode === refCode);
+      if (sponsorL1) {
+        sponsorL1.balance = (parseFloat(sponsorL1.balance || 0) + (planCost * 0.07));
+        
+        // Tier 2 sponsor (3%)
+        if (sponsorL1.referredBy) {
+          const sponsorL2 = usersList.find(u => u.referralCode === sponsorL1.referredBy);
+          if (sponsorL2) {
+            sponsorL2.balance = (parseFloat(sponsorL2.balance || 0) + (planCost * 0.03));
+
+            // Tier 3 sponsor (1%)
+            if (sponsorL2.referredBy) {
+              const sponsorL3 = usersList.find(u => u.referralCode === sponsorL2.referredBy);
+              if (sponsorL3) {
+                sponsorL3.balance = (parseFloat(sponsorL3.balance || 0) + (planCost * 0.01));
+              }
+            }
+          }
+        }
+        localStorage.setItem('volt_users_list', JSON.stringify(usersList));
+      }
+    }
+    function initTicker() {
+      const items = [
+        '<span class="text-amber-500 font-bold">0301****89</span> checked in: <strong class="text-emerald-600">+$1.23</strong>',
+        '<span class="text-indigo-500 font-bold">A****d@gmail.com</span> activated <strong class="text-amber-600">Plan $100</strong>',
+        '<span class="text-emerald-500 font-bold">0345****12</span> joined <strong class="text-cyan-600">Weekly Lucky Spin</strong> ($5)',
+        '<span class="text-purple-500 font-bold">K****n@gmail.com</span> earned <strong class="text-emerald-600">Tier 1 Rebate</strong> ($7.00)',
+        '<span class="text-amber-500 font-bold">0312****43</span> checked in: <strong class="text-emerald-600">+$4.20</strong>'
+      ];
+      document.getElementById('liveTicker').innerHTML = items.join(' &nbsp;&nbsp;•&nbsp;&nbsp; ');
     }
 
     function logout() {
       sessionStorage.clear();
       window.location.href = 'index.html';
     }
+
+    refreshUI();
+    initTicker();
   </script>
 </body>
 </html>

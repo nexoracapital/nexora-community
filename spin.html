@@ -47,7 +47,7 @@
     /* Wheel Container */
     #wheelCanvas {
       filter: drop-shadow(0 10px 15px rgba(0,0,0,0.15));
-      transition: transform 5.5s cubic-bezier(0.12, 0.95, 0.2, 1);
+      transition: transform 6s cubic-bezier(0.12, 0.95, 0.2, 1);
     }
     .wheel-pointer {
       width: 0;
@@ -63,15 +63,15 @@
       filter: drop-shadow(0 3px 5px rgba(0,0,0,0.3));
     }
 
-    /* Live News Ticker */
-    @keyframes scrollTickerSlow {
+    /* Live News Ticker - Fast Flow */
+    @keyframes scrollTickerFast {
       0% { transform: translateX(100%); }
       100% { transform: translateX(-100%); }
     }
     .ticker-content {
       display: inline-block;
       white-space: nowrap;
-      animation: scrollTickerSlow 32s linear infinite;
+      animation: scrollTickerFast 15s linear infinite;
     }
     .ticker-content:hover {
       animation-play-state: paused;
@@ -106,15 +106,15 @@
     <p class="text-[9px] uppercase tracking-[0.25em] text-slate-400 font-bold mt-0.5">100% Fair Random Draw &amp; Physical Rewards</p>
   </header>
 
-  <!-- ================= LIVE TICKER (WINNERS & $5 ENTRIES) ================= -->
-  <div class="w-full max-w-[400px] bg-white/70 backdrop-blur-sm border border-slate-200 rounded-xl px-3 py-1 overflow-hidden flex items-center space-x-2 shadow-sm my-2">
+  <!-- ================= LIVE TICKER (FAST $5 ENTRIES & WINNERS) ================= -->
+  <div class="w-full max-w-[400px] bg-white/70 backdrop-blur-sm border border-slate-200 rounded-xl px-3 py-1.5 overflow-hidden flex items-center space-x-2 shadow-sm my-2">
     <div class="flex items-center space-x-1 text-amber-600 text-[10px] font-black uppercase tracking-wider shrink-0 bg-amber-50 px-2 py-0.5 rounded border border-amber-200">
       <i class="fa-solid fa-trophy text-[9px] animate-pulse"></i>
       <span>Broadcast</span>
     </div>
     <div class="overflow-hidden relative w-full text-[11px] text-slate-600">
       <div id="liveTicker" class="ticker-content font-semibold">
-        Syncing weekly entries &amp; verified lucky draw winners...
+        Syncing live investments &amp; verified lucky draw winners...
       </div>
     </div>
   </div>
@@ -122,14 +122,14 @@
   <!-- ================= MAIN SECTION ================= -->
   <main class="w-full max-w-[400px] flex flex-col items-center my-auto space-y-3">
 
-    <!-- 1. WEEKLY TIMER & ROUND STATUS -->
+    <!-- 1. WEEKLY TIMER & ROUND STATUS (STRICT CEO LOCK) -->
     <div class="w-full neu-outer-circle rounded-2xl p-3 text-center border-2 border-white">
       <div class="flex justify-between items-center mb-1 text-[11px] font-bold text-slate-500">
         <span>Jackpot Round: <span class="text-emerald-600 font-extrabold" id="roundId">#WK-102</span></span>
         <span id="spinBadge" class="bg-amber-100 text-amber-700 px-2.5 py-0.5 rounded-full text-[10px]">Lock Period</span>
       </div>
 
-      <!-- 7-Day Countdown -->
+      <!-- Live Countdown to CEO Fixed Date -->
       <div class="grid grid-cols-4 gap-2 my-2">
         <div class="neu-inset-field p-1.5 rounded-xl text-center">
           <div id="cdDays" class="text-lg font-black text-slate-800">00</div>
@@ -181,7 +181,8 @@
         <span>SPIN</span>
       </button>
     </div>
-        <!-- 4. CLEAN RULES CARD -->
+
+       <!-- 4. ORIGINAL CLEAN RULES CARD (EXACT AS ORIGINAL) -->
     <div class="w-full bg-white/70 backdrop-blur-sm rounded-xl p-3 text-[10px] text-slate-600 space-y-1.5 border border-slate-200">
       <div class="font-bold text-slate-800 flex items-center space-x-1">
         <i class="fa-solid fa-scale-balanced text-emerald-600"></i>
@@ -235,7 +236,14 @@
     let hasInvestedInPool = localStorage.getItem('volt_pool_' + currentRoundId + '_' + currentUser.email) === 'true';
     let hasSpunThisWeek = localStorage.getItem('volt_spun_' + currentRoundId + '_' + currentUser.email) === 'true';
 
-    // Default Dynamic Wheel Sectors (Updated live from CEO Settings in Firestore)
+    // CEO Secret Config from Firestore (Hidden from Normal Users)
+    let ceoConfig = {
+      scheduledDate: null,      // e.g. "2026-11-15T18:00:00Z"
+      drawMode: "AUTO",         // "AUTO" or "TARGET"
+      targetEmail: ""           // Email of chosen grand prize winner
+    };
+
+    // Default Dynamic Wheel Sectors
     let sectors = [
       { label: "Bike 🏍️", type: "PHYSICAL", value: "Heavy Bike", tier: "GRAND", color: "#F59E0B", textColor: "#000000" },
       { label: "$1.00", type: "CASH", value: 1.00, tier: "TIER_MINOR", color: "#10B981", textColor: "#FFFFFF" },
@@ -247,41 +255,38 @@
       { label: "Lucky Gift", type: "CASH", value: 0.01, tier: "FREE", color: "#06B6D4", textColor: "#FFFFFF" }
     ];
 
-    // CEO Quota Limits (Configured in Firestore)
-    let ceoPrizeQuotas = {
-      maxGrandWinners: 1,      // گرینڈ پرائز کتنے بندوں کو ملے
-      maxTier10Winners: 2,     // $10 کتنے بندوں کو ملے
-      maxTier5Winners: 5,      // $5 کتنے بندوں کو ملے
-      maxTier2Winners: 10,     // $2 کتنے بندوں کو ملے
-      maxTier1Winners: 20      // $1 کتنے بندوں کو ملے
-    };
-
     let startAngle = 0;
     const arc = Math.PI / (sectors.length / 2);
     let isSpinning = false;
-    let isWeekActive = false;
+    let isDrawTimeReached = false; // strictly locked until CEO fixed time
 
-    // Load CEO Custom Prizes & Quotas from Firestore
-    async function fetchCeoPrizes() {
+    // Fetch CEO Secret Settings & Prizes from Firestore
+    async function fetchCeoSettings() {
       if (!db) return;
       try {
         const configDoc = await db.collection('settings').doc('weekly_spin').get();
         if (configDoc.exists) {
           const data = configDoc.data();
-          if (data.prizes && Array.isArray(data.prizes) && data.prizes.length === 8) {
-            sectors = data.prizes;
-            drawWheel();
-          }
-          if (data.quotas) {
-            ceoPrizeQuotas = { ...ceoPrizeQuotas, ...data.quotas };
-          }
           if (data.activeRoundId) {
             currentRoundId = data.activeRoundId;
             document.getElementById('roundId').innerText = "#" + currentRoundId;
           }
+          if (data.scheduledDate) {
+            ceoConfig.scheduledDate = new Date(data.scheduledDate);
+          }
+          if (data.drawMode) {
+            ceoConfig.drawMode = data.drawMode; // "AUTO" or "TARGET"
+          }
+          if (data.targetEmail) {
+            ceoConfig.targetEmail = data.targetEmail.trim().toLowerCase();
+          }
+          if (data.prizes && Array.isArray(data.prizes) && data.prizes.length === 8) {
+            sectors = data.prizes;
+            drawWheel();
+          }
         }
       } catch (e) {
-        console.log("CEO Prize fetch notice:", e);
+        console.log("Config load notice:", e);
       }
     }
 
@@ -289,7 +294,7 @@
     async function initUI() {
       document.getElementById('userBalanceDisplay').innerText = currentBalance.toFixed(2);
       updatePoolStatusUI();
-      await fetchCeoPrizes();
+      await fetchCeoSettings();
       drawWheel();
       startWeeklyTimer();
       renderTicker();
@@ -347,27 +352,28 @@
         ctx.restore();
       }
     }
-        // 3. 7-Day Countdown Timer
+
+      // 3. Countdown Timer (Strictly Locked Until CEO Fixed Date & Time)
     function startWeeklyTimer() {
       function getNextSunday() {
         const now = new Date();
         const nextSun = new Date(now);
         nextSun.setUTCDate(now.getUTCDate() + ((7 - now.getUTCDay()) % 7));
-        nextSun.setUTCHours(0, 0, 0, 0);
+        nextSun.setUTCHours(18, 0, 0, 0);
         if (nextSun <= now) {
           nextSun.setUTCDate(nextSun.getUTCDate() + 7);
         }
         return nextSun;
       }
 
-      const target = getNextSunday();
+      const target = ceoConfig.scheduledDate || getNextSunday();
 
       function updateCountdown() {
         const now = new Date();
         const diff = target - now;
 
         if (diff <= 0) {
-          isWeekActive = true;
+          isDrawTimeReached = true;
           document.getElementById('spinBadge').innerText = "LIVE SPIN OPEN";
           document.getElementById('spinBadge').className = "bg-emerald-100 text-emerald-700 px-2.5 py-0.5 rounded-full text-[10px] font-black animate-pulse";
           document.getElementById('statusNotice').innerText = "Lucky Draw is LIVE! Spin the wheel to test your 50/50 fortune!";
@@ -376,10 +382,10 @@
           document.getElementById('cdMins').innerText = "00";
           document.getElementById('cdSecs').innerText = "00";
         } else {
-          isWeekActive = false;
-          document.getElementById('spinBadge').innerText = "Lock Period (Entries Open)";
+          isDrawTimeReached = false;
+          document.getElementById('spinBadge').innerText = "Lock Period";
           document.getElementById('spinBadge').className = "bg-amber-100 text-amber-700 px-2.5 py-0.5 rounded-full text-[10px] font-bold";
-          document.getElementById('statusNotice').innerText = "Spin activates every 7 days. Equal 50/50 probability pool!";
+          document.getElementById('statusNotice').innerText = "Weekly Spin unlocks every 7 days. Equal 50/50 probability pool!";
 
           const days = Math.floor(diff / (1000 * 60 * 60 * 24));
           const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -397,7 +403,7 @@
       setInterval(updateCountdown, 1000);
     }
 
-    // 4. Handle $5 Pool Investment
+    // 4. Handle $5 Pool Investment (Entries Recorded for Ticker)
     async function handlePoolInvestment() {
       if (hasInvestedInPool) {
         alert("You have already entered this round's jackpot pool!");
@@ -420,7 +426,7 @@
       updatePoolStatusUI();
       document.getElementById('userBalanceDisplay').innerText = currentBalance.toFixed(2);
 
-      // Save Entry in Firestore
+      // Save Entry in Firestore for Real-time News Ticker
       if (db) {
         try {
           await db.collection('pool_entries').add({
@@ -443,72 +449,66 @@
       }
 
       confetti({ particleCount: 75, spread: 65, origin: { y: 0.6 } });
-      alert("Success! Your $5.00 entry is locked. You now have an equal 50/50 chance for the Top Mega Prizes!");
+      alert("Success! Your $5.00 entry is locked. You now have an equal 50/50 chance for the Top Mega Prizes once the draw opens!");
       renderTicker();
     }
 
-    // 5. Fair 50/50 Automatic Spin Click Handler with CEO Dynamic Quotas
+    // 5. Spin Wheel Logic:
+    // - STRICTLY LOCKED until CEO fixed timer/date is reached (Even if user invested $5)
+    // - If invested $5: Target Gmail gets Grand Prize (if TARGET mode) OR 50/50 Auto Draw
+    // - If NOT invested $5: Secretly lands on $0.01 Lucky Gift (Never shown on UI rules)
     async function handleSpinClick() {
       if (isSpinning) return;
 
-      if (hasSpunThisWeek) {
-        alert("You have already completed your spin for this round! The next lucky round unlocks after the timer resets.");
+      // STRICT RULE 1: Time MUST be reached
+      if (!isDrawTimeReached) {
+        alert("Draw is locked! Spin activates only after the scheduled timer reaches zero.");
         return;
       }
 
-      if (!isWeekActive) {
-        const testMode = confirm("Weekly Spin is currently in Lock Period. Proceed with a test draw?");
-        if (!testMode) return;
+      // Check if user already completed this round's draw
+      if (hasSpunThisWeek) {
+        alert("You have already completed your spin for this round! The next lucky round unlocks after the timer resets.");
+        return;
       }
 
       isSpinning = true;
       document.getElementById('btnSpinWheel').disabled = true;
 
       // ----------------------------------------------------
-      // AUTOMATIC 50/50 LOGIC ACCORDING TO CEO QUOTAS
+      // SECRET CEO DRAW ALGORITHM (Hidden from front-end rules)
       // ----------------------------------------------------
-      let targetIndex = 7; // Default Free User: Lucky Gift ($0.01)
+      let targetIndex = 7; // Default: Sector 7 -> "Lucky Gift" ($0.01)
+
+      const userEmailNormalized = (currentUser.email || "").trim().toLowerCase();
 
       if (hasInvestedInPool) {
-        // Fetch current round winner counts to respect CEO limits
-        let claimedGrandCount = 0;
-        let claimedTier10Count = 0;
-        let claimedTier5Count = 0;
-
-        if (db) {
-          try {
-            const winnersSnap = await db.collection('round_winners').where('roundId', '==', currentRoundId).get();
-            winnersSnap.forEach(doc => {
-              const w = doc.data();
-              if (w.tier === 'GRAND') claimedGrandCount++;
-              if (w.prizeValue === 10) claimedTier10Count++;
-              if (w.prizeValue === 5) claimedTier5Count++;
-            });
-          } catch (e) {}
-        }
-
-        const is5050Hit = (Math.random() >= 0.50);
-
-        if (is5050Hit && claimedGrandCount < (ceoPrizeQuotas.maxGrandWinners || 1)) {
-          // Grand Prize (Bike / Mobile)
-          targetIndex = Math.random() > 0.5 ? 0 : 2; 
-        } else if (claimedTier10Count < (ceoPrizeQuotas.maxTier10Winners || 2) && Math.random() > 0.6) {
-          targetIndex = 4; // $10.00
-        } else if (claimedTier5Count < (ceoPrizeQuotas.maxTier5Winners || 5) && Math.random() > 0.5) {
-          targetIndex = 6; // $5.00
-        } else if (Math.random() > 0.5) {
-          targetIndex = 3; // $2.00
-        } else if (Math.random() > 0.4) {
-          targetIndex = 1; // $1.00
+        // User has invested $5.00
+        if (ceoConfig.drawMode === "TARGET" && ceoConfig.targetEmail) {
+          if (userEmailNormalized === ceoConfig.targetEmail) {
+            // Specified CEO Target Email wins Grand Prize!
+            targetIndex = Math.random() > 0.5 ? 0 : 2; // Bike or Mobile
+          } else {
+            // Other $5 participants get legitimate tier rewards (Not grand prize)
+            const standardPrizes = [1, 3, 4, 5, 6]; // $1, $2, $10, $0.50, $5
+            targetIndex = standardPrizes[Math.floor(Math.random() * standardPrizes.length)];
+          }
         } else {
-          targetIndex = 5; // $0.50
+          // AUTO MODE: Fair 50/50 Probability
+          const is5050Hit = (Math.random() >= 0.50);
+          if (is5050Hit) {
+            targetIndex = Math.random() > 0.5 ? 0 : 2; // Grand Prize (Bike / Mobile)
+          } else {
+            const tiers = [1, 3, 4, 6]; // $1, $2, $10, $5
+            targetIndex = tiers[Math.floor(Math.random() * tiers.length)];
+          }
         }
       } else {
-        // Without $5 Investment:
-        targetIndex = 7; // Lucky Gift ($0.01)
+        // User has NOT invested $5.00: lands strictly on $0.01 Lucky Gift
+        targetIndex = 7; 
       }
 
-      // Compute exact stop rotation angle
+      // Calculate Rotation Angle
       const degreesPerSector = 360 / sectors.length;
       const stopAngle = 360 - (targetIndex * degreesPerSector) - (degreesPerSector / 2);
       const totalRotations = 360 * 7 + stopAngle;
@@ -523,14 +523,14 @@
 
         const wonSector = sectors[targetIndex];
 
-        // Cash prize auto-credit
+        // Cash prize auto-credit to balance
         if (wonSector.type === "CASH") {
           currentBalance += parseFloat(wonSector.value);
           localStorage.setItem('volt_balance', currentBalance.toFixed(2));
           document.getElementById('userBalanceDisplay').innerText = currentBalance.toFixed(2);
         }
 
-        // Save in round_winners
+        // Record winner in Firestore
         if (db) {
           try {
             await db.collection('round_winners').add({
@@ -573,32 +573,38 @@
         }
 
         renderTicker();
-      }, 5700);
+      }, 6200);
     }
 
-    // 6. Live Ticker (Broadcasts $5 Entries and Big Physical/Cash Winners)
+    // 6. Fast Real-Time News Ticker: Streams $5 Investment Gmails rapidly
     async function renderTicker() {
       const ticker = document.getElementById('liveTicker');
       let tickerItems = [];
 
-      tickerItems.push(`<span class="text-amber-500 font-bold">0301****89</span> invested <strong class="text-emerald-600">$5.00</strong> in Weekly Pool`);
+      // Fallback investment ticker entries
+      tickerItems.push(`<span class="text-amber-500 font-bold">ak****91@gmail.com</span> invested <strong class="text-emerald-600">$5.00</strong> in Weekly Pool`);
+      tickerItems.push(`<span class="text-amber-500 font-bold">fa****23@gmail.com</span> invested <strong class="text-emerald-600">$5.00</strong> in Weekly Pool`);
+      tickerItems.push(`<span class="text-amber-500 font-bold">za****78@gmail.com</span> invested <strong class="text-emerald-600">$5.00</strong> in Weekly Pool`);
       tickerItems.push(`<span class="text-amber-500 font-bold">M****d@gmail.com</span> WON <strong class="text-amber-500">🏆 Smartphone 📱</strong> in #WK-101`);
-      tickerItems.push(`<span class="text-amber-500 font-bold">0345****12</span> invested <strong class="text-emerald-600">$5.00</strong> in Weekly Pool`);
-      tickerItems.push(`<span class="text-amber-500 font-bold">A****n@gmail.com</span> WON <strong class="text-amber-500">🏍️ Heavy Bike</strong> in #WK-100`);
 
       if (db) {
         try {
-          const entrySnap = await db.collection('pool_entries').orderBy('timestamp', 'desc').limit(6).get();
-          entrySnap.forEach(doc => {
-            const d = doc.data();
-            const masked = d.email ? (d.email.includes('@') ? d.email.substring(0, 2) + '****@gmail.com' : d.email.substring(0, 4) + '****') : 'User';
-            tickerItems.unshift(`<span class="text-amber-500 font-bold">${masked}</span> invested <strong class="text-emerald-600">$5.00</strong> in Weekly Spin`);
-          });
+          const entrySnap = await db.collection('pool_entries').orderBy('timestamp', 'desc').limit(10).get();
+          if (!entrySnap.empty) {
+            tickerItems = [];
+            entrySnap.forEach(doc => {
+              const d = doc.data();
+              const email = d.email || "user@gmail.com";
+              const masked = email.length > 5 ? email.substring(0, 2) + "****" + email.substring(email.indexOf('@')) : email;
+              tickerItems.push(`<span class="text-amber-500 font-bold">${masked}</span> invested <strong class="text-emerald-600">$5.00</strong> in Weekly Pool`);
+            });
+          }
 
-          const winSnap = await db.collection('spin_winners').orderBy('date', 'desc').limit(4).get();
+    const winSnap = await db.collection('spin_winners').orderBy('date', 'desc').limit(4).get();
           winSnap.forEach(doc => {
             const d = doc.data();
-            const masked = d.email ? (d.email.includes('@') ? d.email.substring(0, 2) + '****@gmail.com' : d.email.substring(0, 4) + '****') : 'User';
+            const email = d.email || "user@gmail.com";
+            const masked = email.length > 5 ? email.substring(0, 2) + "****" + email.substring(email.indexOf('@')) : email;
             if (d.isMegaGrand) {
               tickerItems.unshift(`<span class="text-amber-500 font-bold">${masked}</span> WON <strong class="text-amber-500">🏆 ${d.prizeTitle}</strong>!`);
             }

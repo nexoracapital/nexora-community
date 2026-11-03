@@ -3,28 +3,35 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>VoltWealth - Active VIP Nodes & Yield Contracts</title>
+  <title>VoltWealth - VIP Nodes & Investment Plans</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@700;900&display=swap" rel="stylesheet">
+  <!-- Confetti library -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-
   <style>
-    body {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      touch-action: manipulation;
+    body { font-family: 'Plus Jakarta Sans', sans-serif; touch-action: manipulation; background-color: #f1f5f9; }
+    .font-brand { font-family: 'Space Grotesk', sans-serif; }
+    
+    .app-card {
+      background: #ffffff;
+      border-radius: 24px;
+      box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.06), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      border: 1px solid rgba(226, 232, 240, 0.8);
     }
-    .font-brand {
-      font-family: 'Space Grotesk', sans-serif;
-    }
-    .glow-card {
-      box-shadow: 0 0 25px rgba(16, 185, 129, 0.18);
-    }
-    .glow-amber {
-      box-shadow: 0 0 20px rgba(245, 158, 11, 0.2);
+    .app-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 28px -4px rgba(15, 23, 42, 0.09);
     }
 
-    /* Fast Live Ticker for VIP Plans & Rebate Withdrawals */
+    .plan-card-active {
+      border: 2px solid #10b981 !important;
+      box-shadow: 0 12px 28px -4px rgba(16, 185, 129, 0.2) !important;
+      background: #f0fdf4 !important;
+    }
+
+    /* Fast ticker animation */
     @keyframes scrollTickerFast {
       0% { transform: translateX(100%); }
       100% { transform: translateX(-100%); }
@@ -39,133 +46,151 @@
     }
   </style>
 </head>
-<body class="bg-[#030712] text-slate-100 min-h-screen flex flex-col justify-between pb-24 selection:bg-amber-400 selection:text-black">
+<body class="min-h-screen text-slate-800 flex flex-col justify-between pb-24 selection:bg-amber-400 selection:text-black">
 
   <!-- ================= TOP HEADER ================= -->
-  <header class="sticky top-0 z-40 bg-slate-900/90 backdrop-blur border-b border-slate-800 px-4 py-3 flex justify-between items-center">
-    <div class="flex items-center space-x-2">
-      <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-amber-500 via-emerald-400 to-cyan-400 p-[2px] flex items-center justify-center">
-        <div class="w-full h-full bg-[#030712] rounded-[9px] flex items-center justify-center">
-          <i class="fa-solid fa-gem text-amber-400 text-xs"></i>
+  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-slate-200/80 px-4 py-3 flex justify-between items-center shadow-xs">
+    <div class="flex items-center space-x-2.5">
+      <a href="dashboard.html" class="w-8 h-8 rounded-xl bg-slate-100 border border-slate-200 text-slate-700 flex items-center justify-center hover:bg-slate-200 transition">
+        <i class="fa-solid fa-arrow-left text-xs"></i>
+      </a>
+      <div class="flex items-center space-x-2">
+        <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-amber-500 via-emerald-400 to-teal-500 p-[2px] flex items-center justify-center shadow-xs">
+          <div class="w-full h-full bg-slate-900 rounded-[10px] flex items-center justify-center">
+            <i class="fa-solid fa-gem text-amber-400 text-xs"></i>
+          </div>
         </div>
+        <span class="text-lg font-black italic tracking-wider font-brand text-slate-900">
+          VOLT<span class="text-emerald-600">VIP</span>
+        </span>
       </div>
-      <span class="text-lg font-black italic tracking-wider font-brand text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-emerald-300 to-cyan-400">
-        VOLT<span class="text-white">VIP</span>
-      </span>
     </div>
-    <div class="bg-slate-800/90 border border-slate-700/80 px-3 py-1 rounded-full text-[11px] text-slate-300 font-semibold flex items-center space-x-1.5">
-      <span class="text-slate-400">Balance:</span>
-      <span id="userBalanceDisplay" class="text-amber-400 font-bold font-mono">$0.00</span>
+    <div class="flex items-center space-x-2">
+      <div class="bg-slate-100 border border-slate-200 px-3 py-1 rounded-full text-[11px] text-slate-700 font-bold flex items-center space-x-1.5">
+        <i class="fa-solid fa-wallet text-emerald-600"></i>
+        <span>Balance: $<span id="vipBalanceDisplay" class="font-mono text-emerald-600">0.00</span></span>
+      </div>
     </div>
   </header>
 
-  <!-- ================= LIVE TICKER (VIP PLANS ACTIVATED & REBATES CLAIMED) ================= -->
-  <div class="max-w-md mx-auto w-full px-4 pt-2">
-    <div class="bg-slate-900/90 border border-slate-800 rounded-xl px-3 py-1.5 overflow-hidden flex items-center space-x-2 shadow-inner">
-      <div class="flex items-center space-x-1 text-amber-400 text-[10px] font-black uppercase tracking-wider shrink-0 bg-amber-400/10 px-2 py-0.5 rounded border border-amber-400/20">
+  <!-- ================= MAIN CONTAINER ================= -->
+  <main class="max-w-md mx-auto w-full px-4 py-4 space-y-4">
+
+    <!-- Broadcast Ticker Bar -->
+    <div class="bg-white border border-slate-200/80 rounded-xl px-3 py-1.5 overflow-hidden flex items-center space-x-2 shadow-xs">
+      <div class="flex items-center space-x-1 text-emerald-600 text-[10px] font-black uppercase tracking-wider shrink-0 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
         <i class="fa-solid fa-bolt text-[9px] animate-pulse"></i>
-        <span>Live Payouts</span>
+        <span>Live Rebates</span>
       </div>
-      <div class="overflow-hidden relative w-full text-[11px] text-slate-300">
-        <div id="liveTicker" class="ticker-content font-medium">
-          Loading live VIP node activations and rebate withdrawals...
+      <div class="overflow-hidden relative w-full text-[11px] text-slate-600 font-medium">
+        <div id="liveTicker" class="ticker-content">
+          Loading real-time plan activations and rebate withdrawals...
         </div>
+      </div>
+    </div>
+
+    <!-- Active Plan Status Banner -->
+    <div id="activePlanBanner" class="app-card p-4 border-2 border-emerald-500/40 bg-gradient-to-br from-emerald-50/60 via-white to-white">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center space-x-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping"></span>
+          <span class="text-xs font-black text-slate-900 uppercase font-brand tracking-wider" id="bannerPlanTitle">No Active Plan</span>
+        </div>
+        <span id="bannerStatusTag" class="text-[10px] font-bold text-slate-400 bg-slate-100 px-2.5 py-0.5 rounded-full border border-slate-200">
+          Inactive
+        </span>
+      </div>
+      <p id="bannerDescText" class="text-[11px] text-slate-500 mt-1.5 leading-relaxed">
+        Select and activate one of the official 10 investment nodes below to earn daily yield for 30 days.
+      </p>
+      
+      <!-- Claim Action inside banner if active -->
+      <div id="bannerClaimSection" class="hidden mt-3 pt-3 border-t border-emerald-200/60 flex items-center justify-between">
+        <div class="text-[11px] text-slate-600">
+          Daily Yield: <strong class="text-emerald-600 font-black font-mono" id="bannerDailyRate">+$0.00</strong>
+        </div>
+        <button id="bannerClaimBtn" onclick="claimDailyYield()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-4 py-2 rounded-xl text-xs uppercase tracking-wider transition shadow-sm active:scale-95 flex items-center space-x-1.5">
+          <i class="fa-solid fa-hand-holding-dollar text-xs"></i>
+          <span id="bannerClaimBtnText">Claim Yield</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Section Header -->
+    <div class="flex items-center justify-between pt-1">
+      <h2 class="text-xs font-extrabold text-slate-500 uppercase tracking-wider">Official 10 Investment Plans</h2>
+      <span class="text-[10px] text-emerald-600 font-bold bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">1 Plan Lock Policy</span>
+    </div>
+
+    <!-- ================= 2-COLUMN APP-STYLE WHITE GRID (EXACT 10 PLANS) ================= -->
+    <div class="grid grid-cols-2 gap-3.5" id="plansContainer">
+      <!-- Generated dynamically matching dashboard.html 10 plans exactly -->
+    </div>
+
+  </main>
+
+  <!-- ================= PLAN CONFIRMATION MODAL ================= -->
+  <div id="planModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-50 flex items-center justify-center px-4 hidden">
+    <div class="bg-white rounded-3xl max-w-sm w-full p-5 shadow-2xl border border-slate-200">
+      <div class="flex justify-between items-center mb-3">
+        <h3 class="text-sm font-black text-slate-900 font-brand" id="modalPlanTitle">Activate Plan</h3>
+        <button onclick="closePlanModal()" class="w-7 h-7 rounded-full bg-slate-100 text-slate-500 hover:text-slate-900 flex items-center justify-center text-xs">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="bg-slate-50 border border-slate-200 rounded-2xl p-3.5 space-y-2 text-xs mb-4">
+        <div class="flex justify-between">
+          <span class="text-slate-500">Required Deposit:</span>
+          <strong class="text-slate-800" id="modalPlanCost">$0.00</strong>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-slate-500">Daily Return (30 Days):</span>
+          <strong class="text-emerald-600" id="modalDailyReturn">$0.00 / day</strong>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-slate-500">Total Capital + Profit:</span>
+          <strong class="text-amber-600 font-bold" id="modalTotalReturn">$0.00</strong>
+        </div>
+        <div class="flex justify-between border-t border-slate-200 pt-1.5 text-[11px]">
+          <span class="text-slate-500">Policy:</span>
+          <span class="text-rose-500 font-bold">30-Day Staking Cycle</span>
+        </div>
+      </div>
+
+      <div class="space-y-2">
+        <button id="modalConfirmBtn" onclick="confirmActivatePlan()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-black py-2.5 rounded-xl text-xs uppercase tracking-wider transition shadow-sm active:scale-95">
+          Confirm &amp; Lock Plan
+        </button>
+        <button onclick="closePlanModal()" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold py-2 rounded-xl text-xs uppercase transition">
+          Cancel
+        </button>
       </div>
     </div>
   </div>
 
-  <!-- ================= MAIN CONTENT ================= -->
-  <main class="max-w-md mx-auto w-full px-4 py-3 space-y-4">
-
-    <!-- Overview Banner -->
-    <div class="bg-gradient-to-br from-slate-900 via-indigo-950/40 to-slate-900 border border-emerald-500/30 rounded-2xl p-4 shadow-lg relative overflow-hidden">
-      <div class="flex items-center justify-between">
-        <span class="text-[9px] font-extrabold uppercase tracking-wider text-emerald-400 bg-emerald-400/10 px-2.5 py-0.5 rounded-full border border-emerald-400/20">
-          30-Day Institutional Staking
-        </span>
-        <span class="text-[10px] text-amber-300 font-bold flex items-center space-x-1">
-          <i class="fa-solid fa-shield-check text-emerald-400"></i>
-          <span>100% Principal Safe</span>
-        </span>
-      </div>
-      <h2 class="text-base font-black font-brand text-white mt-2">Active Contracts & Daily Rebates</h2>
-      <p class="text-[11px] text-slate-400 mt-1 leading-relaxed">
-        Manage your active VIP investment contracts, claim 24h accumulated daily yields, or deploy higher liquidity nodes[span_0](start_span)[span_0](end_span)[span_1](start_span)[span_1](end_span).
-      </p>
-    </div>
-
-    <!-- ================= 1. ACTIVE PLAN & CLAIM PANEL ================= -->
-    <div id="activeContractContainer" class="space-y-3">
-      <!-- Injected Dynamically: Only Active Plan Shows Here -->
-    </div>
-
-    <!-- ================= 2. UPGRADE / SUBSCRIBE TO NEW VIP NODE ================= -->
-    <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 space-y-3">
-      <div class="flex justify-between items-center border-b border-slate-800/80 pb-2">
-        <div class="flex items-center space-x-2">
-          <i class="fa-solid fa-circle-arrow-up text-amber-400 text-sm"></i>
-          <h3 class="text-xs font-bold uppercase text-white font-brand tracking-wider">Deploy / Upgrade VIP Plan</h3>
-        </div>
-        <span class="text-[10px] text-slate-400">Instant Activation</span>
-      </div>
-
-      <div class="space-y-2">
-        <label class="text-[11px] text-slate-400 font-semibold block">Select VIP Tier Node:</label>
-        <div class="relative">
-          <select id="nodeSelectDropdown" onchange="onPlanSelectChange()" class="w-full bg-slate-950 border border-slate-700/80 rounded-xl px-3 py-2.5 text-xs text-white font-bold focus:outline-none focus:border-emerald-500 appearance-none">
-            <option value="VIP 1" data-cost="100" data-daily="1.16" data-monthly="35.00">VIP 1 Starter ($100.00 • $1.16/day • 35% Return)</option>
-            <option value="VIP 2" data-cost="250" data-daily="2.91" data-monthly="87.50">VIP 2 Growth ($250.00 • $2.91/day • 35% Return)</option>
-            <option value="VIP 3" data-cost="500" data-daily="5.83" data-monthly="175.00">VIP 3 Advanced ($500.00 • $5.83/day • 35% Return)</option>
-            <option value="VIP 4" data-cost="1000" data-daily="11.66" data-monthly="350.00">VIP 4 Institutional ($1,000.00 • $11.66/day • 35% Return)</option>
-            <option value="VIP 5" data-cost="2500" data-daily="29.16" data-monthly="875.00">VIP 5 Enterprise ($2,500.00 • $29.16/day • 35% Return)</option>
-          </select>
-          <div class="absolute right-3.5 top-3.5 pointer-events-none text-slate-400 text-xs">
-            <i class="fa-solid fa-chevron-down"></i>
-          </div>
-        </div>
-      </div>
-
-      <!-- Quick Stats of Selected Plan -->
-      <div class="grid grid-cols-3 gap-2 bg-slate-950/70 p-2.5 rounded-xl border border-slate-800/80 text-center text-xs">
-        <div>
-          <div class="text-[9px] text-slate-400 uppercase font-semibold">Stake Amount</div>
-          <div id="statStake" class="font-bold text-amber-400 mt-0.5">$100.00</div>
-        </div>
-        <div>
-          <div class="text-[9px] text-slate-400 uppercase font-semibold">Daily Yield</div>
-          <div id="statDaily" class="font-bold text-emerald-400 mt-0.5">$1.16</div>
-        </div>
-        <div>
-          <div class="text-[9px] text-slate-400 uppercase font-semibold">30D Net Return</div>
-          <div id="statReturn" class="font-bold text-white mt-0.5">+$35.00</div>
-        </div>
-      </div>
-
-      <button id="btnDeployPlan" onclick="deploySelectedPlan()" class="w-full bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-slate-950 font-black py-2.5 rounded-xl text-xs uppercase tracking-wider transition active:scale-95 shadow-md shadow-emerald-500/20 flex items-center justify-center space-x-1.5">
-        <i class="fa-solid fa-lock-open text-xs"></i>
-        <span id="btnDeployText">Activate Selected VIP Plan</span>
-      </button>
-    </div>
-
-  </main>
-    <!-- ================= FIXED BOTTOM NAVIGATION BAR ================= -->
-  <nav class="fixed bottom-0 left-0 right-0 z-50 bg-slate-900/95 backdrop-blur border-t border-slate-800 px-6 py-2.5">
-    <div class="max-w-md mx-auto flex justify-between items-center text-[10px] font-medium text-slate-400">
-      <a href="dashboard.html" class="flex flex-col items-center space-y-1 hover:text-amber-400 transition">
+  <!-- ================= FIXED BOTTOM NAVIGATION ================= -->
+  <nav class="fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur border-t border-slate-200 px-6 py-2.5 shadow-lg">
+    <div class="max-w-md mx-auto flex justify-between items-center text-[10px] font-medium text-slate-500">
+      <a href="dashboard.html" class="flex flex-col items-center space-y-1 hover:text-emerald-600 transition">
         <i class="fa-solid fa-house text-base"></i>
         <span>Home</span>
       </a>
-      <a href="team.html" class="flex flex-col items-center space-y-1 hover:text-amber-400 transition">
+      <a href="spin.html" class="flex flex-col items-center space-y-1 hover:text-amber-500 transition">
+        <i class="fa-solid fa-dharmachakra text-base"></i>
+        <span>Spin</span>
+      </a>
+      <a href="team.html" class="flex flex-col items-center space-y-1 hover:text-indigo-600 transition">
         <i class="fa-solid fa-users text-base"></i>
         <span>Team</span>
       </a>
-      <a href="vip.html" class="flex flex-col items-center space-y-1 text-amber-400 font-bold transition">
-        <div class="w-9 h-9 rounded-full bg-amber-400 text-black flex items-center justify-center -mt-4 shadow-lg shadow-amber-400/30">
-          <i class="fa-solid fa-gem text-base"></i>
+      <a href="vip.html" class="flex flex-col items-center space-y-1 text-emerald-600 font-bold transition">
+        <div class="w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center -mt-3 shadow-md shadow-emerald-600/30">
+          <i class="fa-solid fa-gem text-xs"></i>
         </div>
         <span>VIP</span>
       </a>
-      <a href="me.html" class="flex flex-col items-center space-y-1 hover:text-amber-400 transition">
+      <a href="me.html" class="flex flex-col items-center space-y-1 hover:text-slate-800 transition">
         <i class="fa-solid fa-circle-user text-base"></i>
         <span>Profile</span>
       </a>
@@ -174,185 +199,262 @@
 
   <!-- ================= LOGIC SCRIPT ================= -->
   <script>
-    // All available VIP tiers definition
-    const VIP_CATALOG = {
-      "VIP 1": { title: "Starter Node", cost: 100, daily: 1.16, monthly: 35.00 },
-      "VIP 2": { title: "Growth Node", cost: 250, daily: 2.91, monthly: 87.50 },
-      "VIP 3": { title: "Advanced Node", cost: 500, daily: 5.83, monthly: 175.00 },
-      "VIP 4": { title: "Institutional Node", cost: 1000, daily: 11.66, monthly: 350.00 },
-      "VIP 5": { title: "Enterprise Node", cost: 2500, daily: 29.16, monthly: 875.00 }
+    // 1. Session verification
+    const activeSession = JSON.parse(sessionStorage.getItem('volt_active_session')) || {
+      email: "user_test@gmail.com",
+      mobile: "03001234567"
     };
+    const userEmail = (activeSession.email || activeSession.mobile || 'user').toLowerCase();
 
-    let currentBalance = parseFloat(localStorage.getItem('volt_balance')) || 50.00;
-    let activePlanName = localStorage.getItem('volt_active_plan') || null;
-    let activePlanStart = parseInt(localStorage.getItem('volt_plan_start')) || null;
-    let lastClaimTime = parseInt(localStorage.getItem('volt_last_claim')) || null;
+    // 2. Exact 10 Dashboard Plans
+    const DASHBOARD_PLANS = [
+      { cost: 30, returnAmt: 37, net: 7, daily: 1.23, title: 'Plan $30', icon: 'fa-vault', color: 'emerald' },
+      { cost: 50, returnAmt: 61, net: 11, daily: 2.03, title: 'Plan $50', icon: 'fa-chart-line', color: 'teal' },
+      { cost: 100, returnAmt: 126, net: 26, daily: 4.20, title: 'Plan $100', icon: 'fa-sack-dollar', color: 'blue' },
+      { cost: 250, returnAmt: 320, net: 70, daily: 10.66, title: 'Plan $250', icon: 'fa-briefcase', color: 'cyan' },
+      { cost: 500, returnAmt: 650, net: 150, daily: 21.66, title: 'Plan $500', icon: 'fa-award', color: 'amber' },
+      { cost: 750, returnAmt: 990, net: 240, daily: 33.00, title: 'Plan $750', icon: 'fa-gem', color: 'purple' },
+      { cost: 1000, returnAmt: 1350, net: 350, daily: 45.00, title: 'Plan $1000', icon: 'fa-crown', color: 'rose' },
+      { cost: 2000, returnAmt: 2750, net: 750, daily: 91.66, title: 'Plan $2000', icon: 'fa-building-columns', color: 'orange' },
+      { cost: 5000, returnAmt: 7000, net: 2000, daily: 233.33, title: 'Plan $5000', icon: 'fa-shield-virus', color: 'sky' },
+      { cost: 10000, returnAmt: 14500, net: 4500, daily: 483.33, title: 'Plan $10000', icon: 'fa-hand-holding-dollar', color: 'emerald' }
+    ];
 
-    // Initialize UI
+    let balance = parseFloat(localStorage.getItem('volt_balance') || '200.00');
+    let activePlan = JSON.parse(localStorage.getItem('volt_active_plan_' + userEmail)) || null;
+
+    // Fallback if saved under old key
+    if (!activePlan) {
+      const oldPlanName = localStorage.getItem('volt_active_plan');
+      if (oldPlanName) {
+        const matched = DASHBOARD_PLANS.find(p => p.title.toLowerCase() === oldPlanName.toLowerCase() || oldPlanName.includes(p.cost.toString()));
+        if (matched) {
+          activePlan = { cost: matched.cost, totalReturn: matched.returnAmt, daily: matched.daily, title: matched.title, activatedAt: Date.now() };
+        }
+      }
+    }
+
+    let pendingModalPlan = null;
+
     function initUI() {
       refreshBalanceDisplay();
-      renderActiveContractView();
-      onPlanSelectChange();
+      renderPlansGrid();
+      updateBannerUI();
       renderLiveTicker();
     }
 
     function refreshBalanceDisplay() {
-      document.getElementById('userBalanceDisplay').innerText = `$${currentBalance.toFixed(2)}`;
-      localStorage.setItem('volt_balance', currentBalance.toString());
+      document.getElementById('vipBalanceDisplay').innerText = balance.toFixed(2);
+      localStorage.setItem('volt_balance', balance.toFixed(2));
     }
 
-    // Render Active Plan Card (ONLY shows currently active plan)
-    function renderActiveContractView() {
-      const container = document.getElementById('activeContractContainer');
+    // Render Banner State & Daily Claim
+    function updateBannerUI() {
+      const bannerTitle = document.getElementById('bannerPlanTitle');
+      const bannerTag = document.getElementById('bannerStatusTag');
+      const bannerDesc = document.getElementById('bannerDescText');
+      const claimSection = document.getElementById('bannerClaimSection');
+      const bannerDailyRate = document.getElementById('bannerDailyRate');
+      const bannerClaimBtn = document.getElementById('bannerClaimBtn');
+      const bannerClaimBtnText = document.getElementById('bannerClaimBtnText');
 
-      if (!activePlanName || !VIP_CATALOG[activePlanName]) {
-        container.innerHTML = `
-          <div class="bg-slate-900/90 border border-dashed border-slate-800 rounded-2xl p-6 text-center">
-            <div class="w-12 h-12 mx-auto rounded-full bg-slate-800 flex items-center justify-center text-slate-500 mb-3">
-              <i class="fa-solid fa-box-open text-xl"></i>
-            </div>
-            <h3 class="text-xs font-bold text-slate-300 uppercase tracking-wider">No Active VIP Plan</h3>
-            <p class="text-[11px] text-slate-500 mt-1">You do not have any running node currently. Select and activate a VIP plan below to earn daily yield.</p>
-          </div>
-        `;
-        return;
+      if (activePlan) {
+        bannerTitle.innerText = `${activePlan.title} ($${activePlan.cost})`;
+        bannerTag.className = "text-[10px] font-black text-emerald-700 bg-emerald-100 px-2.5 py-0.5 rounded-full border border-emerald-300";
+        bannerTag.innerText = "Active & Running";
+        bannerDesc.innerText = `Your node is generating daily returns. You can claim your daily rebate profit directly below every 24 hours.`;
+
+        claimSection.classList.remove('hidden');
+        bannerDailyRate.innerText = `+$${parseFloat(activePlan.daily).toFixed(2)}`;
+
+        const lastClaim = localStorage.getItem('volt_last_claim_' + userEmail);
+        if (lastClaim) {
+          const diffHours = (Date.now() - parseInt(lastClaim)) / (1000 * 60 * 60);
+          if (diffHours < 24) {
+            bannerClaimBtn.disabled = true;
+            bannerClaimBtn.className = "bg-slate-200 text-slate-400 font-bold px-4 py-2 rounded-xl text-xs uppercase tracking-wider cursor-not-allowed";
+            bannerClaimBtnText.innerText = "Claimed Today";
+          } else {
+            bannerClaimBtn.disabled = false;
+            bannerClaimBtn.className = "bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-4 py-2 rounded-xl text-xs uppercase tracking-wider transition shadow-sm active:scale-95";
+            bannerClaimBtnText.innerText = "Claim Yield";
+          }
+        } else {
+          bannerClaimBtn.disabled = false;
+          bannerClaimBtn.className = "bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-4 py-2 rounded-xl text-xs uppercase tracking-wider transition shadow-sm active:scale-95";
+          bannerClaimBtnText.innerText = "Claim Yield";
+        }
+      } else {
+        bannerTitle.innerText = "No Active Plan";
+        bannerTag.className = "text-[10px] font-bold text-slate-400 bg-slate-100 px-2.5 py-0.5 rounded-full border border-slate-200";
+        bannerTag.innerText = "Inactive";
+        bannerDesc.innerText = "Select and activate one of the 10 official plans below to start earning daily yield.";
+        claimSection.classList.add('hidden');
       }
+    }
+            // Render Exact 10 Dashboard Plans
+    function renderPlansGrid() {
+      const container = document.getElementById('plansContainer');
+      container.innerHTML = "";
 
-      const plan = VIP_CATALOG[activePlanName];
-      const now = Date.now();
-      const planElapsedMs = now - (activePlanStart || now);
-      const daysRunning = Math.min(30, Math.floor(planElapsedMs / (1000 * 60 * 60 * 24)));
-      const daysLeft = Math.max(0, 30 - daysRunning);
+      const lastClaim = localStorage.getItem('volt_last_claim_' + userEmail);
+      const isClaimedToday = lastClaim && ((Date.now() - parseInt(lastClaim)) / (1000 * 60 * 60) < 24);
 
-      // Check daily claim eligibility (Can claim once every 24 hours)
-      const hoursSinceLastClaim = lastClaimTime ? (now - lastClaimTime) / (1000 * 60 * 60) : 999;
-      const canClaim = hoursSinceLastClaim >= 24;
+      DASHBOARD_PLANS.forEach(plan => {
+        const isActive = activePlan && (activePlan.cost === plan.cost);
 
-      container.innerHTML = `
-        <div class="bg-gradient-to-b from-slate-900 to-slate-950 border border-emerald-500/50 rounded-2xl p-4 glow-card relative">
-          <!-- Active Badge -->
-          <div class="flex items-center justify-between pb-3 border-b border-slate-800">
-            <div class="flex items-center space-x-2">
-              <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
-              <span class="bg-amber-400 text-black text-[10px] font-black px-2 py-0.5 rounded-md uppercase font-brand">${activePlanName}</span>
-              <span class="text-xs font-bold text-white">${plan.title}</span>
+        const card = document.createElement('div');
+        card.className = `app-card p-4 flex flex-col items-center justify-center text-center cursor-pointer ${isActive ? 'plan-card-active' : ''}`;
+
+        const colorClasses = {
+          emerald: { bg: 'bg-emerald-50', border: 'border-emerald-200/60', text: 'text-emerald-600', bar: 'bg-emerald-500' },
+          teal: { bg: 'bg-teal-50', border: 'border-teal-200/60', text: 'text-teal-600', bar: 'bg-teal-500' },
+          blue: { bg: 'bg-blue-50', border: 'border-blue-200/60', text: 'text-blue-600', bar: 'bg-blue-500' },
+          cyan: { bg: 'bg-cyan-50', border: 'border-cyan-200/60', text: 'text-cyan-600', bar: 'bg-cyan-500' },
+          amber: { bg: 'bg-amber-50', border: 'border-amber-200/60', text: 'text-amber-600', bar: 'bg-amber-500' },
+          purple: { bg: 'bg-purple-50', border: 'border-purple-200/60', text: 'text-purple-600', bar: 'bg-purple-500' },
+          rose: { bg: 'bg-rose-50', border: 'border-rose-200/60', text: 'text-rose-600', bar: 'bg-rose-500' },
+          orange: { bg: 'bg-orange-50', border: 'border-orange-200/60', text: 'text-orange-600', bar: 'bg-orange-500' },
+          sky: { bg: 'bg-sky-50', border: 'border-sky-200/60', text: 'text-sky-600', bar: 'bg-sky-500' }
+        }[plan.color] || { bg: 'bg-slate-50', border: 'border-slate-200', text: 'text-slate-600', bar: 'bg-slate-500' };
+
+        let footerHTML = "";
+        if (isActive) {
+          footerHTML = `
+            <div class="w-full mt-2 space-y-1.5">
+              <span class="inline-block text-[9px] bg-emerald-600 text-white font-extrabold px-2.5 py-0.5 rounded-full uppercase tracking-wider shadow-xs">
+                Active Plan
+              </span>
+              <button onclick="event.stopPropagation(); claimDailyYield();" ${isClaimedToday ? 'disabled' : ''} class="w-full ${isClaimedToday ? 'bg-slate-200 text-slate-400 cursor-not-allowed' : 'bg-emerald-600 hover:bg-emerald-500 text-white active:scale-95 shadow-xs'} py-1 px-2 rounded-lg text-[10px] font-black uppercase tracking-wider transition">
+                ${isClaimedToday ? 'Claimed' : `Claim +$${plan.daily.toFixed(2)}`}
+              </button>
             </div>
-            <span class="text-[10px] font-extrabold text-emerald-400 bg-emerald-400/10 px-2.5 py-0.5 rounded-full border border-emerald-400/20">
-              ACTIVE & RUNNING
-            </span>
-          </div>
-
-          <!-- Staking Progress & Cycle -->
-          <div class="grid grid-cols-3 gap-2 my-3 text-center">
-            <div class="bg-slate-950/80 p-2.5 rounded-xl border border-slate-800">
-              <div class="text-[9px] text-slate-400 uppercase font-semibold">Staked Capital</div>
-              <div class="text-xs font-black text-amber-400 font-mono mt-0.5">$${plan.cost.toFixed(2)}</div>
-            </div>
-            <div class="bg-slate-950/80 p-2.5 rounded-xl border border-slate-800">
-              <div class="text-[9px] text-slate-400 uppercase font-semibold">Daily Yield</div>
-              <div class="text-xs font-black text-emerald-400 font-mono mt-0.5">+$${plan.daily.toFixed(2)}</div>
-            </div>
-            <div class="bg-slate-950/80 p-2.5 rounded-xl border border-slate-800">
-              <div class="text-[9px] text-slate-400 uppercase font-semibold">Cycle Left</div>
-              <div class="text-xs font-black text-cyan-400 font-mono mt-0.5">${daysLeft} Days</div>
-            </div>
-          </div>
-
-          <!-- Claim Daily Yield Button -->
-          <div class="pt-1">
-            <button onclick="claimDailyYield()" ${!canClaim ? 'disabled' : ''} class="w-full ${canClaim ? 'bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 shadow-amber-400/20' : 'bg-slate-800 text-slate-500 cursor-not-allowed'} font-black py-2.5 rounded-xl text-xs uppercase tracking-wider transition active:scale-95 shadow-md flex items-center justify-center space-x-1.5">
-              <i class="fa-solid fa-hand-holding-dollar text-sm"></i>
-              <span>${canClaim ? `Claim Today's Rebate Yield (+$${plan.daily.toFixed(2)})` : `Yield Claimed (Next in ${Math.ceil(24 - hoursSinceLastClaim)}h)`}</span>
+          `;
+        } else {
+          footerHTML = `
+            <div class="w-8 h-1 ${colorClasses.bar} rounded-full mt-2"></div>
+            <button onclick="event.stopPropagation(); openPlanModal(${plan.cost}, ${plan.returnAmt}, ${plan.daily}, '${plan.title}');" class="mt-2 text-[10px] font-bold text-slate-500 hover:text-emerald-600 bg-slate-100 hover:bg-emerald-50 px-2.5 py-1 rounded-lg border border-slate-200 transition">
+              Activate
             </button>
+          `;
+        }
+
+        card.innerHTML = `
+          <div class="w-14 h-14 rounded-2xl ${colorClasses.bg} border ${colorClasses.border} flex items-center justify-center mb-2.5">
+            <i class="fa-solid ${plan.icon} text-2xl ${colorClasses.text}"></i>
           </div>
-        </div>
-      `;
-    }
+          <span class="text-xs font-black text-slate-900 font-brand">${plan.title}</span>
+          <span class="text-[9px] font-bold ${colorClasses.text} mt-0.5">Return $${plan.returnAmt} (+$${plan.net} Net)</span>
+          ${footerHTML}
+        `;
 
-    // Daily Yield Claim Handler
-    function claimDailyYield() {
-      if (!activePlanName || !VIP_CATALOG[activePlanName]) return;
-      const plan = VIP_CATALOG[activePlanName];
+        card.onclick = () => {
+          if (!isActive) {
+            openPlanModal(plan.cost, plan.returnAmt, plan.daily, plan.title);
+          }
+        };
 
-      currentBalance += plan.daily;
-      lastClaimTime = Date.now();
-      localStorage.setItem('volt_last_claim', lastClaimTime.toString());
-      refreshBalanceDisplay();
-      renderActiveContractView();
-
-      confetti({
-        particleCount: 80,
-        spread: 60,
-        origin: { y: 0.6 }
+        container.appendChild(card);
       });
-
-      alert(`Success! Daily rebate yield of +$${plan.daily.toFixed(2)} credited to your balance.`);
-      renderLiveTicker();
     }
 
-    // Dropdown change listener
-    function onPlanSelectChange() {
-      const select = document.getElementById('nodeSelectDropdown');
-      const selectedOption = select.options[select.selectedIndex];
-      const cost = parseFloat(selectedOption.getAttribute('data-cost'));
-      const daily = parseFloat(selectedOption.getAttribute('data-daily'));
-      const monthly = parseFloat(selectedOption.getAttribute('data-monthly'));
-
-      document.getElementById('statStake').innerText = `$${cost.toFixed(2)}`;
-      document.getElementById('statDaily').innerText = `$${daily.toFixed(2)}`;
-      document.getElementById('statReturn').innerText = `+$${monthly.toFixed(2)}`;
-      document.getElementById('btnDeployText').innerText = `Activate ${selectedOption.value} ($${cost.toFixed(2)})`;
-    }
-
-    // Deploy / Upgrade to a New Plan
-    function deploySelectedPlan() {
-      const select = document.getElementById('nodeSelectDropdown');
-      const planName = select.value;
-      const plan = VIP_CATALOG[planName];
-
-      if (currentBalance < plan.cost) {
-        alert(`Insufficient Balance! You need $${plan.cost.toFixed(2)} USDT to activate ${planName}. Your balance is $${currentBalance.toFixed(2)}.`);
-        window.location.href = 'me.html';
+    // Daily Claim Handler
+    function claimDailyYield() {
+      if (!activePlan) {
+        alert("You do not have an active plan! Please activate a plan first.");
         return;
       }
 
-      if (confirm(`Confirm activation of ${planName} for $${plan.cost}.00 USDT? (30-Day Contract • 35% Net Yield)`)) {
-        currentBalance -= plan.cost;
-        activePlanName = planName;
-        activePlanStart = Date.now();
-        lastClaimTime = null; // Reset claim timer for fresh daily cycle
-
-        localStorage.setItem('volt_active_plan', activePlanName);
-        localStorage.setItem('volt_plan_start', activePlanStart.toString());
-        localStorage.removeItem('volt_last_claim');
-
-        refreshBalanceDisplay();
-        renderActiveContractView();
-
-        confetti({
-          particleCount: 120,
-          spread: 70,
-          origin: { y: 0.5 }
-        });
-
-        alert(`Congratulations! ${planName} node activated successfully! Your daily yield is now active.`);
-        renderLiveTicker();
+      const lastClaim = localStorage.getItem('volt_last_claim_' + userEmail);
+      if (lastClaim) {
+        const diffHours = (Date.now() - parseInt(lastClaim)) / (1000 * 60 * 60);
+        if (diffHours < 24) {
+          alert(`You have already claimed today! Next claim available in ~${Math.ceil(24 - diffHours)} hours.`);
+          return;
+        }
       }
+
+      const dailyReward = parseFloat(activePlan.daily);
+      balance += dailyReward;
+      localStorage.setItem('volt_last_claim_' + userEmail, Date.now().toString());
+      localStorage.setItem('volt_balance', balance.toFixed(2));
+
+      confetti({ particleCount: 70, spread: 55, origin: { y: 0.6 } });
+      alert(`🎉 Success! Daily rebate yield of +$${dailyReward.toFixed(2)} has been added to your balance.`);
+      
+      initUI();
     }
-      // Live Ticker Stream (Shows activations, daily rebate claims, and withdrawals)
+
+    // Modal Handlers
+    function openPlanModal(cost, totalReturn, daily, title) {
+      if (activePlan) {
+        alert(`You already have an active plan: ${activePlan.title} ($${activePlan.cost}). Only 1 plan can be active at a time.`);
+        return;
+      }
+
+      pendingModalPlan = { cost, totalReturn, daily, title };
+      document.getElementById('modalPlanTitle').innerText = title;
+      document.getElementById('modalPlanCost').innerText = `$${cost}.00 USDT`;
+      document.getElementById('modalDailyReturn').innerText = `$${daily.toFixed(2)} USDT / day`;
+      document.getElementById('modalTotalReturn').innerText = `$${totalReturn}.00 USDT (30 Days)`;
+
+      document.getElementById('planModal').classList.remove('hidden');
+    }
+
+    function closePlanModal() {
+      document.getElementById('planModal').classList.add('hidden');
+      pendingModalPlan = null;
+    }
+
+    function confirmActivatePlan() {
+      if (!pendingModalPlan) return;
+      const { cost, totalReturn, daily, title } = pendingModalPlan;
+
+      if (balance < cost) {
+        alert(`Insufficient balance! You need $${cost}.00 USDT. Your current balance is $${balance.toFixed(2)}.`);
+        closePlanModal();
+        return;
+      }
+
+      if (!confirm(`Are you sure you want to activate ${title} for $${cost}.00? This choice will be active for 30 days.`)) {
+        return;
+      }
+
+      balance -= cost;
+      activePlan = {
+        cost,
+        totalReturn,
+        daily,
+        title,
+        activatedAt: Date.now()
+      };
+
+      localStorage.setItem('volt_active_plan_' + userEmail, JSON.stringify(activePlan));
+      localStorage.setItem('volt_active_plan', title);
+      localStorage.setItem('volt_balance', balance.toFixed(2));
+
+      confetti({ particleCount: 120, spread: 80, origin: { y: 0.5 } });
+      alert(`🎉 Success! ${title} ($${cost}) is now active on your account!`);
+      closePlanModal();
+      initUI();
+    }
+
+    // Fast Live Ticker Stream (Matching your requested details)
     function renderLiveTicker() {
       const ticker = document.getElementById('liveTicker');
       const updates = [
-        '<span class="text-emerald-400 font-bold">fa****82@gmail.com</span> activated <strong class="text-amber-400">VIP 2 Node ($250)</strong>',
-        '<span class="text-emerald-400 font-bold">ak****19@gmail.com</span> claimed daily rebate <strong class="text-emerald-400">+$11.66</strong>',
-        '<span class="text-emerald-400 font-bold">us****04@gmail.com</span> withdrew rebate yield <strong class="text-amber-300">$35.00 USDT</strong>',
-        '<span class="text-emerald-400 font-bold">za****99@gmail.com</span> activated <strong class="text-amber-400">VIP 3 Node ($500)</strong>',
-        '<span class="text-emerald-400 font-bold">sh****55@gmail.com</span> claimed team rebate <strong class="text-emerald-400">+$17.50</strong>',
-        '<span class="text-emerald-400 font-bold">mo****71@gmail.com</span> withdrew daily yield <strong class="text-amber-300">$11.66 USDT</strong>'
+        '<span class="text-emerald-600 font-bold">fa****82@gmail.com</span> activated <strong class="text-amber-600">Plan $100</strong>',
+        '<span class="text-emerald-600 font-bold">ak****19@gmail.com</span> claimed daily rebate <strong class="text-emerald-600">+$4.20</strong>',
+        '<span class="text-emerald-600 font-bold">us****04@gmail.com</span> withdrew rebate yield <strong class="text-slate-800">$26.00 USDT</strong>',
+        '<span class="text-emerald-600 font-bold">za****99@gmail.com</span> activated <strong class="text-amber-600">Plan $500</strong>',
+        '<span class="text-emerald-600 font-bold">sh****55@gmail.com</span> claimed daily rebate <strong class="text-emerald-600">+$21.66</strong>',
+        '<span class="text-emerald-600 font-bold">mo****71@gmail.com</span> withdrew rebate yield <strong class="text-slate-800">$150.00 USDT</strong>',
+        '<span class="text-emerald-600 font-bold">0345****12</span> activated <strong class="text-amber-600">Plan $250</strong>',
+        '<span class="text-emerald-600 font-bold">0301****89</span> claimed daily rebate <strong class="text-emerald-600">+$10.66</strong>'
       ];
 
-      if (activePlanName) {
-        updates.unshift(`<span class="text-amber-400 font-bold">You</span> currently running <strong class="text-emerald-400">${activePlanName}</strong> contract`);
+      if (activePlan) {
+        updates.unshift(`<span class="text-amber-600 font-bold">You</span> running active <strong class="text-emerald-600">${activePlan.title} ($${activePlan.cost})</strong>`);
       }
 
       ticker.innerHTML = updates.join(' &nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp; ');

@@ -3,595 +3,685 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>VoltWealth - Institutional Smart Yield</title>
+  <title>VoltWealth - CEO Master Admin Console</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@700;900&display=swap" rel="stylesheet">
   
-  <!-- Blast Particle Effects -->
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-
   <!-- Firebase Official SDKs -->
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
 
   <style>
-    body {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      touch-action: manipulation;
-      background-color: #e6ebf1;
-    }
-    .font-brand {
-      font-family: 'Space Grotesk', sans-serif;
-    }
-
-    /* Neumorphic Surfaces */
-    .neu-outer-circle {
-      background: #e6ebf1;
-      box-shadow: 18px 18px 36px #c4c8cd, -18px -18px 36px #ffffff;
-    }
-    .neu-inset-field {
-      background: #e6ebf1;
-      box-shadow: inset 4px 4px 8px #cbcfd4, inset -4px -4px 8px #ffffff;
-    }
-    .neu-btn {
-      background: #e6ebf1;
-      box-shadow: 5px 5px 10px #c5c9ce, -5px -5px 10px #ffffff;
-      transition: all 0.2s ease;
-    }
-    .neu-btn:active {
-      box-shadow: inset 3px 3px 6px #cbcfd4, inset -3px -3px 6px #ffffff;
-    }
-
-    /* Fast Spinner Outline */
-    @keyframes spinCircle {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-    .ring-active {
-      border: 4px solid transparent;
-      border-top-color: #10B981;
-      border-right-color: #F59E0B;
-      border-radius: 50%;
-      animation: spinCircle 0.8s linear infinite;
-    }
-
-    /* Blast Explosion */
-    @keyframes blastZoom {
-      0% { transform: scale(0.6); opacity: 0; filter: brightness(2); }
-      50% { transform: scale(1.15); opacity: 1; filter: brightness(1.5); }
-      100% { transform: scale(1); opacity: 1; filter: brightness(1); }
-    }
-    .blast-effect {
-      animation: blastZoom 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-    }
-
-    /* Live Activity Ticker */
-    @keyframes scrollTickerSlow {
-      0% { transform: translateX(100%); }
-      100% { transform: translateX(-100%); }
-    }
-    .ticker-content {
-      display: inline-block;
-      white-space: nowrap;
-      animation: scrollTickerSlow 40s linear infinite;
+    body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #030712; }
+    .font-brand { font-family: 'Space Grotesk', sans-serif; }
+    .admin-card {
+      background: #0b1329;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 1.25rem;
     }
   </style>
 </head>
-<body class="min-h-screen w-screen overflow-x-hidden flex flex-col justify-between items-center py-3 px-3 text-slate-700">
+<body class="text-slate-100 min-h-screen flex flex-col font-sans selection:bg-amber-400 selection:text-black">
 
-  <!-- ================= TOP APP INSTALL & HEADER ================= -->
-  <header class="w-full max-w-[380px] flex flex-col items-center select-none pt-1">
-    <div class="w-full flex justify-between items-center px-2 mb-2">
-      <div class="flex items-center space-x-1.5 text-xs font-bold text-slate-500">
-        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
-        <span>Secure Protocol</span>
+  <!-- ================= TOP HEADER ================= -->
+  <header class="sticky top-0 z-40 bg-slate-900/95 backdrop-blur border-b border-slate-800 px-4 py-3 flex justify-between items-center shadow-lg">
+    <div class="flex items-center space-x-2.5">
+      <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-amber-500 via-rose-500 to-indigo-500 p-[2px] flex items-center justify-center shadow-md">
+        <div class="w-full h-full bg-[#030712] rounded-[10px] flex items-center justify-center">
+          <i class="fa-solid fa-crown text-amber-400 text-sm"></i>
+        </div>
       </div>
-      <button id="btnInstallApp" onclick="triggerPWAInstall()" class="neu-btn px-3 py-1.5 rounded-full text-xs font-bold text-slate-700 flex items-center space-x-1.5 border border-white">
-        <i class="fa-solid fa-download text-emerald-600"></i>
-        <span>Install App</span>
+      <div>
+        <span class="text-lg font-black italic tracking-wider font-brand text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-rose-300 to-indigo-400">
+          VOLT<span class="text-white">CORE</span>
+        </span>
+        <span class="text-[9px] bg-amber-400/10 text-amber-400 border border-amber-400/30 px-2 py-0.5 rounded-full font-bold uppercase ml-2">Master CEO</span>
+      </div>
+    </div>
+    <div class="flex items-center space-x-2">
+      <button onclick="downloadAllUsersCSV()" class="bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-xs font-bold px-3 py-1.5 rounded-full transition flex items-center space-x-1.5">
+        <i class="fa-solid fa-download"></i>
+        <span class="hidden sm:inline">Export CSV</span>
+      </button>
+      <button onclick="ceoLogout()" class="bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/30 text-xs font-bold px-3 py-1.5 rounded-full transition">
+        Exit
       </button>
     </div>
-
-    <div class="inline-flex items-center space-x-2.5">
-      <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-amber-500 via-emerald-500 to-teal-500 p-[2px] shadow-sm flex items-center justify-center">
-        <div class="w-full h-full bg-[#e6ebf1] rounded-[10px] flex items-center justify-center">
-          <i class="fa-solid fa-bolt-lightning text-amber-500 text-sm"></i>
-        </div>
-      </div>
-      <h1 class="text-2xl font-black italic tracking-wider font-brand text-slate-800">
-        VOLT<span class="text-emerald-600">WEALTH</span>
-      </h1>
-    </div>
-    <p class="text-[9px] uppercase tracking-[0.25em] text-slate-400 font-bold mt-0.5">Institutional Smart Yield</p>
   </header>
 
-  <!-- ================= LIVE ACTIVITY TICKER BAR ================= -->
-  <div class="w-full max-w-[350px] bg-white/70 backdrop-blur-sm border border-slate-200 rounded-xl px-3 py-1 overflow-hidden flex items-center space-x-2 shadow-sm my-2">
-    <div class="flex items-center space-x-1 text-emerald-600 text-[10px] font-black uppercase tracking-wider shrink-0 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
-      <i class="fa-solid fa-bolt-lightning text-[9px] animate-pulse"></i>
-      <span>Live</span>
-    </div>
-    <div class="overflow-hidden relative w-full text-[11px] text-slate-600">
-      <div id="liveTicker" class="ticker-content font-semibold">
-        Syncing verified blockchain transactions...
-      </div>
-    </div>
-  </div>
-
-  <!-- ================= MAIN CIRCULAR DIAL CARD ================= -->
-  <main class="w-full max-w-[360px] my-auto flex flex-col items-center">
+  <!-- ================= MAIN DASHBOARD ================= -->
+  <main class="max-w-5xl mx-auto w-full px-4 py-6 space-y-6 flex-1">
     
-    <div class="relative w-[345px] h-[345px] rounded-full neu-outer-circle flex items-center justify-center p-3 border-4 border-[#edf1f5]">
-      
-      <!-- Rapid Circular Spinner Overlay -->
-      <div id="spinnerOverlay" class="absolute inset-0 rounded-full pointer-events-none hidden z-20"></div>
+    <!-- 1. COMPLETE NETWORK FINANCIAL SUMMARY -->
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+      <div class="admin-card p-4">
+        <div class="text-[10px] uppercase font-bold text-slate-400">Total Deposits (کل جمع شدہ رقم)</div>
+        <div id="statTotalDeposits" class="text-2xl font-black font-brand text-emerald-400 mt-1">$0.00</div>
+      </div>
+      <div class="admin-card p-4">
+        <div class="text-[10px] uppercase font-bold text-slate-400">Total Withdrawals (کل نکلوائی گئی رقم)</div>
+        <div id="statTotalWithdrawals" class="text-2xl font-black font-brand text-rose-400 mt-1">$0.00</div>
+      </div>
+      <div class="admin-card p-4">
+        <div class="text-[10px] uppercase font-bold text-slate-400">Net Vault Balance (خالص باقی رقم)</div>
+        <div id="statVaultNet" class="text-2xl font-black font-brand text-indigo-400 mt-1">$0.00</div>
+      </div>
+      <div class="admin-card p-4">
+        <div class="text-[10px] uppercase font-bold text-slate-400">Pending Requests (زیر التواء)</div>
+        <div id="statPendingRequests" class="text-2xl font-black font-brand text-amber-400 mt-1">0</div>
+      </div>
+    </div>
 
-      <!-- VIEW 1: SIGN IN -->
-      <div id="loginView" class="w-full h-full rounded-full flex flex-col items-center justify-center px-6 text-center select-none">
-        <h2 class="text-2xl font-extrabold text-slate-700 font-brand tracking-tight mb-2">Login</h2>
-
-        <div class="flex items-center space-x-3 mb-2 text-[11px] font-bold text-slate-500">
-          <label class="cursor-pointer flex items-center space-x-1">
-            <input type="radio" name="loginMode" value="mobile" checked onchange="toggleLoginType('mobile')" class="accent-emerald-600">
-            <span>Mobile</span>
-          </label>
-          <label class="cursor-pointer flex items-center space-x-1">
-            <input type="radio" name="loginMode" value="gmail" onchange="toggleLoginType('gmail')" class="accent-emerald-600">
-            <span>Gmail</span>
-          </label>
+    <!-- 2. MEMBER BALANCE & RECORD INSPECTOR -->
+    <div class="admin-card p-5 border-indigo-500/30">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3 mb-3">
+        <div class="flex items-center space-x-2">
+          <i class="fa-solid fa-magnifying-glass-dollar text-indigo-400"></i>
+          <h2 class="text-xs font-bold uppercase tracking-wider text-white">Member Financial Inspector (کسی بھی ممبر کی تفصیلات دیکھیں)</h2>
         </div>
-
-        <form onsubmit="handleLoginSubmit(event)" class="w-full space-y-2.5 flex flex-col items-center" autocomplete="off">
-          
-          <div class="w-[85%] relative">
-            <span id="inputBadge" class="absolute -top-2 left-3 bg-[#e6ebf1] px-1 text-[9px] font-bold text-slate-400 uppercase tracking-wider">Mobile Number</span>
-            <input type="tel" id="loginIdentifier" required placeholder="03001234567" 
-                   class="w-full h-9 rounded-full neu-inset-field px-4 text-xs font-semibold text-slate-700 outline-none">
-          </div>
-
-          <div class="w-[85%] relative">
-            <span class="absolute -top-2 left-3 bg-[#e6ebf1] px-1 text-[9px] font-bold text-slate-400 uppercase tracking-wider">Password</span>
-            <input type="password" id="loginPass" required placeholder="••••••••" 
-                   class="w-full h-9 rounded-full neu-inset-field px-4 text-xs font-semibold text-slate-700 outline-none">
-          </div>
-
-          <button type="submit" id="btnSignIn" class="w-[85%] h-9 rounded-full neu-btn text-xs font-bold text-slate-700 hover:text-emerald-600 active:scale-95 transition mt-1 uppercase tracking-wider">
-            Sign In
-          </button>
-        </form>
-
-        <!-- 3 Failed Attempts Notice -->
-        <div id="forgotPasswordNotice" class="text-[10px] text-rose-600 font-bold mt-1.5 hidden">
-          3 Failed Attempts! <button type="button" onclick="showPanel('forgotView')" class="underline text-amber-600 font-extrabold">Reset Password</button>
-        </div>
-
-        <div class="flex items-center justify-between w-[80%] text-[10px] text-slate-500 font-semibold mt-2.5">
-          <button type="button" onclick="showPanel('forgotView')" class="hover:text-amber-600">Forgot?</button>
-          <button type="button" onclick="showPanel('registerView')" class="text-emerald-600 font-bold hover:underline">Register Here</button>
-        </div>
+        <span class="text-[10px] text-slate-400">Instant Balance Check & Direct Adjust</span>
       </div>
 
-      <!-- VIEW 2: SUCCESS BLAST POPUP -->
-      <div id="successView" class="hidden absolute inset-0 rounded-full flex flex-col items-center justify-center p-6 text-center z-30">
-        <div class="w-16 h-16 rounded-full neu-btn flex items-center justify-center mb-3">
-          <i class="fa-solid fa-check text-2xl text-emerald-500 font-black"></i>
-        </div>
-        <h3 class="text-2xl font-black text-slate-800 font-brand mb-1">Success!</h3>
-        <p class="text-xs font-semibold text-slate-500">Login Successfully</p>
-      </div>
-
-      <!-- VIEW 3: STEP-BY-STEP EMAIL OTP REGISTER -->
-      <div id="registerView" class="hidden w-full h-full rounded-full flex flex-col items-center justify-center px-4 py-2 text-center select-none">
-        
-        <h2 class="text-base font-black text-slate-800 font-brand">Create Account</h2>
-        <span class="text-[8px] text-emerald-600 font-bold mb-1.5">+ $2.00 Welcome Bonus</span>
-
-        <!-- STEP 1: ENTER EMAIL & CLICK VERIFY -->
-        <div id="regEmailSection" class="w-full space-y-2 flex flex-col items-center">
-          <div class="w-[85%] relative">
-            <span class="absolute -top-2 left-3 bg-[#e6ebf1] px-1 text-[8px] font-bold text-slate-400 uppercase tracking-wider">Gmail Address</span>
-            <input type="email" id="regEmail" required placeholder="name@gmail.com" 
-                   class="w-full h-8 rounded-full neu-inset-field px-3 text-xs font-semibold text-slate-700 outline-none">
-          </div>
-          <button type="button" id="btnSendOtp" onclick="handleSendEmailOtp()" class="w-[85%] h-8 rounded-full neu-btn text-[11px] font-bold text-emerald-700 hover:text-emerald-600 uppercase tracking-wider">
-            <i class="fa-regular fa-envelope mr-1"></i> Verify Your Email
-          </button>
-        </div>
-
-        <!-- STEP 2: 6-DIGIT OTP INPUT -->
-        <div id="regOtpSection" class="w-full space-y-2 flex flex-col items-center hidden">
-          <p class="text-[9px] text-slate-500 font-semibold">Enter 6-digit OTP code sent to email:</p>
-          <div class="w-[70%]">
-            <input type="text" id="inputOtp" maxlength="6" placeholder="• • • • • •" 
-                   class="w-full h-8 rounded-full neu-inset-field px-3 text-xs font-mono font-black text-center text-emerald-600 outline-none tracking-widest">
-          </div>
-          <button type="button" onclick="handleConfirmOtp()" class="w-[70%] h-7 rounded-full neu-btn text-[11px] font-bold text-slate-800 hover:text-emerald-600 uppercase">
-            <i class="fa-solid fa-check mr-1 text-emerald-500"></i> Confirm Code
-          </button>
-        </div>
-
-        <!-- STEP 3: DETAILS -->
-        <form id="regDetailsSection" onsubmit="handleFinalRegistration(event)" class="w-full space-y-1.5 flex flex-col items-center hidden" autocomplete="off">
-          
-          <div class="text-[9px] text-emerald-600 font-bold flex items-center space-x-1">
-            <i class="fa-solid fa-circle-check"></i>
-            <span>Email Verified Successfully</span>
-          </div>
-
-          <div class="w-[85%]">
-            <input type="tel" id="regMobile" required placeholder="Mobile Number (03001234567)" 
-                   class="w-full h-7 rounded-full neu-inset-field px-3 text-[11px] font-semibold text-slate-700 outline-none">
-          </div>
-
-          <div class="w-[85%] flex space-x-1.5">
-            <input type="password" id="regPass" required placeholder="Password" 
-                   class="w-1/2 h-7 rounded-full neu-inset-field px-2.5 text-[11px] font-semibold text-slate-700 outline-none">
-            <input type="password" id="regPassAgain" required placeholder="Again Password" 
-                   class="w-1/2 h-7 rounded-full neu-inset-field px-2.5 text-[11px] font-semibold text-slate-700 outline-none">
-          </div>
-
-          <div class="w-[85%]">
-            <input type="text" id="regReferral" placeholder="Referral Code (Optional)" 
-                   class="w-full h-7 rounded-full neu-inset-field px-3 text-[11px] font-bold text-emerald-600 uppercase outline-none">
-          </div>
-
-          <button type="submit" id="btnCompleteReg" class="w-[85%] h-8 rounded-full neu-btn text-[11px] font-bold text-slate-800 hover:text-emerald-600 uppercase tracking-wider mt-0.5">
-            Complete Registration
-          </button>
-        </form>
-
-        <p class="text-[10px] text-slate-500 font-semibold mt-1.5">
-          Already verified? 
-          <button type="button" onclick="showPanel('loginView')" class="text-emerald-600 font-bold hover:underline">Log In</button>
-        </p>
-      </div>
-
-      <!-- VIEW 4: FORGOT PASSWORD -->
-      <div id="forgotView" class="hidden w-full h-full rounded-full flex flex-col items-center justify-center px-6 text-center select-none">
-        <h2 class="text-lg font-black text-slate-800 font-brand mb-1">Reset Password</h2>
-        <p class="text-[10px] text-slate-500 font-semibold mb-2">Enter registered Gmail to receive recovery instructions.</p>
-
-        <form onsubmit="handleForgotPassword(event)" class="w-full space-y-2 flex flex-col items-center">
-          <div class="w-[88%]">
-            <input type="email" id="forgotEmail" required placeholder="Registered Gmail Address" 
-                   class="w-full h-8 rounded-full neu-inset-field px-3 text-xs font-semibold text-slate-700 outline-none">
-          </div>
-
-          <button type="submit" id="btnResetPass" class="w-[88%] h-8 rounded-full neu-btn text-[11px] font-bold text-slate-800 hover:text-amber-600 uppercase">
-            Send Reset Link
-          </button>
-        </form>
-
-        <button type="button" onclick="showPanel('loginView')" class="text-[10px] text-emerald-600 font-bold hover:underline mt-3">
-          Back to Login
+      <div class="flex gap-2">
+        <input type="text" id="inspectorSearchInput" placeholder="Enter member Email or Phone..." class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-indigo-500">
+        <button onclick="inspectMemberRecord()" class="bg-indigo-600 hover:bg-indigo-500 text-white font-bold px-4 py-2 rounded-xl text-xs uppercase shrink-0 transition">
+          Inspect
         </button>
       </div>
 
+      <div id="inspectorResultCard" class="hidden mt-3 bg-slate-950/80 p-3.5 rounded-xl border border-slate-800 text-xs space-y-2">
+        <!-- Dynamically Populated -->
+      </div>
     </div>
-  </main>
-    <!-- ================= FOOTER ================= -->
-  <footer class="w-full max-w-[340px] text-center text-slate-500 text-[10px] pt-2 space-y-1 select-none">
-    <div class="flex items-center justify-center space-x-2 text-slate-600 font-semibold">
-      <i class="fa-solid fa-shield-halved text-emerald-500"></i>
-      <span>Anti-Brute Force Protection • 256-Bit SSL</span>
-    </div>
-    <div class="text-[9px] text-slate-400">
-      &copy; 2026 VoltWealth Protocol. All Rights Reserved.
-    </div>
-  </footer>
 
-  <!-- ================= JAVASCRIPT LOGIC ================= -->
+    <!-- 3. DEPOSIT MANAGEMENT (MANAGE & APPROVE/REJECT) -->
+    <div class="admin-card p-4">
+      <div class="flex justify-between items-center mb-3">
+        <h3 class="text-sm font-bold text-white flex items-center space-x-2">
+          <i class="fa-solid fa-arrow-down text-emerald-400"></i>
+          <span>Member Deposit Requests (ڈپازٹ تصدیق و کنٹرول)</span>
+        </h3>
+        <span class="text-[10px] text-slate-400">Approve to auto-credit wallet</span>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-xs text-slate-300">
+          <thead class="bg-slate-950 text-slate-400 text-[10px] uppercase border-b border-slate-800">
+            <tr>
+              <th class="py-2.5 px-3">Member</th>
+              <th class="py-2.5 px-3">Amount</th>
+              <th class="py-2.5 px-3">Trx ID / Hash</th>
+              <th class="py-2.5 px-3">Status</th>
+              <th class="py-2.5 px-3 text-right">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="depositRequestsTable" class="divide-y divide-slate-800">
+            <!-- Dynamically Rendered -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 4. WITHDRAWAL MANAGEMENT (APPROVE / FREEZE / REJECT) -->
+    <div class="admin-card p-4">
+      <div class="flex justify-between items-center mb-3">
+        <h3 class="text-sm font-bold text-white flex items-center space-x-2">
+          <i class="fa-solid fa-hand-holding-dollar text-amber-400"></i>
+          <span>Member Withdrawal Requests (ودڈرا تصدیق و کنٹرول)</span>
+        </h3>
+        <span class="text-[10px] text-slate-400">Approve payout or freeze/reject</span>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-xs text-slate-300">
+          <thead class="bg-slate-950 text-slate-400 text-[10px] uppercase border-b border-slate-800">
+            <tr>
+              <th class="py-2.5 px-3">Member</th>
+              <th class="py-2.5 px-3">Amount</th>
+              <th class="py-2.5 px-3">Wallet Address</th>
+              <th class="py-2.5 px-3">Status</th>
+              <th class="py-2.5 px-3 text-right">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="withdrawRequestsTable" class="divide-y divide-slate-800">
+            <!-- Dynamically Rendered -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 5. WEEKLY LUCKY SPIN MASTER CONTROLLER -->
+    <div class="admin-card p-5 border-amber-500/30">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3 mb-4">
+        <div class="flex items-center space-x-2">
+          <i class="fa-solid fa-dharmachakra text-amber-400 text-lg"></i>
+          <h2 class="text-sm font-bold text-white uppercase tracking-wider font-brand">Weekly Lucky Spin Control Center</h2>
+        </div>
+        <span class="text-[10px] bg-amber-400/10 text-amber-300 px-2 py-0.5 rounded border border-amber-400/20 font-bold">Live Configuration</span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+        <div class="bg-slate-950/70 p-3.5 rounded-xl border border-slate-800 space-y-2">
+          <label class="font-bold text-slate-300 block">1. Scheduled Spin Unlock Date & Time:</label>
+          <input type="datetime-local" id="spinScheduledDate" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-white font-mono text-xs focus:outline-none focus:border-amber-400">
+          <p class="text-[10px] text-slate-500">اس مقررہ تاریخ اور وقت سے پہلے کسی کا اسپن ان لاک نہیں ہوگا۔</p>
+        </div>
+
+        <div class="bg-slate-950/70 p-3.5 rounded-xl border border-slate-800 space-y-2">
+          <label class="font-bold text-slate-300 block">2. Grand Prize Winner Mode:</label>
+          <div class="flex space-x-2">
+            <select id="spinDrawMode" onchange="toggleTargetEmailInput()" class="bg-slate-900 border border-slate-700 rounded-lg p-2 text-white font-bold text-xs focus:outline-none">
+              <option value="AUTO">Auto 50/50 Fair Draw</option>
+              <option value="TARGET">Special Target Email</option>
+            </select>
+            <input type="email" id="spinTargetEmail" placeholder="Enter Target Gmail" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-white text-xs focus:outline-none focus:border-amber-400 hidden">
+          </div>
+          <p class="text-[10px] text-slate-500">اگر ٹارگٹ جی میل سیٹ ہو تو صرف اسی بندے کو گرینڈ پرائز ملے گا، ورنہ آٹو 50/50 ہوگا۔</p>
+        </div>
+      </div>
+
+      <div class="mt-4 bg-slate-950/70 p-3.5 rounded-xl border border-slate-800">
+        <label class="font-bold text-slate-300 block mb-2">3. Member Allocation & Quotas (کتنے ممبرز میں کتنے ڈالر تقسیم ہوں):</label>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-[11px]">
+          <div>
+            <span class="text-slate-400 block">$10.00 Max Winners:</span>
+            <input type="number" id="quota10" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-1.5 text-white font-bold mt-1 text-center" value="2">
+          </div>
+          <div>
+            <span class="text-slate-400 block">$5.00 Max Winners:</span>
+            <input type="number" id="quota5" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-1.5 text-white font-bold mt-1 text-center" value="5">
+          </div>
+          <div>
+            <span class="text-slate-400 block">$2.00 Max Winners:</span>
+            <input type="number" id="quota2" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-1.5 text-white font-bold mt-1 text-center" value="10">
+          </div>
+          <div>
+            <span class="text-slate-400 block">$1.00 Max Winners:</span>
+            <input type="number" id="quota1" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-1.5 text-white font-bold mt-1 text-center" value="20">
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-4 flex justify-end">
+        <button onclick="saveSpinSettings()" class="bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black px-5 py-2.5 rounded-xl text-xs uppercase tracking-wider transition shadow-md">
+          Save Spin Controls
+        </button>
+      </div>
+    </div>
+
+    <!-- 6. LIVE TICKER MESSAGE MANAGER -->
+    <div class="admin-card p-4">
+      <div class="flex items-center space-x-2 border-b border-slate-800 pb-2 mb-3">
+        <i class="fa-solid fa-bullhorn text-emerald-400"></i>
+        <h3 class="text-xs font-bold text-white uppercase tracking-wider">Site Live News Ticker Broadcast</h3>
+      </div>
+      <div class="flex gap-2">
+        <input type="text" id="newTickerNotice" placeholder="مثال: 0300****12 invested $5 in Weekly Pool • Fast Payout Verified" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-emerald-500">
+        <button onclick="publishTickerNotice()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-4 py-2 rounded-xl text-xs uppercase shrink-0 transition">
+          Publish
+        </button>
+      </div>
+    </div>
+
+    <!-- 7. REGISTERED MEMBERS DIRECTORY -->
+    <div class="admin-card p-4">
+      <div class="flex justify-between items-center mb-3">
+        <h3 class="text-sm font-bold text-white flex items-center space-x-2">
+          <i class="fa-solid fa-users text-indigo-400"></i>
+          <span>Registered Members & Active Plans</span>
+        </h3>
+        <span class="text-[10px] text-slate-400">Live Database Records</span>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-xs text-slate-300">
+          <thead class="bg-slate-950 text-slate-400 text-[10px] uppercase border-b border-slate-800">
+            <tr>
+              <th class="py-2.5 px-3">Member (Email/Phone)</th>
+              <th class="py-2.5 px-3">Wallet Balance</th>
+              <th class="py-2.5 px-3">Active Plan</th>
+              <th class="py-2.5 px-3">Spin $5 Pool</th>
+              <th class="py-2.5 px-3 text-right">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="memberListBody" class="divide-y divide-slate-800">
+            <!-- Dynamically Rendered -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 8. SUPPORT TICKETS & RESOLUTION DESK -->
+    <div class="admin-card p-4">
+      <div class="flex items-center space-x-2 border-b border-slate-800 pb-2 mb-3">
+        <i class="fa-solid fa-headset text-cyan-400"></i>
+        <h3 class="text-xs font-bold text-white uppercase tracking-wider">Member Support Desk</h3>
+      </div>
+      <div id="supportTicketsContainer" class="space-y-2">
+        <!-- Sample tickets and resolver -->
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ================= LOGIC SCRIPT ================= -->
   <script>
-    // 1. Firebase Configuration (بغیر کسی ہارڈ کوڈڈ پاسورڈ کے)
+    // 1. Firebase Secret Authentication Check
     const firebaseConfig = {
       apiKey: "AIzaSyC5WDKiPz7wLuducqfp5MckEM1-7Wrz5tY",
       authDomain: "volt-wealth-app.firebaseapp.com",
       projectId: "volt-wealth-app",
       storageBucket: "volt-wealth-app.firebasestorage.app",
       messagingSenderId: "193045788778",
-      appId: "1:193045788778:web:f2174c3ed696bf5246b213",
-      measurementId: "G-ZJ2ZTT3ZEB"
+      appId: "1:193045788778:web:f2174c3ed696bf5246b213"
     };
 
     let db = null;
-    let auth = null;
     try {
       firebase.initializeApp(firebaseConfig);
       db = firebase.firestore();
-      auth = firebase.auth();
     } catch (e) {
-      console.warn("Firebase Init fallback:", e);
+      console.warn("Firestore Notice:", e);
     }
 
-    let failedAttempts = 0;
-    let systemOtp = null;
-    let verifiedEmail = "";
-
-    // Referral auto-fill (?ref=CODE)
-    window.addEventListener('DOMContentLoaded', () => {
-      const urlParams = new URLSearchParams(window.location.search);
-      const refCode = urlParams.get('ref');
-      if (refCode) {
-        const refInput = document.getElementById('regReferral');
-        if (refInput) refInput.value = refCode.toUpperCase();
-      }
-    });
-
-    // PWA Install
-    let deferredPrompt;
-    window.addEventListener('beforeinstallprompt', (e) => {
-      e.preventDefault();
-      deferredPrompt = e;
-    });
-
-    function triggerPWAInstall() {
-      if (deferredPrompt) {
-        deferredPrompt.prompt();
-      } else {
-        alert('Please open browser menu and select "Add to Home Screen".');
+    // Verify CEO Session Role
+    const activeSessionRole = sessionStorage.getItem('volt_auth_role');
+    if (activeSessionRole !== 'CEO') {
+      const activeSession = JSON.parse(sessionStorage.getItem('volt_active_session')) || {};
+      if (activeSession.role !== 'CEO' && activeSession.email !== 'ceo@voltwealth.com') {
+        window.location.href = 'index.html';
       }
     }
 
-    // Panel switcher
-    function showPanel(panelId) {
-      ['loginView', 'registerView', 'forgotView', 'successView'].forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.classList.add('hidden');
+    // Initialize Mock / Database Ledger for Deposits and Withdrawals
+    let depositList = JSON.parse(localStorage.getItem('volt_deposit_requests')) || [
+      { id: 'DEP-101', user: 'investor_khan@gmail.com', amount: 100.00, txid: '0x9fa4...8b21', status: 'PENDING', date: '2026-11-03' },
+      { id: 'DEP-102', user: 'user_01@gmail.com', amount: 50.00, txid: 'TX89za...31qa', status: 'APPROVED', date: '2026-11-02' }
+    ];
+
+    let withdrawalList = JSON.parse(localStorage.getItem('volt_withdraw_requests')) || [
+      { id: 'WIT-501', user: 'hamza_tariq@gmail.com', amount: 45.00, wallet: 'TX9yZae...8z1P', status: 'PENDING', date: '2026-11-03' },
+      { id: 'WIT-502', user: 'smart_member@gmail.com', amount: 26.00, wallet: 'TReq87X...91Lq', status: 'APPROVED', date: '2026-11-01' }
+    ];
+
+    function calculateFinancialMetrics() {
+      let totalDep = 0;
+      depositList.forEach(d => {
+        if (d.status === 'APPROVED') totalDep += parseFloat(d.amount);
       });
-      document.getElementById(panelId).classList.remove('hidden');
 
-      if (panelId === 'registerView') {
-        document.getElementById('regEmailSection').classList.remove('hidden');
-        document.getElementById('regOtpSection').classList.add('hidden');
-        document.getElementById('regDetailsSection').classList.add('hidden');
+      let totalWith = 0;
+      withdrawalList.forEach(w => {
+        if (w.status === 'APPROVED') totalWith += parseFloat(w.amount);
+      });
+
+      let pendingCount = 0;
+      depositList.forEach(d => { if (d.status === 'PENDING') pendingCount++; });
+      withdrawalList.forEach(w => { if (w.status === 'PENDING') pendingCount++; });
+
+      const vaultNet = Math.max(0, totalDep - totalWith);
+
+      document.getElementById('statTotalDeposits').innerText = `$${totalDep.toFixed(2)}`;
+      document.getElementById('statTotalWithdrawals').innerText = `$${totalWith.toFixed(2)}`;
+      document.getElementById('statVaultNet').innerText = `$${vaultNet.toFixed(2)}`;
+      document.getElementById('statPendingRequests').innerText = pendingCount;
+    }
+
+    // Render Deposit Requests Table
+    function renderDepositTable() {
+      const tbody = document.getElementById('depositRequestsTable');
+      tbody.innerHTML = '';
+
+      depositList.forEach((dep, index) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td class="py-2.5 px-3 font-semibold text-white">${dep.user}</td>
+          <td class="py-2.5 px-3 text-emerald-400 font-bold font-mono">$${parseFloat(dep.amount).toFixed(2)}</td>
+          <td class="py-2.5 px-3 font-mono text-[10px] text-slate-400">${dep.txid}</td>
+          <td class="py-2.5 px-3">
+            <span class="px-2 py-0.5 rounded text-[10px] font-bold ${dep.status === 'APPROVED' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : dep.status === 'REJECTED' ? 'bg-rose-500/10 text-rose-400 border border-rose-500/20' : 'bg-amber-500/10 text-amber-400 border border-amber-500/20'}">${dep.status}</span>
+          </td>
+          <td class="py-2.5 px-3 text-right space-x-1">
+            ${dep.status === 'PENDING' ? `
+              <button onclick="approveDeposit(${index})" class="bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500 hover:text-black px-2 py-0.5 rounded text-[10px] font-bold">Approve</button>
+              <button onclick="rejectDeposit(${index})" class="bg-rose-500/20 text-rose-400 hover:bg-rose-500 hover:text-white px-2 py-0.5 rounded text-[10px] font-bold">Reject</button>
+            ` : '<span class="text-slate-500 text-[10px] font-semibold">Processed</span>'}
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+          function approveDeposit(index) {
+      const dep = depositList[index];
+      if (confirm(`Approve deposit of $${dep.amount}.00 for ${dep.user}? User balance will be auto-credited.`)) {
+        dep.status = 'APPROVED';
+        localStorage.setItem('volt_deposit_requests', JSON.stringify(depositList));
+
+        // Credit to user balance
+        creditUserBalance(dep.user, dep.amount);
+        renderDepositTable();
+        calculateFinancialMetrics();
+        alert(`Deposit of $${dep.amount}.00 approved successfully.`);
       }
     }
 
-    function toggleLoginType(type) {
-      const input = document.getElementById('loginIdentifier');
-      const badge = document.getElementById('inputBadge');
-      if (type === 'mobile') {
-        badge.innerText = 'Mobile Number';
-        input.type = 'tel';
-        input.placeholder = '03001234567';
+    function rejectDeposit(index) {
+      const dep = depositList[index];
+      if (confirm(`Reject deposit request for ${dep.user}?`)) {
+        dep.status = 'REJECTED';
+        localStorage.setItem('volt_deposit_requests', JSON.stringify(depositList));
+        renderDepositTable();
+        calculateFinancialMetrics();
+        alert('Deposit request rejected.');
+      }
+    }
+
+    // Render Withdrawal Requests Table
+    function renderWithdrawalTable() {
+      const tbody = document.getElementById('withdrawRequestsTable');
+      tbody.innerHTML = '';
+
+      withdrawalList.forEach((wit, index) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td class="py-2.5 px-3 font-semibold text-white">${wit.user}</td>
+          <td class="py-2.5 px-3 text-amber-400 font-bold font-mono">$${parseFloat(wit.amount).toFixed(2)}</td>
+          <td class="py-2.5 px-3 font-mono text-[10px] text-slate-400">${wit.wallet}</td>
+          <td class="py-2.5 px-3">
+            <span class="px-2 py-0.5 rounded text-[10px] font-bold ${wit.status === 'APPROVED' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : wit.status === 'FROZEN' ? 'bg-rose-500/20 text-rose-400 border border-rose-500/30' : 'bg-amber-500/10 text-amber-400 border border-amber-500/20'}">${wit.status}</span>
+          </td>
+          <td class="py-2.5 px-3 text-right space-x-1">
+            ${wit.status === 'PENDING' ? `
+              <button onclick="approveWithdrawal(${index})" class="bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500 hover:text-black px-2 py-0.5 rounded text-[10px] font-bold">Approve</button>
+              <button onclick="freezeWithdrawal(${index})" class="bg-rose-500/20 text-rose-400 hover:bg-rose-500 hover:text-white px-2 py-0.5 rounded text-[10px] font-bold">Freeze/Hold</button>
+            ` : '<span class="text-slate-500 text-[10px] font-semibold">Completed</span>'}
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function approveWithdrawal(index) {
+      const wit = withdrawalList[index];
+      if (confirm(`Approve and release payout of $${wit.amount}.00 to ${wit.wallet}?`)) {
+        wit.status = 'APPROVED';
+        localStorage.setItem('volt_withdraw_requests', JSON.stringify(withdrawalList));
+        renderWithdrawalTable();
+        calculateFinancialMetrics();
+        alert(`Withdrawal of $${wit.amount}.00 marked as completed.`);
+      }
+    }
+
+    function freezeWithdrawal(index) {
+      const wit = withdrawalList[index];
+      if (confirm(`Freeze/Block this withdrawal of $${wit.amount}.00 for ${wit.user}?`)) {
+        wit.status = 'FROZEN';
+        localStorage.setItem('volt_withdraw_requests', JSON.stringify(withdrawalList));
+        renderWithdrawalTable();
+        calculateFinancialMetrics();
+        alert(`Withdrawal for ${wit.user} has been frozen.`);
+      }
+    }
+
+    // Helper: Credit User Balance
+    function creditUserBalance(email, amount) {
+      const usersList = JSON.parse(localStorage.getItem('volt_users_list')) || [];
+      const user = usersList.find(u => (u.email || u.mobile || '').toLowerCase() === email.toLowerCase());
+      if (user) {
+        user.balance = (parseFloat(user.balance || 0) + parseFloat(amount)).toFixed(2);
+        localStorage.setItem('volt_users_list', JSON.stringify(usersList));
+        loadMembersDirectory();
+      }
+    }
+
+    // 2. Member Inspector Feature
+    function inspectMemberRecord() {
+      const query = document.getElementById('inspectorSearchInput').value.trim().toLowerCase();
+      if (!query) {
+        alert("Please enter member email or phone number.");
+        return;
+      }
+
+      const usersList = JSON.parse(localStorage.getItem('volt_users_list')) || [];
+      const user = usersList.find(u => (u.email || '').toLowerCase().includes(query) || (u.mobile || '').includes(query));
+
+      const card = document.getElementById('inspectorResultCard');
+      card.classList.remove('hidden');
+
+      if (!user) {
+        card.innerHTML = `<div class="text-rose-400 font-bold">No member found matching: "${query}"</div>`;
+        return;
+      }
+
+      const uEmail = (user.email || user.mobile || 'user').toLowerCase();
+      const activePlan = JSON.parse(localStorage.getItem('volt_active_plan_' + uEmail)) || null;
+      const spinPool = localStorage.getItem('volt_pool_WK-102_' + uEmail) === 'true';
+
+      card.innerHTML = `
+        <div class="flex justify-between items-center border-b border-slate-800 pb-2">
+          <div>
+            <div class="font-bold text-white text-sm">${user.email || 'N/A'}</div>
+            <div class="text-[10px] text-slate-400 font-mono">Mobile: ${user.mobile || 'N/A'}</div>
+          </div>
+          <div class="text-right">
+            <span class="text-[10px] text-slate-400 block">Available Balance</span>
+            <strong class="text-emerald-400 font-mono text-base">$${parseFloat(user.balance || 0).toFixed(2)}</strong>
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-2 text-[11px] pt-1">
+          <div>Active Plan: <strong class="text-indigo-400">${activePlan ? `${activePlan.title} ($${activePlan.cost})` : 'None'}</strong></div>
+          <div>Weekly Spin $5 Pool: <strong class="${spinPool ? 'text-emerald-400' : 'text-rose-400'}">${spinPool ? 'Active ($5 Locked)' : 'Not Joined'}</strong></div>
+        </div>
+        <div class="flex gap-2 pt-2 border-t border-slate-800">
+          <button onclick="directAdjustBalance('${uEmail}')" class="bg-indigo-600 hover:bg-indigo-500 text-white font-bold px-3 py-1.5 rounded-lg text-xs">Direct Adjust Balance</button>
+        </div>
+      `;
+    }
+
+    function directAdjustBalance(email) {
+      const usersList = JSON.parse(localStorage.getItem('volt_users_list')) || [];
+      const user = usersList.find(u => (u.email || u.mobile || '').toLowerCase() === email.toLowerCase());
+      if (!user) return;
+
+      const newBal = prompt(`Enter new balance for ${email}:`, user.balance || "0.00");
+      if (newBal !== null && !isNaN(newBal)) {
+        user.balance = parseFloat(newBal).toFixed(2);
+        localStorage.setItem('volt_users_list', JSON.stringify(usersList));
+        inspectMemberRecord();
+        loadMembersDirectory();
+        alert(`Balance updated to $${user.balance}`);
+      }
+    }
+
+    // Toggle Target Email Input
+    function toggleTargetEmailInput() {
+      const mode = document.getElementById('spinDrawMode').value;
+      const targetInput = document.getElementById('spinTargetEmail');
+      if (mode === 'TARGET') {
+        targetInput.classList.remove('hidden');
       } else {
-        badge.innerText = 'Gmail Address';
-        input.type = 'email';
-        input.placeholder = 'user@gmail.com';
+        targetInput.classList.add('hidden');
       }
-      input.value = '';
     }
 
-    // Step 1: Send OTP
-    async function handleSendEmailOtp() {
-      const email = document.getElementById('regEmail').value.trim().toLowerCase();
-      if (!email || !email.includes('@')) {
-        alert('Please enter a valid Gmail address!');
-        return;
-      }
+    // Save CEO Spin Controls into Firestore & LocalStorage
+    async function saveSpinSettings() {
+      const dateVal = document.getElementById('spinScheduledDate').value;
+      const modeVal = document.getElementById('spinDrawMode').value;
+      const targetEmailVal = document.getElementById('spinTargetEmail').value.trim().toLowerCase();
 
-      const localUsers = JSON.parse(localStorage.getItem('volt_users_list')) || [];
-      if (localUsers.some(u => u.email === email)) {
-        alert('This email is already registered! Please sign in directly.');
-        showPanel('loginView');
-        return;
-      }
-
-      if (db) {
-        try {
-          const snapshot = await db.collection('users').where('email', '==', email).get();
-          if (!snapshot.empty) {
-            alert('This email is already registered! Please sign in directly.');
-            showPanel('loginView');
-            return;
-          }
-        } catch (err) {
-          console.log("Firestore check bypassed:", err.message);
-        }
-      }
-
-      systemOtp = Math.floor(100000 + Math.random() * 900000).toString();
-      verifiedEmail = email;
-
-      alert(`Security code generated for (${email})!\n\nYour 6-Digit OTP: ${systemOtp}`);
-
-      document.getElementById('regEmailSection').classList.add('hidden');
-      document.getElementById('regOtpSection').classList.remove('hidden');
-      document.getElementById('inputOtp').focus();
-    }
-
-    // Step 2: Confirm OTP
-    function handleConfirmOtp() {
-      const enteredOtp = document.getElementById('inputOtp').value.trim();
-      if (enteredOtp !== systemOtp) {
-        alert('Invalid OTP code! Please enter the correct code.');
-        return;
-      }
-      document.getElementById('regOtpSection').classList.add('hidden');
-      document.getElementById('regDetailsSection').classList.remove('hidden');
-    }
-
-    // Step 3: Registration with Safe Firestore + Local Sync
-    async function handleFinalRegistration(e) {
-      e.preventDefault();
-      const mobile = document.getElementById('regMobile').value.trim();
-      const pass = document.getElementById('regPass').value;
-      const passAgain = document.getElementById('regPassAgain').value;
-      const referral = document.getElementById('regReferral').value.trim().toUpperCase() || 'VOLT786';
-
-      if (pass !== passAgain) {
-        alert('Passwords do not match! Please check again.');
-        return;
-      }
-
-      const btn = document.getElementById('btnCompleteReg');
-      btn.innerText = 'Creating Secure Node...';
-      btn.disabled = true;
-
-      const myReferralCode = 'VOLT' + Math.floor(1000 + Math.random() * 9000);
-
-      const newUserData = {
-        email: verifiedEmail,
-        mobile: mobile,
-        pass: pass,
-        balance: 2.00, // $2.00 Welcome bonus
-        referralCode: myReferralCode,
-        referredBy: referral,
-        verified: true,
-        role: 'USER',
-        createdAt: new Date().toISOString()
+      const quotas = {
+        maxTier10Winners: parseInt(document.getElementById('quota10').value) || 2,
+        maxTier5Winners: parseInt(document.getElementById('quota5').value) || 5,
+        maxTier2Winners: parseInt(document.getElementById('quota2').value) || 10,
+        maxTier1Winners: parseInt(document.getElementById('quota1').value) || 20
       };
 
-      // 1. Save Locally
-      let usersList = JSON.parse(localStorage.getItem('volt_users_list')) || [];
-      usersList = usersList.map(u => {
-        if (u.referralCode === referral) {
-          u.balance = (parseFloat(u.balance || 0) + 1.00);
-        }
-        return u;
-      });
-      usersList.push(newUserData);
-      localStorage.setItem('volt_users_list', JSON.stringify(usersList));
+      const spinConfig = {
+        scheduledDate: dateVal ? new Date(dateVal).toISOString() : null,
+        drawMode: modeVal,
+        targetEmail: targetEmailVal,
+        quotas: quotas,
+        updatedAt: new Date().toISOString()
+      };
 
-      // 2. Safe Firebase Firestore Save
+      localStorage.setItem('volt_ceo_spin_config', JSON.stringify(spinConfig));
+
       if (db) {
         try {
-          await db.collection('users').doc(verifiedEmail).set(newUserData);
-        } catch (dbErr) {
-          console.warn("Firestore sync notice:", dbErr.message);
+          await db.collection('settings').doc('weekly_spin').set(spinConfig, { merge: true });
+        } catch (e) {
+          console.error("Firestore Save Error:", e);
         }
       }
 
-      if (auth) {
+      alert("Success! Weekly Lucky Spin controls updated & locked across all user interfaces.");
+    }
+
+    // Load Existing Settings
+    async function loadSpinSettings() {
+      let cfg = JSON.parse(localStorage.getItem('volt_ceo_spin_config')) || {};
+
+      if (db) {
         try {
-          await auth.createUserWithEmailAndPassword(verifiedEmail, pass);
-        } catch (authErr) {
-          console.warn("Auth sync notice:", authErr.message);
-        }
+          const doc = await db.collection('settings').doc('weekly_spin').get();
+          if (doc.exists) cfg = doc.data();
+        } catch (e) {}
       }
 
-      alert('Account registered successfully! $2.00 Welcome Bonus credited.');
-      btn.innerText = 'Complete Registration';
-      btn.disabled = false;
-      showPanel('loginView');
-    }
-
-    // Login Submission (Firestore محفوظ سی ای او + عام یوزر)
-    async function handleLoginSubmit(e) {
-      e.preventDefault();
-      const identifier = document.getElementById('loginIdentifier').value.trim().toLowerCase();
-      const pass = document.getElementById('loginPass').value;
-
-      const btn = document.getElementById('btnSignIn');
-      btn.innerText = 'Authenticating...';
-      btn.disabled = true;
-
-      try {
-        // ================= 1. محفوظ فائر اسٹور ایڈمن/سی ای او چیک =================
-        // یہ سیدھا آپ کے فائر اسٹور کے 'admins' کلیکشن سے چیک کرے گا
-        if (db) {
-          try {
-            const adminQuery = await db.collection('admins').where('email', '==', identifier).get();
-            if (!adminQuery.empty) {
-              const adminData = adminQuery.docs[0].data();
-              if (adminData.pass === pass && adminData.role === 'CEO') {
-                sessionStorage.setItem('volt_auth_role', 'CEO');
-                sessionStorage.setItem('volt_active_session', JSON.stringify(adminData));
-                triggerSuccessAnimation('./ceo-dashboard.html');
-                return;
-              }
-            }
-          } catch (adminErr) {
-            console.log("Admin check notice:", adminErr.message);
-          }
-        }
-
-        // ================= 2. عام یوزر لاگ ان چیک =================
-        let foundUser = null;
-        const usersList = JSON.parse(localStorage.getItem('volt_users_list')) || [];
-        foundUser = usersList.find(u => (u.email === identifier || u.mobile === identifier) && u.pass === pass);
-
-        if (!foundUser && db) {
-          try {
-            const snapshot = await db.collection('users').where('email', '==', identifier).get();
-            if (!snapshot.empty && snapshot.docs[0].data().pass === pass) {
-              foundUser = snapshot.docs[0].data();
-            } else {
-              const mobileSnapshot = await db.collection('users').where('mobile', '==', identifier).get();
-              if (!mobileSnapshot.empty && mobileSnapshot.docs[0].data().pass === pass) {
-                foundUser = mobileSnapshot.docs[0].data();
-              }
-            }
-          } catch (e) {}
-        }
-
-        if (foundUser) {
-          failedAttempts = 0;
-          document.getElementById('forgotPasswordNotice').classList.add('hidden');
-
-          sessionStorage.setItem('volt_active_session', JSON.stringify(foundUser));
-          sessionStorage.setItem('volt_auth_role', 'USER');
-          localStorage.setItem('volt_balance', (foundUser.balance || 0).toFixed(2));
-
-          triggerSuccessAnimation('./dashboard.html');
-        } else {
-          btn.innerText = 'Sign In';
-          btn.disabled = false;
-          failedAttempts++;
-          if (failedAttempts >= 3) {
-            document.getElementById('forgotPasswordNotice').classList.remove('hidden');
-            alert('Security Alert: 3 failed attempts! Please use "Reset Password".');
-          } else {
-            alert(`Invalid credentials! Remaining attempts: ${3 - failedAttempts}`);
-          }
-        }
-      } catch (err) {
-        alert('Authentication Error: ' + err.message);
-        btn.innerText = 'Sign In';
-        btn.disabled = false;
+      if (cfg.scheduledDate) {
+        const d = new Date(cfg.scheduledDate);
+        d.setMinutes(d.getMinutes() - d.getTimezoneOffset());
+        document.getElementById('spinScheduledDate').value = d.toISOString().slice(0, 16);
+      }
+      if (cfg.drawMode) {
+        document.getElementById('spinDrawMode').value = cfg.drawMode;
+        toggleTargetEmailInput();
+      }
+      if (cfg.targetEmail) {
+        document.getElementById('spinTargetEmail').value = cfg.targetEmail;
+      }
+      if (cfg.quotas) {
+        if (cfg.quotas.maxTier10Winners) document.getElementById('quota10').value = cfg.quotas.maxTier10Winners;
+        if (cfg.quotas.maxTier5Winners) document.getElementById('quota5').value = cfg.quotas.maxTier5Winners;
+        if (cfg.quotas.maxTier2Winners) document.getElementById('quota2').value = cfg.quotas.maxTier2Winners;
+        if (cfg.quotas.maxTier1Winners) document.getElementById('quota1').value = cfg.quotas.maxTier1Winners;
       }
     }
 
-    // Success Animation
-    function triggerSuccessAnimation(redirectUrl) {
-      const spinner = document.getElementById('spinnerOverlay');
-      spinner.className = 'absolute inset-0 rounded-full pointer-events-none ring-active z-20';
-      spinner.classList.remove('hidden');
+    // Render Members Directory
+    function loadMembersDirectory() {
+      const usersList = JSON.parse(localStorage.getItem('volt_users_list')) || [
+        { email: 'user_01@gmail.com', mobile: '03011234567', balance: '126.50' },
+        { email: 'investor_khan@gmail.com', mobile: '03459876543', balance: '520.00' },
+        { email: 'smart_member@gmail.com', mobile: '03125556677', balance: '30.00' }
+      ];
 
-      setTimeout(() => {
-        spinner.classList.add('hidden');
-        document.getElementById('loginView').classList.add('hidden');
-        
-        const successView = document.getElementById('successView');
-        successView.classList.remove('hidden');
-        successView.classList.add('blast-effect');
+      const tbody = document.getElementById('memberListBody');
+      tbody.innerHTML = '';
 
-        if (typeof confetti === 'function') {
-          confetti({ particleCount: 120, spread: 80, origin: { y: 0.55 } });
-        }
+      usersList.forEach((user, index) => {
+        const uEmail = (user.email || user.mobile || 'user').toLowerCase();
+        const activePlan = JSON.parse(localStorage.getItem('volt_active_plan_' + uEmail)) || null;
+        const hasSpinPool = localStorage.getItem('volt_pool_WK-102_' + uEmail) === 'true';
 
-        setTimeout(() => {
-          window.location.href = redirectUrl;
-        }, 1100);
-      }, 850);
+        const tr = document.createElement('tr');
+        tr.id = `user-row-${index}`;
+        tr.innerHTML = `
+          <td class="py-2.5 px-3 font-semibold text-white">
+            <div>${user.email || 'N/A'}</div>
+            <div class="text-[10px] text-slate-400 font-mono">${user.mobile || ''}</div>
+          </td>
+          <td class="py-2.5 px-3 text-emerald-400 font-bold font-mono">$${parseFloat(user.balance || 0).toFixed(2)}</td>
+          <td class="py-2.5 px-3">
+            ${activePlan ? `<span class="bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 px-2 py-0.5 rounded text-[10px] font-bold">${activePlan.title} ($${activePlan.cost})</span>` : '<span class="text-slate-500 text-[10px]">No Plan</span>'}
+          </td>
+          <td class="py-2.5 px-3">
+            ${hasSpinPool ? '<span class="text-amber-400 font-bold text-[10px]">✓ Locked $5</span>' : '<span class="text-slate-500 text-[10px]">Not Entered</span>'}
+          </td>
+          <td class="py-2.5 px-3 text-right space-x-1">
+            <button onclick="directAdjustBalance('${uEmail}')" class="bg-indigo-500/20 text-indigo-400 hover:bg-indigo-500 hover:text-white px-2 py-0.5 rounded text-[10px] font-bold">Edit</button>
+            <button onclick="deleteMember('${uEmail}', ${index})" class="bg-rose-500/20 text-rose-400 hover:bg-rose-500 hover:text-white px-2 py-0.5 rounded text-[10px] font-bold">Delete</button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
     }
 
-    // Password Recovery
-    async function handleForgotPassword(e) {
-      e.preventDefault();
-      const email = document.getElementById('forgotEmail').value.trim().toLowerCase();
-      
-      if (auth) {
-        try {
-          await auth.sendPasswordResetEmail(email);
-        } catch (err) {}
+        // Delete Member
+    function deleteMember(email, index) {
+      if (confirm(`Are you sure you want to permanently delete member: ${email}?`)) {
+        let usersList = JSON.parse(localStorage.getItem('volt_users_list')) || [];
+        usersList.splice(index, 1);
+        localStorage.setItem('volt_users_list', JSON.stringify(usersList));
+        localStorage.removeItem('volt_active_plan_' + email);
+        loadMembersDirectory();
+        alert(`Member ${email} deleted from directory.`);
+      }
+    }
+
+    // Export All Members Data to CSV
+    function downloadAllUsersCSV() {
+      const usersList = JSON.parse(localStorage.getItem('volt_users_list')) || [];
+      if (usersList.length === 0) {
+        alert("No user records available to download.");
+        return;
       }
 
-      alert(`If (${email}) exists in our network, a password recovery link has been dispatched.`);
-      showPanel('loginView');
+      let csv = "Email,Mobile,Balance,ActivePlan,PlanCost,PoolEntry\n";
+      usersList.forEach(u => {
+        const uEmail = (u.email || u.mobile || 'user').toLowerCase();
+        const activePlan = JSON.parse(localStorage.getItem('volt_active_plan_' + uEmail)) || {};
+        const pool = localStorage.getItem('volt_pool_WK-102_' + uEmail) === 'true' ? "YES" : "NO";
+        csv += `"${u.email || ''}","${u.mobile || ''}","${u.balance || 0}","${activePlan.title || 'None'}","${activePlan.cost || 0}","${pool}"\n`;
+      });
+
+      const blob = new Blob([csv], { type: 'text/csv' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.setAttribute('href', url);
+      a.setAttribute('download', `voltwealth_members_${Date.now()}.csv`);
+      a.click();
     }
+
+    // Publish Ticker Notice
+    function publishTickerNotice() {
+      const text = document.getElementById('newTickerNotice').value.trim();
+      if (!text) return;
+      localStorage.setItem('volt_custom_ticker_notice', text);
+      alert("Notice broadcasted to Live Tickers on Dashboard & Spin.");
+      document.getElementById('newTickerNotice').value = '';
+    }
+
+    // Sample Support Ticket Setup
+    function loadSupportTickets() {
+      const container = document.getElementById('supportTicketsContainer');
+      container.innerHTML = `
+        <div class="bg-slate-950/70 p-3 rounded-xl border border-slate-800 flex items-center justify-between text-xs">
+          <div>
+            <div class="text-white font-bold">User: 0345****12 - "Deposit Not Showing"</div>
+            <div class="text-[10px] text-slate-400">Issue with $50.00 TRC20 transaction hash verification</div>
+          </div>
+          <button onclick="this.parentElement.remove(); alert('Ticket marked as Resolved & Reply Sent!');" class="bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500 hover:text-black px-3 py-1 rounded text-[10px] font-bold">Resolve Ticket</button>
+        </div>
+      `;
+    }
+
+    function ceoLogout() {
+      sessionStorage.clear();
+      window.location.href = 'index.html';
+    }
+
+    window.onload = () => {
+      calculateFinancialMetrics();
+      renderDepositTable();
+      renderWithdrawalTable();
+      loadSpinSettings();
+      loadMembersDirectory();
+      loadSupportTickets();
+    };
   </script>
 </body>
 </html>

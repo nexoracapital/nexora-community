@@ -3,61 +3,185 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>VoltWealth - CEO Admin Console</title>
+  <title>VoltWealth - Master CEO Admin Console</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@700;900&display=swap" rel="stylesheet">
+  
+  <!-- Firebase Official SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+
   <style>
-    body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #030712; }
     .font-brand { font-family: 'Space Grotesk', sans-serif; }
+    .admin-card {
+      background: #0b1329;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 1.25rem;
+    }
   </style>
 </head>
-<body class="bg-[#030712] text-slate-100 min-h-screen flex flex-col font-sans selection:bg-amber-400 selection:text-black">
+<body class="text-slate-100 min-h-screen flex flex-col font-sans selection:bg-amber-400 selection:text-black">
 
-  <header class="sticky top-0 z-40 bg-slate-900/95 border-b border-slate-800 px-4 py-3 flex justify-between items-center">
+  <!-- ================= TOP HEADER ================= -->
+  <header class="sticky top-0 z-40 bg-slate-900/95 backdrop-blur border-b border-slate-800 px-4 py-3 flex justify-between items-center shadow-lg">
     <div class="flex items-center space-x-2">
-      <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-amber-500 via-rose-500 to-indigo-500 p-[2px] flex items-center justify-center">
-        <div class="w-full h-full bg-[#030712] rounded-[9px] flex items-center justify-center">
-          <i class="fa-solid fa-crown text-amber-400 text-xs"></i>
+      <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-amber-500 via-rose-500 to-indigo-500 p-[2px] flex items-center justify-center shadow-md">
+        <div class="w-full h-full bg-[#030712] rounded-[10px] flex items-center justify-center">
+          <i class="fa-solid fa-crown text-amber-400 text-sm"></i>
         </div>
       </div>
-      <span class="text-lg font-black italic tracking-wider font-brand text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-rose-300 to-indigo-400">
-        VOLT<span class="text-white">CORE</span>
-      </span>
-      <span class="text-[9px] bg-amber-400/10 text-amber-400 border border-amber-400/30 px-2 py-0.5 rounded-full font-bold uppercase ml-2">CEO Mode</span>
+      <div>
+        <span class="text-lg font-black italic tracking-wider font-brand text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-rose-300 to-indigo-400">
+          VOLT<span class="text-white">CORE</span>
+        </span>
+        <span class="text-[9px] bg-amber-400/10 text-amber-400 border border-amber-400/30 px-2 py-0.5 rounded-full font-bold uppercase ml-2">Master CEO</span>
+      </div>
     </div>
-    <button onclick="ceoLogout()" class="bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/30 text-xs font-bold px-3 py-1 rounded-full transition">
-      Exit
-    </button>
+    <div class="flex items-center space-x-2">
+      <button onclick="downloadAllUsersCSV()" class="bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-xs font-bold px-3 py-1.5 rounded-full transition flex items-center space-x-1.5">
+        <i class="fa-solid fa-download"></i>
+        <span class="hidden sm:inline">Export Data (CSV)</span>
+      </button>
+      <button onclick="ceoLogout()" class="bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/30 text-xs font-bold px-3 py-1.5 rounded-full transition">
+        Exit
+      </button>
+    </div>
   </header>
 
-  <main class="max-w-4xl mx-auto w-full px-4 py-6 space-y-6 flex-1">
+  <!-- ================= MAIN DASHBOARD ================= -->
+  <main class="max-w-5xl mx-auto w-full px-4 py-6 space-y-6 flex-1">
     
-    <!-- Metrics -->
+    <!-- 1. LIVE METRICS -->
     <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-      <div class="bg-slate-900 border border-slate-800 p-4 rounded-2xl">
-        <div class="text-[10px] uppercase font-bold text-slate-400">Total Deposits</div>
-        <div class="text-xl font-black font-brand text-emerald-400 mt-1">$48,290.00</div>
+      <div class="admin-card p-4">
+        <div class="text-[10px] uppercase font-bold text-slate-400">Total Registered Members</div>
+        <div id="statTotalUsers" class="text-2xl font-black font-brand text-indigo-400 mt-1">0</div>
       </div>
-      <div class="bg-slate-900 border border-slate-800 p-4 rounded-2xl">
+      <div class="admin-card p-4">
+        <div class="text-[10px] uppercase font-bold text-slate-400">Active Node Plans</div>
+        <div id="statActivePlans" class="text-2xl font-black font-brand text-emerald-400 mt-1">0</div>
+      </div>
+      <div class="admin-card p-4">
         <div class="text-[10px] uppercase font-bold text-slate-400">Pending Payouts</div>
-        <div id="pendingCountDisplay" class="text-xl font-black font-brand text-amber-400 mt-1">$1,240.00</div>
+        <div id="statPendingWithdraw" class="text-2xl font-black font-brand text-amber-400 mt-1">$0.00</div>
       </div>
-      <div class="bg-slate-900 border border-slate-800 p-4 rounded-2xl">
-        <div class="text-[10px] uppercase font-bold text-slate-400">Active Nodes</div>
-        <div class="text-xl font-black font-brand text-cyan-400 mt-1">1,489</div>
-      </div>
-      <div class="bg-slate-900 border border-slate-800 p-4 rounded-2xl">
-        <div class="text-[10px] uppercase font-bold text-slate-400">Vault Balance</div>
-        <div class="text-xl font-black font-brand text-indigo-400 mt-1">$92,600.00</div>
+      <div class="admin-card p-4">
+        <div class="text-[10px] uppercase font-bold text-slate-400">Weekly Pool Pool Entries ($5)</div>
+        <div id="statPoolEntries" class="text-2xl font-black font-brand text-rose-400 mt-1">0</div>
       </div>
     </div>
 
-    <!-- Withdrawal Management -->
-    <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4">
+    <!-- 2. WEEKLY LUCKY SPIN MASTER CONTROLLER -->
+    <div class="admin-card p-5 border-amber-500/30">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3 mb-4">
+        <div class="flex items-center space-x-2">
+          <i class="fa-solid fa-dharmachakra text-amber-400 text-lg"></i>
+          <h2 class="text-sm font-bold text-white uppercase tracking-wider font-brand">Weekly Lucky Spin Control Center</h2>
+        </div>
+        <span class="text-[10px] bg-amber-400/10 text-amber-300 px-2 py-0.5 rounded border border-amber-400/20 font-bold">Live Configuration</span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+        <!-- A. Date & Time -->
+        <div class="bg-slate-950/70 p-3.5 rounded-xl border border-slate-800 space-y-2">
+          <label class="font-bold text-slate-300 block">1. Scheduled Spin Unlock Date & Time:</label>
+          <input type="datetime-local" id="spinScheduledDate" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-white font-mono text-xs focus:outline-none focus:border-amber-400">
+          <p class="text-[10px] text-slate-500">इस तारीख व समय से पहले किसी भी मेंबर का पहिया (Spin) अनलॉक नहीं होगा।</p>
+        </div>
+
+        <!-- B. Target Email or 50/50 Auto Mode -->
+        <div class="bg-slate-950/70 p-3.5 rounded-xl border border-slate-800 space-y-2">
+          <label class="font-bold text-slate-300 block">2. Grand Prize Winner Mode:</label>
+          <div class="flex space-x-2">
+            <select id="spinDrawMode" onchange="toggleTargetEmailInput()" class="bg-slate-900 border border-slate-700 rounded-lg p-2 text-white font-bold text-xs focus:outline-none">
+              <option value="AUTO">Auto 50/50 Fair Draw</option>
+              <option value="TARGET">Special Target Email</option>
+            </select>
+            <input type="email" id="spinTargetEmail" placeholder="Enter Winner's Gmail" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-white text-xs focus:outline-none focus:border-amber-400 hidden">
+          </div>
+          <p class="text-[10px] text-slate-500">यदि 'Special Target Email' सेट है तो केवल उसी जीमेल को बाइक/मोबाइल मिलेगा, बाकी को नहीं।</p>
+        </div>
+      </div>
+
+      <!-- C. Prize Quotas / Amount Distribution -->
+      <div class="mt-4 bg-slate-950/70 p-3.5 rounded-xl border border-slate-800">
+        <label class="font-bold text-slate-300 block mb-2">3. Member Allocation & Quota Limit (कितने मेंबर्स को कितने डॉलर):</label>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-[11px]">
+          <div>
+            <span class="text-slate-400 block">$10.00 Max Winners:</span>
+            <input type="number" id="quota10" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-1.5 text-white font-bold mt-1 text-center" value="2">
+          </div>
+          <div>
+            <span class="text-slate-400 block">$5.00 Max Winners:</span>
+            <input type="number" id="quota5" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-1.5 text-white font-bold mt-1 text-center" value="5">
+          </div>
+          <div>
+            <span class="text-slate-400 block">$2.00 Max Winners:</span>
+            <input type="number" id="quota2" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-1.5 text-white font-bold mt-1 text-center" value="10">
+          </div>
+          <div>
+            <span class="text-slate-400 block">$1.00 Max Winners:</span>
+            <input type="number" id="quota1" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-1.5 text-white font-bold mt-1 text-center" value="20">
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-4 flex justify-end">
+        <button onclick="saveSpinSettings()" class="bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black px-5 py-2.5 rounded-xl text-xs uppercase tracking-wider transition shadow-md">
+          Save Spin Controls
+        </button>
+      </div>
+    </div>
+
+    <!-- 3. LIVE TICKER MESSAGE MANAGER -->
+    <div class="admin-card p-4">
+      <div class="flex items-center space-x-2 border-b border-slate-800 pb-2 mb-3">
+        <i class="fa-solid fa-bullhorn text-emerald-400"></i>
+        <h3 class="text-xs font-bold text-white uppercase tracking-wider">Site Live News Ticker Broadcast</h3>
+      </div>
+      <div class="flex gap-2">
+        <input type="text" id="newTickerNotice" placeholder="उदा: 0300****12 invested $5 in Spin Pool • New withdrawal verified $150.00" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-emerald-500">
+        <button onclick="publishTickerNotice()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-4 py-2 rounded-xl text-xs uppercase shrink-0 transition">
+          Publish
+        </button>
+      </div>
+    </div>
+
+    <!-- 4. MEMBERS REGISTERED & PLAN DIRECTORY -->
+    <div class="admin-card p-4">
+      <div class="flex justify-between items-center mb-3">
+        <h3 class="text-sm font-bold text-white flex items-center space-x-2">
+          <i class="fa-solid fa-users text-indigo-400"></i>
+          <span>Registered Members & Active Plans</span>
+        </h3>
+        <span class="text-[10px] text-slate-400">Real-Time Database Records</span>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-xs text-slate-300">
+          <thead class="bg-slate-950 text-slate-400 text-[10px] uppercase border-b border-slate-800">
+            <tr>
+              <th class="py-2.5 px-3">Member (Email/Phone)</th>
+              <th class="py-2.5 px-3">Wallet Balance</th>
+              <th class="py-2.5 px-3">Active Plan</th>
+              <th class="py-2.5 px-3">Spin $5 Pool</th>
+              <th class="py-2.5 px-3 text-right">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="memberListBody" class="divide-y divide-slate-800">
+            <!-- Dynamically Rendered -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 5. WITHDRAWALS APPROVAL QUEUE -->
+    <div class="admin-card p-4">
       <h3 class="text-sm font-bold text-white mb-3 flex items-center space-x-2">
         <i class="fa-solid fa-hand-holding-dollar text-amber-400"></i>
-        <span>Pending Withdrawal Requests (Min $20)</span>
+        <span>Pending Blockchain Withdrawal Requests</span>
       </h3>
       <div class="overflow-x-auto">
         <table class="w-full text-left text-xs text-slate-300">
@@ -65,59 +189,261 @@
             <tr>
               <th class="py-2 px-3">User</th>
               <th class="py-2 px-3">Amount</th>
-              <th class="py-2 px-3">Wallet</th>
+              <th class="py-2 px-3">Wallet Address</th>
               <th class="py-2 px-3 text-right">Action</th>
             </tr>
           </thead>
           <tbody id="payoutList" class="divide-y divide-slate-800">
-            <tr id="req-1">
-              <td class="py-2.5 px-3 font-semibold text-white">Hamza Tariq</td>
-              <td class="py-2.5 px-3 text-amber-400 font-bold">$150.00</td>
-              <td class="py-2.5 px-3 font-mono text-[10px] text-slate-400">TX9yZae...8z1P</td>
-              <td class="py-2.5 px-3 text-right space-x-1">
-                <button onclick="approve('req-1', 150)" class="bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500 hover:text-black px-2 py-0.5 rounded text-[10px] font-bold">Approve</button>
-                <button onclick="reject('req-1')" class="bg-rose-500/20 text-rose-400 hover:bg-rose-500 hover:text-white px-2 py-0.5 rounded text-[10px] font-bold">Reject</button>
-              </td>
-            </tr>
-            <tr id="req-2">
-              <td class="py-2.5 px-3 font-semibold text-white">Sarmad Bilal</td>
-              <td class="py-2.5 px-3 text-amber-400 font-bold">$45.00</td>
-              <td class="py-2.5 px-3 font-mono text-[10px] text-slate-400">TReq87X...91Lq</td>
-              <td class="py-2.5 px-3 text-right space-x-1">
-                <button onclick="approve('req-2', 45)" class="bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500 hover:text-black px-2 py-0.5 rounded text-[10px] font-bold">Approve</button>
-                <button onclick="reject('req-2')" class="bg-rose-500/20 text-rose-400 hover:bg-rose-500 hover:text-white px-2 py-0.5 rounded text-[10px] font-bold">Reject</button>
-              </td>
-            </tr>
+            <!-- Dynamically populated or manually handled -->
           </tbody>
         </table>
       </div>
     </div>
 
+    <!-- 6. SUPPORT TICKETS & RESOLUTION DESK -->
+    <div class="admin-card p-4">
+      <div class="flex items-center space-x-2 border-b border-slate-800 pb-2 mb-3">
+        <i class="fa-solid fa-headset text-cyan-400"></i>
+        <h3 class="text-xs font-bold text-white uppercase tracking-wider">Member Support Desk</h3>
+      </div>
+      <div id="supportTicketsContainer" class="space-y-2">
+        <!-- Sample tickets and resolver -->
+      </div>
+    </div>
+
   </main>
 
+  <!-- ================= LOGIC SCRIPT ================= -->
   <script>
+    // 1. Secret CEO Authentication Check
     if (sessionStorage.getItem('volt_auth_role') !== 'CEO') {
       window.location.href = 'index.html';
     }
 
-    function approve(id, amt) {
-      if (confirm(`Authorize blockchain payout of $${amt}.00 USDT?`)) {
-        document.getElementById(id).remove();
-        alert(`Payout of $${amt}.00 approved successfully.`);
+    // Firebase Initialization
+    const firebaseConfig = {
+      apiKey: "AIzaSyC5WDKiPz7wLuducqfp5MckEM1-7Wrz5tY",
+      authDomain: "volt-wealth-app.firebaseapp.com",
+      projectId: "volt-wealth-app",
+      storageBucket: "volt-wealth-app.firebasestorage.app",
+      messagingSenderId: "193045788778",
+      appId: "1:193045788778:web:f2174c3ed696bf5246b213"
+    };
+
+    let db = null;
+    try {
+      firebase.initializeApp(firebaseConfig);
+      db = firebase.firestore();
+    } catch (e) {
+      console.warn("Firestore Notice:", e);
+    }
+
+    // Toggle Target Email Input
+    function toggleTargetEmailInput() {
+      const mode = document.getElementById('spinDrawMode').value;
+      const targetInput = document.getElementById('spinTargetEmail');
+      if (mode === 'TARGET') {
+        targetInput.classList.remove('hidden');
+      } else {
+        targetInput.classList.add('hidden');
+      }
+    }
+      // Save CEO Spin Controls into Firestore & LocalStorage
+    async function saveSpinSettings() {
+      const dateVal = document.getElementById('spinScheduledDate').value;
+      const modeVal = document.getElementById('spinDrawMode').value;
+      const targetEmailVal = document.getElementById('spinTargetEmail').value.trim().toLowerCase();
+
+      const quotas = {
+        maxTier10Winners: parseInt(document.getElementById('quota10').value) || 2,
+        maxTier5Winners: parseInt(document.getElementById('quota5').value) || 5,
+        maxTier2Winners: parseInt(document.getElementById('quota2').value) || 10,
+        maxTier1Winners: parseInt(document.getElementById('quota1').value) || 20
+      };
+
+      const spinConfig = {
+        scheduledDate: dateVal ? new Date(dateVal).toISOString() : null,
+        drawMode: modeVal,
+        targetEmail: targetEmailVal,
+        quotas: quotas,
+        updatedAt: new Date().toISOString()
+      };
+
+      localStorage.setItem('volt_ceo_spin_config', JSON.stringify(spinConfig));
+
+      if (db) {
+        try {
+          await db.collection('settings').doc('weekly_spin').set(spinConfig, { merge: true });
+        } catch (e) {
+          console.error("Firestore Save Error:", e);
+        }
+      }
+
+      alert("Success! Weekly Lucky Spin controls updated & locked across all user interfaces.");
+    }
+
+    // Load Existing Settings
+    async function loadSpinSettings() {
+      let cfg = JSON.parse(localStorage.getItem('volt_ceo_spin_config')) || {};
+
+      if (db) {
+        try {
+          const doc = await db.collection('settings').doc('weekly_spin').get();
+          if (doc.exists) cfg = doc.data();
+        } catch (e) {}
+      }
+
+      if (cfg.scheduledDate) {
+        const d = new Date(cfg.scheduledDate);
+        d.setMinutes(d.getMinutes() - d.getTimezoneOffset());
+        document.getElementById('spinScheduledDate').value = d.toISOString().slice(0, 16);
+      }
+      if (cfg.drawMode) {
+        document.getElementById('spinDrawMode').value = cfg.drawMode;
+        toggleTargetEmailInput();
+      }
+      if (cfg.targetEmail) {
+        document.getElementById('spinTargetEmail').value = cfg.targetEmail;
+      }
+      if (cfg.quotas) {
+        if (cfg.quotas.maxTier10Winners) document.getElementById('quota10').value = cfg.quotas.maxTier10Winners;
+        if (cfg.quotas.maxTier5Winners) document.getElementById('quota5').value = cfg.quotas.maxTier5Winners;
+        if (cfg.quotas.maxTier2Winners) document.getElementById('quota2').value = cfg.quotas.maxTier2Winners;
+        if (cfg.quotas.maxTier1Winners) document.getElementById('quota1').value = cfg.quotas.maxTier1Winners;
       }
     }
 
-    function reject(id) {
-      if (confirm('Reject this payout request? Funds will refund to user.')) {
-        document.getElementById(id).remove();
-        alert('Payout request rejected.');
+    // Render Members Directory
+    function loadMembersDirectory() {
+      const usersList = JSON.parse(localStorage.getItem('volt_users_list')) || [
+        { email: 'user_01@gmail.com', mobile: '03011234567', balance: '126.50' },
+        { email: 'investor_khan@gmail.com', mobile: '03459876543', balance: '520.00' },
+        { email: 'smart_member@gmail.com', mobile: '03125556677', balance: '30.00' }
+      ];
+
+      const tbody = document.getElementById('memberListBody');
+      tbody.innerHTML = '';
+
+      let activePlansCount = 0;
+      let poolEntriesCount = 0;
+
+      usersList.forEach((user, index) => {
+        const uEmail = (user.email || user.mobile || 'user').toLowerCase();
+        const activePlan = JSON.parse(localStorage.getItem('volt_active_plan_' + uEmail)) || null;
+        const hasSpinPool = localStorage.getItem('volt_pool_WK-102_' + uEmail) === 'true';
+
+        if (activePlan) activePlansCount++;
+        if (hasSpinPool) poolEntriesCount++;
+
+        const tr = document.createElement('tr');
+        tr.id = `user-row-${index}`;
+        tr.innerHTML = `
+          <td class="py-2.5 px-3 font-semibold text-white">
+            <div>${user.email || 'N/A'}</div>
+            <div class="text-[10px] text-slate-400 font-mono">${user.mobile || ''}</div>
+          </td>
+          <td class="py-2.5 px-3 text-emerald-400 font-bold font-mono">$${parseFloat(user.balance || 0).toFixed(2)}</td>
+          <td class="py-2.5 px-3">
+            ${activePlan ? `<span class="bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 px-2 py-0.5 rounded text-[10px] font-bold">${activePlan.title} ($${activePlan.cost})</span>` : '<span class="text-slate-500 text-[10px]">No Plan</span>'}
+          </td>
+          <td class="py-2.5 px-3">
+            ${hasSpinPool ? '<span class="text-amber-400 font-bold text-[10px]">✓ Locked $5</span>' : '<span class="text-slate-500 text-[10px]">Not Entered</span>'}
+          </td>
+          <td class="py-2.5 px-3 text-right space-x-1">
+            <button onclick="editUserBalance('${uEmail}', ${index})" class="bg-indigo-500/20 text-indigo-400 hover:bg-indigo-500 hover:text-white px-2 py-0.5 rounded text-[10px] font-bold">Edit</button>
+            <button onclick="deleteMember('${uEmail}', ${index})" class="bg-rose-500/20 text-rose-400 hover:bg-rose-500 hover:text-white px-2 py-0.5 rounded text-[10px] font-bold">Delete</button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+
+      document.getElementById('statTotalUsers').innerText = usersList.length;
+      document.getElementById('statActivePlans').innerText = activePlansCount;
+      document.getElementById('statPoolEntries').innerText = poolEntriesCount;
+    }
+
+    // Edit Member Balance / Fix Issue
+    function editUserBalance(email, index) {
+      const usersList = JSON.parse(localStorage.getItem('volt_users_list')) || [];
+      const user = usersList[index];
+      const newBal = prompt(`Enter new balance for ${email}:`, user ? user.balance : "0.00");
+      if (newBal !== null && !isNaN(newBal)) {
+        if (user) user.balance = parseFloat(newBal).toFixed(2);
+        localStorage.setItem('volt_users_list', JSON.stringify(usersList));
+        loadMembersDirectory();
+        alert("Member balance updated successfully.");
       }
+    }
+
+    // Delete Member
+    function deleteMember(email, index) {
+      if (confirm(`Are you sure you want to permanently delete member: ${email}?`)) {
+        let usersList = JSON.parse(localStorage.getItem('volt_users_list')) || [];
+        usersList.splice(index, 1);
+        localStorage.setItem('volt_users_list', JSON.stringify(usersList));
+        localStorage.removeItem('volt_active_plan_' + email);
+        loadMembersDirectory();
+        alert(`Member ${email} deleted from directory.`);
+      }
+    }
+
+    // Export All Members Data to CSV
+    function downloadAllUsersCSV() {
+      const usersList = JSON.parse(localStorage.getItem('volt_users_list')) || [];
+      if (usersList.length === 0) {
+        alert("No user records available to download.");
+        return;
+      }
+
+      let csv = "Email,Mobile,Balance,ActivePlan,PlanCost,PoolEntry\n";
+      usersList.forEach(u => {
+        const uEmail = (u.email || u.mobile || 'user').toLowerCase();
+        const activePlan = JSON.parse(localStorage.getItem('volt_active_plan_' + uEmail)) || {};
+        const pool = localStorage.getItem('volt_pool_WK-102_' + uEmail) === 'true' ? "YES" : "NO";
+        csv += `"${u.email || ''}","${u.mobile || ''}","${u.balance || 0}","${activePlan.title || 'None'}","${activePlan.cost || 0}","${pool}"\n`;
+      });
+
+      const blob = new Blob([csv], { type: 'text/csv' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.setAttribute('href', url);
+      a.setAttribute('download', `voltwealth_members_${Date.now()}.csv`);
+      a.click();
+    }
+
+    // Publish Ticker Notice
+    function publishTickerNotice() {
+      const text = document.getElementById('newTickerNotice').value.trim();
+      if (!text) return;
+      localStorage.setItem('volt_custom_ticker_notice', text);
+      alert("Notice broadcasted to Live Tickers on Dashboard & Spin.");
+      document.getElementById('newTickerNotice').value = '';
+    }
+
+    // Sample Support Ticket Setup
+    function loadSupportTickets() {
+      const container = document.getElementById('supportTicketsContainer');
+      container.innerHTML = `
+        <div class="bg-slate-950/70 p-3 rounded-xl border border-slate-800 flex items-center justify-between text-xs">
+          <div>
+            <div class="text-white font-bold">User: 0345****12 - "Deposit Not Showing"</div>
+            <div class="text-[10px] text-slate-400">Issue with $50.00 TRC20 transaction hash verification</div>
+          </div>
+          <button onclick="this.parentElement.remove(); alert('Ticket marked as Resolved & Reply Sent!');" class="bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500 hover:text-black px-3 py-1 rounded text-[10px] font-bold">Resolve Ticket</button>
+        </div>
+      `;
     }
 
     function ceoLogout() {
       sessionStorage.clear();
       window.location.href = 'index.html';
     }
+
+    window.onload = () => {
+      loadSpinSettings();
+      loadMembersDirectory();
+      loadSupportTickets();
+    };
   </script>
 </body>
 </html>

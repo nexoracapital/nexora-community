@@ -1,687 +1,440 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>VoltWealth - CEO Master Admin Console</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@700;900&display=swap" rel="stylesheet">
-  
-  <!-- Firebase Official SDKs -->
-  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
-
-  <style>
-    body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #030712; }
-    .font-brand { font-family: 'Space Grotesk', sans-serif; }
-    .admin-card {
-      background: #0b1329;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 1.25rem;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Login Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
-<body class="text-slate-100 min-h-screen flex flex-col font-sans selection:bg-amber-400 selection:text-black">
+<body class="bg-slate-900 text-slate-100 min-h-screen flex items-center justify-center p-4 font-sans">
 
-  <!-- ================= TOP HEADER ================= -->
-  <header class="sticky top-0 z-40 bg-slate-900/95 backdrop-blur border-b border-slate-800 px-4 py-3 flex justify-between items-center shadow-lg">
-    <div class="flex items-center space-x-2.5">
-      <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-amber-500 via-rose-500 to-indigo-500 p-[2px] flex items-center justify-center shadow-md">
-        <div class="w-full h-full bg-[#030712] rounded-[10px] flex items-center justify-center">
-          <i class="fa-solid fa-crown text-amber-400 text-sm"></i>
-        </div>
-      </div>
-      <div>
-        <span class="text-lg font-black italic tracking-wider font-brand text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-rose-300 to-indigo-400">
-          VOLT<span class="text-white">CORE</span>
-        </span>
-        <span class="text-[9px] bg-amber-400/10 text-amber-400 border border-amber-400/30 px-2 py-0.5 rounded-full font-bold uppercase ml-2">Master CEO</span>
-      </div>
-    </div>
-    <div class="flex items-center space-x-2">
-      <button onclick="downloadAllUsersCSV()" class="bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-xs font-bold px-3 py-1.5 rounded-full transition flex items-center space-x-1.5">
-        <i class="fa-solid fa-download"></i>
-        <span class="hidden sm:inline">Export CSV</span>
-      </button>
-      <button onclick="ceoLogout()" class="bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/30 text-xs font-bold px-3 py-1.5 rounded-full transition">
-        Exit
-      </button>
-    </div>
-  </header>
-
-  <!-- ================= MAIN DASHBOARD ================= -->
-  <main class="max-w-5xl mx-auto w-full px-4 py-6 space-y-6 flex-1">
-    
-    <!-- 1. COMPLETE NETWORK FINANCIAL SUMMARY -->
-    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-      <div class="admin-card p-4">
-        <div class="text-[10px] uppercase font-bold text-slate-400">Total Deposits (کل جمع شدہ رقم)</div>
-        <div id="statTotalDeposits" class="text-2xl font-black font-brand text-emerald-400 mt-1">$0.00</div>
-      </div>
-      <div class="admin-card p-4">
-        <div class="text-[10px] uppercase font-bold text-slate-400">Total Withdrawals (کل نکلوائی گئی رقم)</div>
-        <div id="statTotalWithdrawals" class="text-2xl font-black font-brand text-rose-400 mt-1">$0.00</div>
-      </div>
-      <div class="admin-card p-4">
-        <div class="text-[10px] uppercase font-bold text-slate-400">Net Vault Balance (خالص باقی رقم)</div>
-        <div id="statVaultNet" class="text-2xl font-black font-brand text-indigo-400 mt-1">$0.00</div>
-      </div>
-      <div class="admin-card p-4">
-        <div class="text-[10px] uppercase font-bold text-slate-400">Pending Requests (زیر التواء)</div>
-        <div id="statPendingRequests" class="text-2xl font-black font-brand text-amber-400 mt-1">0</div>
-      </div>
-    </div>
-
-    <!-- 2. MEMBER BALANCE & RECORD INSPECTOR -->
-    <div class="admin-card p-5 border-indigo-500/30">
-      <div class="flex items-center justify-between border-b border-slate-800 pb-3 mb-3">
-        <div class="flex items-center space-x-2">
-          <i class="fa-solid fa-magnifying-glass-dollar text-indigo-400"></i>
-          <h2 class="text-xs font-bold uppercase tracking-wider text-white">Member Financial Inspector (کسی بھی ممبر کی تفصیلات دیکھیں)</h2>
-        </div>
-        <span class="text-[10px] text-slate-400">Instant Balance Check & Direct Adjust</span>
-      </div>
-
-      <div class="flex gap-2">
-        <input type="text" id="inspectorSearchInput" placeholder="Enter member Email or Phone..." class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-indigo-500">
-        <button onclick="inspectMemberRecord()" class="bg-indigo-600 hover:bg-indigo-500 text-white font-bold px-4 py-2 rounded-xl text-xs uppercase shrink-0 transition">
-          Inspect
-        </button>
-      </div>
-
-      <div id="inspectorResultCard" class="hidden mt-3 bg-slate-950/80 p-3.5 rounded-xl border border-slate-800 text-xs space-y-2">
-        <!-- Dynamically Populated -->
-      </div>
-    </div>
-
-    <!-- 3. DEPOSIT MANAGEMENT (MANAGE & APPROVE/REJECT) -->
-    <div class="admin-card p-4">
-      <div class="flex justify-between items-center mb-3">
-        <h3 class="text-sm font-bold text-white flex items-center space-x-2">
-          <i class="fa-solid fa-arrow-down text-emerald-400"></i>
-          <span>Member Deposit Requests (ڈپازٹ تصدیق و کنٹرول)</span>
-        </h3>
-        <span class="text-[10px] text-slate-400">Approve to auto-credit wallet</span>
-      </div>
-
-      <div class="overflow-x-auto">
-        <table class="w-full text-left text-xs text-slate-300">
-          <thead class="bg-slate-950 text-slate-400 text-[10px] uppercase border-b border-slate-800">
-            <tr>
-              <th class="py-2.5 px-3">Member</th>
-              <th class="py-2.5 px-3">Amount</th>
-              <th class="py-2.5 px-3">Trx ID / Hash</th>
-              <th class="py-2.5 px-3">Status</th>
-              <th class="py-2.5 px-3 text-right">Actions</th>
-            </tr>
-          </thead>
-          <tbody id="depositRequestsTable" class="divide-y divide-slate-800">
-            <!-- Dynamically Rendered -->
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-    <!-- 4. WITHDRAWAL MANAGEMENT (APPROVE / FREEZE / REJECT) -->
-    <div class="admin-card p-4">
-      <div class="flex justify-between items-center mb-3">
-        <h3 class="text-sm font-bold text-white flex items-center space-x-2">
-          <i class="fa-solid fa-hand-holding-dollar text-amber-400"></i>
-          <span>Member Withdrawal Requests (ودڈرا تصدیق و کنٹرول)</span>
-        </h3>
-        <span class="text-[10px] text-slate-400">Approve payout or freeze/reject</span>
-      </div>
-
-      <div class="overflow-x-auto">
-        <table class="w-full text-left text-xs text-slate-300">
-          <thead class="bg-slate-950 text-slate-400 text-[10px] uppercase border-b border-slate-800">
-            <tr>
-              <th class="py-2.5 px-3">Member</th>
-              <th class="py-2.5 px-3">Amount</th>
-              <th class="py-2.5 px-3">Wallet Address</th>
-              <th class="py-2.5 px-3">Status</th>
-              <th class="py-2.5 px-3 text-right">Actions</th>
-            </tr>
-          </thead>
-          <tbody id="withdrawRequestsTable" class="divide-y divide-slate-800">
-            <!-- Dynamically Rendered -->
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-    <!-- 5. WEEKLY LUCKY SPIN MASTER CONTROLLER -->
-    <div class="admin-card p-5 border-amber-500/30">
-      <div class="flex items-center justify-between border-b border-slate-800 pb-3 mb-4">
-        <div class="flex items-center space-x-2">
-          <i class="fa-solid fa-dharmachakra text-amber-400 text-lg"></i>
-          <h2 class="text-sm font-bold text-white uppercase tracking-wider font-brand">Weekly Lucky Spin Control Center</h2>
-        </div>
-        <span class="text-[10px] bg-amber-400/10 text-amber-300 px-2 py-0.5 rounded border border-amber-400/20 font-bold">Live Configuration</span>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
-        <div class="bg-slate-950/70 p-3.5 rounded-xl border border-slate-800 space-y-2">
-          <label class="font-bold text-slate-300 block">1. Scheduled Spin Unlock Date & Time:</label>
-          <input type="datetime-local" id="spinScheduledDate" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-white font-mono text-xs focus:outline-none focus:border-amber-400">
-          <p class="text-[10px] text-slate-500">اس مقررہ تاریخ اور وقت سے پہلے کسی کا اسپن ان لاک نہیں ہوگا۔</p>
+    <!-- Login Card -->
+    <div class="w-full max-w-md bg-slate-800 border border-slate-700 rounded-2xl shadow-2xl p-8">
+        <div class="text-center mb-8">
+            <div class="inline-flex items-center justify-center w-14 h-14 rounded-full bg-indigo-600/20 text-indigo-400 mb-3">
+                <i class="fas fa-shield-alt text-2xl"></i>
+            </div>
+            <h1 class="text-2xl font-bold text-white">अकाउंट लॉगिन</h1>
+            <p class="text-slate-400 text-sm mt-1">आगे बढ़ने के लिए अपनी जानकारी दर्ज करें</p>
         </div>
 
-        <div class="bg-slate-950/70 p-3.5 rounded-xl border border-slate-800 space-y-2">
-          <label class="font-bold text-slate-300 block">2. Grand Prize Winner Mode:</label>
-          <div class="flex space-x-2">
-            <select id="spinDrawMode" onchange="toggleTargetEmailInput()" class="bg-slate-900 border border-slate-700 rounded-lg p-2 text-white font-bold text-xs focus:outline-none">
-              <option value="AUTO">Auto 50/50 Fair Draw</option>
-              <option value="TARGET">Special Target Email</option>
-            </select>
-            <input type="email" id="spinTargetEmail" placeholder="Enter Target Gmail" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-white text-xs focus:outline-none focus:border-amber-400 hidden">
-          </div>
-          <p class="text-[10px] text-slate-500">اگر ٹارگٹ جی میل سیٹ ہو تو صرف اسی بندے کو گرینڈ پرائز ملے گا، ورنہ آٹو 50/50 ہوگا۔</p>
+        <!-- Alert / Error Box -->
+        <div id="alertBox" class="hidden mb-5 p-4 rounded-xl text-sm border transition-all duration-300">
+            <div class="flex items-start gap-3">
+                <i id="alertIcon" class="fas fa-exclamation-circle mt-0.5 text-lg"></i>
+                <div>
+                    <p id="alertMessage" class="font-medium"></p>
+                    <button id="lockForgotBtn" onclick="openForgotModal()" class="hidden mt-2 inline-block bg-red-600 hover:bg-red-500 text-white text-xs font-semibold px-3 py-1.5 rounded-lg transition">
+                        Forgot Password करें
+                    </button>
+                </div>
+            </div>
         </div>
-      </div>
 
-      <div class="mt-4 bg-slate-950/70 p-3.5 rounded-xl border border-slate-800">
-        <label class="font-bold text-slate-300 block mb-2">3. Member Allocation & Quotas (کتنے ممبرز میں کتنے ڈالر تقسیم ہوں):</label>
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-[11px]">
-          <div>
-            <span class="text-slate-400 block">$10.00 Max Winners:</span>
-            <input type="number" id="quota10" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-1.5 text-white font-bold mt-1 text-center" value="2">
-          </div>
-          <div>
-            <span class="text-slate-400 block">$5.00 Max Winners:</span>
-            <input type="number" id="quota5" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-1.5 text-white font-bold mt-1 text-center" value="5">
-          </div>
-          <div>
-            <span class="text-slate-400 block">$2.00 Max Winners:</span>
-            <input type="number" id="quota2" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-1.5 text-white font-bold mt-1 text-center" value="10">
-          </div>
-          <div>
-            <span class="text-slate-400 block">$1.00 Max Winners:</span>
-            <input type="number" id="quota1" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-1.5 text-white font-bold mt-1 text-center" value="20">
-          </div>
-        </div>
-      </div>
+        <!-- Login Form -->
+        <form id="loginForm" class="space-y-5">
+            <div>
+                <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">ईमेल आईडी (Gmail)</label>
+                <div class="relative">
+                    <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-400">
+                        <i class="fas fa-envelope"></i>
+                    </span>
+                    <input type="email" id="email" required placeholder="example@gmail.com"
+                        class="w-full pl-10 pr-4 py-3 bg-slate-900/80 border border-slate-700 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition">
+                </div>
+            </div>
 
-      <div class="mt-4 flex justify-end">
-        <button onclick="saveSpinSettings()" class="bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black px-5 py-2.5 rounded-xl text-xs uppercase tracking-wider transition shadow-md">
-          Save Spin Controls
-        </button>
-      </div>
+            <div>
+                <div class="flex items-center justify-between mb-2">
+                    <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400">पासवर्ड</label>
+                    <button type="button" onclick="openForgotModal()" class="text-xs text-indigo-400 hover:text-indigo-300 font-medium">
+                        Forgot Password?
+                    </button>
+                </div>
+                <div class="relative">
+                    <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-400">
+                        <i class="fas fa-lock"></i>
+                    </span>
+                    <input type="password" id="password" required placeholder="••••••••"
+                        class="w-full pl-10 pr-10 py-3 bg-slate-900/80 border border-slate-700 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition">
+                    <button type="button" onclick="togglePassword()" class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-200">
+                        <i id="eyeIcon" class="fas fa-eye"></i>
+                    </button>
+                </div>
+            </div>
+
+            <button type="submit" id="loginBtn"
+                class="w-full py-3 px-4 bg-indigo-600 hover:bg-indigo-500 disabled:bg-slate-700 disabled:text-slate-500 disabled:cursor-not-allowed text-white font-semibold rounded-xl shadow-lg shadow-indigo-600/20 transition duration-200 flex items-center justify-center gap-2">
+                <span>लॉगिन करें</span>
+                <i class="fas fa-arrow-right text-sm"></i>
+            </button>
+        </form>
     </div>
 
-    <!-- 6. LIVE TICKER MESSAGE MANAGER -->
-    <div class="admin-card p-4">
-      <div class="flex items-center space-x-2 border-b border-slate-800 pb-2 mb-3">
-        <i class="fa-solid fa-bullhorn text-emerald-400"></i>
-        <h3 class="text-xs font-bold text-white uppercase tracking-wider">Site Live News Ticker Broadcast</h3>
-      </div>
-      <div class="flex gap-2">
-        <input type="text" id="newTickerNotice" placeholder="مثال: 0300****12 invested $5 in Weekly Pool • Fast Payout Verified" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-emerald-500">
-        <button onclick="publishTickerNotice()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-4 py-2 rounded-xl text-xs uppercase shrink-0 transition">
-          Publish
-        </button>
-      </div>
+    <!-- Forgot Password Modal (Email & Phone OTP) -->
+    <div id="forgotModal" class="fixed inset-0 bg-black/75 backdrop-blur-sm hidden items-center justify-center p-4 z-50">
+        <div class="bg-slate-800 border border-slate-700 rounded-2xl max-w-md w-full p-6 shadow-2xl">
+            <div class="flex items-center justify-between border-b border-slate-700 pb-4 mb-5">
+                <h3 class="text-lg font-bold text-white">अकाउंट रिकवरी / पासवर्ड रीसेट</h3>
+                <button onclick="closeForgotModal()" class="text-slate-400 hover:text-white">
+                    <i class="fas fa-times text-lg"></i>
+                </button>
+            </div>
+
+            <!-- Method Switcher Tabs -->
+            <div class="grid grid-cols-2 gap-2 bg-slate-900 p-1 rounded-xl mb-5">
+                <button type="button" id="tabEmail" onclick="switchRecoveryTab('email')" class="py-2 text-xs font-semibold rounded-lg bg-indigo-600 text-white transition">
+                    <i class="fas fa-envelope mr-1"></i> रजिस्टर्ड ईमेल
+                </button>
+                <button type="button" id="tabPhone" onclick="switchRecoveryTab('phone')" class="py-2 text-xs font-semibold rounded-lg text-slate-400 hover:text-white transition">
+                    <i class="fas fa-mobile-alt mr-1"></i> फोन नंबर (OTP)
+                </button>
+            </div>
+
+            <!-- Modal Status Message -->
+            <div id="modalAlert" class="hidden mb-4 p-3 rounded-lg text-xs"></div>
+
+            <!-- Email Reset Section -->
+            <div id="emailRecoverySection" class="space-y-4">
+                <p class="text-xs text-slate-400">अपना रजिस्टर्ड Gmail दर्ज करें। हम आपको पासवर्ड रीसेट लिंक भेजेंगे।</p>
+                <input type="email" id="resetEmail" placeholder="registered@gmail.com"
+                    class="w-full px-4 py-2.5 bg-slate-900 border border-slate-700 rounded-xl text-sm text-white focus:outline-none focus:border-indigo-500">
+                <button type="button" onclick="sendEmailReset()" class="w-full py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-semibold rounded-xl transition">
+                    ईमेल पर रीसेट लिंक भेजें
+                </button>
+            </div>
+
+            <!-- Phone OTP Section -->
+            <div id="phoneRecoverySection" class="hidden space-y-4">
+                <p class="text-xs text-slate-400">कंट्री कोड के साथ रजिस्टर्ड नंबर लिखें (जैसे: +923001234567 या +919876543210)</p>
+                <input type="tel" id="resetPhone" placeholder="+923001234567"
+                    class="w-full px-4 py-2.5 bg-slate-900 border border-slate-700 rounded-xl text-sm text-white focus:outline-none focus:border-indigo-500">
+                
+                <!-- Invisible/Visible Recaptcha Container for Firebase Phone Auth -->
+                <div id="recaptcha-container"></div>
+
+                <button type="button" id="sendOtpBtn" onclick="sendPhoneOTP()" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-semibold rounded-xl transition">
+                    OTP भेजें
+                </button>
+
+                <!-- OTP Verification Box (Shown after OTP sent) -->
+                <div id="otpVerifyBox" class="hidden pt-3 border-t border-slate-700 space-y-3">
+                    <input type="text" id="otpCode" maxlength="6" placeholder="6-अंकों का OTP दर्ज करें"
+                        class="w-full px-4 py-2.5 bg-slate-900 border border-slate-700 rounded-xl text-sm text-center tracking-widest text-white focus:outline-none focus:border-emerald-500">
+                    <button type="button" onclick="verifyPhoneOTP()" class="w-full py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-semibold rounded-xl transition">
+                        OTP वेरीफाई करें और लॉक खोलें
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <!-- 7. REGISTERED MEMBERS DIRECTORY -->
-    <div class="admin-card p-4">
-      <div class="flex justify-between items-center mb-3">
-        <h3 class="text-sm font-bold text-white flex items-center space-x-2">
-          <i class="fa-solid fa-users text-indigo-400"></i>
-          <span>Registered Members & Active Plans</span>
-        </h3>
-        <span class="text-[10px] text-slate-400">Live Database Records</span>
-      </div>
+    <!-- Firebase SDKs & Logic -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { 
+            getAuth, 
+            signInWithEmailAndPassword, 
+            sendPasswordResetEmail,
+            RecaptchaVerifier,
+            signInWithPhoneNumber
+        } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-      <div class="overflow-x-auto">
-        <table class="w-full text-left text-xs text-slate-300">
-          <thead class="bg-slate-950 text-slate-400 text-[10px] uppercase border-b border-slate-800">
-            <tr>
-              <th class="py-2.5 px-3">Member (Email/Phone)</th>
-              <th class="py-2.5 px-3">Wallet Balance</th>
-              <th class="py-2.5 px-3">Active Plan</th>
-              <th class="py-2.5 px-3">Spin $5 Pool</th>
-              <th class="py-2.5 px-3 text-right">Actions</th>
-            </tr>
-          </thead>
-          <tbody id="memberListBody" class="divide-y divide-slate-800">
-            <!-- Dynamically Rendered -->
-          </tbody>
-        </table>
-      </div>
-    </div>
+        // 1. अपनी Firebase Config यहाँ पेस्ट करें
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_PROJECT.firebaseapp.com",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_PROJECT.appspot.com",
+            messagingSenderId: "YOUR_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
 
-    <!-- 8. SUPPORT TICKETS & RESOLUTION DESK -->
-    <div class="admin-card p-4">
-      <div class="flex items-center space-x-2 border-b border-slate-800 pb-2 mb-3">
-        <i class="fa-solid fa-headset text-cyan-400"></i>
-        <h3 class="text-xs font-bold text-white uppercase tracking-wider">Member Support Desk</h3>
-      </div>
-      <div id="supportTicketsContainer" class="space-y-2">
-        <!-- Sample tickets and resolver -->
-      </div>
-    </div>
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
 
-  </main>
+        // 2. CEO का आधिकारिक Gmail (और Redirect पेज)
+        const CEO_EMAIL = "ceo@yourdomain.com"; // <-- यहाँ CEO का Firebase वाला Gmail लिखें
+        const CEO_DASHBOARD_URL = "ceo-dashboard.html";
+        const USER_DASHBOARD_URL = "dashboard.html";
 
-  <!-- ================= LOGIC SCRIPT ================= -->
-  <script>
-    // 1. Firebase Secret Authentication Check
-    const firebaseConfig = {
-      apiKey: "AIzaSyC5WDKiPz7wLuducqfp5MckEM1-7Wrz5tY",
-      authDomain: "volt-wealth-app.firebaseapp.com",
-      projectId: "volt-wealth-app",
-      storageBucket: "volt-wealth-app.firebasestorage.app",
-      messagingSenderId: "193045788778",
-      appId: "1:193045788778:web:f2174c3ed696bf5246b213"
-    };
+        // 3. Silent Security State (कहीं भी शो नहीं होगा)
+        const MAX_ATTEMPTS = 3;
+        const STORAGE_KEY = "auth_session_guard_v1";
 
-    let db = null;
-    try {
-      firebase.initializeApp(firebaseConfig);
-      db = firebase.firestore();
-    } catch (e) {
-      console.warn("Firestore Notice:", e);
-    }
-
-    // Verify CEO Session Role
-    const activeSessionRole = sessionStorage.getItem('volt_auth_role');
-    if (activeSessionRole !== 'CEO') {
-      const activeSession = JSON.parse(sessionStorage.getItem('volt_active_session')) || {};
-      if (activeSession.role !== 'CEO' && activeSession.email !== 'ceo@voltwealth.com') {
-        window.location.href = 'index.html';
-      }
-    }
-
-    // Initialize Mock / Database Ledger for Deposits and Withdrawals
-    let depositList = JSON.parse(localStorage.getItem('volt_deposit_requests')) || [
-      { id: 'DEP-101', user: 'investor_khan@gmail.com', amount: 100.00, txid: '0x9fa4...8b21', status: 'PENDING', date: '2026-11-03' },
-      { id: 'DEP-102', user: 'user_01@gmail.com', amount: 50.00, txid: 'TX89za...31qa', status: 'APPROVED', date: '2026-11-02' }
-    ];
-
-    let withdrawalList = JSON.parse(localStorage.getItem('volt_withdraw_requests')) || [
-      { id: 'WIT-501', user: 'hamza_tariq@gmail.com', amount: 45.00, wallet: 'TX9yZae...8z1P', status: 'PENDING', date: '2026-11-03' },
-      { id: 'WIT-502', user: 'smart_member@gmail.com', amount: 26.00, wallet: 'TReq87X...91Lq', status: 'APPROVED', date: '2026-11-01' }
-    ];
-
-    function calculateFinancialMetrics() {
-      let totalDep = 0;
-      depositList.forEach(d => {
-        if (d.status === 'APPROVED') totalDep += parseFloat(d.amount);
-      });
-
-      let totalWith = 0;
-      withdrawalList.forEach(w => {
-        if (w.status === 'APPROVED') totalWith += parseFloat(w.amount);
-      });
-
-      let pendingCount = 0;
-      depositList.forEach(d => { if (d.status === 'PENDING') pendingCount++; });
-      withdrawalList.forEach(w => { if (w.status === 'PENDING') pendingCount++; });
-
-      const vaultNet = Math.max(0, totalDep - totalWith);
-
-      document.getElementById('statTotalDeposits').innerText = `$${totalDep.toFixed(2)}`;
-      document.getElementById('statTotalWithdrawals').innerText = `$${totalWith.toFixed(2)}`;
-      document.getElementById('statVaultNet').innerText = `$${vaultNet.toFixed(2)}`;
-      document.getElementById('statPendingRequests').innerText = pendingCount;
-    }
-
-    // Render Deposit Requests Table
-    function renderDepositTable() {
-      const tbody = document.getElementById('depositRequestsTable');
-      tbody.innerHTML = '';
-
-      depositList.forEach((dep, index) => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td class="py-2.5 px-3 font-semibold text-white">${dep.user}</td>
-          <td class="py-2.5 px-3 text-emerald-400 font-bold font-mono">$${parseFloat(dep.amount).toFixed(2)}</td>
-          <td class="py-2.5 px-3 font-mono text-[10px] text-slate-400">${dep.txid}</td>
-          <td class="py-2.5 px-3">
-            <span class="px-2 py-0.5 rounded text-[10px] font-bold ${dep.status === 'APPROVED' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : dep.status === 'REJECTED' ? 'bg-rose-500/10 text-rose-400 border border-rose-500/20' : 'bg-amber-500/10 text-amber-400 border border-amber-500/20'}">${dep.status}</span>
-          </td>
-          <td class="py-2.5 px-3 text-right space-x-1">
-            ${dep.status === 'PENDING' ? `
-              <button onclick="approveDeposit(${index})" class="bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500 hover:text-black px-2 py-0.5 rounded text-[10px] font-bold">Approve</button>
-              <button onclick="rejectDeposit(${index})" class="bg-rose-500/20 text-rose-400 hover:bg-rose-500 hover:text-white px-2 py-0.5 rounded text-[10px] font-bold">Reject</button>
-            ` : '<span class="text-slate-500 text-[10px] font-semibold">Processed</span>'}
-          </td>
-        `;
-        tbody.appendChild(tr);
-      });
-    }
-          function approveDeposit(index) {
-      const dep = depositList[index];
-      if (confirm(`Approve deposit of $${dep.amount}.00 for ${dep.user}? User balance will be auto-credited.`)) {
-        dep.status = 'APPROVED';
-        localStorage.setItem('volt_deposit_requests', JSON.stringify(depositList));
-
-        // Credit to user balance
-        creditUserBalance(dep.user, dep.amount);
-        renderDepositTable();
-        calculateFinancialMetrics();
-        alert(`Deposit of $${dep.amount}.00 approved successfully.`);
-      }
-    }
-
-    function rejectDeposit(index) {
-      const dep = depositList[index];
-      if (confirm(`Reject deposit request for ${dep.user}?`)) {
-        dep.status = 'REJECTED';
-        localStorage.setItem('volt_deposit_requests', JSON.stringify(depositList));
-        renderDepositTable();
-        calculateFinancialMetrics();
-        alert('Deposit request rejected.');
-      }
-    }
-
-    // Render Withdrawal Requests Table
-    function renderWithdrawalTable() {
-      const tbody = document.getElementById('withdrawRequestsTable');
-      tbody.innerHTML = '';
-
-      withdrawalList.forEach((wit, index) => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td class="py-2.5 px-3 font-semibold text-white">${wit.user}</td>
-          <td class="py-2.5 px-3 text-amber-400 font-bold font-mono">$${parseFloat(wit.amount).toFixed(2)}</td>
-          <td class="py-2.5 px-3 font-mono text-[10px] text-slate-400">${wit.wallet}</td>
-          <td class="py-2.5 px-3">
-            <span class="px-2 py-0.5 rounded text-[10px] font-bold ${wit.status === 'APPROVED' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : wit.status === 'FROZEN' ? 'bg-rose-500/20 text-rose-400 border border-rose-500/30' : 'bg-amber-500/10 text-amber-400 border border-amber-500/20'}">${wit.status}</span>
-          </td>
-          <td class="py-2.5 px-3 text-right space-x-1">
-            ${wit.status === 'PENDING' ? `
-              <button onclick="approveWithdrawal(${index})" class="bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500 hover:text-black px-2 py-0.5 rounded text-[10px] font-bold">Approve</button>
-              <button onclick="freezeWithdrawal(${index})" class="bg-rose-500/20 text-rose-400 hover:bg-rose-500 hover:text-white px-2 py-0.5 rounded text-[10px] font-bold">Freeze/Hold</button>
-            ` : '<span class="text-slate-500 text-[10px] font-semibold">Completed</span>'}
-          </td>
-        `;
-        tbody.appendChild(tr);
-      });
-    }
-
-    function approveWithdrawal(index) {
-      const wit = withdrawalList[index];
-      if (confirm(`Approve and release payout of $${wit.amount}.00 to ${wit.wallet}?`)) {
-        wit.status = 'APPROVED';
-        localStorage.setItem('volt_withdraw_requests', JSON.stringify(withdrawalList));
-        renderWithdrawalTable();
-        calculateFinancialMetrics();
-        alert(`Withdrawal of $${wit.amount}.00 marked as completed.`);
-      }
-    }
-
-    function freezeWithdrawal(index) {
-      const wit = withdrawalList[index];
-      if (confirm(`Freeze/Block this withdrawal of $${wit.amount}.00 for ${wit.user}?`)) {
-        wit.status = 'FROZEN';
-        localStorage.setItem('volt_withdraw_requests', JSON.stringify(withdrawalList));
-        renderWithdrawalTable();
-        calculateFinancialMetrics();
-        alert(`Withdrawal for ${wit.user} has been frozen.`);
-      }
-    }
-
-    // Helper: Credit User Balance
-    function creditUserBalance(email, amount) {
-      const usersList = JSON.parse(localStorage.getItem('volt_users_list')) || [];
-      const user = usersList.find(u => (u.email || u.mobile || '').toLowerCase() === email.toLowerCase());
-      if (user) {
-        user.balance = (parseFloat(user.balance || 0) + parseFloat(amount)).toFixed(2);
-        localStorage.setItem('volt_users_list', JSON.stringify(usersList));
-        loadMembersDirectory();
-      }
-    }
-
-    // 2. Member Inspector Feature
-    function inspectMemberRecord() {
-      const query = document.getElementById('inspectorSearchInput').value.trim().toLowerCase();
-      if (!query) {
-        alert("Please enter member email or phone number.");
-        return;
-      }
-
-      const usersList = JSON.parse(localStorage.getItem('volt_users_list')) || [];
-      const user = usersList.find(u => (u.email || '').toLowerCase().includes(query) || (u.mobile || '').includes(query));
-
-      const card = document.getElementById('inspectorResultCard');
-      card.classList.remove('hidden');
-
-      if (!user) {
-        card.innerHTML = `<div class="text-rose-400 font-bold">No member found matching: "${query}"</div>`;
-        return;
-      }
-
-      const uEmail = (user.email || user.mobile || 'user').toLowerCase();
-      const activePlan = JSON.parse(localStorage.getItem('volt_active_plan_' + uEmail)) || null;
-      const spinPool = localStorage.getItem('volt_pool_WK-102_' + uEmail) === 'true';
-
-      card.innerHTML = `
-        <div class="flex justify-between items-center border-b border-slate-800 pb-2">
-          <div>
-            <div class="font-bold text-white text-sm">${user.email || 'N/A'}</div>
-            <div class="text-[10px] text-slate-400 font-mono">Mobile: ${user.mobile || 'N/A'}</div>
-          </div>
-          <div class="text-right">
-            <span class="text-[10px] text-slate-400 block">Available Balance</span>
-            <strong class="text-emerald-400 font-mono text-base">$${parseFloat(user.balance || 0).toFixed(2)}</strong>
-          </div>
-        </div>
-        <div class="grid grid-cols-2 gap-2 text-[11px] pt-1">
-          <div>Active Plan: <strong class="text-indigo-400">${activePlan ? `${activePlan.title} ($${activePlan.cost})` : 'None'}</strong></div>
-          <div>Weekly Spin $5 Pool: <strong class="${spinPool ? 'text-emerald-400' : 'text-rose-400'}">${spinPool ? 'Active ($5 Locked)' : 'Not Joined'}</strong></div>
-        </div>
-        <div class="flex gap-2 pt-2 border-t border-slate-800">
-          <button onclick="directAdjustBalance('${uEmail}')" class="bg-indigo-600 hover:bg-indigo-500 text-white font-bold px-3 py-1.5 rounded-lg text-xs">Direct Adjust Balance</button>
-        </div>
-      `;
-    }
-
-    function directAdjustBalance(email) {
-      const usersList = JSON.parse(localStorage.getItem('volt_users_list')) || [];
-      const user = usersList.find(u => (u.email || u.mobile || '').toLowerCase() === email.toLowerCase());
-      if (!user) return;
-
-      const newBal = prompt(`Enter new balance for ${email}:`, user.balance || "0.00");
-      if (newBal !== null && !isNaN(newBal)) {
-        user.balance = parseFloat(newBal).toFixed(2);
-        localStorage.setItem('volt_users_list', JSON.stringify(usersList));
-        inspectMemberRecord();
-        loadMembersDirectory();
-        alert(`Balance updated to $${user.balance}`);
-      }
-    }
-
-    // Toggle Target Email Input
-    function toggleTargetEmailInput() {
-      const mode = document.getElementById('spinDrawMode').value;
-      const targetInput = document.getElementById('spinTargetEmail');
-      if (mode === 'TARGET') {
-        targetInput.classList.remove('hidden');
-      } else {
-        targetInput.classList.add('hidden');
-      }
-    }
-
-    // Save CEO Spin Controls into Firestore & LocalStorage
-    async function saveSpinSettings() {
-      const dateVal = document.getElementById('spinScheduledDate').value;
-      const modeVal = document.getElementById('spinDrawMode').value;
-      const targetEmailVal = document.getElementById('spinTargetEmail').value.trim().toLowerCase();
-
-      const quotas = {
-        maxTier10Winners: parseInt(document.getElementById('quota10').value) || 2,
-        maxTier5Winners: parseInt(document.getElementById('quota5').value) || 5,
-        maxTier2Winners: parseInt(document.getElementById('quota2').value) || 10,
-        maxTier1Winners: parseInt(document.getElementById('quota1').value) || 20
-      };
-
-      const spinConfig = {
-        scheduledDate: dateVal ? new Date(dateVal).toISOString() : null,
-        drawMode: modeVal,
-        targetEmail: targetEmailVal,
-        quotas: quotas,
-        updatedAt: new Date().toISOString()
-      };
-
-      localStorage.setItem('volt_ceo_spin_config', JSON.stringify(spinConfig));
-
-      if (db) {
-        try {
-          await db.collection('settings').doc('weekly_spin').set(spinConfig, { merge: true });
-        } catch (e) {
-          console.error("Firestore Save Error:", e);
+        function getSecurityState() {
+            const data = localStorage.getItem(STORAGE_KEY);
+            return data ? JSON.parse(data) : { attempts: 0, locked: false };
         }
-      }
 
-      alert("Success! Weekly Lucky Spin controls updated & locked across all user interfaces.");
-    }
+        function saveSecurityState(state) {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        }
 
-    // Load Existing Settings
-    async function loadSpinSettings() {
-      let cfg = JSON.parse(localStorage.getItem('volt_ceo_spin_config')) || {};
+        function resetSecurityLock() {
+            saveSecurityState({ attempts: 0, locked: false });
+            const loginBtn = document.getElementById("loginBtn");
+            loginBtn.disabled = false;
+            document.getElementById("lockForgotBtn").classList.add("hidden");
+        }
 
-      if (db) {
-        try {
-          const doc = await db.collection('settings').doc('weekly_spin').get();
-          if (doc.exists) cfg = doc.data();
-        } catch (e) {}
-      }
+        // UI Alert Helper
+        function showAlert(message, type = "error", showForgotBtn = false) {
+            const box = document.getElementById("alertBox");
+            const msg = document.getElementById("alertMessage");
+            const icon = document.getElementById("alertIcon");
+            const forgotBtn = document.getElementById("lockForgotBtn");
 
-      if (cfg.scheduledDate) {
-        const d = new Date(cfg.scheduledDate);
-        d.setMinutes(d.getMinutes() - d.getTimezoneOffset());
-        document.getElementById('spinScheduledDate').value = d.toISOString().slice(0, 16);
-      }
-      if (cfg.drawMode) {
-        document.getElementById('spinDrawMode').value = cfg.drawMode;
-        toggleTargetEmailInput();
-      }
-      if (cfg.targetEmail) {
-        document.getElementById('spinTargetEmail').value = cfg.targetEmail;
-      }
-      if (cfg.quotas) {
-        if (cfg.quotas.maxTier10Winners) document.getElementById('quota10').value = cfg.quotas.maxTier10Winners;
-        if (cfg.quotas.maxTier5Winners) document.getElementById('quota5').value = cfg.quotas.maxTier5Winners;
-        if (cfg.quotas.maxTier2Winners) document.getElementById('quota2').value = cfg.quotas.maxTier2Winners;
-        if (cfg.quotas.maxTier1Winners) document.getElementById('quota1').value = cfg.quotas.maxTier1Winners;
-      }
-    }
+            box.classList.remove("hidden", "bg-red-950/60", "border-red-500/50", "text-red-200", "bg-amber-950/60", "border-amber-500/50", "text-amber-200", "bg-emerald-950/60", "border-emerald-500/50", "text-emerald-200");
 
-    // Render Members Directory
-    function loadMembersDirectory() {
-      const usersList = JSON.parse(localStorage.getItem('volt_users_list')) || [
-        { email: 'user_01@gmail.com', mobile: '03011234567', balance: '126.50' },
-        { email: 'investor_khan@gmail.com', mobile: '03459876543', balance: '520.00' },
-        { email: 'smart_member@gmail.com', mobile: '03125556677', balance: '30.00' }
-      ];
+            if (type === "locked") {
+                box.classList.add("bg-red-950/80", "border-red-500", "text-red-200");
+                icon.className = "fas fa-lock mt-0.5 text-lg text-red-400";
+            } else if (type === "warning") {
+                box.classList.add("bg-amber-950/60", "border-amber-500/50", "text-amber-200");
+                icon.className = "fas fa-exclamation-triangle mt-0.5 text-lg text-amber-400";
+            } else if (type === "success") {
+                box.classList.add("bg-emerald-950/60", "border-emerald-500/50", "text-emerald-200");
+                icon.className = "fas fa-check-circle mt-0.5 text-lg text-emerald-400";
+            }
 
-      const tbody = document.getElementById('memberListBody');
-      tbody.innerHTML = '';
+            msg.textContent = message;
+            if (showForgotBtn) {
+                forgotBtn.classList.remove("hidden");
+            } else {
+                forgotBtn.classList.add("hidden");
+            }
+        }
 
-      usersList.forEach((user, index) => {
-        const uEmail = (user.email || user.mobile || 'user').toLowerCase();
-        const activePlan = JSON.parse(localStorage.getItem('volt_active_plan_' + uEmail)) || null;
-        const hasSpinPool = localStorage.getItem('volt_pool_WK-102_' + uEmail) === 'true';
+        // पेज लोड होते ही चेक करें कि अकाउंट पहले से लॉक तो नहीं है
+        function enforceLockCheck() {
+            const state = getSecurityState();
+            if (state.locked || state.attempts >= MAX_ATTEMPTS) {
+                document.getElementById("loginBtn").disabled = true;
+                showAlert(
+                    "आपने बार-बार गलत आईडी या पासवर्ड डाला है। सुरक्षा कारणों से आपका लॉगिन रोक दिया गया है। कृपया अपना अकाउंट खोलने के लिए Forgot Password करें।",
+                    "locked",
+                    true
+                );
+                return true;
+            }
+            return false;
+        }
 
-        const tr = document.createElement('tr');
-        tr.id = `user-row-${index}`;
-        tr.innerHTML = `
-          <td class="py-2.5 px-3 font-semibold text-white">
-            <div>${user.email || 'N/A'}</div>
-            <div class="text-[10px] text-slate-400 font-mono">${user.mobile || ''}</div>
-          </td>
-          <td class="py-2.5 px-3 text-emerald-400 font-bold font-mono">$${parseFloat(user.balance || 0).toFixed(2)}</td>
-          <td class="py-2.5 px-3">
-            ${activePlan ? `<span class="bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 px-2 py-0.5 rounded text-[10px] font-bold">${activePlan.title} ($${activePlan.cost})</span>` : '<span class="text-slate-500 text-[10px]">No Plan</span>'}
-          </td>
-          <td class="py-2.5 px-3">
-            ${hasSpinPool ? '<span class="text-amber-400 font-bold text-[10px]">✓ Locked $5</span>' : '<span class="text-slate-500 text-[10px]">Not Entered</span>'}
-          </td>
-          <td class="py-2.5 px-3 text-right space-x-1">
-            <button onclick="directAdjustBalance('${uEmail}')" class="bg-indigo-500/20 text-indigo-400 hover:bg-indigo-500 hover:text-white px-2 py-0.5 rounded text-[10px] font-bold">Edit</button>
-            <button onclick="deleteMember('${uEmail}', ${index})" class="bg-rose-500/20 text-rose-400 hover:bg-rose-500 hover:text-white px-2 py-0.5 rounded text-[10px] font-bold">Delete</button>
-          </td>
-        `;
-        tbody.appendChild(tr);
-      });
-    }
+        enforceLockCheck();
 
-        // Delete Member
-    function deleteMember(email, index) {
-      if (confirm(`Are you sure you want to permanently delete member: ${email}?`)) {
-        let usersList = JSON.parse(localStorage.getItem('volt_users_list')) || [];
-        usersList.splice(index, 1);
-        localStorage.setItem('volt_users_list', JSON.stringify(usersList));
-        localStorage.removeItem('volt_active_plan_' + email);
-        loadMembersDirectory();
-        alert(`Member ${email} deleted from directory.`);
-      }
-    }
+        // 4. Login Form Submission
+        document.getElementById("loginForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
 
-    // Export All Members Data to CSV
-    function downloadAllUsersCSV() {
-      const usersList = JSON.parse(localStorage.getItem('volt_users_list')) || [];
-      if (usersList.length === 0) {
-        alert("No user records available to download.");
-        return;
-      }
+            if (enforceLockCheck()) return;
 
-      let csv = "Email,Mobile,Balance,ActivePlan,PlanCost,PoolEntry\n";
-      usersList.forEach(u => {
-        const uEmail = (u.email || u.mobile || 'user').toLowerCase();
-        const activePlan = JSON.parse(localStorage.getItem('volt_active_plan_' + uEmail)) || {};
-        const pool = localStorage.getItem('volt_pool_WK-102_' + uEmail) === 'true' ? "YES" : "NO";
-        csv += `"${u.email || ''}","${u.mobile || ''}","${u.balance || 0}","${activePlan.title || 'None'}","${activePlan.cost || 0}","${pool}"\n`;
-      });
+            const email = document.getElementById("email").value.trim();
+            const password = document.getElementById("password").value;
+            const loginBtn = document.getElementById("loginBtn");
 
-      const blob = new Blob([csv], { type: 'text/csv' });
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.setAttribute('href', url);
-      a.setAttribute('download', `voltwealth_members_${Date.now()}.csv`);
-      a.click();
-    }
+            loginBtn.disabled = true;
+            loginBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> जाँच की जा रही है...`;
 
-    // Publish Ticker Notice
-    function publishTickerNotice() {
-      const text = document.getElementById('newTickerNotice').value.trim();
-      if (!text) return;
-      localStorage.setItem('volt_custom_ticker_notice', text);
-      alert("Notice broadcasted to Live Tickers on Dashboard & Spin.");
-      document.getElementById('newTickerNotice').value = '';
-    }
+            try {
+                const userCredential = await signInWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
 
-    // Sample Support Ticket Setup
-    function loadSupportTickets() {
-      const container = document.getElementById('supportTicketsContainer');
-      container.innerHTML = `
-        <div class="bg-slate-950/70 p-3 rounded-xl border border-slate-800 flex items-center justify-between text-xs">
-          <div>
-            <div class="text-white font-bold">User: 0345****12 - "Deposit Not Showing"</div>
-            <div class="text-[10px] text-slate-400">Issue with $50.00 TRC20 transaction hash verification</div>
-          </div>
-          <button onclick="this.parentElement.remove(); alert('Ticket marked as Resolved & Reply Sent!');" class="bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500 hover:text-black px-3 py-1 rounded text-[10px] font-bold">Resolve Ticket</button>
-        </div>
-      `;
-    }
+                // सफल लॉगिन पर काउंटर रीसेट करें
+                resetSecurityLock();
+                showAlert("लॉगिन सफल! आपको डैशबोर्ड पर भेजा जा रहा है...", "success");
 
-    function ceoLogout() {
-      sessionStorage.clear();
-      window.location.href = 'index.html';
-    }
+                // CEO चेक करें (Direct Email Match या Firestore Role Match)
+                let isCEO = (user.email.toLowerCase() === CEO_EMAIL.toLowerCase());
 
-    window.onload = () => {
-      calculateFinancialMetrics();
-      renderDepositTable();
-      renderWithdrawalTable();
-      loadSpinSettings();
-      loadMembersDirectory();
-      loadSupportTickets();
-    };
-  </script>
+                if (!isCEO) {
+                    // वैकल्पिक: यदि आपने Firestore में 'users' कलेक्शन में role: 'ceo' रखा है
+                    try {
+                        const userDoc = await getDoc(doc(db, "users", user.uid));
+                        if (userDoc.exists() && userDoc.data().role === "ceo") {
+                            isCEO = true;
+                        }
+                    } catch (err) {
+                        // Firestore चेक वैकल्पिक है
+                    }
+                }
+
+                setTimeout(() => {
+                    window.location.href = isCEO ? CEO_DASHBOARD_URL : USER_DASHBOARD_URL;
+                }, 800);
+
+            } catch (error) {
+                // गलत आईडी या पासवर्ड पर काउंटर बढ़ाएं
+                const state = getSecurityState();
+                state.attempts += 1;
+
+                if (state.attempts >= MAX_ATTEMPTS) {
+                    state.locked = true;
+                    saveSecurityState(state);
+                    loginBtn.disabled = true;
+                    loginBtn.innerHTML = `<span>लॉगिन बंद है</span> <i class="fas fa-lock text-sm"></i>`;
+                    showAlert(
+                        "आपने 3 बार गलत पासवर्ड या आईडी डाली है। सुरक्षा के तहत अब आप लॉगिन नहीं कर सकते। कृपया नीचे दिए गए बटन से Forgot Password करें।",
+                        "locked",
+                        true
+                    );
+                } else {
+                    saveSecurityState(state);
+                    const remaining = MAX_ATTEMPTS - state.attempts;
+                    loginBtn.disabled = false;
+                    loginBtn.innerHTML = `<span>लॉगिन करें</span> <i class="fas fa-arrow-right text-sm"></i>`;
+                    showAlert(
+                        `गलत ईमेल आईडी या पासवर्ड! आपके पास केवल ${remaining} कोशिश बाकी है।`,
+                        "warning",
+                        false
+                    );
+                }
+            }
+        });
+
+        // 5. Email Password Reset Logic
+        window.sendEmailReset = async function () {
+            const resetEmail = document.getElementById("resetEmail").value.trim();
+            const modalAlert = document.getElementById("modalAlert");
+
+            if (!resetEmail) {
+                showModalAlert("कृपया अपना रजिस्टर्ड ईमेल दर्ज करें।", "error");
+                return;
+            }
+
+            try {
+                await sendPasswordResetEmail(auth, resetEmail);
+                // रीसेट लिंक भेजने पर लॉक हटा दें ताकि नया पासवर्ड डालकर लॉगिन हो सके
+                resetSecurityLock();
+                showModalAlert("पासवर्ड रीसेट लिंक आपके ईमेल पर भेज दिया गया है! अपना इनबॉक्स (या Spam फोल्डर) चेक करें और नया पासवर्ड सेट करके लॉगिन करें।", "success");
+                showAlert("रीसेट लिंक भेज दिया गया है। नया पासवर्ड बनाने के बाद अब आप लॉगिन कर सकते हैं।", "success", false);
+            } catch (error) {
+                showModalAlert("त्रुटि: यह ईमेल रजिस्टर्ड नहीं है या अमान्य है।", "error");
+            }
+        };
+
+        // 6. Phone Number OTP Recovery Logic
+        let confirmationResultGlobal = null;
+
+        window.sendPhoneOTP = async function () {
+            const phoneNumber = document.getElementById("resetPhone").value.trim();
+            if (!phoneNumber || !phoneNumber.startsWith("+")) {
+                showModalAlert("कृपया कंट्री कोड के साथ सही नंबर लिखें (जैसे: +923001234567 या +919876543210)।", "error");
+                return;
+            }
+
+            try {
+                if (!window.recaptchaVerifier) {
+                    window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
+                        'size': 'invisible'
+                    });
+                }
+
+                const sendBtn = document.getElementById("sendOtpBtn");
+                sendBtn.disabled = true;
+                sendBtn.textContent = "OTP भेजा जा रहा है...";
+
+                confirmationResultGlobal = await signInWithPhoneNumber(auth, phoneNumber, window.recaptchaVerifier);
+                
+                document.getElementById("otpVerifyBox").classList.remove("hidden");
+                sendBtn.textContent = "OTP दोबारा भेजें";
+                sendBtn.disabled = false;
+                showModalAlert("आपके मोबाइल नंबर पर 6-अंकों का OTP भेज दिया गया है।", "success");
+            } catch (error) {
+                document.getElementById("sendOtpBtn").disabled = false;
+                document.getElementById("sendOtpBtn").textContent = "OTP भेजें";
+                showModalAlert("OTP भेजने में समस्या आई: " + error.message, "error");
+            }
+        };
+
+        window.verifyPhoneOTP = async function () {
+            const code = document.getElementById("otpCode").value.trim();
+            if (!code || code.length < 6) {
+                showModalAlert("कृपया 6-अंकों का सही OTP दर्ज करें।", "error");
+                return;
+            }
+
+            try {
+                await confirmationResultGlobal.confirm(code);
+                // OTP वेरीफाई होते ही अकाउंट अनलॉक करें और ईमेल रीसेट का विकल्प दें
+                resetSecurityLock();
+                showModalAlert("OTP वेरीफाई हो गया है! आपका लॉगिन लॉक खोल दिया गया है। अब आप अपना ईमेल पासवर्ड रीसेट कर सकते हैं या लॉगिन कर सकते हैं।", "success");
+                showAlert("मोबाइल OTP वेरीफाई हो गया है। अब आप लॉगिन कर सकते हैं।", "success", false);
+                setTimeout(() => closeForgotModal(), 2000);
+            } catch (error) {
+                showModalAlert("गलत OTP! कृपया मैसेज चेक करके दोबारा डालें।", "error");
+            }
+        };
+
+        function showModalAlert(msg, type) {
+            const el = document.getElementById("modalAlert");
+            el.classList.remove("hidden", "bg-red-950", "text-red-300", "border-red-500", "bg-emerald-950", "text-emerald-300", "border-emerald-500");
+            el.classList.add("border");
+            if (type === "success") {
+                el.classList.add("bg-emerald-950", "text-emerald-300", "border-emerald-500");
+            } else {
+                el.classList.add("bg-red-950", "text-red-300", "border-red-500");
+            }
+            el.textContent = msg;
+        }
+    </script>
+
+      <!-- UI Helper Scripts -->
+    <script>
+        function togglePassword() {
+            const pwd = document.getElementById("password");
+            const icon = document.getElementById("eyeIcon");
+            if (pwd.type === "password") {
+                pwd.type = "text";
+                icon.classList.replace("fa-eye", "fa-eye-slash");
+            } else {
+                pwd.type = "password";
+                icon.classList.replace("fa-eye-slash", "fa-eye");
+            }
+        }
+
+        function openForgotModal() {
+            const modal = document.getElementById("forgotModal");
+            modal.classList.remove("hidden");
+            modal.classList.add("flex");
+            // लॉगिन बॉक्स में लिखा ईमेल ऑटो-फिल कर दें
+            const currentEmail = document.getElementById("email").value;
+            if (currentEmail) document.getElementById("resetEmail").value = currentEmail;
+        }
+
+        function closeForgotModal() {
+            const modal = document.getElementById("forgotModal");
+            modal.classList.add("hidden");
+            modal.classList.remove("flex");
+        }
+
+        function switchRecoveryTab(tab) {
+            const emailSec = document.getElementById("emailRecoverySection");
+            const phoneSec = document.getElementById("phoneRecoverySection");
+            const tabEmail = document.getElementById("tabEmail");
+            const tabPhone = document.getElementById("tabPhone");
+
+            document.getElementById("modalAlert").classList.add("hidden");
+
+            if (tab === "email") {
+                emailSec.classList.remove("hidden");
+                phoneSec.classList.add("hidden");
+                tabEmail.classList.add("bg-indigo-600", "text-white");
+                tabEmail.classList.remove("text-slate-400");
+                tabPhone.classList.remove("bg-indigo-600", "text-white");
+                tabPhone.classList.add("text-slate-400");
+            } else {
+                phoneSec.classList.remove("hidden");
+                emailSec.classList.add("hidden");
+                tabPhone.classList.add("bg-indigo-600", "text-white");
+                tabPhone.classList.remove("text-slate-400");
+                tabEmail.classList.remove("bg-indigo-600", "text-white");
+                tabEmail.classList.add("text-slate-400");
+            }
+        }
+    </script>
 </body>
 </html>

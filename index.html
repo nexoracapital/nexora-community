@@ -1,148 +1,325 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Secure Login Portal</title>
+    <title>VOLTWEALTH - Institutional Smart Yield</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Confetti Burst Effect Library -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #e6ecf2;
+            color: #1e293b;
+            overflow-x: hidden;
+        }
+
+        /* Neumorphic Shadows matching your screenshot */
+        .neu-pill {
+            background: #eef3f8;
+            box-shadow: 6px 6px 14px #c8d0d8, -6px -6px 14px #ffffff;
+        }
+
+        .neu-circle-outer {
+            background: linear-gradient(145deg, #f3f7fb, #dde4ec);
+            box-shadow: 20px 20px 45px #c5cdd6, -20px -20px 45px #ffffff;
+            position: relative;
+        }
+
+        .neu-input {
+            background: #e3e9f0;
+            box-shadow: inset 5px 5px 10px #c4ccd4, inset -5px -5px 10px #ffffff;
+            transition: all 0.25s ease;
+        }
+
+        .neu-input:focus {
+            box-shadow: inset 3px 3px 6px #c4ccd4, inset -3px -3px 6px #ffffff, 0 0 0 2px #10b981;
+        }
+
+        .neu-btn {
+            background: linear-gradient(145deg, #f4f8fc, #dfe6ee);
+            box-shadow: 7px 7px 15px #c5cdd6, -7px -7px 15px #ffffff;
+            transition: all 0.2s ease;
+        }
+
+        .neu-btn:active:not(:disabled) {
+            box-shadow: inset 4px 4px 8px #c5cdd6, inset -4px -4px 8px #ffffff;
+            transform: scale(0.98);
+        }
+
+        .neu-success-badge {
+            background: linear-gradient(145deg, #f5f8fc, #dfe6ee);
+            box-shadow: 10px 10px 22px #c5cdd6, -10px -10px 22px #ffffff;
+        }
+
+        /* Circular Rotating Border Loader around the Circle Card */
+        .circle-spinner-ring {
+            position: absolute;
+            inset: -6px;
+            border-radius: 50%;
+            padding: 5px;
+            background: conic-gradient(from 0deg, transparent 0%, transparent 55%, #10b981 85%, #059669 100%);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            animation: spinRing 1s linear infinite;
+            pointer-events: none;
+            z-index: 20;
+        }
+
+        @keyframes spinRing {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Pop-in animation for Success Checkmark */
+        @keyframes popScale {
+            0% { transform: scale(0.4); opacity: 0; }
+            70% { transform: scale(1.12); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .animate-pop {
+            animation: popScale 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+    </style>
 </head>
-<body class="bg-slate-900 text-slate-100 min-h-screen flex items-center justify-center p-4 font-sans">
+<body class="min-h-screen flex flex-col justify-between items-center py-5 px-4 select-none">
 
-    <!-- Login Card -->
-    <div class="w-full max-w-md bg-slate-800 border border-slate-700 rounded-2xl shadow-2xl p-8">
-        <div class="text-center mb-8">
-            <div class="inline-flex items-center justify-center w-14 h-14 rounded-full bg-indigo-600/20 text-indigo-400 mb-3">
-                <i class="fas fa-shield-alt text-2xl"></i>
-            </div>
-            <h1 class="text-2xl font-bold text-white">अकाउंट लॉगिन</h1>
-            <p class="text-slate-400 text-sm mt-1">आगे बढ़ने के लिए अपनी जानकारी दर्ज करें</p>
+    <!-- Top Right Language Selector -->
+    <div class="w-full max-w-md flex justify-end mb-2">
+        <div class="neu-pill rounded-full px-3 py-1.5 flex items-center gap-2 text-xs font-semibold text-slate-600">
+            <i class="fas fa-globe text-emerald-600"></i>
+            <select id="languageSelect" onchange="changeLanguage(this.value)" class="bg-transparent focus:outline-none cursor-pointer pr-1">
+                <option value="en" selected>English (US)</option>
+                <option value="ur">اردو (Urdu)</option>
+                <option value="hi">हिन्दी (Hindi)</option>
+                <option value="ar">العربية (Arabic)</option>
+            </select>
         </div>
-
-        <!-- Alert / Error Box -->
-        <div id="alertBox" class="hidden mb-5 p-4 rounded-xl text-sm border transition-all duration-300">
-            <div class="flex items-start gap-3">
-                <i id="alertIcon" class="fas fa-exclamation-circle mt-0.5 text-lg"></i>
-                <div>
-                    <p id="alertMessage" class="font-medium"></p>
-                    <button id="lockForgotBtn" onclick="openForgotModal()" class="hidden mt-2 inline-block bg-red-600 hover:bg-red-500 text-white text-xs font-semibold px-3 py-1.5 rounded-lg transition">
-                        Forgot Password करें
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Login Form -->
-        <form id="loginForm" class="space-y-5">
-            <div>
-                <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">ईमेल आईडी (Gmail)</label>
-                <div class="relative">
-                    <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-400">
-                        <i class="fas fa-envelope"></i>
-                    </span>
-                    <input type="email" id="email" required placeholder="example@gmail.com"
-                        class="w-full pl-10 pr-4 py-3 bg-slate-900/80 border border-slate-700 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition">
-                </div>
-            </div>
-
-            <div>
-                <div class="flex items-center justify-between mb-2">
-                    <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400">पासवर्ड</label>
-                    <button type="button" onclick="openForgotModal()" class="text-xs text-indigo-400 hover:text-indigo-300 font-medium">
-                        Forgot Password?
-                    </button>
-                </div>
-                <div class="relative">
-                    <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-400">
-                        <i class="fas fa-lock"></i>
-                    </span>
-                    <input type="password" id="password" required placeholder="••••••••"
-                        class="w-full pl-10 pr-10 py-3 bg-slate-900/80 border border-slate-700 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition">
-                    <button type="button" onclick="togglePassword()" class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-200">
-                        <i id="eyeIcon" class="fas fa-eye"></i>
-                    </button>
-                </div>
-            </div>
-
-            <button type="submit" id="loginBtn"
-                class="w-full py-3 px-4 bg-indigo-600 hover:bg-indigo-500 disabled:bg-slate-700 disabled:text-slate-500 disabled:cursor-not-allowed text-white font-semibold rounded-xl shadow-lg shadow-indigo-600/20 transition duration-200 flex items-center justify-center gap-2">
-                <span>लॉगिन करें</span>
-                <i class="fas fa-arrow-right text-sm"></i>
-            </button>
-        </form>
     </div>
 
-    <!-- Forgot Password Modal (Email & Phone OTP) -->
-    <div id="forgotModal" class="fixed inset-0 bg-black/75 backdrop-blur-sm hidden items-center justify-center p-4 z-50">
-        <div class="bg-slate-800 border border-slate-700 rounded-2xl max-w-md w-full p-6 shadow-2xl">
-            <div class="flex items-center justify-between border-b border-slate-700 pb-4 mb-5">
-                <h3 class="text-lg font-bold text-white">अकाउंट रिकवरी / पासवर्ड रीसेट</h3>
-                <button onclick="closeForgotModal()" class="text-slate-400 hover:text-white">
-                    <i class="fas fa-times text-lg"></i>
+    <!-- Top Brand Header (Exact Match to Screenshot) -->
+    <header class="w-full max-w-md flex flex-col items-center">
+        <div class="flex items-center gap-2.5">
+            <div class="w-9 h-9 rounded-xl border-2 border-emerald-600 flex items-center justify-center bg-emerald-50 shadow-sm">
+                <i class="fas fa-bolt text-amber-400 text-lg drop-shadow"></i>
+            </div>
+            <h1 class="text-2xl font-extrabold italic tracking-tight text-emerald-700">
+                VOLT<span class="text-emerald-600">WEALTH</span>
+            </h1>
+        </div>
+        <p id="brandSubtitle" class="text-[10px] font-bold tracking-[0.22em] text-slate-500 uppercase mt-1">
+            INSTITUTIONAL SMART YIELD
+        </p>
+
+        <!-- Live Status Pill Bar -->
+        <div class="w-full neu-pill rounded-full px-3 py-2 mt-4 flex items-center justify-between">
+            <span class="bg-emerald-100/90 text-emerald-700 text-[11px] font-bold px-2.5 py-0.5 rounded-full flex items-center gap-1.5">
+                <i class="fas fa-bolt text-[10px]"></i> <span id="liveText">LIVE</span>
+            </span>
+            <span id="syncText" class="text-xs font-medium text-slate-600 pr-2 truncate">
+                Syncing verified blocks...
+            </span>
+        </div>
+    </header>
+
+    <!-- Main Circular Neumorphic Card -->
+    <main class="my-6 flex items-center justify-center w-full">
+        <div id="circularCard" class="neu-circle-outer w-[345px] h-[345px] sm:w-[375px] sm:h-[375px] rounded-full flex flex-col items-center justify-center p-8 transition-all duration-300">
+            
+            <!-- Rotating Circular Line (Hidden until Sign In clicked) -->
+            <div id="spinnerRing" class="circle-spinner-ring hidden"></div>
+
+            <!-- VIEW 1: LOGIN FORM -->
+            <div id="loginView" class="w-full max-w-[260px] flex flex-col items-center">
+                <h2 id="loginTitle" class="text-2xl font-bold text-slate-800 mb-2">Login</h2>
+
+                <!-- Radio Switcher: Mobile / Gmail -->
+                <div class="flex items-center justify-center gap-5 mb-3 text-xs font-semibold text-slate-600">
+                    <label class="flex items-center gap-1.5 cursor-pointer">
+                        <input type="radio" name="loginMode" value="mobile" checked onchange="toggleLoginMode('mobile')" class="accent-emerald-600 w-3.5 h-3.5">
+                        <span id="radioMobileLabel">Mobile</span>
+                    </label>
+                    <label class="flex items-center gap-1.5 cursor-pointer">
+                        <input type="radio" name="loginMode" value="gmail" onchange="toggleLoginMode('gmail')" class="accent-emerald-600 w-3.5 h-3.5">
+                        <span id="radioGmailLabel">Gmail</span>
+                    </label>
+                </div>
+
+                <!-- Dynamic Error / Lockout Alert inside Card -->
+                <div id="inlineAlert" class="hidden w-full mb-2 px-3 py-1.5 rounded-xl bg-red-100/90 border border-red-300 text-red-700 text-[10px] font-semibold text-center leading-tight">
+                </div>
+
+                <form id="loginForm" class="w-full space-y-2.5">
+                    <!-- Mobile or Gmail Input -->
+                    <div>
+                        <label id="identifierLabel" class="block text-[10px] font-bold uppercase tracking-wider text-slate-500 ml-3 mb-1">
+                            MOBILE NUMBER
+                        </label>
+                        <input type="text" id="identifierInput" required placeholder="03001234567"
+                            class="neu-input w-full px-4 py-2.5 rounded-full text-xs font-semibold text-slate-700 placeholder-slate-400 focus:outline-none">
+                    </div>
+
+                    <!-- Password Input with Eye Toggle -->
+                    <div>
+                        <label id="passwordLabel" class="block text-[10px] font-bold uppercase tracking-wider text-slate-500 ml-3 mb-1">
+                            PASSWORD
+                        </label>
+                        <div class="relative">
+                            <input type="password" id="passwordInput" required placeholder="••••••••"
+                                class="neu-input w-full pl-4 pr-10 py-2.5 rounded-full text-xs font-semibold text-slate-700 placeholder-slate-400 focus:outline-none">
+                            <button type="button" onclick="togglePasswordVisibility()" class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-500 hover:text-emerald-600 transition">
+                                <i id="eyeIcon" class="fas fa-eye text-xs"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Sign In Button -->
+                    <div class="pt-1">
+                        <button type="submit" id="signInBtn"
+                            class="neu-btn w-full py-2.5 rounded-full text-xs font-extrabold uppercase tracking-wider text-slate-800 hover:text-emerald-700 disabled:opacity-50 disabled:cursor-not-allowed">
+                            <span id="signInBtnText">SIGN IN</span>
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Bottom Links: Forgot? & Register Here -->
+                <div class="w-full flex items-center justify-between px-3 mt-3.5 text-xs font-semibold">
+                    <button type="button" id="forgotLink" onclick="openForgotModal()" class="text-slate-500 hover:text-slate-800 transition">
+                        Forgot?
+                    </button>
+                    <button type="button" id="registerLink" onclick="openRegisterModal()" class="text-emerald-600 hover:text-emerald-700 font-bold transition">
+                        Register Here
+                    </button>
+                </div>
+            </div>
+
+            <!-- VIEW 2: SUCCESS STATE (Exact Match to Screenshot 1) -->
+            <div id="successView" class="hidden flex-col items-center justify-center text-center animate-pop">
+                <div class="neu-success-badge w-20 h-20 rounded-full flex items-center justify-center mb-5">
+                    <i class="fas fa-check text-3xl text-emerald-600 drop-shadow-sm"></i>
+                </div>
+                <h3 id="successTitle" class="text-2xl font-extrabold text-slate-800 tracking-tight">Success!</h3>
+                <p id="successSub" class="text-xs font-medium text-slate-500 mt-1">Login Successfully</p>
+            </div>
+
+        </div>
+    </main>
+        <!-- Clean Professional Footer (No security algorithm names shown) -->
+    <footer class="w-full max-w-md text-center space-y-1">
+        <div class="flex items-center justify-center gap-1.5 text-[11px] font-semibold text-slate-600">
+            <i class="fas fa-shield-alt text-emerald-600"></i>
+            <span id="footerSecurity">256-Bit Encrypted Institutional Gateway</span>
+        </div>
+        <p class="text-[10px] text-slate-400">
+            © 2026 VoltWealth Protocol. All Rights Reserved.
+        </p>
+    </footer>
+
+    <!-- FORGOT PASSWORD MODAL (Email Link & Phone OTP) -->
+    <div id="forgotModal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm hidden items-center justify-center p-4 z-50">
+        <div class="bg-[#eef3f8] border border-white rounded-3xl max-w-sm w-full p-6 shadow-2xl">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-base font-bold text-slate-800">Account Recovery</h3>
+                <button onclick="closeModal('forgotModal')" class="text-slate-400 hover:text-slate-700">
+                    <i class="fas fa-times"></i>
                 </button>
             </div>
 
-            <!-- Method Switcher Tabs -->
-            <div class="grid grid-cols-2 gap-2 bg-slate-900 p-1 rounded-xl mb-5">
-                <button type="button" id="tabEmail" onclick="switchRecoveryTab('email')" class="py-2 text-xs font-semibold rounded-lg bg-indigo-600 text-white transition">
-                    <i class="fas fa-envelope mr-1"></i> रजिस्टर्ड ईमेल
+            <!-- Tabs -->
+            <div class="grid grid-cols-2 gap-2 p-1 rounded-full neu-input mb-4">
+                <button type="button" id="tabEmail" onclick="switchRecoveryTab('email')" class="py-1.5 rounded-full text-xs font-bold bg-emerald-600 text-white shadow">
+                    Gmail Reset
                 </button>
-                <button type="button" id="tabPhone" onclick="switchRecoveryTab('phone')" class="py-2 text-xs font-semibold rounded-lg text-slate-400 hover:text-white transition">
-                    <i class="fas fa-mobile-alt mr-1"></i> फोन नंबर (OTP)
-                </button>
-            </div>
-
-            <!-- Modal Status Message -->
-            <div id="modalAlert" class="hidden mb-4 p-3 rounded-lg text-xs"></div>
-
-            <!-- Email Reset Section -->
-            <div id="emailRecoverySection" class="space-y-4">
-                <p class="text-xs text-slate-400">अपना रजिस्टर्ड Gmail दर्ज करें। हम आपको पासवर्ड रीसेट लिंक भेजेंगे।</p>
-                <input type="email" id="resetEmail" placeholder="registered@gmail.com"
-                    class="w-full px-4 py-2.5 bg-slate-900 border border-slate-700 rounded-xl text-sm text-white focus:outline-none focus:border-indigo-500">
-                <button type="button" onclick="sendEmailReset()" class="w-full py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-semibold rounded-xl transition">
-                    ईमेल पर रीसेट लिंक भेजें
+                <button type="button" id="tabPhone" onclick="switchRecoveryTab('phone')" class="py-1.5 rounded-full text-xs font-bold text-slate-600">
+                    Phone OTP
                 </button>
             </div>
 
-            <!-- Phone OTP Section -->
-            <div id="phoneRecoverySection" class="hidden space-y-4">
-                <p class="text-xs text-slate-400">कंट्री कोड के साथ रजिस्टर्ड नंबर लिखें (जैसे: +923001234567 या +919876543210)</p>
-                <input type="tel" id="resetPhone" placeholder="+923001234567"
-                    class="w-full px-4 py-2.5 bg-slate-900 border border-slate-700 rounded-xl text-sm text-white focus:outline-none focus:border-indigo-500">
-                
-                <!-- Invisible/Visible Recaptcha Container for Firebase Phone Auth -->
+            <div id="modalStatus" class="hidden mb-3 p-2.5 rounded-xl text-xs font-medium text-center"></div>
+
+            <!-- Gmail Reset Form -->
+            <div id="emailResetBox" class="space-y-3">
+                <p class="text-xs text-slate-500">Enter your registered Gmail to receive a password reset link.</p>
+                <input type="email" id="resetEmailInput" placeholder="example@gmail.com"
+                    class="neu-input w-full px-4 py-2.5 rounded-full text-xs font-semibold text-slate-700 focus:outline-none">
+                <button type="button" onclick="handleEmailReset()" class="w-full py-2.5 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold shadow-md transition">
+                    Send Reset Link
+                </button>
+            </div>
+
+            <!-- Phone OTP Form -->
+            <div id="phoneResetBox" class="hidden space-y-3">
+                <p class="text-xs text-slate-500">Enter registered mobile with country code (e.g., +923001234567).</p>
+                <input type="tel" id="resetPhoneInput" placeholder="+923001234567"
+                    class="neu-input w-full px-4 py-2.5 rounded-full text-xs font-semibold text-slate-700 focus:outline-none">
                 <div id="recaptcha-container"></div>
-
-                <button type="button" id="sendOtpBtn" onclick="sendPhoneOTP()" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-semibold rounded-xl transition">
-                    OTP भेजें
+                <button type="button" id="sendOtpBtn" onclick="handleSendOTP()" class="w-full py-2.5 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold shadow-md transition">
+                    Send OTP
                 </button>
 
-                <!-- OTP Verification Box (Shown after OTP sent) -->
-                <div id="otpVerifyBox" class="hidden pt-3 border-t border-slate-700 space-y-3">
-                    <input type="text" id="otpCode" maxlength="6" placeholder="6-अंकों का OTP दर्ज करें"
-                        class="w-full px-4 py-2.5 bg-slate-900 border border-slate-700 rounded-xl text-sm text-center tracking-widest text-white focus:outline-none focus:border-emerald-500">
-                    <button type="button" onclick="verifyPhoneOTP()" class="w-full py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-semibold rounded-xl transition">
-                        OTP वेरीफाई करें और लॉक खोलें
+                <div id="otpConfirmArea" class="hidden pt-2 space-y-2.5 border-t border-slate-300">
+                    <input type="text" id="otpCodeInput" maxlength="6" placeholder="Enter 6-Digit OTP"
+                        class="neu-input w-full px-4 py-2.5 rounded-full text-xs font-bold text-center tracking-widest text-slate-800 focus:outline-none">
+                    <button type="button" onclick="handleVerifyOTP()" class="w-full py-2.5 rounded-full bg-slate-800 hover:bg-slate-900 text-white text-xs font-bold shadow-md transition">
+                        Verify OTP & Unlock
                     </button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Firebase SDKs & Logic -->
+    <!-- REGISTER MODAL -->
+    <div id="registerModal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm hidden items-center justify-center p-4 z-50">
+        <div class="bg-[#eef3f8] border border-white rounded-3xl max-w-sm w-full p-6 shadow-2xl">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-base font-bold text-slate-800">Create New Account</h3>
+                <button onclick="closeModal('registerModal')" class="text-slate-400 hover:text-slate-700">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div id="regStatus" class="hidden mb-3 p-2.5 rounded-xl text-xs font-medium text-center"></div>
+            <form id="registerForm" class="space-y-3">
+                <input type="text" id="regMobile" required placeholder="Mobile Number (e.g. 03001234567)"
+                    class="neu-input w-full px-4 py-2.5 rounded-full text-xs font-semibold text-slate-700 focus:outline-none">
+                <input type="email" id="regEmail" required placeholder="Gmail Address (example@gmail.com)"
+                    class="neu-input w-full px-4 py-2.5 rounded-full text-xs font-semibold text-slate-700 focus:outline-none">
+                <input type="password" id="regPassword" required minlength="6" placeholder="Create Password (min 6 chars)"
+                    class="neu-input w-full px-4 py-2.5 rounded-full text-xs font-semibold text-slate-700 focus:outline-none">
+                <button type="submit" class="w-full py-2.5 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold shadow-md transition">
+                    Register Account
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- FIREBASE & APP LOGIC -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
         import { 
             getAuth, 
             signInWithEmailAndPassword, 
+            createUserWithEmailAndPassword,
             sendPasswordResetEmail,
             RecaptchaVerifier,
             signInWithPhoneNumber
         } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+        import { 
+            getFirestore, 
+            doc, 
+            setDoc, 
+            getDoc, 
+            collection, 
+            query, 
+            where, 
+            getDocs 
+        } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-        // 1. अपनी Firebase Config यहाँ पेस्ट करें
+        // 1. अपनी Firebase Configuration यहाँ डालें
         const firebaseConfig = {
             apiKey: "YOUR_API_KEY",
             authDomain: "YOUR_PROJECT.firebaseapp.com",
@@ -156,283 +333,381 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        // 2. CEO का आधिकारिक Gmail (और Redirect पेज)
-        const CEO_EMAIL = "ceo@yourdomain.com"; // <-- यहाँ CEO का Firebase वाला Gmail लिखें
-        const CEO_DASHBOARD_URL = "ceo-dashboard.html";
-        const USER_DASHBOARD_URL = "dashboard.html";
+        // 2. CEO Credentials & Redirect URLs
+        const CEO_EMAIL = "ceo@gmail.com"; // <-- यहाँ CEO का असली Gmail लिखें जो Firebase में है
+        const CEO_PAGE_URL = "ceo-dashboard.html";
+        const USER_PAGE_URL = "dashboard.html";
 
-        // 3. Silent Security State (कहीं भी शो नहीं होगा)
-        const MAX_ATTEMPTS = 3;
-        const STORAGE_KEY = "auth_session_guard_v1";
+        // 3. Silent Background Security (3 Attempts Lockout)
+        const MAX_TRIES = 3;
+        const GUARD_KEY = "_vw_session_lock_state";
 
-        function getSecurityState() {
-            const data = localStorage.getItem(STORAGE_KEY);
-            return data ? JSON.parse(data) : { attempts: 0, locked: false };
+        function getGuardState() {
+            const raw = localStorage.getItem(GUARD_KEY);
+            return raw ? JSON.parse(raw) : { count: 0, locked: false };
         }
 
-        function saveSecurityState(state) {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        function setGuardState(state) {
+            localStorage.setItem(GUARD_KEY, JSON.stringify(state));
         }
 
-        function resetSecurityLock() {
-            saveSecurityState({ attempts: 0, locked: false });
-            const loginBtn = document.getElementById("loginBtn");
-            loginBtn.disabled = false;
-            document.getElementById("lockForgotBtn").classList.add("hidden");
+        window.unlockSessionGuard = function() {
+            setGuardState({ count: 0, locked: false });
+            document.getElementById("signInBtn").disabled = false;
+            document.getElementById("inlineAlert").classList.add("hidden");
+        };
+
+        function showInlineError(msg) {
+            const alertEl = document.getElementById("inlineAlert");
+            alertEl.textContent = msg;
+            alertEl.classList.remove("hidden");
         }
 
-        // UI Alert Helper
-        function showAlert(message, type = "error", showForgotBtn = false) {
-            const box = document.getElementById("alertBox");
-            const msg = document.getElementById("alertMessage");
-            const icon = document.getElementById("alertIcon");
-            const forgotBtn = document.getElementById("lockForgotBtn");
-
-            box.classList.remove("hidden", "bg-red-950/60", "border-red-500/50", "text-red-200", "bg-amber-950/60", "border-amber-500/50", "text-amber-200", "bg-emerald-950/60", "border-emerald-500/50", "text-emerald-200");
-
-            if (type === "locked") {
-                box.classList.add("bg-red-950/80", "border-red-500", "text-red-200");
-                icon.className = "fas fa-lock mt-0.5 text-lg text-red-400";
-            } else if (type === "warning") {
-                box.classList.add("bg-amber-950/60", "border-amber-500/50", "text-amber-200");
-                icon.className = "fas fa-exclamation-triangle mt-0.5 text-lg text-amber-400";
-            } else if (type === "success") {
-                box.classList.add("bg-emerald-950/60", "border-emerald-500/50", "text-emerald-200");
-                icon.className = "fas fa-check-circle mt-0.5 text-lg text-emerald-400";
-            }
-
-            msg.textContent = message;
-            if (showForgotBtn) {
-                forgotBtn.classList.remove("hidden");
-            } else {
-                forgotBtn.classList.add("hidden");
-            }
-        }
-
-        // पेज लोड होते ही चेक करें कि अकाउंट पहले से लॉक तो नहीं है
-        function enforceLockCheck() {
-            const state = getSecurityState();
-            if (state.locked || state.attempts >= MAX_ATTEMPTS) {
-                document.getElementById("loginBtn").disabled = true;
-                showAlert(
-                    "आपने बार-बार गलत आईडी या पासवर्ड डाला है। सुरक्षा कारणों से आपका लॉगिन रोक दिया गया है। कृपया अपना अकाउंट खोलने के लिए Forgot Password करें।",
-                    "locked",
-                    true
-                );
+        function checkIfLocked() {
+            const st = getGuardState();
+            if (st.locked || st.count >= MAX_TRIES) {
+                document.getElementById("signInBtn").disabled = true;
+                showInlineError("Too many failed attempts. Login disabled. Please use Forgot? to reset.");
                 return true;
             }
             return false;
         }
 
-        enforceLockCheck();
+        // Check lock status immediately on page load
+        checkIfLocked();
 
-        // 4. Login Form Submission
+        // 4. Trigger Bomb/Confetti Burst + Success Checkmark + Redirect
+        function triggerSuccessSequence(redirectUrl) {
+            const spinner = document.getElementById("spinnerRing");
+            const loginView = document.getElementById("loginView");
+            const successView = document.getElementById("successView");
+
+            // Stop circular ring & switch to Success View
+            spinner.classList.add("hidden");
+            loginView.classList.add("hidden");
+            successView.classList.remove("hidden");
+            successView.classList.add("flex");
+
+            // Confetti Explosion (بم پھٹنے والا اسٹائل)
+            if (typeof confetti === "function") {
+                confetti({
+                    particleCount: 95,
+                    spread: 75,
+                    origin: { y: 0.52 },
+                    colors: ['#10b981', '#059669', '#f59e0b', '#3b82f6', '#ec4899']
+                });
+            }
+
+            // Redirect after showing Success screen
+            setTimeout(() => {
+                window.location.href = redirectUrl;
+            }, 1800);
+        }
+
+        // 5. Handle Login Submission (Supports both Mobile & Gmail)
         document.getElementById("loginForm").addEventListener("submit", async (e) => {
             e.preventDefault();
+            if (checkIfLocked()) return;
 
-            if (enforceLockCheck()) return;
+            const mode = document.querySelector('input[name="loginMode"]:checked').value;
+            const identifier = document.getElementById("identifierInput").value.trim();
+            const password = document.getElementById("passwordInput").value;
+            const signInBtn = document.getElementById("signInBtn");
+            const spinner = document.getElementById("spinnerRing");
 
-            const email = document.getElementById("email").value.trim();
-            const password = document.getElementById("password").value;
-            const loginBtn = document.getElementById("loginBtn");
-
-            loginBtn.disabled = true;
-            loginBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> जाँच की जा रही है...`;
+            // Start circular rotating border animation
+            document.getElementById("inlineAlert").classList.add("hidden");
+            signInBtn.disabled = true;
+            spinner.classList.remove("hidden");
 
             try {
-                const userCredential = await signInWithEmailAndPassword(auth, email, password);
-                const user = userCredential.user;
+                let emailToLogin = identifier;
 
-                // सफल लॉगिन पर काउंटर रीसेट करें
-                resetSecurityLock();
-                showAlert("लॉगिन सफल! आपको डैशबोर्ड पर भेजा जा रहा है...", "success");
+                // If user selected Mobile Number, find linked Gmail from Firestore 'users' collection
+                if (mode === "mobile") {
+                    const q = query(collection(db, "users"), where("mobile", "==", identifier));
+                    const snap = await getDocs(q);
+                    if (snap.empty) {
+                        throw new Error("Mobile number not registered");
+                    }
+                    emailToLogin = snap.docs[0].data().email;
+                }
 
-                // CEO चेक करें (Direct Email Match या Firestore Role Match)
-                let isCEO = (user.email.toLowerCase() === CEO_EMAIL.toLowerCase());
+                // Sign in via Firebase Auth
+                const cred = await signInWithEmailAndPassword(auth, emailToLogin, password);
+                const loggedEmail = cred.user.email.toLowerCase();
 
+                // Reset failed attempts on success
+                window.unlockSessionGuard();
+
+                // Check if CEO
+                let isCEO = (loggedEmail === CEO_EMAIL.toLowerCase());
                 if (!isCEO) {
-                    // वैकल्पिक: यदि आपने Firestore में 'users' कलेक्शन में role: 'ceo' रखा है
-                    try {
-                        const userDoc = await getDoc(doc(db, "users", user.uid));
-                        if (userDoc.exists() && userDoc.data().role === "ceo") {
-                            isCEO = true;
-                        }
-                    } catch (err) {
-                        // Firestore चेक वैकल्पिक है
+                    const userDoc = await getDoc(doc(db, "users", cred.user.uid));
+                    if (userDoc.exists() && userDoc.data().role === "ceo") {
+                        isCEO = true;
                     }
                 }
 
-                setTimeout(() => {
-                    window.location.href = isCEO ? CEO_DASHBOARD_URL : USER_DASHBOARD_URL;
-                }, 800);
+                // Play Confetti + Success Checkmark + Redirect
+                triggerSuccessSequence(isCEO ? CEO_PAGE_URL : USER_PAGE_URL);
 
-            } catch (error) {
-                // गलत आईडी या पासवर्ड पर काउंटर बढ़ाएं
-                const state = getSecurityState();
-                state.attempts += 1;
+            } catch (err) {
+                spinner.classList.add("hidden");
+                const st = getGuardState();
+                st.count += 1;
 
-                if (state.attempts >= MAX_ATTEMPTS) {
-                    state.locked = true;
-                    saveSecurityState(state);
-                    loginBtn.disabled = true;
-                    loginBtn.innerHTML = `<span>लॉगिन बंद है</span> <i class="fas fa-lock text-sm"></i>`;
-                    showAlert(
-                        "आपने 3 बार गलत पासवर्ड या आईडी डाली है। सुरक्षा के तहत अब आप लॉगिन नहीं कर सकते। कृपया नीचे दिए गए बटन से Forgot Password करें।",
-                        "locked",
-                        true
-                    );
+                if (st.count >= MAX_TRIES) {
+                    st.locked = true;
+                    setGuardState(st);
+                    signInBtn.disabled = true;
+                    showInlineError("Incorrect ID/Password 3 times. Login locked. Click 'Forgot?' to recover.");
                 } else {
-                    saveSecurityState(state);
-                    const remaining = MAX_ATTEMPTS - state.attempts;
-                    loginBtn.disabled = false;
-                    loginBtn.innerHTML = `<span>लॉगिन करें</span> <i class="fas fa-arrow-right text-sm"></i>`;
-                    showAlert(
-                        `गलत ईमेल आईडी या पासवर्ड! आपके पास केवल ${remaining} कोशिश बाकी है।`,
-                        "warning",
-                        false
-                    );
+                    setGuardState(st);
+                    signInBtn.disabled = false;
+                    const left = MAX_TRIES - st.count;
+                    showInlineError(`Invalid credentials! ${left} attempt(s) remaining.`);
                 }
             }
         });
 
-        // 5. Email Password Reset Logic
-        window.sendEmailReset = async function () {
-            const resetEmail = document.getElementById("resetEmail").value.trim();
-            const modalAlert = document.getElementById("modalAlert");
-
-            if (!resetEmail) {
-                showModalAlert("कृपया अपना रजिस्टर्ड ईमेल दर्ज करें।", "error");
-                return;
-            }
+        // 6. Register New User (Stores Mobile + Gmail mapping in Firestore)
+        document.getElementById("registerForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const mobile = document.getElementById("regMobile").value.trim();
+            const email = document.getElementById("regEmail").value.trim();
+            const pass = document.getElementById("regPassword").value;
+            const statusEl = document.getElementById("regStatus");
 
             try {
-                await sendPasswordResetEmail(auth, resetEmail);
-                // रीसेट लिंक भेजने पर लॉक हटा दें ताकि नया पासवर्ड डालकर लॉगिन हो सके
-                resetSecurityLock();
-                showModalAlert("पासवर्ड रीसेट लिंक आपके ईमेल पर भेज दिया गया है! अपना इनबॉक्स (या Spam फोल्डर) चेक करें और नया पासवर्ड सेट करके लॉगिन करें।", "success");
-                showAlert("रीसेट लिंक भेज दिया गया है। नया पासवर्ड बनाने के बाद अब आप लॉगिन कर सकते हैं।", "success", false);
-            } catch (error) {
-                showModalAlert("त्रुटि: यह ईमेल रजिस्टर्ड नहीं है या अमान्य है।", "error");
+                const cred = await createUserWithEmailAndPassword(auth, email, pass);
+                await setDoc(doc(db, "users", cred.user.uid), {
+                    mobile: mobile,
+                    email: email.toLowerCase(),
+                    role: email.toLowerCase() === CEO_EMAIL.toLowerCase() ? "ceo" : "user",
+                    createdAt: new Date().toISOString()
+                });
+
+                statusEl.className = "mb-3 p-2.5 rounded-xl text-xs font-semibold text-center bg-emerald-100 text-emerald-700";
+                statusEl.textContent = "Account created! You can now sign in.";
+                statusEl.classList.remove("hidden");
+                setTimeout(() => closeModal('registerModal'), 1500);
+            } catch (err) {
+                statusEl.className = "mb-3 p-2.5 rounded-xl text-xs font-semibold text-center bg-red-100 text-red-700";
+                statusEl.textContent = err.message;
+                statusEl.classList.remove("hidden");
+            }
+        });
+
+            // 7. Forgot Password via Gmail Link
+        window.handleEmailReset = async function() {
+            const email = document.getElementById("resetEmailInput").value.trim();
+            const statusEl = document.getElementById("modalStatus");
+            if (!email) return;
+
+            try {
+                await sendPasswordResetEmail(auth, email);
+                window.unlockSessionGuard();
+                statusEl.className = "mb-3 p-2.5 rounded-xl text-xs font-semibold text-center bg-emerald-100 text-emerald-700";
+                statusEl.textContent = "Reset link sent to your Gmail! Lock removed.";
+                statusEl.classList.remove("hidden");
+            } catch (err) {
+                statusEl.className = "mb-3 p-2.5 rounded-xl text-xs font-semibold text-center bg-red-100 text-red-700";
+                statusEl.textContent = "Email not found or invalid.";
+                statusEl.classList.remove("hidden");
             }
         };
 
-        // 6. Phone Number OTP Recovery Logic
-        let confirmationResultGlobal = null;
-
-        window.sendPhoneOTP = async function () {
-            const phoneNumber = document.getElementById("resetPhone").value.trim();
-            if (!phoneNumber || !phoneNumber.startsWith("+")) {
-                showModalAlert("कृपया कंट्री कोड के साथ सही नंबर लिखें (जैसे: +923001234567 या +919876543210)।", "error");
+        // 8. Forgot Password via Phone OTP
+        let confirmationResult = null;
+        window.handleSendOTP = async function() {
+            const phone = document.getElementById("resetPhoneInput").value.trim();
+            const statusEl = document.getElementById("modalStatus");
+            if (!phone.startsWith("+")) {
+                statusEl.className = "mb-3 p-2.5 rounded-xl text-xs font-semibold text-center bg-red-100 text-red-700";
+                statusEl.textContent = "Include country code (e.g. +923001234567)";
+                statusEl.classList.remove("hidden");
                 return;
             }
 
             try {
                 if (!window.recaptchaVerifier) {
-                    window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
-                        'size': 'invisible'
-                    });
+                    window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', { size: 'invisible' });
                 }
-
-                const sendBtn = document.getElementById("sendOtpBtn");
-                sendBtn.disabled = true;
-                sendBtn.textContent = "OTP भेजा जा रहा है...";
-
-                confirmationResultGlobal = await signInWithPhoneNumber(auth, phoneNumber, window.recaptchaVerifier);
-                
-                document.getElementById("otpVerifyBox").classList.remove("hidden");
-                sendBtn.textContent = "OTP दोबारा भेजें";
-                sendBtn.disabled = false;
-                showModalAlert("आपके मोबाइल नंबर पर 6-अंकों का OTP भेज दिया गया है।", "success");
-            } catch (error) {
-                document.getElementById("sendOtpBtn").disabled = false;
-                document.getElementById("sendOtpBtn").textContent = "OTP भेजें";
-                showModalAlert("OTP भेजने में समस्या आई: " + error.message, "error");
+                confirmationResult = await signInWithPhoneNumber(auth, phone, window.recaptchaVerifier);
+                document.getElementById("otpConfirmArea").classList.remove("hidden");
+                statusEl.className = "mb-3 p-2.5 rounded-xl text-xs font-semibold text-center bg-emerald-100 text-emerald-700";
+                statusEl.textContent = "OTP sent to your mobile number!";
+                statusEl.classList.remove("hidden");
+            } catch (err) {
+                statusEl.className = "mb-3 p-2.5 rounded-xl text-xs font-semibold text-center bg-red-100 text-red-700";
+                statusEl.textContent = err.message;
+                statusEl.classList.remove("hidden");
             }
         };
 
-        window.verifyPhoneOTP = async function () {
-            const code = document.getElementById("otpCode").value.trim();
-            if (!code || code.length < 6) {
-                showModalAlert("कृपया 6-अंकों का सही OTP दर्ज करें।", "error");
-                return;
-            }
-
+        window.handleVerifyOTP = async function() {
+            const code = document.getElementById("otpCodeInput").value.trim();
+            const statusEl = document.getElementById("modalStatus");
             try {
-                await confirmationResultGlobal.confirm(code);
-                // OTP वेरीफाई होते ही अकाउंट अनलॉक करें और ईमेल रीसेट का विकल्प दें
-                resetSecurityLock();
-                showModalAlert("OTP वेरीफाई हो गया है! आपका लॉगिन लॉक खोल दिया गया है। अब आप अपना ईमेल पासवर्ड रीसेट कर सकते हैं या लॉगिन कर सकते हैं।", "success");
-                showAlert("मोबाइल OTP वेरीफाई हो गया है। अब आप लॉगिन कर सकते हैं।", "success", false);
-                setTimeout(() => closeForgotModal(), 2000);
-            } catch (error) {
-                showModalAlert("गलत OTP! कृपया मैसेज चेक करके दोबारा डालें।", "error");
+                await confirmationResult.confirm(code);
+                window.unlockSessionGuard();
+                statusEl.className = "mb-3 p-2.5 rounded-xl text-xs font-semibold text-center bg-emerald-100 text-emerald-700";
+                statusEl.textContent = "OTP Verified! Account unlocked.";
+                statusEl.classList.remove("hidden");
+                setTimeout(() => closeModal('forgotModal'), 1500);
+            } catch (err) {
+                statusEl.className = "mb-3 p-2.5 rounded-xl text-xs font-semibold text-center bg-red-100 text-red-700";
+                statusEl.textContent = "Invalid OTP code.";
+                statusEl.classList.remove("hidden");
             }
         };
-
-        function showModalAlert(msg, type) {
-            const el = document.getElementById("modalAlert");
-            el.classList.remove("hidden", "bg-red-950", "text-red-300", "border-red-500", "bg-emerald-950", "text-emerald-300", "border-emerald-500");
-            el.classList.add("border");
-            if (type === "success") {
-                el.classList.add("bg-emerald-950", "text-emerald-300", "border-emerald-500");
-            } else {
-                el.classList.add("bg-red-950", "text-red-300", "border-red-500");
-            }
-            el.textContent = msg;
-        }
     </script>
 
-      <!-- UI Helper Scripts -->
+    <!-- UI INTERACTION & MULTI-LANGUAGE SCRIPT -->
     <script>
-        function togglePassword() {
-            const pwd = document.getElementById("password");
-            const icon = document.getElementById("eyeIcon");
-            if (pwd.type === "password") {
-                pwd.type = "text";
-                icon.classList.replace("fa-eye", "fa-eye-slash");
+        let currentMode = 'mobile';
+        let currentLang = 'en';
+
+        const translations = {
+            en: {
+                loginTitle: "Login",
+                mobileRadio: "Mobile",
+                gmailRadio: "Gmail",
+                mobileLabel: "MOBILE NUMBER",
+                gmailLabel: "GMAIL ADDRESS",
+                passwordLabel: "PASSWORD",
+                signInBtn: "SIGN IN",
+                forgot: "Forgot?",
+                register: "Register Here",
+                successTitle: "Success!",
+                successSub: "Login Successfully",
+                syncText: "Syncing verified blocks..."
+            },
+            ur: {
+                loginTitle: "لاگ ان",
+                mobileRadio: "موبائل",
+                gmailRadio: "جی میل",
+                mobileLabel: "موبائل نمبر",
+                gmailLabel: "جی میل ایڈریس",
+                passwordLabel: "پاس ورڈ",
+                signInBtn: "سائن ان کریں",
+                forgot: "پاس ورڈ بھول گئے؟",
+                register: "رجسٹر کریں",
+                successTitle: "کامیابی!",
+                successSub: "لاگ ان کامیاب ہو گیا",
+                syncText: "تصدیق شدہ بلاکس منسلک ہو رہے ہیں..."
+            },
+            hi: {
+                loginTitle: "लॉगिन",
+                mobileRadio: "मोबाइल",
+                gmailRadio: "जीमेल",
+                mobileLabel: "मोबाइल नंबर",
+                gmailLabel: "जीमेल पता",
+                passwordLabel: "पासवर्ड",
+                signInBtn: "साइन इन करें",
+                forgot: "भूल गए?",
+                register: "यहाँ रजिस्टर करें",
+                successTitle: "सफलता!",
+                successSub: "लॉगिन सफल रहा",
+                syncText: "सत्यापित ब्लॉक सिंक हो रहे हैं..."
+            },
+            ar: {
+                loginTitle: "تسجيل الدخول",
+                mobileRadio: "الجوال",
+                gmailRadio: "جيميل",
+                mobileLabel: "رقم الجوال",
+                gmailLabel: "البريد الإلكتروني",
+                passwordLabel: "كلمة المرور",
+                signInBtn: "دخول",
+                forgot: "نسيت كلمة المرور؟",
+                register: "سجل هنا",
+                successTitle: "نجاح!",
+                successSub: "تم تسجيل الدخول بنجاح",
+                syncText: "مزامنة الكتل الموثقة..."
+            }
+        };
+
+        function changeLanguage(lang) {
+            currentLang = lang;
+            const t = translations[lang];
+            document.getElementById("loginTitle").textContent = t.loginTitle;
+            document.getElementById("radioMobileLabel").textContent = t.mobileRadio;
+            document.getElementById("radioGmailLabel").textContent = t.gmailRadio;
+            document.getElementById("passwordLabel").textContent = t.passwordLabel;
+            document.getElementById("signInBtnText").textContent = t.signInBtn;
+            document.getElementById("forgotLink").textContent = t.forgot;
+            document.getElementById("registerLink").textContent = t.register;
+            document.getElementById("successTitle").textContent = t.successTitle;
+            document.getElementById("successSub").textContent = t.successSub;
+            document.getElementById("syncText").textContent = t.syncText;
+            toggleLoginMode(currentMode);
+        }
+
+        function toggleLoginMode(mode) {
+            currentMode = mode;
+            const t = translations[currentLang];
+            const label = document.getElementById("identifierLabel");
+            const input = document.getElementById("identifierInput");
+
+            if (mode === "mobile") {
+                label.textContent = t.mobileLabel;
+                input.type = "tel";
+                input.placeholder = "03001234567";
             } else {
-                pwd.type = "password";
-                icon.classList.replace("fa-eye-slash", "fa-eye");
+                label.textContent = t.gmailLabel;
+                input.type = "email";
+                input.placeholder = "example@gmail.com";
+            }
+        }
+
+        function togglePasswordVisibility() {
+            const pwdInput = document.getElementById("passwordInput");
+            const eyeIcon = document.getElementById("eyeIcon");
+            if (pwdInput.type === "password") {
+                pwdInput.type = "text";
+                eyeIcon.classList.replace("fa-eye", "fa-eye-slash");
+            } else {
+                pwdInput.type = "password";
+                eyeIcon.classList.replace("fa-eye-slash", "fa-eye");
             }
         }
 
         function openForgotModal() {
-            const modal = document.getElementById("forgotModal");
-            modal.classList.remove("hidden");
-            modal.classList.add("flex");
-            // लॉगिन बॉक्स में लिखा ईमेल ऑटो-फिल कर दें
-            const currentEmail = document.getElementById("email").value;
-            if (currentEmail) document.getElementById("resetEmail").value = currentEmail;
+            const m = document.getElementById("forgotModal");
+            m.classList.remove("hidden");
+            m.classList.add("flex");
         }
 
-        function closeForgotModal() {
-            const modal = document.getElementById("forgotModal");
-            modal.classList.add("hidden");
-            modal.classList.remove("flex");
+        function openRegisterModal() {
+            const m = document.getElementById("registerModal");
+            m.classList.remove("hidden");
+            m.classList.add("flex");
+        }
+
+        function closeModal(id) {
+            const m = document.getElementById(id);
+            m.classList.add("hidden");
+            m.classList.remove("flex");
         }
 
         function switchRecoveryTab(tab) {
-            const emailSec = document.getElementById("emailRecoverySection");
-            const phoneSec = document.getElementById("phoneRecoverySection");
+            const emailBox = document.getElementById("emailResetBox");
+            const phoneBox = document.getElementById("phoneResetBox");
             const tabEmail = document.getElementById("tabEmail");
             const tabPhone = document.getElementById("tabPhone");
-
-            document.getElementById("modalAlert").classList.add("hidden");
+            document.getElementById("modalStatus").classList.add("hidden");
 
             if (tab === "email") {
-                emailSec.classList.remove("hidden");
-                phoneSec.classList.add("hidden");
-                tabEmail.classList.add("bg-indigo-600", "text-white");
-                tabEmail.classList.remove("text-slate-400");
-                tabPhone.classList.remove("bg-indigo-600", "text-white");
-                tabPhone.classList.add("text-slate-400");
+                emailBox.classList.remove("hidden");
+                phoneBox.classList.add("hidden");
+                tabEmail.className = "py-1.5 rounded-full text-xs font-bold bg-emerald-600 text-white shadow";
+                tabPhone.className = "py-1.5 rounded-full text-xs font-bold text-slate-600";
             } else {
-                phoneSec.classList.remove("hidden");
-                emailSec.classList.add("hidden");
-                tabPhone.classList.add("bg-indigo-600", "text-white");
-                tabPhone.classList.remove("text-slate-400");
-                tabEmail.classList.remove("bg-indigo-600", "text-white");
-                tabEmail.classList.add("text-slate-400");
+                phoneBox.classList.remove("hidden");
+                emailBox.classList.add("hidden");
+                tabPhone.className = "py-1.5 rounded-full text-xs font-bold bg-emerald-600 text-white shadow";
+                tabEmail.className = "py-1.5 rounded-full text-xs font-bold text-slate-600";
             }
         }
     </script>
